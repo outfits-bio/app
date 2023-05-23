@@ -12,10 +12,15 @@ const SettingsPage = () => {
     console.log(data);
   };
 
-  const handleAvatarDrop = (files: FileList) => {
-    const fileList = Array.from(files);
-    setAvatar(fileList[0]);
-  };
+  const handleAvatarDrop = (files: FileList | undefined) => {
+    if (files && files.length > 0) {
+      const fileList = Array.from(files);
+      setAvatar(null);
+    //   setAvatar(fileList[0]);
+    } else {
+      setAvatar(null);
+    }
+  };  
   
 
   return (
