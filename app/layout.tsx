@@ -25,6 +25,8 @@ export const metadata = {
     title: 'Something drippy is cooking',
     description: "I'm building a virtual wardrobe where people can add photos to their profile and share them with a link like outfits.bio/jecta.",
     image: 'https://outfits.bio/ogimage.png',
+    imageWidth: 1200,
+    imageHeight: 630,
   },
 };
 
