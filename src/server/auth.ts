@@ -1,13 +1,11 @@
-import { type GetServerSidePropsContext } from "next";
-import {
-  getServerSession,
-  type NextAuthOptions,
-  type DefaultSession,
-} from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { env } from "~/env.mjs";
-import { prisma } from "~/server/db";
+import type { GetServerSidePropsContext } from "next";
+import { DefaultSession, getServerSession, NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import DiscordProvider from 'next-auth/providers/discord';
+import { env } from '~/env.mjs';
+import { prisma } from '~/server/db';
+
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -18,7 +16,6 @@ import { prisma } from "~/server/db";
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
-      id: string;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -36,20 +33,62 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+  pages: {
+    signIn: "/login",
+    newUser: "/register",
+  },
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    redirect: async ({ baseUrl }) => {
+      return baseUrl;
+    },
+    jwt: async ({ token, user }) => {
+      if (typeof user !== typeof undefined) token.user = user;
+
+      return token;
+    },
+    session: async ({ session, token }) => {
+      token?.user && (session.user = token.user as any);
+
+      return session;
+    },
   },
   adapter: PrismaAdapter(prisma),
   providers: [
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
+    }),
+    CredentialsProvider({
+      id: "credentials",
+      name: "Credentials",
+      async authorize(credentials) {
+        const user = await prisma.user.findUnique({
+          where: {
+            email: credentials?.email,
+          },
+        });
+
+        if (!user) {
+          throw new Error("No user found");
+        }
+
+        if (user.password !== credentials?.password) {
+          throw new Error("Password does not match");
+        }
+
+        return {
+          id: user.id,
+          email: user.email,
+        };
+      },
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
     }),
     /**
      * ...add more providers here.

@@ -1,14 +1,25 @@
 'use client';
 
+import { getSession, signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 const LoginPage = () => {
+  const { push } = useRouter();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle form submission logic here
+    const data = await signIn('credentials', { redirect: false, email, password });
+
+    if (data?.error) {
+      alert(data.error);
+    } else {
+      push('/settings');
+    }
   };
 
   return (
