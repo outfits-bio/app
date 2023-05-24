@@ -1,12 +1,8 @@
-import { z } from "zod";
-import {
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from "~/server/api/trpc";
+import { z } from 'zod';
+import { createTRPCRouter, protectedProcedure, publicProcedure } from '~/server/api/trpc';
 
-import { Prisma, User } from "@prisma/client";
-import { TRPCError } from "@trpc/server";
+import { Prisma, User } from '@prisma/client';
+import { TRPCError } from '@trpc/server';
 
 // display name, email, password, username, confirm password
 const userSchema = z.object({
@@ -17,11 +13,21 @@ const userSchema = z.object({
   confirmPassword: z.string().min(8).max(100),
 });
 
+// can't be login, register, settings, api/*, etc.
+const badUsernames = ["login", "register", "settings"];
+
 export const userRouter = createTRPCRouter({
   register: publicProcedure
     .input(userSchema)
     .mutation(async ({ input, ctx }) => {
       const { name, email, password, username, confirmPassword } = input;
+
+      if (badUsernames.includes(username) || username.startsWith("api/")) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Username is not allowed",
+        });
+      }
 
       if (password !== confirmPassword) {
         throw new TRPCError({
