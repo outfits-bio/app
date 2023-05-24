@@ -1,17 +1,35 @@
 'use client';
 
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { api } from '~/utils/api';
 
 const RegisterPage = () => {
+  const { push } = useRouter();
+
   const [displayName, setDisplayName] = useState('Jeremy');
   const [username, setUsername] = useState('jecta');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const { mutate } = api.user.register.useMutation({
+    retry: 0,
+    onError: (error) => {
+      alert(JSON.parse(error.message)[0].message);
+    },
+    onSuccess: () => {
+      signIn('credentials', { redirect: false, email, password, callbackUrl: '/settings' });
+
+      push('/settings');
+    }
+  });
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle form submission logic here
+    mutate({ name: displayName, username, email, password, confirmPassword });
   };
 
   return (
