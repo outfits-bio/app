@@ -19,6 +19,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{metadata.title}</title>
+        <link rel="icon" href="favicon.ico" />        
         <meta name="description" content={metadata.description} />
         <meta property="og:locale" content="en_US" />
         <meta property="og:url" content={metadata.url} />

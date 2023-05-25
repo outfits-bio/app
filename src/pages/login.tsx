@@ -26,7 +26,7 @@ const LoginPage = () => {
     <div className="flex justify-center items-center h-screen bg-white">
       <form className="bg-white rounded px-8 py-10 mb-4 max-w-sm w-full" onSubmit={handleSubmit}>
         <div className="flex items-center mb-6">
-          <img src="https://outfits.bio/favicon.png" alt="Outfits Bio" className="w-8 h-8 mr-2" />
+          <img src="favicon.ico" alt="Outfits Bio" className="w-8 h-8 mr-2" />
           <h2 className="text-2xl font-semibold text-black font-prompt">Login</h2>
         </div>
 
