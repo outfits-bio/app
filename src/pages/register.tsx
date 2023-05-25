@@ -1,18 +1,23 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { api } from '~/utils/api';
 
 const RegisterPage = () => {
   const { push } = useRouter();
+  const { status, data: session } = useSession();
 
   const [displayName, setDisplayName] = useState('Jeremy');
   const [username, setUsername] = useState('jecta');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  if (status === 'authenticated') {
+    push(`/${session?.user?.username}`);
+  }
 
   const { mutate } = api.user.register.useMutation({
     retry: 0,
@@ -22,7 +27,7 @@ const RegisterPage = () => {
     onSuccess: () => {
       signIn('credentials', { redirect: false, email, password, callbackUrl: '/settings' });
 
-      push('/settings');
+      push(`/${username}}`);
     }
   });
 

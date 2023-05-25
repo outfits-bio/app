@@ -14,10 +14,12 @@ interface Props {
 export const Navbar = ({ title }: Props) => {
     const { data, status } = useSession();
 
+    const isAuth = status === 'authenticated' && data;
+
     return (
         <div className="flex justify-between px-4 items-center h-20 border border-b-gray-500">
             <div className='flex items-center gap-2 text-2xl font-bold'>
-                <Link href={'/'} className='w-12 h-12 relative'>
+                <Link href={isAuth ? `${data.user.username}` : '/'} className='w-12 h-12 relative'>
                     <Image src={logo} alt="logo" fill />
                 </Link>
 

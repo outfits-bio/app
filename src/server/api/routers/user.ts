@@ -1,10 +1,9 @@
-import { z } from 'zod';
-import { createTRPCRouter, protectedProcedure, publicProcedure } from '~/server/api/trpc';
+import { z } from "zod";
+import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
-import { Prisma, User } from '@prisma/client';
-import { TRPCError } from '@trpc/server';
+import { Prisma, User } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
 
-// display name, email, password, username, confirm password
 const userSchema = z.object({
   name: z.string().optional(),
   email: z.string().email(),
@@ -13,7 +12,10 @@ const userSchema = z.object({
   confirmPassword: z.string().min(8).max(100),
 });
 
-// can't be login, register, settings, api/*, etc.
+const getProfileSchema = z.object({
+  username: z.string().min(3).max(20),
+});
+
 const badUsernames = ["login", "register", "settings"];
 
 export const userRouter = createTRPCRouter({
@@ -66,5 +68,31 @@ export const userRouter = createTRPCRouter({
           }
         }
       }
+    }),
+
+  getProfile: publicProcedure
+    .input(getProfileSchema)
+    .query(async ({ input, ctx }) => {
+      const { username } = input;
+
+      const user = await ctx.prisma.user.findUnique({
+        where: {
+          username,
+        },
+        select: {
+          username: true,
+          name: true,
+          image: true,
+        },
+      });
+
+      if (!user) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "User not found",
+        });
+      }
+
+      return user;
     }),
 });
