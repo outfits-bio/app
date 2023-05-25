@@ -7,7 +7,7 @@ const HomeContent = () => {
       <h1 className="text-3xl font-bold mb-4">Something drippy is cooking</h1>
       <p className="mb-4">
         I'm building a virtual wardrobe where people can add photos of clothes to their profile and share them with a link like{' '}
-        <a className="text-blue-500 underline" href="https://outfits.bio/ogimage.png">
+        <a className="text-blue-500 underline" href="https://beta.outfits.bio/ogimage.png">
           outfits.bio/jecta
         </a>
         .
