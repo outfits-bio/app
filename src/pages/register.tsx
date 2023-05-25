@@ -22,7 +22,7 @@ const RegisterPage = () => {
     onSuccess: () => {
       signIn('credentials', { redirect: false, email, password, callbackUrl: '/settings' });
 
-      push('/settings');
+      push(`/${username}}`);
     }
   });
 
