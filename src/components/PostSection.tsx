@@ -66,7 +66,6 @@ export const PostSection = ({ profileData, postsData, type }: Props) => {
 
     const { mutate, isLoading } = api.post.createPost.useMutation({
         onMutate: async (newPost) => {
-            await ctx.post.getPosts.invalidate();
             await ctx.post.getPostsAllTypes.invalidate();
 
             const prevData = ctx.post.getPostsAllTypes.getData();
@@ -79,20 +78,16 @@ export const PostSection = ({ profileData, postsData, type }: Props) => {
             ctx.post.getPostsAllTypes.setData({ id: profileData?.id ?? '' }, context!.prevData);
         },
         onSettled: async () => {
-            await ctx.post.getPosts.invalidate();
-            await ctx.post.getPostsAllTypes.invalidate();
+            ctx.post.getPostsAllTypes.invalidate();
+            ctx.user.getProfile.invalidate({ username: profileData?.username ?? '' });
         },
         onSuccess: async (result) => {
             await axios.put(result.res, file);
-
-            ctx.post.invalidate();
-            ctx.user.getProfile.invalidate({ username: profileData?.username ?? '' });
         }
     });
 
     const { mutate: deletePost } = api.post.deletePost.useMutation({
         onMutate: async (newPost) => {
-            await ctx.post.getPosts.invalidate();
             await ctx.post.getPostsAllTypes.invalidate();
 
             const prevData = ctx.post.getPostsAllTypes.getData();
@@ -105,11 +100,7 @@ export const PostSection = ({ profileData, postsData, type }: Props) => {
             ctx.post.getPostsAllTypes.setData({ id: profileData?.id ?? '' }, context!.prevData);
         },
         onSettled: async () => {
-            await ctx.post.getPosts.invalidate();
-            await ctx.post.getPostsAllTypes.invalidate();
-        },
-        onSuccess: async () => {
-            ctx.post.invalidate();
+            ctx.post.getPostsAllTypes.invalidate();
             ctx.user.getProfile.invalidate({ username: profileData?.username ?? '' });
         }
     });
@@ -158,7 +149,7 @@ export const PostSection = ({ profileData, postsData, type }: Props) => {
                 <div className="flex gap-4 min-w-max">
                     {postsData?.filter(p => p.type === type).map((post, i) => (
                         <div onMouseEnter={() => setDeleteButton(post.id)} onMouseLeave={() => setDeleteButton(null)} key={post.id ?? 'loading'} className="w-32 h-48 border border-gray-500 rounded-md relative">
-                            {isLoading && i === 0 ? <div className='bg-slate-100 w-full h-full flex items-center justify-center'><Spinner /></div> : <Image src={`https://pub-4bf8804d3efc464b862de36f974618d4.r2.dev/${profileData?.id}/${post.image}.png`} className="object-cover" fill alt={post.type} priority={post.type === 'OUTFIT' || post.type === 'HOODIE'} />}
+                            {isLoading && i === 0 ? <div className='bg-slate-100 w-full h-full flex items-center justify-center'><Spinner /></div> : post.id && <Image sizes="128px" src={`https://pub-4bf8804d3efc464b862de36f974618d4.r2.dev/${profileData?.id}/${post.image}.png`} className="object-cover" fill alt={post.type} priority={post.type === 'OUTFIT' || post.type === 'HOODIE'} />}
 
                             {session?.user?.id === profileData?.id && deleteButton === post.id && <button onClick={() => deletePost({ id: post.id })} className='flex items-center justify-center text-white text-lg absolute -top-2 -right-1 w-8 h-8 bg-red-500 rounded-full'>
                                 <Trash />

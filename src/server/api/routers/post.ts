@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import { z } from "zod";
 import { env } from "~/env.mjs";
 import {
@@ -7,7 +6,11 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import {
+  DeleteObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { PostType } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
@@ -51,7 +54,7 @@ export const postRouter = createTRPCRouter({
             ContentType: "image/png",
           }),
           {
-            expiresIn: 60 * 60 * 24,
+            expiresIn: 30,
           }
         );
       } catch (error) {
@@ -111,6 +114,11 @@ export const postRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       const { id } = input;
 
+      const s3 = new S3Client({
+        region: env.AWS_REGION,
+        endpoint: env.AWS_ENDPOINT,
+      });
+
       const post = await ctx.prisma.post.delete({
         where: {
           id,
@@ -118,6 +126,7 @@ export const postRouter = createTRPCRouter({
         },
         select: {
           type: true,
+          image: true,
         },
       });
 
@@ -126,6 +135,13 @@ export const postRouter = createTRPCRouter({
           code: "BAD_REQUEST",
           message: "Invalid post!",
         });
+
+      s3.send(
+        new DeleteObjectCommand({
+          Bucket: "outfits",
+          Key: `${ctx.session.user.id}/${post.image}.png`,
+        })
+      );
 
       await ctx.prisma.user.update({
         where: {
@@ -146,27 +162,6 @@ export const postRouter = createTRPCRouter({
 
       return true;
     }),
-
-  getPosts: publicProcedure.input(postSchema).query(async ({ input, ctx }) => {
-    const posts = await ctx.prisma.post.findMany({
-      where: {
-        type: input.type,
-        userId: input.id,
-      },
-      select: {
-        id: true,
-        type: true,
-        image: true,
-        createdAt: true,
-      },
-      take: 20,
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
-
-    return posts;
-  }),
 
   getPostsAllTypes: publicProcedure
     .input(idSchema)

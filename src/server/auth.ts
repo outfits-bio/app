@@ -2,6 +2,11 @@ import type { GetServerSidePropsContext } from "next";
 import bcrypt from "bcrypt";
 import { DefaultSession, getServerSession, NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import DiscordProvider from "next-auth/providers/discord";
+import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
+import TwitterProvider from "next-auth/providers/twitter";
+import { env } from "~/env.mjs";
 import { prisma } from "~/server/db";
 
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
@@ -17,15 +22,18 @@ declare module "next-auth" {
     user: {
       id: string;
       username: string;
+      onboarded: boolean;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface User {
+    username: string;
+    onboarded: boolean;
+    // ...other properties
+    // role: UserRole;
+  }
 }
 
 /**
@@ -34,69 +42,44 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
-  pages: {
-    signIn: "/login",
-    newUser: "/register",
-  },
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  },
   callbacks: {
-    redirect: async ({ baseUrl }) => {
-      return baseUrl;
-    },
-    jwt: async ({ token, user }) => {
-      if (typeof user !== typeof undefined) token.user = user;
-
-      return token;
-    },
-    session: async ({ session, token }) => {
-      token?.user && (session.user = token.user as any);
-
+    session({ session, user }) {
+      if (session.user) {
+        session.user.id = user.id;
+        session.user.username = user.username;
+        session.user.onboarded = user.onboarded;
+      }
       return session;
     },
   },
   adapter: PrismaAdapter(prisma),
   providers: [
-    CredentialsProvider({
-      id: "credentials",
-      name: "Credentials",
-      async authorize(credentials) {
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials?.email,
-          },
-          select: {
-            id: true,
-            username: true,
-            image: true,
-            password: true,
-          },
-        });
-
-        if (!user) {
-          throw new Error("No user found");
-        }
-
-        const passwordMatches =
-          user.password &&
-          credentials?.password &&
-          (await bcrypt.compare(credentials.password, user.password));
-
-        if (!passwordMatches) {
-          throw new Error("Password does not match");
-        }
-
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+      profile(profile) {
         return {
-          id: user.id,
-          username: user.username,
-          image: user.image,
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+          username: profile.name?.replaceAll(" ", "_"),
+          onboarded: profile.onboarded,
         };
       },
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+    }),
+    DiscordProvider({
+      clientId: env.DISCORD_CLIENT_ID,
+      clientSecret: env.DISCORD_CLIENT_SECRET,
+      profile(profile) {
+        return {
+          id: profile.id,
+          name: profile.username,
+          email: profile.email,
+          image: profile.image_url,
+          username: profile.username,
+          onboarded: profile.onboarded,
+        };
       },
     }),
     /**

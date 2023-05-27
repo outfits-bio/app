@@ -1,25 +1,23 @@
-import { type AppType } from "next/app";
-import { type Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
+import '~/styles/globals.css';
 
-import { api } from "~/utils/api";
-
-import "~/styles/globals.css";
-
-import Head from 'next/head';
+import type { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
 import { metadata } from 'next-seo.config';
+import type { AppType } from 'next/app';
+import Head from 'next/head';
+import { api } from '~/utils/api';
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
   return (
-<>
-<Head>
+    <>
+      <Head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{metadata.title}</title>
-        <link rel="icon" href="favicon.ico" />        
+        <link rel="icon" href="favicon.ico" sizes="32px" />
         <meta name="description" content={metadata.description} />
         <meta property="og:locale" content="en_US" />
         <meta property="og:url" content={metadata.url} />
@@ -36,9 +34,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta name="twitter:image" content={metadata.twitter.image} />
       </Head>
 
-    <SessionProvider session={session}>
-      <Component {...pageProps} />
-    </SessionProvider>
+      <SessionProvider session={session}>
+        <Component {...pageProps} />
+      </SessionProvider>
 
     </>
   );

@@ -16,9 +16,9 @@ export const ProfilePage = ({ username }: InferGetServerSidePropsType<typeof get
     const { push } = useRouter();
     const { data } = useSession();
 
-    const { data: profileData } = api.user.getProfile.useQuery({ username }, { onError: () => push('/') });
+    const { data: profileData } = api.user.getProfile.useQuery({ username }, { onError: () => push('/'), retry: 0 });
 
-    const { data: postsData, refetch } = api.post.getPostsAllTypes.useQuery({
+    const { data: postsData } = api.post.getPostsAllTypes.useQuery({
         id: profileData?.id ?? ''
     }, { retry: 0, enabled: !!profileData?.id });
 

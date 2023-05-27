@@ -29,12 +29,6 @@ const HomeContent = () => {
 
       <div className="flex mt-8">
         <a
-          href="/register"
-          className="bg-gray-700 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded mr-4 transition-colors duration-300"
-        >
-          Register
-        </a>
-        <a
           href="/login"
           className="bg-gray-700 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
         >
