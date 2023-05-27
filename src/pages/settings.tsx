@@ -4,13 +4,32 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Layout } from '~/components/Layout';
 
+// import { editProfileInput, editProfileSchema } from '~/server/api/routers/user';
+// import { api } from '~/utils/api';
+import { zodResolver } from '@hookform/resolvers/zod';
+
 const SettingsPage = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm({
+    // resolver: zodResolver(editProfileSchema),
+  });
   const [avatar, setAvatar] = useState<File | null>(null);
 
-  const handleFormSubmit = (data: any) => {
+  // const ctx = api.useContext();
+
+  // const { mutate } = api.user.editProfile.useMutation({
+  //   onSuccess: () => {
+  //     ctx.user.getProfile.invalidate();
+  //   }
+  // });
+
+  const handleFormSubmit = ({ email, name, password, username }: any) => {
     // Handle form submission
-    console.log(data);
+    // mutate({
+    //   email,
+    //   name,
+    //   password,
+    //   username
+    // });
   };
 
   const handleAvatarDrop = (files: FileList | undefined) => {

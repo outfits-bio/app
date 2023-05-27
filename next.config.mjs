@@ -18,5 +18,12 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  webpack: (config) => {
+    config.externals = [...config.externals, "bcrypt"];
+    return config;
+  },
+  images: {
+    domains: ["pub-4bf8804d3efc464b862de36f974618d4.r2.dev"],
+  },
 };
 export default config;
