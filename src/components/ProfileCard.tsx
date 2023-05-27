@@ -19,7 +19,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser }: Props) => 
             <div className='flex flex-col gap-10'>
                 <div className='flex items-center gap-10'>
                     <div className='relative sm:w-32 sm:h-32 w-24 h-24'>
-                        <Image src="/avatar.webp" fill alt={`${username}'s profile image`} className='object-cover rounded-full' />
+                        <Image sizes='128px 96px' src={profileData?.image?.startsWith('https://') ? profileData.image : `https://pub-4bf8804d3efc464b862de36f974618d4.r2.dev/${profileData?.id}/${profileData?.image}.png`} fill alt={`${username}'s profile image`} className='object-cover rounded-full' />
                     </div>
 
                     <div className='space-y-4'>
@@ -68,11 +68,6 @@ export const ProfileCard = ({ profileData, username, isCurrentUser }: Props) => 
                     <div className='text-center'>
                         <h1 className='font-bold'>{profileData?.imageCount}</h1>
                         <h3>images</h3>
-                    </div>
-
-                    <div className='text-center'>
-                        <h1 className='font-bold'>{profileData?.likeCount}</h1>
-                        <h3>likes</h3>
                     </div>
                 </div>
 

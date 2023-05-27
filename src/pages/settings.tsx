@@ -1,45 +1,85 @@
-'use client';
-
-import React, { useState } from 'react';
+import axios from 'axios';
+import { GetServerSidePropsContext } from 'next';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Layout } from '~/components/Layout';
+import { SpinnerSmall } from '~/components/Spinner';
+import { EditProfileInput, editProfileSchema } from '~/schemas/user.schema';
+import { getServerAuthSession } from '~/server/auth';
+import { api } from '~/utils/api';
 
-// import { editProfileInput, editProfileSchema } from '~/server/api/routers/user';
-// import { api } from '~/utils/api';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const SettingsPage = () => {
+  const [file, setFile] = useState<any>(null);
+  const [dragActive, setDragActive] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const ref = useRef<HTMLInputElement>(null);
+
   const { register, handleSubmit } = useForm({
-    // resolver: zodResolver(editProfileSchema),
+    resolver: zodResolver(editProfileSchema),
   });
-  const [avatar, setAvatar] = useState<File | null>(null);
 
-  // const ctx = api.useContext();
+  const { update } = useSession();
+  const { push } = useRouter();
 
-  // const { mutate } = api.user.editProfile.useMutation({
-  //   onSuccess: () => {
-  //     ctx.user.getProfile.invalidate();
-  //   }
-  // });
+  const { mutateAsync } = api.user.editProfile.useMutation({
+    onSuccess: async (data) => {
+      update();
 
-  const handleFormSubmit = ({ email, name, password, username }: any) => {
+      push(`/${data.username}`);
+    }
+  });
+
+  const { mutate: setImage } = api.user.setImage.useMutation({
+    onSuccess: async (result) => {
+      await axios.put(result, file);
+    }
+  });
+
+  const handleFormSubmit = async ({ name, username }: EditProfileInput) => {
+    setLoading(true);
+
+    if (file) {
+      setImage();
+    }
+
     // Handle form submission
-    // mutate({
-    //   email,
-    //   name,
-    //   password,
-    //   username
-    // });
+    if ((name && name.length) || (username && username.length)) await mutateAsync({
+      name,
+      username
+    });
+
+    setLoading(false);
   };
 
-  const handleAvatarDrop = (files: FileList | undefined) => {
-    if (files && files.length > 0) {
-      const fileList = Array.from(files);
-      setAvatar(null);
-      //   setAvatar(fileList[0]);
-    } else {
-      setAvatar(null);
+  const handleFileChange = (e: React.FormEvent<HTMLInputElement>) => {
+    if (!e.currentTarget?.files?.length) return;
+
+    setFile(e.currentTarget.files[0] ?? null);
+  }
+
+  const handleDrag = function (e: any) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
     }
+  };
+
+  const handleDrop = function (e: any) {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+
+    if (!e.dataTransfer?.files?.length) return;
+
+    setFile(e.dataTransfer.files[0] ?? null);
   };
 
 
@@ -62,40 +102,16 @@ const SettingsPage = () => {
               />
             </div>
 
-            <div className="mb-6">
-              <label htmlFor="email" className="block font-medium mb-1">
-                Email
-              </label>
-              <input
-                id="email"
-                type="email"
-                className="w-full px-4 py-2 border border-gray-300 rounded"
-                {...register('email')}
-              />
-            </div>
-
-            <div className="mb-6">
-              <label htmlFor="password" className="block font-medium mb-1">
-                Password
-              </label>
-              <input
-                id="password"
-                type="password"
-                className="w-full px-4 py-2 border border-gray-300 rounded"
-                {...register('password')}
-              />
-            </div>
-
             <h2 className="text-2xl font-semibold text-black font-prompt">Profile Settings:</h2><br></br>
             <div className="mb-6">
-              <label htmlFor="displayName" className="block font-medium mb-1">
+              <label htmlFor="name" className="block font-medium mb-1">
                 Display Name
               </label>
               <input
-                id="displayName"
+                id="name"
                 type="text"
                 className="w-full px-4 py-2 border border-gray-300 rounded"
-                {...register('displayName')}
+                {...register('name')}
               />
             </div>
 
@@ -103,16 +119,18 @@ const SettingsPage = () => {
               <label htmlFor="avatar" className="block font-medium mb-1">
                 Avatar
               </label>
-              <div className="flex items-center justify-center h-40 border border-gray-300 rounded">
+              <div onClick={() => ref.current?.click()} onDragEnter={handleDrag} className="relative flex items-center justify-center h-40 border border-gray-300 rounded">
+                {dragActive && <div className='absolute w-full h-full t-0 r-0 b-0 l-0' onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}></div>}
                 <input
+                  ref={ref}
                   id="avatar"
                   type="file"
                   className="hidden"
-                  onChange={(e) => handleAvatarDrop(e.target.files as FileList)}
+                  onChange={handleFileChange}
                 />
-                {avatar ? (
+                {file ? (
                   <img
-                    src={URL.createObjectURL(avatar)}
+                    src={URL.createObjectURL(file)}
                     alt="Avatar Preview"
                     className="h-full object-cover"
                   />
@@ -126,8 +144,10 @@ const SettingsPage = () => {
 
             <button
               type="submit"
-              className="w-full h-12 bg-gray-700 hover:bg-gray-900 text-white font-semibold rounded-md mt-4"
+              disabled={loading}
+              className="flex items-center justify-center gap-4 w-full h-12 bg-gray-700 hover:bg-gray-900 text-white font-semibold rounded-md mt-4"
             >
+              {loading && <SpinnerSmall />}
               Save Changes
             </button>
           </form>
@@ -136,5 +156,18 @@ const SettingsPage = () => {
     </Layout>
   );
 };
+
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const session = await getServerAuthSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+}
 
 export default SettingsPage;
