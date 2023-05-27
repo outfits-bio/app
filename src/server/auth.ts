@@ -1,11 +1,10 @@
 import type { GetServerSidePropsContext } from "next";
-import { DefaultSession, getServerSession, NextAuthOptions } from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import DiscordProvider from 'next-auth/providers/discord';
-import { env } from '~/env.mjs';
-import { prisma } from '~/server/db';
+import bcrypt from "bcrypt";
+import { DefaultSession, getServerSession, NextAuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { prisma } from "~/server/db";
 
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -16,6 +15,7 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
+      id: string;
       username: string;
       // ...other properties
       // role: UserRole;
@@ -59,10 +59,6 @@ export const authOptions: NextAuthOptions = {
   },
   adapter: PrismaAdapter(prisma),
   providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
-    }),
     CredentialsProvider({
       id: "credentials",
       name: "Credentials",
@@ -71,13 +67,24 @@ export const authOptions: NextAuthOptions = {
           where: {
             email: credentials?.email,
           },
+          select: {
+            id: true,
+            username: true,
+            image: true,
+            password: true,
+          },
         });
 
         if (!user) {
           throw new Error("No user found");
         }
 
-        if (user.password !== credentials?.password) {
+        const passwordMatches =
+          user.password &&
+          credentials?.password &&
+          (await bcrypt.compare(credentials.password, user.password));
+
+        if (!passwordMatches) {
           throw new Error("Password does not match");
         }
 
