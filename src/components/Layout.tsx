@@ -1,4 +1,4 @@
-import { Prompt } from 'next/font/google';
+import { useRouter } from 'next/router';
 
 import { Navbar } from './Navbar';
 
@@ -7,14 +7,9 @@ interface Props {
     title: string;
 }
 
-const prompt = Prompt({
-    subsets: ['latin-ext'],
-    weight: '400'
-})
-
 export const Layout = ({ children, title }: Props) => {
     return (
-        <div className="flex flex-col" style={prompt.style}>
+        <div className="flex flex-col">
             <Navbar title={title} />
             <main>{children}</main>
         </div>

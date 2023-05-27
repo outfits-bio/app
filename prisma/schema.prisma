@@ -3,17 +3,22 @@
 
 generator client {
     provider = "prisma-client-js"
-    previewFeatures = ["jsonProtocol", "extendedWhereUnique"]
+    previewFeatures = ["jsonProtocol"]
 }
 
 datasource db {
-    provider = "mysql"
+    provider = "sqlite"
     // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
     // Further reading:
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
     // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    relationMode = "prisma"
     url      = env("DATABASE_URL")
+}
+
+model Example {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 // Necessary for Next auth
@@ -23,17 +28,16 @@ model Account {
     type              String
     provider          String
     providerAccountId String
-    refresh_token     String? @db.Text
-    access_token      String? @db.Text
+    refresh_token     String? // @db.Text
+    access_token      String? // @db.Text
     expires_at        Int?
     token_type        String?
     scope             String?
-    id_token          String? @db.Text
+    id_token          String? // @db.Text
     session_state     String?
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([provider, providerAccountId])
-    @@index([userId])
 }
 
 model Session {
@@ -42,53 +46,18 @@ model Session {
     userId       String
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@index([userId])
 }
 
 model User {
-    id              String    @id @default(cuid())
-    name            String?
-    username        String?   @unique
-    email           String?   @unique
-    password        String?   @db.Text
-    emailVerified   DateTime?
-    image           String?
-    accounts        Account[]
-    sessions        Session[]
-
-    outfitPostCount Int @default(0)
-    hoodiePostCount Int @default(0)
-    shirtPostCount  Int @default(0)
-    pantsPostCount  Int @default(0)
-    shoesPostCount  Int @default(0)
-    watchPostCount  Int @default(0)
-    imageCount      Int @default(0)
-    likeCount       Int @default(0)
-
-    posts           Post[]
-}
-
-model Post {
-    id          String   @id @default(cuid())
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
-    userId      String
-    user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-    
-    type       PostType
-    image      String?
-
-    @@index([userId])
-}
-
-enum PostType {
-    OUTFIT
-    HOODIE
-    SHIRT
-    PANTS
-    SHOES
-    WATCH
+    id            String    @id @default(cuid())
+    name          String?
+    username      String?   @unique
+    email         String?   @unique
+    password      String?   // @db.Text
+    emailVerified DateTime?
+    image         String?
+    accounts      Account[]
+    sessions      Session[]
 }
 
 model VerificationToken {

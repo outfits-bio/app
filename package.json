@@ -10,10 +10,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.338.0",
-    "@aws-sdk/s3-request-presigner": "^3.338.0",
     "@headlessui/react": "^1.7.14",
-    "@hookform/resolvers": "^3.1.0",
     "@next-auth/prisma-adapter": "^1.0.5",
     "@phosphor-icons/react": "^2.0.9",
     "@prisma/client": "^4.11.0",
@@ -23,9 +20,6 @@
     "@trpc/next": "^10.18.0",
     "@trpc/react-query": "^10.18.0",
     "@trpc/server": "^10.18.0",
-    "aws-sdk": "^2.1385.0",
-    "axios": "^1.4.0",
-    "bcrypt": "^5.1.0",
     "next": "^13.4.1",
     "next-auth": "^4.21.0",
     "react": "18.2.0",
@@ -35,7 +29,6 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.0",
     "@types/eslint": "^8.21.3",
     "@types/node": "^18.15.5",
     "@types/prettier": "^2.7.2",

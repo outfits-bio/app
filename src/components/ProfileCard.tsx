@@ -32,32 +32,32 @@ export const ProfileCard = ({ profileData, username, isCurrentUser }: Props) => 
                     <div className='flex gap-4'>
                         <div className='flex items-center gap-1'>
                             <Person className='mt-1' />
-                            <span>{profileData?.outfitPostCount}</span>
+                            <span>2</span>
                         </div>
 
                         <div className='flex items-center gap-1'>
                             <Hoodie className='mt-1' />
-                            <span>{profileData?.hoodiePostCount}</span>
+                            <span>12</span>
                         </div>
                         <div className='flex items-center gap-1'>
                             <TShirt className='mt-1' />
-                            <span>{profileData?.shirtPostCount}</span>
+                            <span>21</span>
                         </div>
                     </div>
 
                     <div className='flex gap-4'>
                         <div className='flex items-center gap-1'>
                             <Pants className='mt-1' />
-                            <span>{profileData?.pantsPostCount}</span>
+                            <span>14</span>
                         </div>
                         <div className='flex items-center gap-1'>
                             <Sneaker className='mt-1' />
-                            <span>{profileData?.shoesPostCount}</span>
+                            <span>5</span>
                         </div>
 
                         <div className='flex items-center gap-1'>
                             <Watch className='mt-1' />
-                            <span>{profileData?.watchPostCount}</span>
+                            <span>4</span>
                         </div>
                     </div>
                 </div>
@@ -66,12 +66,12 @@ export const ProfileCard = ({ profileData, username, isCurrentUser }: Props) => 
             <div className='flex flex-col gap-10 md:items-end'>
                 <div className='text-2xl flex gap-6'>
                     <div className='text-center'>
-                        <h1 className='font-bold'>{profileData?.imageCount}</h1>
+                        <h1 className='font-bold'>54</h1>
                         <h3>images</h3>
                     </div>
 
                     <div className='text-center'>
-                        <h1 className='font-bold'>{profileData?.likeCount}</h1>
+                        <h1 className='font-bold'>1.2k+</h1>
                         <h3>likes</h3>
                     </div>
                 </div>
