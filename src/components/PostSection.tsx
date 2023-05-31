@@ -147,7 +147,7 @@ export const PostSection = ({ profileData, postsData, type }: Props) => {
 
     return session?.user.id !== profileData?.id && posts?.length === 0 ? null : (
         <div className="pt-10 pl-10 w-full">
-            {posts?.length || session?.user.id === profileData?.id && <h2 className="text-3xl font-bold mb-10">{getPostTypeName(type)} ({getPostTypeCount(type, profileData)})</h2>}
+            {(posts?.length || session?.user.id === profileData?.id) && <h2 className="text-3xl font-bold mb-10">{getPostTypeName(type)} ({getPostTypeCount(type, profileData)})</h2>}
             <div className='w-full overflow-scroll'>
                 <div className="flex gap-4 min-w-max">
                     {postsData?.filter(p => p.type === type).map((post, i) => (

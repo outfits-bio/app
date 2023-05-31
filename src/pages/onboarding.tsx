@@ -1,10 +1,14 @@
+import 'cropperjs/dist/cropper.css';
+
 import axios from 'axios';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
+import { ReactCropperElement } from 'react-cropper';
 import { useForm } from 'react-hook-form';
 import superjson from 'superjson';
+import { CropModal } from '~/components/CropModal';
 import { Spinner, SpinnerSmall } from '~/components/Spinner';
 import { EditProfileInput, editProfileSchema } from '~/schemas/user.schema';
 import { appRouter } from '~/server/api/root';
@@ -18,10 +22,12 @@ import { createServerSideHelpers } from '@trpc/react-query/server';
 
 export const OnboardingPage: NextPage = () => {
     const [file, setFile] = useState<any>(null);
+    const [fileUrl, setFileUrl] = useState<string | null>(null);
     const [dragActive, setDragActive] = useState<boolean>(false);
-    const [dragOver, setDragOver] = useState<boolean>(false);
+    const [cropModalOpen, setCropModalOpen] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
 
+    const cropperRef = useRef<ReactCropperElement>(null);
     const ref = useRef<HTMLInputElement>(null);
 
     const { push } = useRouter();
@@ -57,6 +63,7 @@ export const OnboardingPage: NextPage = () => {
             await axios.put(result, file);
 
             ctx.user.getProfile.invalidate();
+            update();
         },
         onError: (e) => handleErrors({ e, message: "Failed to set image!" }),
     });
@@ -81,6 +88,10 @@ export const OnboardingPage: NextPage = () => {
         if (!e.currentTarget?.files?.length) return;
 
         setFile(e.currentTarget.files[0] ?? null);
+
+        if (e.currentTarget.files[0])
+            setFileUrl(URL.createObjectURL(e.currentTarget.files[0]));
+        setCropModalOpen(true);
     }
 
     const handleDrag = function (e: any) {
@@ -101,17 +112,39 @@ export const OnboardingPage: NextPage = () => {
         if (!e.dataTransfer?.files?.length) return;
 
         setFile(e.dataTransfer.files[0] ?? null);
+
+        if (e.currentTarget.files[0])
+            setFileUrl(URL.createObjectURL(e.currentTarget.files[0]));
+        setCropModalOpen(true);
+    };
+
+    const onCrop = () => {
+        const cropper = cropperRef.current?.cropper;
+        if (typeof cropper !== 'undefined') {
+            cropper.getCroppedCanvas().toBlob((b) => {
+                if (!b) return;
+
+                const file = new File(
+                    [b],
+                    "avatar.png",
+                    {
+                        type: "image/png",
+                        lastModified: Date.now()
+                    }
+                );
+
+                setFile(file);
+            });
+        }
     };
 
     return (
-        <div>
+        <div className='h-screen flex flex-col w-full absolute'>
+            {cropModalOpen && <CropModal file={file} setFileUrl={setFileUrl} cropperRef={cropperRef} fileUrl={fileUrl} isOpen={cropModalOpen} onCrop={onCrop} setIsOpen={setCropModalOpen} />}
             <div className="bg-white text-black py-8 px-4 sm:px-6 lg:px-8">
-
                 <div className="max-w-md mx-auto">
                     <h2 className="text-2xl font-semibold text-black font-prompt">Let's get you set up!</h2><br></br>
                     <form onSubmit={handleSubmit(handleFormSubmit)}>
-
-
                         <div className="mb-6">
                             <div className="mb-6">
                                 <label htmlFor="name" className="block font-medium mb-1">
@@ -151,7 +184,7 @@ export const OnboardingPage: NextPage = () => {
                                 />
                                 {file ? (
                                     <img
-                                        src={URL.createObjectURL(file)}
+                                        src={fileUrl ?? ""}
                                         alt="Avatar Preview"
                                         className="h-full object-cover"
                                     />
