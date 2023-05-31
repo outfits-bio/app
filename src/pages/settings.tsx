@@ -9,6 +9,7 @@ import { SpinnerSmall } from '~/components/Spinner';
 import { EditProfileInput, editProfileSchema } from '~/schemas/user.schema';
 import { getServerAuthSession } from '~/server/auth';
 import { api } from '~/utils/api';
+import { handleErrors } from '~/utils/handle-errors.util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -19,25 +20,29 @@ const SettingsPage = () => {
 
   const ref = useRef<HTMLInputElement>(null);
 
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, getValues } = useForm({
     resolver: zodResolver(editProfileSchema),
   });
 
-  const { update } = useSession();
+  const { data: session } = useSession();
   const { push } = useRouter();
 
-  const { mutateAsync } = api.user.editProfile.useMutation({
-    onSuccess: async (data) => {
-      update();
-
+  const { mutate } = api.user.editProfile.useMutation({
+    onSuccess: (data) => {
       push(`/${data.username}`);
-    }
+    },
+    onError: (e) => handleErrors({ e, message: "Failed to edit profile!" })
   });
 
   const { mutate: setImage } = api.user.setImage.useMutation({
     onSuccess: async (result) => {
       await axios.put(result, file);
-    }
+
+      if (!getValues().name && !getValues().username) {
+        push(`/${session?.user.username}`)
+      }
+    },
+    onError: (e) => handleErrors({ e, message: "Failed to set image!" })
   });
 
   const handleFormSubmit = async ({ name, username }: EditProfileInput) => {
@@ -48,7 +53,7 @@ const SettingsPage = () => {
     }
 
     // Handle form submission
-    if ((name && name.length) || (username && username.length)) await mutateAsync({
+    if ((name && name.length) || (username && username.length)) mutate({
       name,
       username
     });
@@ -167,6 +172,10 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
         permanent: false,
       },
     };
+  } else {
+    return {
+      props: {}
+    }
   }
 }
 

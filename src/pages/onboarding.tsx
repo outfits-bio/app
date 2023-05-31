@@ -11,6 +11,7 @@ import { appRouter } from '~/server/api/root';
 import { getServerAuthSession } from '~/server/auth';
 import { prisma } from '~/server/db';
 import { api } from '~/utils/api';
+import { handleErrors } from '~/utils/handle-errors.util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createServerSideHelpers } from '@trpc/react-query/server';
@@ -32,7 +33,7 @@ export const OnboardingPage: NextPage = () => {
     });
 
     api.user.getMe.useQuery(undefined, {
-        onError: () => push('/'),
+        onError: (e) => handleErrors({ e, message: "Failed to fetch you!", fn: () => push('/') }),
         onSuccess: (data) => {
             setValue('name', data.name);
             setValue('username', data.username);
@@ -47,7 +48,8 @@ export const OnboardingPage: NextPage = () => {
             update();
 
             push(`/${data.username}`);
-        }
+        },
+        onError: (e) => handleErrors({ e, message: "Failed to edit profile!" }),
     });
 
     const { mutateAsync: setImage } = api.user.setImage.useMutation({
@@ -55,7 +57,8 @@ export const OnboardingPage: NextPage = () => {
             await axios.put(result, file);
 
             ctx.user.getProfile.invalidate();
-        }
+        },
+        onError: (e) => handleErrors({ e, message: "Failed to set image!" }),
     });
 
     const handleFormSubmit = async ({ username, name }: EditProfileInput) => {

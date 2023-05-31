@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { AppRouter } from '~/server/api/root';
+import { formatAvatar } from '~/utils/avatar-format';
 
 import { Hoodie, Pants, Person, Share, Sneaker, TShirt, Watch } from '@phosphor-icons/react';
 import { inferRouterOutputs } from '@trpc/server';
@@ -14,12 +16,21 @@ interface Props {
 }
 
 export const ProfileCard = ({ profileData, username, isCurrentUser }: Props) => {
+    const { asPath } = useRouter();
+
+    const origin =
+        typeof window !== 'undefined' && window.location.origin
+            ? window.location.origin
+            : '';
+
+    const userUrl = `${origin}${asPath}`;
+
     return (
         <div className="flex flex-col md:flex-row justify-between md:items-center border border-b-gray-500 p-10 gap-10 md:gap-0">
             <div className='flex flex-col gap-10'>
                 <div className='flex items-center gap-10'>
                     <div className='relative sm:w-32 sm:h-32 w-24 h-24'>
-                        <Image sizes='128px 96px' src={profileData?.image?.startsWith('https://') ? profileData.image : `https://pub-4bf8804d3efc464b862de36f974618d4.r2.dev/${profileData?.id}/${profileData?.image}.png`} fill alt={`${username}'s profile image`} className='object-cover rounded-full' />
+                        <Image sizes='128px 96px' src={formatAvatar(profileData?.image, profileData?.id)} fill alt={`${username}'s profile image`} className='object-cover rounded-full' />
                     </div>
 
                     <div className='space-y-4'>
@@ -73,7 +84,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser }: Props) => 
 
                 <div className='flex gap-4 text-gray-400 font-semibold'>
                     {isCurrentUser && <Link href={'/settings'} className='border border-gray-400 px-6 h-10 rounded-sm flex items-center justify-center'>Edit Profile</Link>}
-                    <button className='border border-gray-400 px-6 h-10 rounded-sm text-xl'>
+                    <button onClick={() => navigator.clipboard.writeText(userUrl)} className='border border-gray-400 px-6 h-10 rounded-sm text-xl'>
                         <Share />
                     </button>
                 </div>
