@@ -1,11 +1,7 @@
 import type { GetServerSidePropsContext } from "next";
-import bcrypt from "bcrypt";
 import { DefaultSession, getServerSession, NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
 import DiscordProvider from "next-auth/providers/discord";
-import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import TwitterProvider from "next-auth/providers/twitter";
 import { env } from "~/env.mjs";
 import { prisma } from "~/server/db";
 

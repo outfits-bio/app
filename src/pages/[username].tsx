@@ -1,26 +1,24 @@
-import { GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import superjson from 'superjson';
 import { Layout } from '~/components/Layout';
 import { PostSection } from '~/components/PostSection';
 import { ProfileCard } from '~/components/ProfileCard';
-import { appRouter } from '~/server/api/root';
-import { prisma } from '~/server/db';
+import { generateSSGHelper } from '~/server/utils/ssg.util';
 import { api } from '~/utils/api';
+import { handleErrors } from '~/utils/handle-errors.util';
 
 import { PostType } from '@prisma/client';
-import { createServerSideHelpers } from '@trpc/react-query/server';
 
-export const ProfilePage = ({ username }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+export const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
     const { push } = useRouter();
     const { data } = useSession();
 
-    const { data: profileData } = api.user.getProfile.useQuery({ username }, { onError: () => push('/'), retry: 0 });
+    const { data: profileData } = api.user.getProfile.useQuery({ username }, { onError: (e) => handleErrors({ e, message: "Failed to get user!", fn: () => push('/') }), retry: 0 });
 
     const { data: postsData } = api.post.getPostsAllTypes.useQuery({
         id: profileData?.id ?? ''
-    }, { retry: 0, enabled: !!profileData?.id });
+    }, { retry: 0, enabled: !!profileData?.id, refetchOnMount: false, refetchOnWindowFocus: false, onError: (e) => handleErrors({ e, message: "Failed to get posts!", fn: () => push('/') }) });
 
     const isCurrentUser = data?.user.username === username ?? false;
 
@@ -41,36 +39,28 @@ export const ProfilePage = ({ username }: InferGetServerSidePropsType<typeof get
     );
 };
 
-export const getServerSideProps = async (context: GetServerSidePropsContext<{ username: string }>,
-) => {
-    const helpers = createServerSideHelpers({
-        router: appRouter,
-        ctx: { prisma, session: null },
-        transformer: superjson, // optional - adds superjson serialization
-    });
+export const getStaticProps: GetStaticProps = async (context) => {
+    const ssg = generateSSGHelper();
 
+    const username = context.params?.username?.toString();
 
-    const username = context.params?.username?.toString() ?? '';
-
-    const userExists = await helpers.user.profileExists.fetch({ username });
-
-    if (userExists) {
-        await helpers.user.getProfile.prefetch({ username });
-    } else {
-        return {
-            notFound: true,
-            props: {
-                username
-            }
-        };
+    if (!username) return {
+        notFound: true,
+        props: {}
     }
+
+    await ssg.user.getProfile.prefetch({ username });
 
     return {
         props: {
-            trpcState: helpers.dehydrate(),
-            username
-        }
-    };
+            username,
+            trpcState: ssg.dehydrate(),
+        },
+    }
+}
+
+export const getStaticPaths = () => {
+    return { paths: [], fallback: "blocking" };
 }
 
 export default ProfilePage;

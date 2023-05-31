@@ -2,6 +2,7 @@ import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment } from 'react';
+import { formatAvatar } from '~/utils/avatar-format';
 
 import { Menu, Transition } from '@headlessui/react';
 
@@ -31,9 +32,9 @@ export const Navbar = ({ title }: Props) => {
             <div className='flex items-center'>
                 {status === 'authenticated' && data ?
                     <Menu as="div" className="relative inline-block text-left">
-                        <Menu.Button className='border rounded-md border-gray-500 px-10 h-10 items-center justify-center flex gap-1'>
-                            <div className='w-8 h-8 relative'>
-                                <Image src={logo} alt='avatar' fill />
+                        <Menu.Button className='border rounded-md border-gray-500 px-10 h-10 items-center justify-center flex gap-2'>
+                            <div className='w-6 h-6 relative'>
+                                <Image src={formatAvatar(data.user.image, data.user.id)} alt='avatar' fill className='rounded-full' />
                             </div>
 
                             <div className='font-bold hidden sm:block'>{data.user.username}</div>

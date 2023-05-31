@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { AppRouter } from '~/server/api/root';
 import { api } from '~/utils/api';
+import { handleErrors } from '~/utils/handle-errors.util';
 
 import { Trash } from '@phosphor-icons/react';
 import { Post, PostType } from '@prisma/client';
@@ -74,8 +75,9 @@ export const PostSection = ({ profileData, postsData, type }: Props) => {
 
             return { prevData }
         },
-        onError: async (_err, _newPost, context) => {
+        onError: async (err, _newPost, context) => {
             ctx.post.getPostsAllTypes.setData({ id: profileData?.id ?? '' }, context!.prevData);
+            handleErrors({ e: err, message: "Failed to create post!" });
         },
         onSettled: async () => {
             ctx.post.getPostsAllTypes.invalidate();
@@ -96,8 +98,9 @@ export const PostSection = ({ profileData, postsData, type }: Props) => {
 
             return { prevData }
         },
-        onError: async (_err, _newPost, context) => {
+        onError: async (err, _newPost, context) => {
             ctx.post.getPostsAllTypes.setData({ id: profileData?.id ?? '' }, context!.prevData);
+            handleErrors({ e: err, message: "Failed to delete post!" });
         },
         onSettled: async () => {
             ctx.post.getPostsAllTypes.invalidate();
@@ -144,7 +147,7 @@ export const PostSection = ({ profileData, postsData, type }: Props) => {
 
     return session?.user.id !== profileData?.id && posts?.length === 0 ? null : (
         <div className="pt-10 pl-10 w-full">
-            <h2 className="text-3xl font-bold mb-10">{getPostTypeName(type)} ({getPostTypeCount(type, profileData)})</h2>
+            {posts?.length || session?.user.id === profileData?.id && <h2 className="text-3xl font-bold mb-10">{getPostTypeName(type)} ({getPostTypeCount(type, profileData)})</h2>}
             <div className='w-full overflow-scroll'>
                 <div className="flex gap-4 min-w-max">
                     {postsData?.filter(p => p.type === type).map((post, i) => (
@@ -170,5 +173,5 @@ export const PostSection = ({ profileData, postsData, type }: Props) => {
                 </div>
             </div>
         </div>
-    )
+    );
 }

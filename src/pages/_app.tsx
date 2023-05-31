@@ -1,11 +1,15 @@
 import '~/styles/globals.css';
 
-import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { metadata } from 'next-seo.config';
-import type { AppType } from 'next/app';
 import Head from 'next/head';
+import { Toaster } from 'react-hot-toast';
 import { api } from '~/utils/api';
+
+import { Analytics } from '@vercel/analytics/react';
+
+import type { Session } from 'next-auth';
+import type { AppType } from 'next/app';
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -35,6 +39,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
       </Head>
 
       <SessionProvider session={session}>
+        <Toaster />
+        <Analytics />
         <Component {...pageProps} />
       </SessionProvider>
 
