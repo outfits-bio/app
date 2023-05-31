@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { toast } from 'react-hot-toast';
 import { AppRouter } from '~/server/api/root';
 import { formatAvatar } from '~/utils/avatar-format';
 
@@ -24,6 +25,12 @@ export const ProfileCard = ({ profileData, username, isCurrentUser }: Props) => 
             : '';
 
     const userUrl = `${origin}${asPath}`;
+
+    const handleShare = () => {
+        navigator.clipboard.writeText(userUrl);
+
+        toast.success('Copied profile link to clipboard!');
+    }
 
     return (
         <div className="flex flex-col md:flex-row justify-between md:items-center border border-b-gray-500 p-10 gap-10 md:gap-0">
@@ -84,7 +91,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser }: Props) => 
 
                 <div className='flex gap-4 text-gray-400 font-semibold'>
                     {isCurrentUser && <Link href={'/settings'} className='border border-gray-400 px-6 h-10 rounded-sm flex items-center justify-center'>Edit Profile</Link>}
-                    <button onClick={() => navigator.clipboard.writeText(userUrl)} className='border border-gray-400 px-6 h-10 rounded-sm text-xl'>
+                    <button onClick={handleShare} className='border border-gray-400 px-6 h-10 rounded-sm text-xl'>
                         <Share />
                     </button>
                 </div>

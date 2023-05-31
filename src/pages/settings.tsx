@@ -1,9 +1,13 @@
+import 'cropperjs/dist/cropper.css';
+
 import axios from 'axios';
 import { GetServerSidePropsContext } from 'next';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React, { useRef, useState } from 'react';
+import { ReactCropperElement } from 'react-cropper';
 import { useForm } from 'react-hook-form';
+import { CropModal } from '~/components/CropModal';
 import { Layout } from '~/components/Layout';
 import { SpinnerSmall } from '~/components/Spinner';
 import { EditProfileInput, editProfileSchema } from '~/schemas/user.schema';
@@ -15,23 +19,27 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 const SettingsPage = () => {
   const [file, setFile] = useState<any>(null);
+  const [fileUrl, setFileUrl] = useState<string | null>(null);
   const [dragActive, setDragActive] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [cropModalOpen, setCropModalOpen] = useState<boolean>(false);
 
+  const cropperRef = useRef<ReactCropperElement>(null);
   const ref = useRef<HTMLInputElement>(null);
 
   const { register, handleSubmit, getValues } = useForm({
     resolver: zodResolver(editProfileSchema),
   });
 
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
   const { push } = useRouter();
 
   const { mutate } = api.user.editProfile.useMutation({
     onSuccess: (data) => {
+      update();
       push(`/${data.username}`);
     },
-    onError: (e) => handleErrors({ e, message: "Failed to edit profile!" })
+    onError: (e) => handleErrors({ e, message: "Failed to edit profile!", fn: () => setLoading(false) })
   });
 
   const { mutate: setImage } = api.user.setImage.useMutation({
@@ -39,10 +47,11 @@ const SettingsPage = () => {
       await axios.put(result, file);
 
       if (!getValues().name && !getValues().username) {
+        update();
         push(`/${session?.user.username}`)
       }
     },
-    onError: (e) => handleErrors({ e, message: "Failed to set image!" })
+    onError: (e) => handleErrors({ e, message: "Failed to set image!", fn: () => setLoading(false) })
   });
 
   const handleFormSubmit = async ({ name, username }: EditProfileInput) => {
@@ -57,14 +66,16 @@ const SettingsPage = () => {
       name,
       username
     });
-
-    setLoading(false);
   };
 
   const handleFileChange = (e: React.FormEvent<HTMLInputElement>) => {
     if (!e.currentTarget?.files?.length) return;
 
     setFile(e.currentTarget.files[0] ?? null);
+
+    if (e.currentTarget.files[0])
+      setFileUrl(URL.createObjectURL(e.currentTarget.files[0]));
+    setCropModalOpen(true);
   }
 
   const handleDrag = function (e: any) {
@@ -85,13 +96,36 @@ const SettingsPage = () => {
     if (!e.dataTransfer?.files?.length) return;
 
     setFile(e.dataTransfer.files[0] ?? null);
+
+    if (e.currentTarget.files[0])
+      setFileUrl(URL.createObjectURL(e.currentTarget.files[0]));
+    setCropModalOpen(true);
   };
 
+  const onCrop = () => {
+    const cropper = cropperRef.current?.cropper;
+    if (typeof cropper !== 'undefined') {
+      cropper.getCroppedCanvas().toBlob((b) => {
+        if (!b) return;
+
+        const file = new File(
+          [b],
+          "avatar.png",
+          {
+            type: "image/png",
+            lastModified: Date.now()
+          }
+        );
+
+        setFile(file);
+      });
+    }
+  };
 
   return (
     <Layout title='settings'>
       <div className="bg-white text-black py-8 px-4 sm:px-6 lg:px-8">
-
+        {cropModalOpen && <CropModal file={file} setFileUrl={setFileUrl} cropperRef={cropperRef} fileUrl={fileUrl} isOpen={cropModalOpen} onCrop={onCrop} setIsOpen={setCropModalOpen} />}
         <div className="max-w-md mx-auto">
           <h2 className="text-2xl font-semibold text-black font-prompt">Account Settings:</h2><br></br>
           <form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -135,7 +169,7 @@ const SettingsPage = () => {
                 />
                 {file ? (
                   <img
-                    src={URL.createObjectURL(file)}
+                    src={fileUrl ?? ""}
                     alt="Avatar Preview"
                     className="h-full object-cover"
                   />
