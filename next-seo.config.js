@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "beta.outfits.bio",
+  title: "outfits.bio",
   description:
     "I'm building a virtual wardrobe where people can add photos to their profile and share them with a link like outfits.bio/jecta.",
   image: "https://outfits.bio/ogimage.png",
