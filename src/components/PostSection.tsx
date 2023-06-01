@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AppRouter } from '~/server/api/root';
 import { api } from '~/utils/api';
 import { handleErrors } from '~/utils/handle-errors.util';
@@ -10,6 +10,7 @@ import { Trash } from '@phosphor-icons/react';
 import { Post, PostType } from '@prisma/client';
 import { inferRouterOutputs } from '@trpc/server';
 
+import { PostCropModal } from './PostCropModal';
 import { Spinner } from './Spinner';
 
 type RouterOutput = inferRouterOutputs<AppRouter>;
@@ -58,12 +59,22 @@ export const PostSection = ({ profileData, postsData, type }: Props) => {
     const { data: session } = useSession();
 
     const [file, setFile] = useState<any>(null);
+    const [fileUrl, setFileUrl] = useState<string | null>(null);
+    const [isCropped, setIsCropped] = useState<boolean>(false);
     const [dragActive, setDragActive] = useState<boolean>(false);
     const [deleteButton, setDeleteButton] = useState<string | null>(null);
+    const [cropModalOpen, setCropModalOpen] = useState<boolean>(false);
 
     const ref = useRef<HTMLInputElement>(null);
 
     const ctx = api.useContext();
+
+    useEffect(() => {
+        if (isCropped) {
+            mutate({ type });
+            setIsCropped(false);
+        }
+    }, [isCropped]);
 
     const { mutate, isLoading } = api.post.createPost.useMutation({
         onMutate: async (newPost) => {
@@ -113,9 +124,10 @@ export const PostSection = ({ profileData, postsData, type }: Props) => {
 
         setFile(e.currentTarget.files[0] ?? null);
 
-        mutate({
-            type,
-        });
+        if (e.currentTarget.files[0])
+            setFileUrl(URL.createObjectURL(e.currentTarget.files[0]));
+
+        setCropModalOpen(true);
     }
 
     const handleDrag = function (e: any) {
@@ -137,9 +149,10 @@ export const PostSection = ({ profileData, postsData, type }: Props) => {
 
         setFile(e.dataTransfer.files[0] ?? null);
 
-        mutate({
-            type,
-        });
+        if (e.currentTarget.files[0])
+            setFileUrl(URL.createObjectURL(e.currentTarget.files[0]));
+
+        setCropModalOpen(true);
     };
 
     const posts = postsData?.filter(p => p.type === type);
@@ -147,6 +160,8 @@ export const PostSection = ({ profileData, postsData, type }: Props) => {
 
     return session?.user.id !== profileData?.id && posts?.length === 0 ? null : (
         <div className="pt-10 pl-10 w-full">
+            {cropModalOpen && <PostCropModal setIsCropped={setIsCropped} fileUrl={fileUrl} isOpen={cropModalOpen} setFile={setFile} setFileUrl={setFileUrl} setIsOpen={setCropModalOpen} />}
+
             {(posts?.length || session?.user.id === profileData?.id) && <h2 className="text-3xl font-bold mb-10">{getPostTypeName(type)} ({getPostTypeCount(type, profileData)})</h2>}
             <div className='w-full overflow-scroll'>
                 <div className="flex gap-4 min-w-max">
