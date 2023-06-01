@@ -1,5 +1,6 @@
-import { Fragment, Ref } from 'react';
-import Cropper, { ReactCropperElement } from 'react-cropper';
+import { Fragment, useCallback, useState } from 'react';
+import Cropper from 'react-easy-crop';
+import getCroppedImg from '~/utils/crop-image.util';
 
 import { Dialog, Transition } from '@headlessui/react';
 
@@ -8,16 +9,33 @@ interface Props {
     setIsOpen: (isOpen: boolean) => void;
     fileUrl: string | null;
     setFileUrl: (fileUrl: string | null) => void;
-    file: any;
-    onCrop: () => void;
-    cropperRef: Ref<ReactCropperElement>;
+    setFile: (file: any) => void;
 }
 
-export const CropModal = ({ isOpen, setIsOpen, fileUrl, onCrop, cropperRef, setFileUrl, file }: Props) => {
-    const handleClose = () => {
-        setIsOpen(false);
-        setFileUrl(URL.createObjectURL(file));
-    }
+export const CropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl }: Props) => {
+    const [crop, setCrop] = useState({ x: 0, y: 0 });
+    const [zoom, setZoom] = useState(1);
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+
+    const onCropComplete = useCallback((croppedArea: any, croppedAreaPixels: any) => {
+        setCroppedAreaPixels(croppedAreaPixels)
+    }, []);
+
+    const handleClose = useCallback(async () => {
+        try {
+            const croppedImage = await getCroppedImg(
+                fileUrl ?? "",
+                croppedAreaPixels,
+            )
+
+            if (!croppedImage) return;
+            setFile(croppedImage.file);
+            setFileUrl(croppedImage.fileUrl);
+            setIsOpen(false);
+        } catch (e) {
+            console.error(e)
+        }
+    }, [croppedAreaPixels]);
 
     return (
         <Transition appear show={isOpen} as={Fragment}>
@@ -48,14 +66,28 @@ export const CropModal = ({ isOpen, setIsOpen, fileUrl, onCrop, cropperRef, setF
                             <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-md bg-white p-6 text-left align-middle shadow-xl transition-all">
                                 <Dialog.Title className={'text-lg font-bold mb-2'}>Crop Image</Dialog.Title>
 
-                                <Cropper
+                                {/* <Cropper
                                     src={fileUrl ?? ""}
                                     aspectRatio={1 / 1}
                                     className='max-h-80'
                                     crop={onCrop}
                                     ref={cropperRef}
                                     cropBoxResizable={false}
-                                />
+                                /> */}
+
+                                <div className='relative w-full h-80'>
+                                    <Cropper
+                                        image={fileUrl ?? ""}
+                                        crop={crop}
+                                        zoom={zoom}
+                                        aspect={1}
+                                        cropShape="round"
+                                        showGrid={false}
+                                        onCropChange={(crop) => setCrop(crop)}
+                                        onCropComplete={onCropComplete}
+                                        onZoomChange={(zoom) => setZoom(zoom)}
+                                    />
+                                </div>
 
                                 <button className='mt-4 border border-gray-400 px-6 h-10 rounded-sm' onClick={handleClose}>Close</button>
                             </Dialog.Panel>

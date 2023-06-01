@@ -1,11 +1,8 @@
-import 'cropperjs/dist/cropper.css';
-
 import axios from 'axios';
 import { GetServerSidePropsContext } from 'next';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React, { useRef, useState } from 'react';
-import { ReactCropperElement } from 'react-cropper';
 import { useForm } from 'react-hook-form';
 import { CropModal } from '~/components/CropModal';
 import { Layout } from '~/components/Layout';
@@ -24,7 +21,6 @@ const SettingsPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [cropModalOpen, setCropModalOpen] = useState<boolean>(false);
 
-  const cropperRef = useRef<ReactCropperElement>(null);
   const ref = useRef<HTMLInputElement>(null);
 
   const { register, handleSubmit, getValues } = useForm({
@@ -102,30 +98,10 @@ const SettingsPage = () => {
     setCropModalOpen(true);
   };
 
-  const onCrop = () => {
-    const cropper = cropperRef.current?.cropper;
-    if (typeof cropper !== 'undefined') {
-      cropper.getCroppedCanvas().toBlob((b) => {
-        if (!b) return;
-
-        const file = new File(
-          [b],
-          "avatar.png",
-          {
-            type: "image/png",
-            lastModified: Date.now()
-          }
-        );
-
-        setFile(file);
-      });
-    }
-  };
-
   return (
     <Layout title='settings'>
       <div className="bg-white text-black py-8 px-4 sm:px-6 lg:px-8">
-        {cropModalOpen && <CropModal file={file} setFileUrl={setFileUrl} cropperRef={cropperRef} fileUrl={fileUrl} isOpen={cropModalOpen} onCrop={onCrop} setIsOpen={setCropModalOpen} />}
+        {cropModalOpen && <CropModal setFileUrl={setFileUrl} fileUrl={fileUrl} isOpen={cropModalOpen} setFile={setFile} setIsOpen={setCropModalOpen} />}
         <div className="max-w-md mx-auto">
           <h2 className="text-2xl font-semibold text-black font-prompt">Account Settings:</h2><br></br>
           <form onSubmit={handleSubmit(handleFormSubmit)}>
