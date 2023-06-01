@@ -10,15 +10,17 @@ interface Props {
     fileUrl: string | null;
     setFileUrl: (fileUrl: string | null) => void;
     setFile: (file: any) => void;
+    setIsCropped: (isCropped: boolean) => void;
 }
 
-export const CropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl }: Props) => {
-    const [crop, setCrop] = useState({ x: 0, y: 0 });
-    const [zoom, setZoom] = useState(1);
-    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl, setIsCropped }: Props) => {
+    const [crop, setCrop] = useState({ x: 0, y: 0 })
+    const [rotation, setRotation] = useState(0)
+    const [zoom, setZoom] = useState(1)
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
 
     const onCropComplete = useCallback((croppedArea: any, croppedAreaPixels: any) => {
-        setCroppedAreaPixels(croppedAreaPixels)
+        setCroppedAreaPixels(croppedAreaPixels);
     }, []);
 
     const handleClose = useCallback(async () => {
@@ -31,6 +33,7 @@ export const CropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl }: P
             if (!croppedImage) return;
             setFile(croppedImage.file);
             setFileUrl(croppedImage.fileUrl);
+            setIsCropped(true);
             setIsOpen(false);
         } catch (e) {
             console.error(e)
@@ -80,10 +83,11 @@ export const CropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl }: P
                                         image={fileUrl ?? ""}
                                         crop={crop}
                                         zoom={zoom}
-                                        aspect={1}
-                                        cropShape="round"
-                                        showGrid={false}
+                                        rotation={rotation}
+                                        aspect={2 / 3}
+                                        showGrid={true}
                                         onCropChange={(crop) => setCrop(crop)}
+                                        onRotationChange={(rotation) => setRotation(rotation)}
                                         onCropComplete={onCropComplete}
                                         onZoomChange={(zoom) => setZoom(zoom)}
                                     />
