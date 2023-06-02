@@ -106,7 +106,7 @@ export const PostSection = ({ profileData, postsData, type }: PostSectionProps) 
                             className="w-32 h-48 border border-gray-500 rounded-md relative">
 
                             {isLoading && i === 0 ?
-                                <div className='bg-slate-100 w-full h-full flex items-center justify-center'>
+                                <div className='bg-slate-100 dark:bg-slate-700 w-full h-full flex items-center justify-center'>
                                     <Spinner />
                                 </div>
                                 :
@@ -148,7 +148,7 @@ export const PostSection = ({ profileData, postsData, type }: PostSectionProps) 
                         <button
                             onClick={() => ref.current?.click()}
                             type='submit'
-                            className='hover:bg-slate-100 w-32 h-48 border border-gray-500 flex items-center justify-center font-bold flex-col text-sm rounded-md'>
+                            className='hover:bg-slate-100 dark:hover:bg-slate-700 w-32 h-48 border border-gray-500 flex items-center justify-center font-bold flex-col text-sm rounded-md'>
                             <div>Create new:</div>
                             <div>Drag & Drop</div>
                             <div className='text-xs text-gray-500 font-semibold mt-2'>Or click here</div>

@@ -103,9 +103,9 @@ export const OnboardingPage: NextPage = () => {
     return (
         <div className='h-screen flex flex-col w-full absolute'>
             {cropModalOpen && <CropModal setFileUrl={setFileUrl} fileUrl={fileUrl} isOpen={cropModalOpen} setFile={setFile} setIsOpen={setCropModalOpen} />}
-            <div className="bg-white text-black py-8 px-4 sm:px-6 lg:px-8">
+            <div className="bg-white dark:bg-slate-950 py-8 px-4 sm:px-6 lg:px-8 dark:text-white">
                 <div className="max-w-md mx-auto">
-                    <h2 className="text-2xl font-semibold text-black font-prompt">Let's get you set up!</h2><br></br>
+                    <h2 className="text-2xl font-semibold font-prompt">Let's get you set up!</h2><br></br>
                     <form onSubmit={handleSubmit(handleFormSubmit)}>
                         <div className="mb-6">
                             <div className="mb-6">
@@ -115,7 +115,7 @@ export const OnboardingPage: NextPage = () => {
                                 <input
                                     id="name"
                                     type="text"
-                                    className="w-full px-4 py-2 border border-gray-300 rounded"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded dark:bg-slate-950 dark:text-white"
                                     {...register('name')}
                                 />
                             </div>
@@ -126,7 +126,7 @@ export const OnboardingPage: NextPage = () => {
                             <input
                                 id="username"
                                 type="text"
-                                className="w-full px-4 py-2 border border-gray-300 rounded"
+                                className="w-full px-4 py-2 border border-gray-300 rounded dark:bg-slate-950 dark:text-white"
                                 {...register('username')}
                             />
                         </div>
@@ -161,7 +161,7 @@ export const OnboardingPage: NextPage = () => {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="flex items-center justify-center gap-3 w-full h-12 bg-gray-700 hover:bg-gray-900 text-white font-semibold rounded-md mt-4"
+                            className="flex items-center justify-center gap-3 w-full h-12 bg-gray-700 hover:bg-gray-900 dark:bg-gray-600 dark:hover:bg-gray-700 text-white font-semibold rounded-md mt-4"
                         >
                             {loading && <SpinnerSmall />}
                             Continue

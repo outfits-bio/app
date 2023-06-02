@@ -2,6 +2,7 @@
 
 :root {
   --primary: rgba(0, 0, 0, 0.5);
+  @apply dark:bg-black;
 }
 
 * {
@@ -14,12 +15,17 @@
   height: 5px;
 }
 
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 *::-webkit-scrollbar-track {
   background: transparent;
 }
 
 *::-webkit-scrollbar-thumb {
   background-color: var(--primary);
+  @apply dark:bg-gray-500;
   border-radius: 9999999px;
 }
 

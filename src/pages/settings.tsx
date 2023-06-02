@@ -84,10 +84,10 @@ const SettingsPage = () => {
 
   return (
     <Layout title='settings'>
-      <div className="bg-white text-black py-8 px-4 sm:px-6 lg:px-8">
+      <div className="bg-white dark:bg-slate-950 py-8 px-4 sm:px-6 lg:px-8">
         {cropModalOpen && <CropModal setFileUrl={setFileUrl} fileUrl={fileUrl} isOpen={cropModalOpen} setFile={setFile} setIsOpen={setCropModalOpen} />}
         <div className="max-w-md mx-auto">
-          <h2 className="text-2xl font-semibold text-black font-prompt">Account Settings:</h2><br></br>
+          <h2 className="text-2xl font-semibold font-prompt">Account Settings:</h2><br></br>
           <form onSubmit={handleSubmit(handleFormSubmit)}>
             <div className="mb-6">
               <label htmlFor="username" className="block font-medium mb-1">
@@ -96,12 +96,12 @@ const SettingsPage = () => {
               <input
                 id="username"
                 type="text"
-                className="w-full px-4 py-2 border border-gray-300 rounded"
+                className="w-full px-4 py-2 border border-gray-300 rounded dark:bg-slate-950 dark:text-white"
                 {...register('username')}
               />
             </div>
 
-            <h2 className="text-2xl font-semibold text-black font-prompt">Profile Settings:</h2><br></br>
+            <h2 className="text-2xl font-semibold font-prompt">Profile Settings:</h2><br></br>
             <div className="mb-6">
               <label htmlFor="name" className="block font-medium mb-1">
                 Display Name
@@ -109,7 +109,7 @@ const SettingsPage = () => {
               <input
                 id="name"
                 type="text"
-                className="w-full px-4 py-2 border border-gray-300 rounded"
+                className="w-full px-4 py-2 border border-gray-300 rounded dark:bg-slate-950 dark:text-white"
                 {...register('name')}
               />
             </div>
@@ -156,7 +156,7 @@ const SettingsPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="flex items-center justify-center gap-4 w-full h-12 bg-gray-700 hover:bg-gray-900 text-white font-semibold rounded-md mt-4"
+              className="flex items-center justify-center gap-4 w-full h-12 bg-gray-700 hover:bg-gray-900 dark:bg-gray-600 dark:hover:bg-gray-700 text-white font-semibold rounded-md mt-4"
             >
               {loading && <SpinnerSmall />}
               Save Changes
