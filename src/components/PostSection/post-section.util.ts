@@ -6,6 +6,7 @@ import { Post, PostType } from "@prisma/client";
 import { inferRouterOutputs } from "@trpc/server";
 
 type RouterOutput = inferRouterOutputs<AppRouter>;
+// TODO: Find a better way to grab a type from the second param of ctx.post.getPostsAllTypes.setData
 type PartialPost = Omit<Omit<Post, "userId">, "updatedAt">;
 type Context = ReturnType<(typeof api)["useContext"]>;
 
@@ -15,6 +16,11 @@ export interface PostSectionProps {
   type: PostType;
 }
 
+/**
+ * This isn't SOLID, I'm sorry Uncle Bob :(
+ * @param type PostType
+ * @returns string
+ */
 export const getPostTypeName = (type: PostType): string => {
   switch (type) {
     case PostType.OUTFIT:
@@ -32,6 +38,12 @@ export const getPostTypeName = (type: PostType): string => {
   }
 };
 
+/**
+ * This isn't SOLID, I'm sorry Uncle Bob :(
+ * @param type PostType
+ * @param profileData RouterOutput["user"]["getProfile"]
+ * @returns number
+ */
 export const getPostTypeCount = (
   type: PostType,
   profileData?: RouterOutput["user"]["getProfile"]
@@ -52,11 +64,18 @@ export const getPostTypeCount = (
   }
 };
 
+/**
+ * Optimistically updates the previously fetched array of posts using the updateData function
+ * @param ctx Context (from api.useContext)
+ * @param updateData (old: PartialPost[] | undefined) => PartialPost[] | undefined
+ * @param userId string
+ * @returns { prevData: PartialPost[] | undefined }
+ */
 export const onMutate = async (
   ctx: Context,
   updateData: (old: PartialPost[] | undefined) => PartialPost[] | undefined,
   userId?: string
-) => {
+): Promise<{ prevData: PartialPost[] | undefined }> => {
   await ctx.post.getPostsAllTypes.invalidate();
 
   const prevData = ctx.post.getPostsAllTypes.getData();
@@ -66,6 +85,15 @@ export const onMutate = async (
   return { prevData };
 };
 
+/**
+ * Rolls back the optimistic update if the mutation fails
+ * @param ctx Context (from api.useContext)
+ * @param err any
+ * @param context { prevData: PartialPost[] | undefined }
+ * @param message string
+ * @param userId string
+ * @returns void
+ */
 export const onError = async (
   ctx: Context,
   err: any,
@@ -77,6 +105,12 @@ export const onError = async (
   handleErrors({ e: err, message });
 };
 
+/**
+ * Refetches the posts if the mutation succeeds
+ * @param ctx Context (from api.useContext)
+ * @param username string
+ * @returns void
+ */
 export const onSettled = async (ctx: Context, username?: string | null) => {
   ctx.post.getPostsAllTypes.invalidate();
   ctx.user.getProfile.invalidate({ username: username ?? "" });

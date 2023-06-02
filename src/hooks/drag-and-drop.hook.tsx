@@ -2,7 +2,7 @@ import { DragEvent, useState } from 'react';
 
 export const useDragAndDrop = () => {
     const [dragActive, setDragActive] = useState<boolean>(false);
-    const [file, setFile] = useState<File | null>(null);
+    const [file, setFile] = useState<File | Blob | null>(null);
     const [fileUrl, setFileUrl] = useState<string | null>(null);
     const [cropModalOpen, setCropModalOpen] = useState<boolean>(false);
 

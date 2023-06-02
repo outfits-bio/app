@@ -25,6 +25,10 @@ export const PostSection = ({ profileData, postsData, type }: PostSectionProps) 
 
     const ref = useRef<HTMLInputElement>(null);
 
+    /**
+     * This closes the crop modal and creates the post after the image has been cropped
+     * The PostCropModal component sets isCropped to true when the image has been cropped
+     */
     useEffect(() => {
         if (isCropped) {
             mutate({ type });
@@ -32,6 +36,10 @@ export const PostSection = ({ profileData, postsData, type }: PostSectionProps) 
         }
     }, [isCropped]);
 
+    /**
+     * This creates a presigned url for the image and then uploads the image to the presigned url
+     * onMutate, onError, and onSettled are custom functions in ./post-section.util.ts that handle optimistic updates
+     */
     const { mutate, isLoading } = api.post.createPost.useMutation({
         onMutate: (newPost) => onMutate(ctx, (old) => [newPost, ...old as any], profileData?.id),
         onError: (err, context) => onError(ctx, err, context, "Failed to create post!", profileData?.id),
@@ -41,12 +49,21 @@ export const PostSection = ({ profileData, postsData, type }: PostSectionProps) 
         }
     });
 
+    /**
+     * This deletes the post
+     * The image gets removed from the s3 bucket in the backend
+     * onMutate, onError, and onSettled are custom functions in ./post-section.util.ts that handle optimistic updates
+     */
     const { mutate: deletePost } = api.post.deletePost.useMutation({
         onMutate: (newPost) => onMutate(ctx, (old) => old?.filter((p) => p.id !== newPost.id), profileData?.id),
         onError: (err, context) => onError(ctx, err, context, "Failed to delete post!", profileData?.id),
         onSettled: () => onSettled(ctx, profileData?.username)
     });
 
+    /**
+     * This opens the crop modal and sets the file and fileUrl
+     * This only fires when the user clicks on the "Create new" button, not when the user drags and drops
+     */
     const handleFileChange = (e: React.FormEvent<HTMLInputElement>) => {
         if (!e.currentTarget?.files?.length) return;
 
@@ -62,6 +79,7 @@ export const PostSection = ({ profileData, postsData, type }: PostSectionProps) 
     const userIsProfileOwner = session?.user.id === profileData?.id;
     const postsExist = posts?.length !== 0;
 
+    // There's nothing to see here and no button to upload since you aren't the owner, so don't show anything
     if (!userIsProfileOwner && !postsExist) return null;
 
     return (
@@ -75,9 +93,6 @@ export const PostSection = ({ profileData, postsData, type }: PostSectionProps) 
                 setIsOpen={setCropModalOpen}
             />
             }
-
-            {dragActive && 'dragging'}
-            {file && file.name}
 
             {(postsExist || userIsProfileOwner) && <h2 className="text-3xl font-bold mb-10">{getPostTypeName(type)} ({getPostTypeCount(type, profileData)})</h2>}
 
@@ -97,11 +112,13 @@ export const PostSection = ({ profileData, postsData, type }: PostSectionProps) 
                                 :
                                 post.id &&
                                 <Image
+                                    // 128px is the same as w-32, the width of the container
                                     sizes="128px"
                                     src={formatImage(post.image, profileData?.id)}
                                     className="object-cover"
                                     fill
                                     alt={post.type}
+                                    // Outfits and Hoodies are above the fold on most screens, so we want to prioritize them
                                     priority={post.type === 'OUTFIT' || post.type === 'HOODIE'}
                                 />
                             }
