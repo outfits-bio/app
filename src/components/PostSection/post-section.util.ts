@@ -1,5 +1,5 @@
 import { AppRouter } from "~/server/api/root";
-import { api } from "~/utils/api";
+import { api } from "~/utils/api.util";
 import { handleErrors } from "~/utils/handle-errors.util";
 
 import { Post, PostType } from "@prisma/client";

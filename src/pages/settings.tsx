@@ -10,7 +10,7 @@ import { SpinnerSmall } from '~/components/Spinner';
 import { useDragAndDrop } from '~/hooks/drag-and-drop.hook';
 import { EditProfileInput, editProfileSchema } from '~/schemas/user.schema';
 import { getServerAuthSession } from '~/server/auth';
-import { api } from '~/utils/api';
+import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 import { zodResolver } from '@hookform/resolvers/zod';

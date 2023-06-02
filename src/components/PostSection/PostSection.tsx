@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { useDragAndDrop } from '~/hooks/drag-and-drop.hook';
-import { api } from '~/utils/api';
+import { api } from '~/utils/api.util';
 import { formatImage } from '~/utils/image-src-format.util';
 
 import { Trash } from '@phosphor-icons/react';

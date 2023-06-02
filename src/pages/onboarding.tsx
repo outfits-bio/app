@@ -12,7 +12,7 @@ import { EditProfileInput, editProfileSchema } from '~/schemas/user.schema';
 import { appRouter } from '~/server/api/root';
 import { getServerAuthSession } from '~/server/auth';
 import { prisma } from '~/server/db';
-import { api } from '~/utils/api';
+import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
