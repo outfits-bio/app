@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';
 import { AppRouter } from '~/server/api/root';
-import { formatAvatar } from '~/utils/avatar-format';
+import { formatAvatar } from '~/utils/image-src-format.util';
 
 import { Hoodie, Pants, Person, Share, Sneaker, TShirt, Watch } from '@phosphor-icons/react';
 import { inferRouterOutputs } from '@trpc/server';

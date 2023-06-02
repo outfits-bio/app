@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import superjson from 'superjson';
 import { CropModal } from '~/components/CropModal';
 import { SpinnerSmall } from '~/components/Spinner';
+import { useDragAndDrop } from '~/hooks/drag-and-drop.hook';
 import { EditProfileInput, editProfileSchema } from '~/schemas/user.schema';
 import { appRouter } from '~/server/api/root';
 import { getServerAuthSession } from '~/server/auth';
@@ -18,17 +19,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createServerSideHelpers } from '@trpc/react-query/server';
 
 export const OnboardingPage: NextPage = () => {
-    const [file, setFile] = useState<any>(null);
-    const [fileUrl, setFileUrl] = useState<string | null>(null);
-    const [dragActive, setDragActive] = useState<boolean>(false);
-    const [cropModalOpen, setCropModalOpen] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(false);
-
-    const ref = useRef<HTMLInputElement>(null);
-
+    const { dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useDragAndDrop();
     const { push } = useRouter();
     const { update } = useSession();
     const ctx = api.useContext();
+
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const ref = useRef<HTMLInputElement>(null);
 
     const { register, handleSubmit, setValue } = useForm({
         resolver: zodResolver(editProfileSchema),
@@ -89,30 +87,6 @@ export const OnboardingPage: NextPage = () => {
             setFileUrl(URL.createObjectURL(e.currentTarget.files[0]));
         setCropModalOpen(true);
     }
-
-    const handleDrag = function (e: any) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (e.type === "dragenter" || e.type === "dragover") {
-            setDragActive(true);
-        } else if (e.type === "dragleave") {
-            setDragActive(false);
-        }
-    };
-
-    const handleDrop = function (e: any) {
-        e.preventDefault();
-        e.stopPropagation();
-        setDragActive(false);
-
-        if (!e.dataTransfer?.files?.length) return;
-
-        setFile(e.dataTransfer.files[0] ?? null);
-
-        if (e.currentTarget.files[0])
-            setFileUrl(URL.createObjectURL(e.currentTarget.files[0]));
-        setCropModalOpen(true);
-    };
 
     return (
         <div className='h-screen flex flex-col w-full absolute'>

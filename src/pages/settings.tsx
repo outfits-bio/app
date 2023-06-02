@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { CropModal } from '~/components/CropModal';
 import { Layout } from '~/components/Layout';
 import { SpinnerSmall } from '~/components/Spinner';
+import { useDragAndDrop } from '~/hooks/drag-and-drop.hook';
 import { EditProfileInput, editProfileSchema } from '~/schemas/user.schema';
 import { getServerAuthSession } from '~/server/auth';
 import { api } from '~/utils/api';
@@ -15,20 +16,17 @@ import { handleErrors } from '~/utils/handle-errors.util';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const SettingsPage = () => {
-  const [file, setFile] = useState<any>(null);
-  const [fileUrl, setFileUrl] = useState<string | null>(null);
-  const [dragActive, setDragActive] = useState<boolean>(false);
+  const { dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useDragAndDrop();
+  const { data: session, update } = useSession();
+  const { push } = useRouter();
+
   const [loading, setLoading] = useState<boolean>(false);
-  const [cropModalOpen, setCropModalOpen] = useState<boolean>(false);
 
   const ref = useRef<HTMLInputElement>(null);
 
   const { register, handleSubmit, getValues } = useForm({
     resolver: zodResolver(editProfileSchema),
   });
-
-  const { data: session, update } = useSession();
-  const { push } = useRouter();
 
   const { mutate } = api.user.editProfile.useMutation({
     onSuccess: (data) => {
@@ -73,30 +71,6 @@ const SettingsPage = () => {
       setFileUrl(URL.createObjectURL(e.currentTarget.files[0]));
     setCropModalOpen(true);
   }
-
-  const handleDrag = function (e: any) {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
-      setDragActive(true);
-    } else if (e.type === "dragleave") {
-      setDragActive(false);
-    }
-  };
-
-  const handleDrop = function (e: any) {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-
-    if (!e.dataTransfer?.files?.length) return;
-
-    setFile(e.dataTransfer.files[0] ?? null);
-
-    if (e.currentTarget.files[0])
-      setFileUrl(URL.createObjectURL(e.currentTarget.files[0]));
-    setCropModalOpen(true);
-  };
 
   return (
     <Layout title='settings'>
