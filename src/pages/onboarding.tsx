@@ -22,17 +22,17 @@ export const OnboardingPage: NextPage = () => {
     const { dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useDragAndDrop();
     const { push } = useRouter();
     const { update } = useSession();
-    const ctx = api.useContext();
 
     const [loading, setLoading] = useState<boolean>(false);
 
     const ref = useRef<HTMLInputElement>(null);
 
-    const { register, handleSubmit, setValue } = useForm({
+    const { register, handleSubmit, setValue, getValues } = useForm({
         resolver: zodResolver(editProfileSchema),
     });
 
-    api.user.getMe.useQuery(undefined, {
+    // This fetches the user's data and sets the name and username fields to the user's current name and username
+    const { data } = api.user.getMe.useQuery(undefined, {
         onError: (e) => handleErrors({ e, message: "Failed to fetch you!", fn: () => push('/') }),
         onSuccess: (data) => {
             setValue('name', data.name);
@@ -43,7 +43,8 @@ export const OnboardingPage: NextPage = () => {
         refetchOnReconnect: false,
     });
 
-    const { mutateAsync } = api.user.editProfile.useMutation({
+    // On success, this updates the session and returns the user to their profile
+    const { mutate } = api.user.editProfile.useMutation({
         onSuccess: (data) => {
             update();
 
@@ -52,12 +53,19 @@ export const OnboardingPage: NextPage = () => {
         onError: (e) => handleErrors({ e, message: "Failed to edit profile!" }),
     });
 
-    const { mutateAsync: setImage } = api.user.setImage.useMutation({
+    /**
+     * This creates a presigned url for the image and then uploads the image to the presigned url
+     * If the user didn't change their name and username from the original data, they get sent back to their profile early,
+     * otherwise the edit profile mutation will send them after it finishes
+     */
+    const { mutate: setImage } = api.user.setImage.useMutation({
         onSuccess: async (result) => {
             await axios.put(result, file);
 
-            ctx.user.getProfile.invalidate();
-            update();
+            if ((getValues('name') === data?.name) && (getValues('username') === data?.username)) {
+                update();
+                push(`/${data?.username}`)
+            }
         },
         onError: (e) => handleErrors({ e, message: "Failed to set image!" }),
     });
@@ -65,19 +73,23 @@ export const OnboardingPage: NextPage = () => {
     const handleFormSubmit = async ({ username, name }: EditProfileInput) => {
         setLoading(true);
 
-        // Handle form submission
-        if ((name && name.length) || (username && username.length)) await mutateAsync({
+        if (file) {
+            setImage();
+        }
+
+        // If the user didn't change their name or username from the original data, do nothing
+        if ((name !== data?.name) || (username !== data?.username)) mutate({
             name,
             username
         });
 
-        if (file) {
-            await setImage();
-        }
-
         setLoading(false);
     };
 
+    /**
+     * This opens the crop modal and sets the file and fileUrl
+     * This only fires when the user clicks on the "Create new" button, not when the user drags and drops
+     */
     const handleFileChange = (e: React.FormEvent<HTMLInputElement>) => {
         if (!e.currentTarget?.files?.length) return;
 
@@ -161,6 +173,7 @@ export const OnboardingPage: NextPage = () => {
     );
 };
 
+// TODO: This is quite slow, not sure how to fix it
 export const getServerSideProps = async (context: GetServerSidePropsContext<{ username: string }>,
 ) => {
     const helpers = createServerSideHelpers({

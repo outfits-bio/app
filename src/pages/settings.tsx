@@ -28,6 +28,7 @@ const SettingsPage = () => {
     resolver: zodResolver(editProfileSchema),
   });
 
+  // On success, this updates the session and returns the user to their profile
   const { mutate } = api.user.editProfile.useMutation({
     onSuccess: (data) => {
       update();
@@ -36,6 +37,11 @@ const SettingsPage = () => {
     onError: (e) => handleErrors({ e, message: "Failed to edit profile!", fn: () => setLoading(false) })
   });
 
+  /**
+   * This creates a presigned url for the image and then uploads the image to the presigned url
+   * If the user didn't change their name and username, they get sent back to their profile early,
+   * otherwise the edit profile mutation will send them after it finishes
+   */
   const { mutate: setImage } = api.user.setImage.useMutation({
     onSuccess: async (result) => {
       await axios.put(result, file);
@@ -55,13 +61,17 @@ const SettingsPage = () => {
       setImage();
     }
 
-    // Handle form submission
+    // If the user didn't change their name and username, do nothing
     if ((name && name.length) || (username && username.length)) mutate({
       name,
       username
     });
   };
 
+  /**
+   * This opens the crop modal and sets the file and fileUrl
+   * This only fires when the user clicks on the "Create new" button, not when the user drags and drops
+   */
   const handleFileChange = (e: React.FormEvent<HTMLInputElement>) => {
     if (!e.currentTarget?.files?.length) return;
 
@@ -108,8 +118,20 @@ const SettingsPage = () => {
               <label htmlFor="avatar" className="block font-medium mb-1">
                 Avatar
               </label>
-              <div onClick={() => ref.current?.click()} onDragEnter={handleDrag} className="relative flex items-center justify-center h-40 border border-gray-300 rounded">
-                {dragActive && <div className='absolute w-full h-full t-0 r-0 b-0 l-0' onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}></div>}
+              <div
+                onClick={() => ref.current?.click()}
+                onDragEnter={handleDrag}
+                className="relative flex items-center justify-center h-40 border border-gray-300 rounded"
+              >
+                {dragActive &&
+                  <div
+                    className='absolute w-full h-full t-0 r-0 b-0 l-0'
+                    onDragEnter={handleDrag}
+                    onDragLeave={handleDrag}
+                    onDragOver={handleDrag}
+                    onDrop={handleDrop} />
+                }
+
                 <input
                   ref={ref}
                   id="avatar"
@@ -146,6 +168,7 @@ const SettingsPage = () => {
   );
 };
 
+// TODO: Possibly change to client side, this is sort of slow
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const session = await getServerAuthSession(context);
 
