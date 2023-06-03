@@ -2,7 +2,7 @@ import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment } from 'react';
-import { formatAvatar } from '~/utils/avatar-format';
+import { formatAvatar } from '~/utils/image-src-format.util';
 
 import { Menu, Transition } from '@headlessui/react';
 
@@ -18,7 +18,7 @@ export const Navbar = ({ title }: Props) => {
     const isAuth = status === 'authenticated' && data;
 
     return (
-        <div className="flex justify-between px-4 items-center h-20 border border-b-gray-500">
+        <div className="flex justify-between px-4 items-center h-20 border border-b-gray-500 dark:text-white dark:border-transparent dark:border-b-gray-500">
             <div className='flex items-center gap-2 text-2xl font-bold'>
                 <Link href={isAuth ? `${data.user.username}` : '/'} className='w-12 h-12 relative'>
                     <Image src={logo} alt="logo" fill />
@@ -48,12 +48,12 @@ export const Navbar = ({ title }: Props) => {
                             leaveFrom="transform opacity-100 scale-100"
                             leaveTo="transform opacity-0 scale-95"
                         >
-                            <Menu.Items className="z-10 absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <Menu.Items className="z-10 absolute right-0 mt-2 w-56 origin-top-right divide-y rounded-md bg-white dark:bg-slate-950 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                 <div className="px-1 py-1">
                                     <Menu.Item>
                                         {({ active }) => (
                                             <Link
-                                                className={`${active ? 'bg-gray-100' : 'text-gray-900'
+                                                className={`${active ? 'bg-gray-100 dark:bg-slate-700 dark:text-white' : 'text-gray-900 dark:text-white'
                                                     } group flex w-full items-center rounded-md px-2 py-2 font-semibold`}
                                                 href="/settings"
                                             >
@@ -64,7 +64,7 @@ export const Navbar = ({ title }: Props) => {
                                     <Menu.Item>
                                         {({ active }) => (
                                             <Link
-                                                className={`${active ? 'bg-gray-100' : 'text-gray-900'
+                                                className={`${active ? 'bg-gray-100 dark:bg-slate-700 dark:text-white' : 'text-gray-900 dark:text-white'
                                                     } group flex w-full items-center rounded-md px-2 py-2 font-semibold`}
                                                 href={`/${data.user.username}`}
                                             >
@@ -75,7 +75,7 @@ export const Navbar = ({ title }: Props) => {
                                     <Menu.Item>
                                         {({ active }) => (
                                             <button
-                                                className={`${active ? 'bg-gray-100' : 'text-gray-900'
+                                                className={`${active ? 'bg-gray-100 dark:bg-slate-700 dark:text-white' : 'text-gray-900 dark:text-white'
                                                     } group flex w-full items-center rounded-md px-2 py-2 font-semibold`}
                                                 onClick={() => signOut()}
                                             >

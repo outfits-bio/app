@@ -1,15 +1,15 @@
-import { Fragment, useCallback, useState } from 'react';
-import Cropper from 'react-easy-crop';
+import { Dispatch, Fragment, SetStateAction, useCallback, useState } from 'react';
+import Cropper, { Area } from 'react-easy-crop';
 import getCroppedImg from '~/utils/crop-image.util';
 
 import { Dialog, Transition } from '@headlessui/react';
 
 interface Props {
     isOpen: boolean;
-    setIsOpen: (isOpen: boolean) => void;
+    setIsOpen: Dispatch<SetStateAction<boolean>>;
     fileUrl: string | null;
-    setFileUrl: (fileUrl: string | null) => void;
-    setFile: (file: any) => void;
+    setFileUrl: Dispatch<SetStateAction<string | null>>;
+    setFile: Dispatch<SetStateAction<File | Blob | null>>;
     setIsCropped: (isCropped: boolean) => void;
 }
 
@@ -17,20 +17,18 @@ export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
     const [crop, setCrop] = useState({ x: 0, y: 0 })
     const [rotation, setRotation] = useState(0)
     const [zoom, setZoom] = useState(1)
-    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
+    const [croppedAreaPixelsState, setCroppedAreaPixelsState] = useState<Area | null>(null)
 
-    const onCropComplete = useCallback((croppedArea: any, croppedAreaPixels: any) => {
-        setCroppedAreaPixels(croppedAreaPixels);
+    const onCropComplete = useCallback((croppedArea: Area, croppedAreaPixels: Area) => {
+        setCroppedAreaPixelsState(croppedAreaPixels);
     }, []);
 
     const handleClose = useCallback(async () => {
         try {
-            const croppedImage = await getCroppedImg(
-                fileUrl ?? "",
-                croppedAreaPixels,
-            )
+            const croppedImage = await getCroppedImg(fileUrl ?? "", croppedAreaPixelsState);
 
             if (!croppedImage) return;
+
             setFile(croppedImage.file);
             setFileUrl(croppedImage.fileUrl);
             setIsCropped(true);
@@ -38,7 +36,7 @@ export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
         } catch (e) {
             console.error(e)
         }
-    }, [croppedAreaPixels]);
+    }, [croppedAreaPixelsState]);
 
     return (
         <Transition appear show={isOpen} as={Fragment}>
@@ -66,17 +64,8 @@ export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-md bg-white p-6 text-left align-middle shadow-xl transition-all">
+                            <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-md dark:text-white bg-white dark:bg-slate-950 p-6 text-left align-middle shadow-xl transition-all">
                                 <Dialog.Title className={'text-lg font-bold mb-2'}>Crop Image</Dialog.Title>
-
-                                {/* <Cropper
-                                    src={fileUrl ?? ""}
-                                    aspectRatio={1 / 1}
-                                    className='max-h-80'
-                                    crop={onCrop}
-                                    ref={cropperRef}
-                                    cropBoxResizable={false}
-                                /> */}
 
                                 <div className='relative w-full h-80'>
                                     <Cropper

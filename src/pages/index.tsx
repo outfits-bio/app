@@ -25,7 +25,7 @@ const HomeContent = () => {
       </p>
       <p>- Jeremy</p>
 
-      <p className="text-sm text-gray-500 mt-6">You are on the beta route:</p>
+      <p className="text-sm text-gray-500 dark:text-gray-300 mt-6">You are on the beta route:</p>
 
       <div className="flex mt-8">
         <a
@@ -41,7 +41,7 @@ const HomeContent = () => {
 
 const Home = () => {
   return (
-    <div className="bg-white text-black flex items-center justify-center h-screen">
+    <div className="bg-white dark:bg-slate-950 text-black dark:text-white flex items-center justify-center h-screen">
       <HomeContent />
     </div>
   );

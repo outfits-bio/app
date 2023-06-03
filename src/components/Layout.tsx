@@ -14,7 +14,7 @@ const prompt = Prompt({
 
 export const Layout = ({ children, title }: Props) => {
     return (
-        <div className="flex flex-col" style={prompt.style}>
+        <div className="flex flex-col dark:bg-slate-950 dark:text-white" style={prompt.style}>
             <Navbar title={title} />
             <main>{children}</main>
         </div>

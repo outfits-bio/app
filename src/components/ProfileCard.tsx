@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';
 import { AppRouter } from '~/server/api/root';
-import { formatAvatar } from '~/utils/avatar-format';
+import { formatAvatar } from '~/utils/image-src-format.util';
 
 import { Hoodie, Pants, Person, Share, Sneaker, TShirt, Watch } from '@phosphor-icons/react';
 import { inferRouterOutputs } from '@trpc/server';
@@ -33,7 +33,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser }: Props) => 
     }
 
     return (
-        <div className="flex flex-col md:flex-row justify-between md:items-center border border-b-gray-500 p-10 gap-10 md:gap-0">
+        <div className="flex flex-col md:flex-row justify-between md:items-center border border-b-gray-500 dark:border-b-gray-500 p-10 gap-10 md:gap-0 dark:border-transparent">
             <div className='flex flex-col gap-10'>
                 <div className='flex items-center gap-10'>
                     <div className='relative sm:w-32 sm:h-32 w-24 h-24'>

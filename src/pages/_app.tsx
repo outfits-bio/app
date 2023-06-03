@@ -4,7 +4,7 @@ import { SessionProvider } from 'next-auth/react';
 import { metadata } from 'next-seo.config';
 import Head from 'next/head';
 import { Toaster } from 'react-hot-toast';
-import { api } from '~/utils/api';
+import { api } from '~/utils/api.util';
 
 import { Analytics } from '@vercel/analytics/react';
 

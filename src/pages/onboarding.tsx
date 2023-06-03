@@ -7,34 +7,32 @@ import { useForm } from 'react-hook-form';
 import superjson from 'superjson';
 import { CropModal } from '~/components/CropModal';
 import { SpinnerSmall } from '~/components/Spinner';
+import { useDragAndDrop } from '~/hooks/drag-and-drop.hook';
 import { EditProfileInput, editProfileSchema } from '~/schemas/user.schema';
 import { appRouter } from '~/server/api/root';
 import { getServerAuthSession } from '~/server/auth';
 import { prisma } from '~/server/db';
-import { api } from '~/utils/api';
+import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createServerSideHelpers } from '@trpc/react-query/server';
 
 export const OnboardingPage: NextPage = () => {
-    const [file, setFile] = useState<any>(null);
-    const [fileUrl, setFileUrl] = useState<string | null>(null);
-    const [dragActive, setDragActive] = useState<boolean>(false);
-    const [cropModalOpen, setCropModalOpen] = useState<boolean>(false);
+    const { dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useDragAndDrop();
+    const { push } = useRouter();
+    const { update } = useSession();
+
     const [loading, setLoading] = useState<boolean>(false);
 
     const ref = useRef<HTMLInputElement>(null);
 
-    const { push } = useRouter();
-    const { update } = useSession();
-    const ctx = api.useContext();
-
-    const { register, handleSubmit, setValue } = useForm({
+    const { register, handleSubmit, setValue, getValues } = useForm({
         resolver: zodResolver(editProfileSchema),
     });
 
-    api.user.getMe.useQuery(undefined, {
+    // This fetches the user's data and sets the name and username fields to the user's current name and username
+    const { data } = api.user.getMe.useQuery(undefined, {
         onError: (e) => handleErrors({ e, message: "Failed to fetch you!", fn: () => push('/') }),
         onSuccess: (data) => {
             setValue('name', data.name);
@@ -45,7 +43,8 @@ export const OnboardingPage: NextPage = () => {
         refetchOnReconnect: false,
     });
 
-    const { mutateAsync } = api.user.editProfile.useMutation({
+    // On success, this updates the session and returns the user to their profile
+    const { mutate } = api.user.editProfile.useMutation({
         onSuccess: (data) => {
             update();
 
@@ -54,12 +53,19 @@ export const OnboardingPage: NextPage = () => {
         onError: (e) => handleErrors({ e, message: "Failed to edit profile!" }),
     });
 
-    const { mutateAsync: setImage } = api.user.setImage.useMutation({
+    /**
+     * This creates a presigned url for the image and then uploads the image to the presigned url
+     * If the user didn't change their name and username from the original data, they get sent back to their profile early,
+     * otherwise the edit profile mutation will send them after it finishes
+     */
+    const { mutate: setImage } = api.user.setImage.useMutation({
         onSuccess: async (result) => {
             await axios.put(result, file);
 
-            ctx.user.getProfile.invalidate();
-            update();
+            if ((getValues('name') === data?.name) && (getValues('username') === data?.username)) {
+                update();
+                push(`/${data?.username}`)
+            }
         },
         onError: (e) => handleErrors({ e, message: "Failed to set image!" }),
     });
@@ -67,19 +73,23 @@ export const OnboardingPage: NextPage = () => {
     const handleFormSubmit = async ({ username, name }: EditProfileInput) => {
         setLoading(true);
 
-        // Handle form submission
-        if ((name && name.length) || (username && username.length)) await mutateAsync({
+        if (file) {
+            setImage();
+        }
+
+        // If the user didn't change their name or username from the original data, do nothing
+        if ((name !== data?.name) || (username !== data?.username)) mutate({
             name,
             username
         });
 
-        if (file) {
-            await setImage();
-        }
-
         setLoading(false);
     };
 
+    /**
+     * This opens the crop modal and sets the file and fileUrl
+     * This only fires when the user clicks on the "Create new" button, not when the user drags and drops
+     */
     const handleFileChange = (e: React.FormEvent<HTMLInputElement>) => {
         if (!e.currentTarget?.files?.length) return;
 
@@ -90,36 +100,12 @@ export const OnboardingPage: NextPage = () => {
         setCropModalOpen(true);
     }
 
-    const handleDrag = function (e: any) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (e.type === "dragenter" || e.type === "dragover") {
-            setDragActive(true);
-        } else if (e.type === "dragleave") {
-            setDragActive(false);
-        }
-    };
-
-    const handleDrop = function (e: any) {
-        e.preventDefault();
-        e.stopPropagation();
-        setDragActive(false);
-
-        if (!e.dataTransfer?.files?.length) return;
-
-        setFile(e.dataTransfer.files[0] ?? null);
-
-        if (e.currentTarget.files[0])
-            setFileUrl(URL.createObjectURL(e.currentTarget.files[0]));
-        setCropModalOpen(true);
-    };
-
     return (
         <div className='h-screen flex flex-col w-full absolute'>
             {cropModalOpen && <CropModal setFileUrl={setFileUrl} fileUrl={fileUrl} isOpen={cropModalOpen} setFile={setFile} setIsOpen={setCropModalOpen} />}
-            <div className="bg-white text-black py-8 px-4 sm:px-6 lg:px-8">
+            <div className="bg-white dark:bg-slate-950 py-8 px-4 sm:px-6 lg:px-8 dark:text-white">
                 <div className="max-w-md mx-auto">
-                    <h2 className="text-2xl font-semibold text-black font-prompt">Let's get you set up!</h2><br></br>
+                    <h2 className="text-2xl font-semibold font-prompt">Let's get you set up!</h2><br></br>
                     <form onSubmit={handleSubmit(handleFormSubmit)}>
                         <div className="mb-6">
                             <div className="mb-6">
@@ -129,7 +115,7 @@ export const OnboardingPage: NextPage = () => {
                                 <input
                                     id="name"
                                     type="text"
-                                    className="w-full px-4 py-2 border border-gray-300 rounded"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded dark:bg-slate-950 dark:text-white"
                                     {...register('name')}
                                 />
                             </div>
@@ -140,7 +126,7 @@ export const OnboardingPage: NextPage = () => {
                             <input
                                 id="username"
                                 type="text"
-                                className="w-full px-4 py-2 border border-gray-300 rounded"
+                                className="w-full px-4 py-2 border border-gray-300 rounded dark:bg-slate-950 dark:text-white"
                                 {...register('username')}
                             />
                         </div>
@@ -175,7 +161,7 @@ export const OnboardingPage: NextPage = () => {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="flex items-center justify-center gap-3 w-full h-12 bg-gray-700 hover:bg-gray-900 text-white font-semibold rounded-md mt-4"
+                            className="flex items-center justify-center gap-3 w-full h-12 bg-gray-700 hover:bg-gray-900 dark:bg-gray-600 dark:hover:bg-gray-700 text-white font-semibold rounded-md mt-4"
                         >
                             {loading && <SpinnerSmall />}
                             Continue
@@ -187,6 +173,7 @@ export const OnboardingPage: NextPage = () => {
     );
 };
 
+// TODO: This is quite slow, not sure how to fix it
 export const getServerSideProps = async (context: GetServerSidePropsContext<{ username: string }>,
 ) => {
     const helpers = createServerSideHelpers({

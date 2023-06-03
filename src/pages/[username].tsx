@@ -5,7 +5,7 @@ import { Layout } from '~/components/Layout';
 import { PostSection } from '~/components/PostSection';
 import { ProfileCard } from '~/components/ProfileCard';
 import { generateSSGHelper } from '~/server/utils/ssg.util';
-import { api } from '~/utils/api';
+import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 import { PostType } from '@prisma/client';
