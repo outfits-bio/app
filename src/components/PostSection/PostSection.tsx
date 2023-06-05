@@ -94,7 +94,7 @@ export const PostSection = ({ profileData, postsData, type }: PostSectionProps) 
             />
             }
 
-            {(postsExist || userIsProfileOwner) && <h2 className="text-3xl font-bold mb-10">{getPostTypeName(type)} ({getPostTypeCount(type, profileData)})</h2>}
+            {(postsExist || userIsProfileOwner) && <h2 className="text-2xl font-bold mb-10">{getPostTypeName(type)} ({getPostTypeCount(type, profileData)})</h2>}
 
             <div className='w-full overflow-scroll'>
                 <div className="flex gap-4 min-w-max">

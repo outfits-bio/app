@@ -40,13 +40,13 @@ export const ProfileCard = ({ profileData, username, isCurrentUser }: Props) => 
                         <Image sizes='128px 96px' src={formatAvatar(profileData?.image, profileData?.id)} fill alt={`${username}'s profile image`} className='object-cover rounded-full' />
                     </div>
 
-                    <div className='space-y-4'>
-                        <h1 className='sm:text-5xl text-4xl font-bold'>{profileData?.name}</h1>
-                        <h3 className='sm:text-2xl text-xl font-bold text-gray-400'>@{profileData?.username}</h3>
+                    <div className='space-y-2'>
+                        <h1 className='sm:text-4xl text-3xl font-bold'>{profileData?.name}</h1>
+                        <h3 className='sm:text-xl text-lg font-bold text-gray-400'>@{profileData?.username}</h3>
                     </div>
                 </div>
 
-                <div className='flex gap-4 text-gray-400 text-2xl sm:text-xl sm:flex-row flex-col'>
+                <div className='flex gap-4 text-gray-400 text-xl sm:text-lg sm:flex-row flex-col'>
                     <div className='flex gap-4'>
                         <div className='flex items-center gap-1'>
                             <Person className='mt-1' />
@@ -82,7 +82,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser }: Props) => 
             </div>
 
             <div className='flex flex-col gap-10 md:items-end'>
-                <div className='text-2xl flex gap-6'>
+                <div className='text-xl flex gap-6'>
                     <div className='text-center'>
                         <h1 className='font-bold'>{profileData?.imageCount}</h1>
                         <h3>images</h3>
