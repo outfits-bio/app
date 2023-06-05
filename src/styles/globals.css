@@ -2,7 +2,7 @@
 
 :root {
   --primary: rgba(0, 0, 0, 0.5);
-  @apply dark:bg-black;
+  @apply dark:bg-slate-950;
 }
 
 * {
