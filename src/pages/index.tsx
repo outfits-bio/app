@@ -1,49 +1,34 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
+import { LandingElements } from '~/components/LandingElements';
+import { Layout } from '~/components/Layout';
 
-const HomeContent = () => {
-  return (
+import { ArrowRight } from '@phosphor-icons/react';
 
-    <div className="max-w-screen-md py-10 px-4 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold mb-4">Something drippy is cooking</h1>
-      <p className="mb-4">
-        I'm building a virtual wardrobe where people can add photos of clothes to their profile and share them with a link like{' '}
-        <a className="text-blue-500 underline" href="https://beta.outfits.bio/ogimage.png">
-          outfits.bio/jecta
-        </a>
-        .
-      </p>
-      <p className="mb-4">
-        To stay on top of the latest updates, follow my{' '}
-        <a className="text-blue-500 underline" href="https://twitter.com/jecta2">
-          Twitter
-        </a>{' '}
-        or join the{' '}
-        <a className="text-blue-500 underline" href="https://discord.gg/aQZs9qVna3">
-          Discord
-        </a>
-        .
-      </p>
-      <p>- Jeremy</p>
-
-      <p className="text-sm text-gray-500 dark:text-gray-300 mt-6">You are on the beta route:</p>
-
-      <div className="flex mt-8">
-        <a
-          href="/login"
-          className="bg-gray-700 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
-        >
-          Login
-        </a>
-      </div>
-    </div>
-  );
-};
+import landing from '../../public/landing.png';
 
 const Home = () => {
   return (
-    <div className="bg-white dark:bg-slate-950 text-black dark:text-white flex items-center justify-center h-screen">
-      <HomeContent />
-    </div>
+    <Layout title='outfits.bio' showSlash={false}>
+      <div className='w-full flex flex-col items-center pt-16 h-screen fixed'>
+        <div className='flex flex-col gap-6 sm:w-[518px] w-5/6 text-center items-center'>
+          <Link href={'/login'}>
+            <button className='hover:text-black border dark:border-white border-gray-500 rounded-xl flex justify-between items-center px-4 py-2 gap-4 hover:bg-gradient-to-r hover:from-[#bf0fff] hover:via-[#C58CA0] hover:to-[#cbff49] background-animate'>
+              <p>We&apos;ve launched our open beta</p>
+              <ArrowRight />
+            </button>
+          </Link>
+          <h1 className='sm:text-5xl text-3xl font-bold'>Your virtual wardrobe</h1>
+          <p className='sm:text-xl'>A virtual wardrobe where people can add photos of clothes to their profile and share them with a link like outfits.bio/jeremy.</p>
+        </div>
+
+        <div className='w-5/6 h-full flex justify-center items-end relative'>
+          <LandingElements />
+          <Image src={landing} alt='ogimage' priority className='z-10 object-contain lg:w-[77%] sm:h-5/6 object-bottom w-full mb-20 sm:mb-0' />
+        </div>
+      </div>
+    </Layout>
   );
 };
 

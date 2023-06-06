@@ -28,7 +28,7 @@ const LoginPage = () => {
         </button>
         <button
           onClick={handleDiscord}
-          className="w-full h-12 bg-gray-700 hover:bg-gray-900 dark:bg-gray-600 dark:hover:bg-gray-900 text-white font-semibold rounded-md mt-4"
+          className="w-full h-12 bg-gray-700 hover:bg-gray-900 dark:bg-gray-600 dark:hover:bg-gray-700 text-white font-semibold rounded-md mt-4"
         >
           Discord
         </button>
