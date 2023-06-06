@@ -29,5 +29,23 @@
   border-radius: 9999999px;
 }
 
+.background-animate {
+  background-size: 400%;
+
+  -webkit-animation: ButtonAnimation 3s ease infinite;
+  -moz-animation: ButtonAnimation 3s ease infinite;
+  animation: ButtonAnimation 3s ease infinite;
+}
+
+@keyframes ButtonAnimation {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
 @tailwind components;
 @tailwind utilities;

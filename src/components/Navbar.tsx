@@ -10,9 +10,10 @@ import logo from '../../public/favicon.ico';
 
 interface Props {
     title: string;
+    showSlash?: boolean;
 }
 
-export const Navbar = ({ title }: Props) => {
+export const Navbar = ({ title, showSlash = true }: Props) => {
     const { data, status } = useSession();
 
     const isAuth = status === 'authenticated' && data;
@@ -24,7 +25,7 @@ export const Navbar = ({ title }: Props) => {
                     <Image src={logo} alt="logo" fill />
                 </Link>
 
-                <h1>/</h1>
+                {showSlash ? <div>/</div> : <div></div>}
 
                 <h1>{title}</h1>
             </div>
@@ -48,7 +49,7 @@ export const Navbar = ({ title }: Props) => {
                             leaveFrom="transform opacity-100 scale-100"
                             leaveTo="transform opacity-0 scale-95"
                         >
-                            <Menu.Items className="z-10 absolute right-0 mt-2 w-56 origin-top-right divide-y rounded-md bg-white dark:bg-slate-950 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <Menu.Items className="z-10 absolute right-0 mt-2 w-56 origin-top-right divide-y rounded-md bg-white dark:bg-slate-950 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border-gray-500 border">
                                 <div className="px-1 py-1">
                                     <Menu.Item>
                                         {({ active }) => (
