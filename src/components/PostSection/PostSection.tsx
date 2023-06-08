@@ -85,6 +85,7 @@ export const PostSection = ({ profileData, postsData, type }: PostSectionProps) 
     return (
         <div className="pt-10 pl-10 w-full">
             {cropModalOpen && <PostCropModal
+                type={type}
                 setIsCropped={setIsCropped}
                 fileUrl={fileUrl}
                 isOpen={cropModalOpen}
