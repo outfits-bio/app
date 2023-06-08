@@ -14,7 +14,7 @@ const Home = () => {
       <div className='w-full flex flex-col items-center pt-16 h-screen fixed'>
         <div className='flex flex-col gap-6 sm:w-[518px] w-5/6 text-center items-center'>
           <Link href={'/login'}>
-            <button className='hover:text-black border dark:border-white border-gray-500 rounded-xl flex justify-between items-center px-4 py-2 gap-4 hover:bg-gradient-to-r hover:from-[#bf0fff] hover:via-[#C58CA0] hover:to-[#cbff49] background-animate'>
+            <button className='hover:text-black border dark:border-white border-slate-500 rounded-xl flex justify-between items-center px-4 py-2 gap-4 hover:bg-gradient-to-r hover:from-[#bf0fff] hover:via-[#C58CA0] hover:to-[#cbff49] background-animate'>
               <p>We&apos;ve launched our open beta</p>
               <ArrowRight />
             </button>

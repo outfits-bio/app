@@ -48,6 +48,9 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
+  pages: {
+    newUser: "/onboarding",
+  },
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({

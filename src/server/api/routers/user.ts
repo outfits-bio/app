@@ -20,7 +20,13 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { Prisma, User } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 
-const badUsernames = ["login", "settings", "onboarding"];
+const badUsernames = [
+  "login",
+  "settings",
+  "onboarding",
+  "profile",
+  "[username]",
+];
 
 export const userRouter = createTRPCRouter({
   profileExists: publicProcedure
