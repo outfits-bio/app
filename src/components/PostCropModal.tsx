@@ -3,6 +3,7 @@ import Cropper, { Area } from 'react-easy-crop';
 import getCroppedImg from '~/utils/crop-image.util';
 
 import { Dialog, Transition } from '@headlessui/react';
+import { PostType } from '@prisma/client';
 
 interface Props {
     isOpen: boolean;
@@ -11,9 +12,27 @@ interface Props {
     setFileUrl: Dispatch<SetStateAction<string | null>>;
     setFile: Dispatch<SetStateAction<File | Blob | null>>;
     setIsCropped: (isCropped: boolean) => void;
+    type: PostType;
 }
 
-export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl, setIsCropped }: Props) => {
+const typeToSingular = (type: PostType) => {
+    switch (type) {
+        case PostType.OUTFIT:
+            return 'Outfit';
+        case PostType.HOODIE:
+            return 'Hoodie';
+        case PostType.SHIRT:
+            return 'Shirt';
+        case PostType.PANTS:
+            return 'Pants';
+        case PostType.SHOES:
+            return 'Shoes';
+        case PostType.WATCH:
+            return 'Watch';
+    }
+}
+
+export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl, setIsCropped, type }: Props) => {
     const [crop, setCrop] = useState({ x: 0, y: 0 })
     const [rotation, setRotation] = useState(0)
     const [zoom, setZoom] = useState(1)
@@ -65,7 +84,7 @@ export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
                             leaveTo="opacity-0 scale-95"
                         >
                             <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-md dark:text-white bg-white dark:bg-slate-950 p-6 text-left align-middle shadow-xl transition-all">
-                                <Dialog.Title className={'text-lg font-bold mb-2'}>Crop Image</Dialog.Title>
+                                <Dialog.Title className={'text-lg font-bold mb-2'}>Crop {typeToSingular(type)}</Dialog.Title>
 
                                 <div className='relative w-full h-80'>
                                     <Cropper
@@ -82,7 +101,10 @@ export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
                                     />
                                 </div>
 
-                                <button className='mt-4 border border-gray-400 px-6 h-10 rounded-sm' onClick={handleClose}>Close</button>
+                                <div className='flex w-full justify-between items-center'>
+                                    <button className='mt-4 border border-gray-400 px-6 h-10 rounded-sm' onClick={() => setIsOpen(false)}>Cancel</button>
+                                    <button className='mt-4 border border-gray-400 px-6 h-10 rounded-sm' onClick={handleClose}>Save</button>
+                                </div>
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>

@@ -3,6 +3,7 @@ import Cropper, { Area } from 'react-easy-crop';
 import getCroppedImg from '~/utils/crop-image.util';
 
 import { Dialog, Transition } from '@headlessui/react';
+import { PostType } from '@prisma/client';
 
 interface Props {
     isOpen: boolean;
@@ -78,7 +79,10 @@ export const CropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl }: P
                                     />
                                 </div>
 
-                                <button className='mt-4 border border-gray-400 px-6 h-10 rounded-sm' onClick={handleClose}>Close</button>
+                                <div className='flex w-full justify-between items-center'>
+                                    <button className='mt-4 border border-gray-400 px-6 h-10 rounded-sm' onClick={() => setIsOpen(false)}>Cancel</button>
+                                    <button className='mt-4 border border-gray-400 px-6 h-10 rounded-sm' onClick={handleClose}>Save</button>
+                                </div>
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>
