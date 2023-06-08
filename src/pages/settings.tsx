@@ -1,16 +1,14 @@
 import axios from 'axios';
-import { GetServerSidePropsContext } from 'next';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import React, { useRef, useState } from 'react';
-import { set, useForm } from 'react-hook-form';
+import React, { useEffect, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Button } from '~/components/Button';
 import { CropModal } from '~/components/CropModal';
 import { Layout } from '~/components/Layout';
 import { SpinnerSmall } from '~/components/Spinner';
 import { useDragAndDrop } from '~/hooks/drag-and-drop.hook';
 import { EditProfileInput, editProfileSchema } from '~/schemas/user.schema';
-import { getServerAuthSession } from '~/server/auth';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
@@ -88,7 +86,7 @@ const SettingsPage = () => {
   }
 
   return (
-    <Layout title='settings'>
+    <Layout title='settings' redirectIfNotAuth>
       <div className="bg-white dark:bg-slate-950 py-8 px-4 sm:px-6 lg:px-8">
         {cropModalOpen && <CropModal setFileUrl={setFileUrl} fileUrl={fileUrl} isOpen={cropModalOpen} setFile={setFile} setIsOpen={setCropModalOpen} />}
         <div className="max-w-md mx-auto">
@@ -173,23 +171,5 @@ const SettingsPage = () => {
     </Layout>
   );
 };
-
-// TODO: Possibly change to client side, this is sort of slow
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const session = await getServerAuthSession(context);
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  } else {
-    return {
-      props: {}
-    }
-  }
-}
 
 export default SettingsPage;

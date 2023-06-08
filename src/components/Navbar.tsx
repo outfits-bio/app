@@ -11,11 +11,12 @@ import { Button } from './Button';
 
 interface Props {
     title: string;
+    session: ReturnType<typeof useSession>;
     showSlash?: boolean;
 }
 
-export const Navbar = ({ title, showSlash = true }: Props) => {
-    const { data, status } = useSession();
+export const Navbar = ({ title, session, showSlash = true }: Props) => {
+    const { data, status } = session;
 
     const isAuth = status === 'authenticated' && data;
 
