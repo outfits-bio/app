@@ -4,11 +4,11 @@ import { Button } from '~/components/Button';
 
 const LoginPage = () => {
   const handleGoogle = async () => {
-    signIn('google', { callbackUrl: '/onboarding', redirect: true });
+    signIn('google', { callbackUrl: `/profile`, redirect: true });
   };
 
   const handleDiscord = async () => {
-    signIn('discord', { callbackUrl: '/onboarding', redirect: true });
+    signIn('discord', { callbackUrl: `/profile`, redirect: true });
   };
 
   return (

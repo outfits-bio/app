@@ -161,8 +161,8 @@ const SettingsPage = () => {
               disabled={loading}
               size='lg'
               color='secondary'
+              isLoading={loading}
             >
-              {loading && <SpinnerSmall />}
               Save Changes
             </Button>
           </form>

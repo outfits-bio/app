@@ -7,7 +7,6 @@ import { useForm } from 'react-hook-form';
 import superjson from 'superjson';
 import { Button } from '~/components/Button';
 import { CropModal } from '~/components/CropModal';
-import { SpinnerSmall } from '~/components/Spinner';
 import { useDragAndDrop } from '~/hooks/drag-and-drop.hook';
 import { EditProfileInput, editProfileSchema } from '~/schemas/user.schema';
 import { appRouter } from '~/server/api/root';
@@ -85,6 +84,7 @@ export const OnboardingPage: NextPage = () => {
         });
         else {
             setLoading(false);
+            push(`/${data?.username}`);
         }
 
     };
@@ -163,9 +163,11 @@ export const OnboardingPage: NextPage = () => {
 
                         <Button
                             type="submit"
+                            size='lg'
+                            color='secondary'
                             disabled={loading}
+                            isLoading={loading}
                         >
-                            {loading && <SpinnerSmall />}
                             Continue
                         </Button>
                     </form>

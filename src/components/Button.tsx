@@ -1,3 +1,5 @@
+import { SpinnerSmall } from './Spinner';
+
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     size?: 'sm' | 'md' | 'lg';
     color?: 'primary' | 'secondary' | 'danger' | 'outline';
@@ -40,5 +42,8 @@ export const Button: React.FC<ButtonProps> = ({ size = 'md', color = 'outline', 
             break;
     }
 
-    return <button className={`flex items-center justify-center gap-2 ${sizeClass} ${colorClass}`} {...props} />;
+    return <button className={`flex items-center justify-center gap-2 ${sizeClass} ${colorClass}`} {...props}>
+        {isLoading && <SpinnerSmall />}
+        {props.children}
+    </button>;
 }
