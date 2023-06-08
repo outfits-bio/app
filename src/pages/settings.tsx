@@ -3,7 +3,8 @@ import { GetServerSidePropsContext } from 'next';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React, { useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
+import { Button } from '~/components/Button';
 import { CropModal } from '~/components/CropModal';
 import { Layout } from '~/components/Layout';
 import { SpinnerSmall } from '~/components/Spinner';
@@ -66,6 +67,10 @@ const SettingsPage = () => {
       name,
       username
     });
+    else {
+      setLoading(false);
+    }
+
   };
 
   /**
@@ -96,7 +101,7 @@ const SettingsPage = () => {
               <input
                 id="username"
                 type="text"
-                className="w-full px-4 py-2 border border-gray-300 rounded dark:bg-slate-950 dark:text-white"
+                className="w-full px-4 py-2 border border-slate-300 rounded dark:bg-slate-950 dark:text-white"
                 {...register('username')}
               />
             </div>
@@ -109,7 +114,7 @@ const SettingsPage = () => {
               <input
                 id="name"
                 type="text"
-                className="w-full px-4 py-2 border border-gray-300 rounded dark:bg-slate-950 dark:text-white"
+                className="w-full px-4 py-2 border border-slate-300 rounded dark:bg-slate-950 dark:text-white"
                 {...register('name')}
               />
             </div>
@@ -121,7 +126,7 @@ const SettingsPage = () => {
               <div
                 onClick={() => ref.current?.click()}
                 onDragEnter={handleDrag}
-                className="relative flex items-center justify-center h-40 border border-gray-300 rounded"
+                className="relative flex items-center justify-center h-40 border border-slate-300 rounded"
               >
                 {dragActive &&
                   <div
@@ -153,14 +158,15 @@ const SettingsPage = () => {
               </div>
             </div>
 
-            <button
+            <Button
               type="submit"
               disabled={loading}
-              className="flex items-center justify-center gap-4 w-full h-12 bg-gray-700 hover:bg-gray-900 dark:bg-gray-600 dark:hover:bg-gray-700 text-white font-semibold rounded-md mt-4"
+              size='lg'
+              color='secondary'
             >
               {loading && <SpinnerSmall />}
               Save Changes
-            </button>
+            </Button>
           </form>
         </div>
       </div>

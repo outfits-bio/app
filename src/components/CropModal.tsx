@@ -5,6 +5,8 @@ import getCroppedImg from '~/utils/crop-image.util';
 import { Dialog, Transition } from '@headlessui/react';
 import { PostType } from '@prisma/client';
 
+import { Button } from './Button';
+
 interface Props {
     isOpen: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -79,9 +81,9 @@ export const CropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl }: P
                                     />
                                 </div>
 
-                                <div className='flex w-full justify-between items-center'>
-                                    <button className='mt-4 border border-gray-400 px-6 h-10 rounded-sm' onClick={() => setIsOpen(false)}>Cancel</button>
-                                    <button className='mt-4 border border-gray-400 px-6 h-10 rounded-sm' onClick={handleClose}>Save</button>
+                                <div className='flex w-full justify-between items-center mt-4'>
+                                    <Button onClick={() => setIsOpen(false)}>Cancel</Button>
+                                    <Button onClick={handleClose}>Save</Button>
                                 </div>
                             </Dialog.Panel>
                         </Transition.Child>

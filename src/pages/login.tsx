@@ -1,5 +1,6 @@
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
+import { Button } from '~/components/Button';
 
 const LoginPage = () => {
   const handleGoogle = async () => {
@@ -20,18 +21,22 @@ const LoginPage = () => {
           <h2 className="text-2xl font-semibold text-black dark:text-white font-prompt">Login</h2>
         </div>
 
-        <button
-          onClick={handleGoogle}
-          className="w-full h-12 bg-gray-700 hover:bg-gray-900 dark:bg-gray-600 dark:hover:bg-gray-700 text-white font-semibold rounded-md mt-4"
-        >
-          Google
-        </button>
-        <button
-          onClick={handleDiscord}
-          className="w-full h-12 bg-gray-700 hover:bg-gray-900 dark:bg-gray-600 dark:hover:bg-gray-700 text-white font-semibold rounded-md mt-4"
-        >
-          Discord
-        </button>
+        <div className='gap-4 flex flex-col'>
+          <Button
+            size='lg'
+            color='secondary'
+            onClick={handleGoogle}
+          >
+            Google
+          </Button>
+          <Button
+            size='lg'
+            color='secondary'
+            onClick={handleDiscord}
+          >
+            Discord
+          </Button>
+        </div>
 
       </div>
     </div>

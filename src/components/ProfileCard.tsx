@@ -8,6 +8,8 @@ import { formatAvatar } from '~/utils/image-src-format.util';
 import { Hoodie, Pants, Person, Share, Sneaker, TShirt, Watch } from '@phosphor-icons/react';
 import { inferRouterOutputs } from '@trpc/server';
 
+import { Button } from './Button';
+
 type RouterOutput = inferRouterOutputs<AppRouter>;
 
 interface Props {
@@ -33,7 +35,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser }: Props) => 
     }
 
     return (
-        <div className="flex flex-col md:flex-row justify-between md:items-center border border-b-gray-500 dark:border-b-gray-500 p-10 gap-10 md:gap-0 dark:border-transparent">
+        <div className="flex flex-col md:flex-row justify-between md:items-center border border-b-slate-500 dark:border-b-slate-500 p-10 gap-10 md:gap-0 dark:border-transparent">
             <div className='flex flex-col gap-10'>
                 <div className='flex items-center gap-10'>
                     <div className='relative sm:w-32 sm:h-32 w-24 h-24'>
@@ -42,11 +44,11 @@ export const ProfileCard = ({ profileData, username, isCurrentUser }: Props) => 
 
                     <div className='space-y-2'>
                         <h1 className='sm:text-4xl text-3xl font-bold'>{profileData?.name}</h1>
-                        <h3 className='sm:text-xl text-lg font-bold text-gray-400'>@{profileData?.username}</h3>
+                        <h3 className='sm:text-xl text-lg font-bold text-slate-400'>@{profileData?.username}</h3>
                     </div>
                 </div>
 
-                <div className='flex gap-4 text-gray-400 text-xl sm:text-lg sm:flex-row flex-col'>
+                <div className='flex gap-4 text-slate-400 text-xl sm:text-lg sm:flex-row flex-col'>
                     <div className='flex gap-4'>
                         <div className='flex items-center gap-1'>
                             <Person className='mt-1' />
@@ -89,11 +91,13 @@ export const ProfileCard = ({ profileData, username, isCurrentUser }: Props) => 
                     </div>
                 </div>
 
-                <div className='flex gap-4 text-gray-400 font-semibold'>
-                    {isCurrentUser && <Link href={'/settings'} className='border border-gray-400 px-6 h-10 rounded-sm flex items-center justify-center'>Edit Profile</Link>}
-                    <button onClick={handleShare} className='border border-gray-400 px-6 h-10 rounded-sm text-xl'>
-                        <Share />
-                    </button>
+                <div className='flex gap-4 text-slate-400 font-semibold'>
+                    {isCurrentUser && <Link href={'/settings'}>
+                        <Button>Edit Profile</Button>
+                    </Link>}
+                    <Button onClick={handleShare}>
+                        <Share className='text-xl' />
+                    </Button>
                 </div>
             </div>
         </div>

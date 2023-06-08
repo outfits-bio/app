@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import superjson from 'superjson';
+import { Button } from '~/components/Button';
 import { CropModal } from '~/components/CropModal';
 import { SpinnerSmall } from '~/components/Spinner';
 import { useDragAndDrop } from '~/hooks/drag-and-drop.hook';
@@ -50,7 +51,7 @@ export const OnboardingPage: NextPage = () => {
 
             push(`/${data.username}`);
         },
-        onError: (e) => handleErrors({ e, message: "Failed to edit profile!" }),
+        onError: (e) => handleErrors({ e, message: "Failed to edit profile!", fn: () => setLoading(false) }),
     });
 
     /**
@@ -67,7 +68,7 @@ export const OnboardingPage: NextPage = () => {
                 push(`/${data?.username}`)
             }
         },
-        onError: (e) => handleErrors({ e, message: "Failed to set image!" }),
+        onError: (e) => handleErrors({ e, message: "Failed to set image!", fn: () => setLoading(false) }),
     });
 
     const handleFormSubmit = async ({ username, name }: EditProfileInput) => {
@@ -82,8 +83,10 @@ export const OnboardingPage: NextPage = () => {
             name,
             username
         });
+        else {
+            setLoading(false);
+        }
 
-        setLoading(false);
     };
 
     /**
@@ -115,7 +118,7 @@ export const OnboardingPage: NextPage = () => {
                                 <input
                                     id="name"
                                     type="text"
-                                    className="w-full px-4 py-2 border border-gray-300 rounded dark:bg-slate-950 dark:text-white"
+                                    className="w-full px-4 py-2 border border-slate-300 rounded dark:bg-slate-950 dark:text-white"
                                     {...register('name')}
                                 />
                             </div>
@@ -126,7 +129,7 @@ export const OnboardingPage: NextPage = () => {
                             <input
                                 id="username"
                                 type="text"
-                                className="w-full px-4 py-2 border border-gray-300 rounded dark:bg-slate-950 dark:text-white"
+                                className="w-full px-4 py-2 border border-slate-300 rounded dark:bg-slate-950 dark:text-white"
                                 {...register('username')}
                             />
                         </div>
@@ -135,7 +138,7 @@ export const OnboardingPage: NextPage = () => {
                             <label htmlFor="avatar" className="block font-medium mb-1">
                                 Avatar
                             </label>
-                            <div onClick={() => ref.current?.click()} onDragEnter={handleDrag} className="relative flex items-center justify-center h-40 border border-gray-300 rounded">
+                            <div onClick={() => ref.current?.click()} onDragEnter={handleDrag} className="relative flex items-center justify-center h-40 border border-slate-300 rounded">
                                 {dragActive && <div className='absolute w-full h-full t-0 r-0 b-0 l-0' onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}></div>}
                                 <input
                                     ref={ref}
@@ -158,14 +161,13 @@ export const OnboardingPage: NextPage = () => {
                             </div>
                         </div>
 
-                        <button
+                        <Button
                             type="submit"
                             disabled={loading}
-                            className="flex items-center justify-center gap-3 w-full h-12 bg-gray-700 hover:bg-gray-900 dark:bg-gray-600 dark:hover:bg-gray-700 text-white font-semibold rounded-md mt-4"
                         >
                             {loading && <SpinnerSmall />}
                             Continue
-                        </button>
+                        </Button>
                     </form>
                 </div>
             </div>
