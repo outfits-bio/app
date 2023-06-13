@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { env } from "~/env.mjs";
 import {
   editProfileSchema,
@@ -17,7 +16,7 @@ import {
   S3Client,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { Prisma, User } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 
 const badUsernames = [

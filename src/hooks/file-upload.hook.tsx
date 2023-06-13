@@ -1,6 +1,6 @@
-import { DragEvent, useState } from 'react';
+import { ChangeEvent, DragEvent, useState } from 'react';
 
-export const useDragAndDrop = () => {
+export const useFileUpload = () => {
     const [dragActive, setDragActive] = useState<boolean>(false);
     const [file, setFile] = useState<File | Blob | null>(null);
     const [fileUrl, setFileUrl] = useState<string | null>(null);
@@ -31,5 +31,21 @@ export const useDragAndDrop = () => {
         setCropModalOpen(true);
     };
 
-    return { dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen };
+    /**
+   * This opens the crop modal and sets the file and fileUrl
+   * This only fires when the user clicks on the "Create new" button, not when the user drags and drops
+   */
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.files?.[0]) return;
+        processFile(e.target.files[0]);
+    }
+
+    const processFile = (file: File) => {
+        setFile(file);
+        setFileUrl(URL.createObjectURL(file));
+        setCropModalOpen(true);
+    };
+
+
+    return { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen };
 }

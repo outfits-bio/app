@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import superjson from 'superjson';
 import { Button } from '~/components/Button';
 import { CropModal } from '~/components/CropModal';
-import { useDragAndDrop } from '~/hooks/drag-and-drop.hook';
+import { useFileUpload } from '~/hooks/file-upload.hook';
 import { EditProfileInput, editProfileSchema } from '~/schemas/user.schema';
 import { appRouter } from '~/server/api/root';
 import { getServerAuthSession } from '~/server/auth';
@@ -19,7 +19,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createServerSideHelpers } from '@trpc/react-query/server';
 
 export const OnboardingPage: NextPage = () => {
-    const { dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useDragAndDrop();
+    const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
     const { push } = useRouter();
     const { update } = useSession();
 
@@ -89,20 +89,6 @@ export const OnboardingPage: NextPage = () => {
 
     };
 
-    /**
-     * This opens the crop modal and sets the file and fileUrl
-     * This only fires when the user clicks on the "Create new" button, not when the user drags and drops
-     */
-    const handleFileChange = (e: React.FormEvent<HTMLInputElement>) => {
-        if (!e.currentTarget?.files?.length) return;
-
-        setFile(e.currentTarget.files[0] ?? null);
-
-        if (e.currentTarget.files[0])
-            setFileUrl(URL.createObjectURL(e.currentTarget.files[0]));
-        setCropModalOpen(true);
-    }
-
     return (
         <div className='h-screen flex flex-col w-full absolute'>
             {cropModalOpen && <CropModal setFileUrl={setFileUrl} fileUrl={fileUrl} isOpen={cropModalOpen} setFile={setFile} setIsOpen={setCropModalOpen} />}
@@ -145,7 +131,7 @@ export const OnboardingPage: NextPage = () => {
                                     id="avatar"
                                     type="file"
                                     className="hidden"
-                                    onChange={handleFileChange}
+                                    onChange={handleChange}
                                 />
                                 {file ? (
                                     <img

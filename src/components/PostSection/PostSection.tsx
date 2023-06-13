@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
-import { useDragAndDrop } from '~/hooks/drag-and-drop.hook';
+import { useFileUpload } from '~/hooks/file-upload.hook';
 import { api } from '~/utils/api.util';
 import { formatImage } from '~/utils/image-src-format.util';
 
@@ -18,7 +18,7 @@ export const PostSection = ({ profileData, postsData, type }: PostSectionProps) 
     const { data: session } = useSession();
     const ctx = api.useContext();
 
-    const { dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useDragAndDrop();
+    const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
 
     const [isCropped, setIsCropped] = useState<boolean>(false);
     const [deleteButton, setDeleteButton] = useState<string | null>(null);
@@ -59,21 +59,6 @@ export const PostSection = ({ profileData, postsData, type }: PostSectionProps) 
         onError: (err, context) => onError(ctx, err, context, "Failed to delete post!", profileData?.id),
         onSettled: () => onSettled(ctx, profileData?.username)
     });
-
-    /**
-     * This opens the crop modal and sets the file and fileUrl
-     * This only fires when the user clicks on the "Create new" button, not when the user drags and drops
-     */
-    const handleFileChange = (e: React.FormEvent<HTMLInputElement>) => {
-        if (!e.currentTarget?.files?.length) return;
-
-        setFile(e.currentTarget.files[0] ?? null);
-
-        if (e.currentTarget.files[0])
-            setFileUrl(URL.createObjectURL(e.currentTarget.files[0]));
-
-        setCropModalOpen(true);
-    }
 
     const posts = postsData?.filter(p => p.type === type);
     const userIsProfileOwner = session?.user.id === profileData?.id;
@@ -136,7 +121,7 @@ export const PostSection = ({ profileData, postsData, type }: PostSectionProps) 
 
 
                     {userIsProfileOwner && <div onDragEnter={handleDrag} className='relative'>
-                        <input ref={ref} type="file" className='hidden' onChange={handleFileChange} />
+                        <input ref={ref} type="file" className='hidden' onChange={handleChange} />
                         {dragActive &&
                             <div
                                 className='absolute w-full h-full t-0 r-0 b-0 l-0'
