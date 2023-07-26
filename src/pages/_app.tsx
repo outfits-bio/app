@@ -19,7 +19,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <>
       <Head>
         <meta charSet="UTF-8" />
-        <meta username="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta content="width=device-width, initial-scale=1.0" />
         <title>{metadata.title}</title>
         <link rel="icon" href="favicon.ico" sizes="32px" />
         <meta username="description" content={metadata.description} />
