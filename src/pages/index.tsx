@@ -1,32 +1,33 @@
+import { signIn } from 'next-auth/react';
 import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
-import { LandingElements } from '~/components/LandingElements';
+import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
 
-import { ArrowRight } from '@phosphor-icons/react';
+import { ArrowRight, DiscordLogo, GoogleLogo } from '@phosphor-icons/react';
 
 import landing from '../../public/landing.png';
 
 const Home = () => {
   return (
     <Layout title='outfits.bio' showSlash={false}>
-      <div className='w-full flex flex-col items-center pt-16 h-screen fixed'>
-        <div className='flex flex-col gap-6 sm:w-[518px] w-5/6 text-center items-center'>
-          <Link href={'/login'}>
-            <button className='hover:text-black border dark:border-white border-slate-500 rounded-xl flex justify-between items-center px-4 py-2 gap-4 hover:bg-gradient-to-r hover:from-[#bf0fff] hover:via-[#C58CA0] hover:to-[#cbff49] background-animate'>
-              <p>We&apos;ve launched our open beta</p>
-              <ArrowRight />
-            </button>
-          </Link>
-          <h1 className='sm:text-5xl text-3xl font-bold'>Your virtual wardrobe</h1>
-          <p className='sm:text-xl'>A virtual wardrobe where people can add photos of clothes to their profile and share them with a link like outfits.bio/jeremy.</p>
+      <div className='w-screen h-full flex flex-col gap-4 justify-center items-center font-urbanist pb-20 overflow-x-hidden'>
+        <h1 className='text-5xl font-black'>Your virtual wardrobe</h1>
+
+        <h3 className='font-inter text-gray-600 dark:text-white text-2xl w-[525px] text-center'>
+          A virtual wardrobe where people can add photos of clothes to their profile and share them with a link like outfits.bio/jeremy.
+        </h3>
+
+        <div className='flex w-[525px] items-center gap-2'>
+          <Button iconLeft={<GoogleLogo />} iconRight={<ArrowRight />} color='outline' onClick={() => signIn('google')} centerItems>
+            Join with Google
+          </Button>
+          <Button iconLeft={<DiscordLogo />} iconRight={<ArrowRight />} color='outline' onClick={() => signIn('discord')} centerItems>
+            Join with Discord
+          </Button>
         </div>
 
-        <div className='w-5/6 h-full flex justify-center items-end relative'>
-          <LandingElements />
-          <Image src={landing} alt='ogimage' priority className='z-10 object-contain lg:w-[77%] sm:h-5/6 object-bottom w-full mb-20 sm:mb-0' />
-        </div>
+        {/* <Image src={landing} alt='Landing Image' priority placeholder='blur' className='absolute bottom-0 left-1/2' /> */}
       </div>
     </Layout>
   );

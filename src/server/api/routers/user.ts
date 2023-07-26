@@ -1,8 +1,8 @@
-import { z } from "zod";
 import { env } from "~/env.mjs";
 import {
   editProfileSchema,
   getProfileSchema,
+  likeProfileSchema,
   userSchema,
 } from "~/schemas/user.schema";
 import {
@@ -17,7 +17,7 @@ import {
   S3Client,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { Prisma, User } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 
 const badUsernames = [
@@ -54,7 +54,7 @@ export const userRouter = createTRPCRouter({
       select: {
         id: true,
         username: true,
-        name: true,
+        tagline: true,
         image: true,
         onboarded: true,
       },
@@ -84,6 +84,64 @@ export const userRouter = createTRPCRouter({
     return user;
   }),
 
+  deleteProfile: protectedProcedure.mutation(async ({ ctx }) => {
+    await ctx.prisma.user.delete({
+      where: {
+        id: ctx.session.user.id,
+      },
+    });
+  }),
+
+  getAccounts: protectedProcedure.query(async ({ ctx }) => {
+    const accounts = await ctx.prisma.account.findMany({
+      where: {
+        userId: ctx.session.user.id,
+      },
+      select: {
+        id: true,
+        provider: true,
+      },
+    });
+
+    return accounts;
+  }),
+
+  unlinkAccount: protectedProcedure
+    .input(likeProfileSchema)
+    .mutation(async ({ input, ctx }) => {
+      const { id } = input;
+
+      const user = await ctx.prisma.user.findUnique({
+        where: {
+          id: ctx.session.user.id,
+        },
+        select: {
+          id: true,
+          accounts: {
+            select: {
+              id: true,
+            },
+          },
+        },
+      });
+
+      if (user?.accounts.length === 1) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "You must have at least one account linked",
+        });
+      }
+
+      await ctx.prisma.account.delete({
+        where: {
+          id,
+          userId: ctx.session.user.id,
+        },
+      });
+
+      return true;
+    }),
+
   getProfile: publicProcedure
     .input(getProfileSchema)
     .query(async ({ input, ctx }) => {
@@ -96,7 +154,7 @@ export const userRouter = createTRPCRouter({
         select: {
           id: true,
           username: true,
-          name: true,
+          tagline: true,
           image: true,
           hoodiePostCount: true,
           outfitPostCount: true,
@@ -106,6 +164,16 @@ export const userRouter = createTRPCRouter({
           watchPostCount: true,
           imageCount: true,
           likeCount: true,
+          likedBy: {
+            where: { id: ctx.session?.user.id },
+            select: { id: true },
+          },
+          discord: true,
+          twitter: true,
+          instagram: true,
+          youtube: true,
+          website: true,
+          tiktok: true,
         },
       });
 
@@ -116,18 +184,24 @@ export const userRouter = createTRPCRouter({
         });
       }
 
-      return user;
+      return {
+        ...user,
+        authUserHasLiked: user.likedBy.some(
+          (user) => user.id === ctx.session?.user.id
+        ),
+      };
     }),
 
   editProfile: protectedProcedure
     .input(editProfileSchema)
     .mutation(async ({ input, ctx }) => {
-      const { name, username } = input;
+      const { tagline, username } = input;
 
       if (
         username &&
         (badUsernames.includes(username) ||
           username.startsWith("api/") ||
+          username.startsWith("settings/") ||
           username.length < 3)
       )
         throw new TRPCError({
@@ -141,7 +215,7 @@ export const userRouter = createTRPCRouter({
             id: ctx.session.user.id,
           },
           data: {
-            name: name ? name : undefined,
+            tagline: tagline ? tagline : undefined,
             username: username ? username : undefined,
           },
           select: {
@@ -229,4 +303,65 @@ export const userRouter = createTRPCRouter({
 
     return true;
   }),
+
+  likeProfile: protectedProcedure
+    .input(likeProfileSchema)
+    .mutation(async ({ input, ctx }) => {
+      // like profile, or unlike if already liked
+      const { id } = input;
+
+      let like: { id: string };
+
+      try {
+        like = await ctx.prisma.user.update({
+          where: {
+            id,
+            likedBy: {
+              none: {
+                id: ctx.session.user.id,
+              },
+            },
+          },
+          data: {
+            likedBy: {
+              connect: {
+                id: ctx.session.user.id,
+              },
+            },
+            likeCount: {
+              increment: 1,
+            },
+          },
+          select: {
+            id: true,
+          },
+        });
+      } catch (error) {
+        like = await ctx.prisma.user.update({
+          where: {
+            id,
+            likedBy: {
+              some: {
+                id: ctx.session.user.id,
+              },
+            },
+          },
+          data: {
+            likedBy: {
+              disconnect: {
+                id: ctx.session.user.id,
+              },
+            },
+            likeCount: {
+              decrement: 1,
+            },
+          },
+          select: {
+            id: true,
+          },
+        });
+      }
+
+      return like;
+    }),
 });

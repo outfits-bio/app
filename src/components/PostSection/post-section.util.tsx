@@ -1,9 +1,12 @@
-import { AppRouter } from "~/server/api/root";
-import { api } from "~/utils/api.util";
-import { handleErrors } from "~/utils/handle-errors.util";
+import { type } from 'os';
+import React from 'react';
+import { AppRouter } from '~/server/api/root';
+import { api } from '~/utils/api.util';
+import { handleErrors } from '~/utils/handle-errors.util';
 
-import { Post, PostType } from "@prisma/client";
-import { inferRouterOutputs } from "@trpc/server";
+import { CoatHanger, Hoodie, Pants, Sneaker, TShirt, Watch } from '@phosphor-icons/react';
+import { Post, PostType } from '@prisma/client';
+import { inferRouterOutputs } from '@trpc/server';
 
 type RouterOutput = inferRouterOutputs<AppRouter>;
 // TODO: Find a better way to grab a type from the second param of ctx.post.getPostsAllTypes.setData
@@ -14,6 +17,7 @@ export interface PostSectionProps {
   profileData?: RouterOutput["user"]["getProfile"];
   postsData?: RouterOutput["post"]["getPostsAllTypes"];
   type: PostType;
+  loading: boolean;
 }
 
 /**
@@ -47,7 +51,7 @@ export const getPostTypeName = (type: PostType): string => {
 export const getPostTypeCount = (
   type: PostType,
   profileData?: RouterOutput["user"]["getProfile"]
-): number => {
+): React.ReactNode => {
   switch (type) {
     case PostType.OUTFIT:
       return profileData?.outfitPostCount ?? 0;
@@ -61,6 +65,23 @@ export const getPostTypeCount = (
       return profileData?.shoesPostCount ?? 0;
     case PostType.WATCH:
       return profileData?.watchPostCount ?? 0;
+  }
+};
+
+export const getPostTypeIcon = (type: PostType): React.ReactNode => {
+  switch (type) {
+    case PostType.OUTFIT:
+      return <CoatHanger className='md:w-12 md:h-12 w-8 h-8' />
+    case PostType.HOODIE:
+      return <Hoodie className='md:w-12 md:h-12 w-8 h-8' />
+    case PostType.SHIRT:
+      return <TShirt className='md:w-12 md:h-12 w-8 h-8' />
+    case PostType.PANTS:
+      return <Pants className='md:w-12 md:h-12 w-8 h-8' />
+    case PostType.SHOES:
+      return <Sneaker className='md:w-12 md:h-12 w-8 h-8' />
+    case PostType.WATCH:
+      return <Watch className='md:w-12 md:h-12 w-8 h-8' />
   }
 };
 

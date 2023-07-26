@@ -1,7 +1,12 @@
 import { useSession } from 'next-auth/react';
-import { Poppins } from 'next/font/google';
+import { Inter, Poppins, Urbanist } from 'next/font/google';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { formatAvatar } from '~/utils/image-src-format.util';
+
+import { Bell, Gear, HouseSimple, Plus } from '@phosphor-icons/react';
 
 import { Navbar } from './Navbar';
 
@@ -10,15 +15,23 @@ interface Props {
     title: string;
     showSlash?: boolean;
     redirectIfNotAuth?: boolean;
+    showActions?: boolean;
 }
 
-const poppins = Poppins({
+const urbanist = Urbanist({
     subsets: ['latin-ext'],
-    weight: '400'
-})
+    display: 'swap',
+    variable: '--font-urbanist',
+});
 
-export const Layout = ({ children, title, showSlash, redirectIfNotAuth }: Props) => {
-    const { push } = useRouter();
+const inter = Inter({
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--font-inter',
+});
+
+export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActions }: Props) => {
+    const { push, pathname } = useRouter();
 
     const session = useSession();
 
@@ -33,9 +46,32 @@ export const Layout = ({ children, title, showSlash, redirectIfNotAuth }: Props)
     }
 
     return (
-        <div className="flex flex-col dark:bg-slate-950 dark:text-white" style={poppins.style}>
-            <Navbar title={title} session={session} showSlash={showSlash} />
-            <main>{children}</main>
+        <div className={`bg-white font-inter text-black flex flex-col dark:bg-black dark:text-white min-h-screen antialiased ${urbanist.variable} ${inter.variable}`}>
+            <Navbar title={title} session={session} showSlash={showSlash} showActions={showActions} />
+            <main className='mx-auto h-screen pt-20 overflow-x-hidden pb-24 md:pb-0'>{children}</main>
+            {pathname !== '/login' && pathname !== '/onboarding' && pathname !== '/' &&
+                <div className='py-2 px-6 bg-white dark:bg-black border border-black dark:border-white flex justify-between w-screen h-24 fixed bottom-0 md:hidden gap-4'>
+                    <Link href={'/'} className='grow hover:bg-slate-100 rounded-md flex items-center justify-center text-3xl'>
+                        <HouseSimple />
+                    </Link>
+
+                    <Link href={'/notifications'} className='grow hover:bg-slate-100 rounded-md flex items-center justify-center text-3xl'>
+                        <Bell />
+                    </Link>
+
+                    <Link href={'/shoot'} className='grow hover:bg-slate-100 rounded-md flex items-center justify-center text-3xl'>
+                        <Plus />
+                    </Link>
+
+                    <Link href={'/settings'} className='grow hover:bg-slate-100 rounded-md flex items-center justify-center text-3xl'>
+                        <Gear />
+                    </Link>
+
+                    <Link href={`/${session.data?.user.username}`} className='grow hover:bg-slate-100 rounded-md flex items-center justify-center text-3xl'>
+                        <Image className='rounded-full object-contain' src={formatAvatar(session.data?.user.image, session.data?.user.id)} alt={session.data?.user.username ?? ""} width={30} height={30} />
+                    </Link>
+                </div>
+            }
         </div>
     )
 }

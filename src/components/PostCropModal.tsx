@@ -3,6 +3,7 @@ import Cropper, { Area } from 'react-easy-crop';
 import getCroppedImg from '~/utils/crop-image.util';
 
 import { Dialog, Transition } from '@headlessui/react';
+import { X } from '@phosphor-icons/react';
 import { PostType } from '@prisma/client';
 
 import { Button } from './Button';
@@ -61,7 +62,7 @@ export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
 
     return (
         <Transition appear show={isOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-10" open={isOpen} onClose={handleClose}>
+            <Dialog as="div" className="relative z-10" open={isOpen} onClose={() => setIsOpen(false)}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -85,28 +86,63 @@ export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-md dark:text-white bg-white dark:bg-slate-950 p-6 text-left align-middle shadow-xl transition-all">
-                                <Dialog.Title className={'text-lg font-bold mb-2'}>Crop {typeToSingular(type)}</Dialog.Title>
+                            <Dialog.Panel className="flex transform overflow-hidden rounded-md dark:text-white bg-white dark:bg-black border border-black dark:border-white p-4 text-left align-middle shadow-xl transition-all">
+                                <div>
+                                    <div className='flex justify-end w-full mb-2'>
+                                        <div>
+                                            <Button color='ghost' centerItems>
+                                                <X className='h-6 w-6' />
+                                            </Button>
+                                        </div>
+                                    </div>
 
-                                <div className='relative w-full h-80'>
-                                    <Cropper
-                                        image={fileUrl ?? ""}
-                                        crop={crop}
-                                        zoom={zoom}
-                                        rotation={rotation}
-                                        aspect={2 / 3}
-                                        showGrid={true}
-                                        onCropChange={(crop) => setCrop(crop)}
-                                        onRotationChange={(rotation) => setRotation(rotation)}
-                                        onCropComplete={onCropComplete}
-                                        onZoomChange={(zoom) => setZoom(zoom)}
+                                    <div className='relative w-[320px] h-[574px]'>
+                                        <Cropper
+                                            image={fileUrl ?? ""}
+                                            crop={crop}
+                                            zoom={zoom}
+                                            rotation={rotation}
+                                            aspect={2 / 3}
+                                            cropSize={{ width: 320, height: 574 }}
+                                            classes={{ containerClassName: 'bg-gray-100 rounded-md' }}
+                                            showGrid={true}
+                                            onCropChange={(crop) => setCrop(crop)}
+                                            onRotationChange={(rotation) => setRotation(rotation)}
+                                            onCropComplete={onCropComplete}
+                                            onZoomChange={(zoom) => setZoom(zoom)}
+                                        />
+                                    </div>
+
+                                    <input
+                                        type='range'
+                                        value={zoom}
+                                        step={0.1}
+                                        min={0.4}
+                                        max={3}
+                                        aria-labelledby="Zoom"
+                                        onChange={(e) => setZoom(e.target.valueAsNumber)}
+                                        className="w-[320px] h-2 bg-gray-200 rounded-lg mb-3 appearance-none cursor-pointer dark:bg-gray-700 accent-black dark:accent-white"
                                     />
+
+                                    <Button centerItems onClick={handleClose}>
+                                        Post
+                                    </Button>
                                 </div>
 
-                                <div className='flex w-full justify-between items-center mt-4'>
-                                    <Button onClick={() => setIsOpen(false)}>Cancel</Button>
-                                    <Button onClick={handleClose}>Save</Button>
-                                </div>
+                                {/* <div className='flex flex-col w-[320px] h-full gap-4 pl-4'>
+                                    <div className='flex w-full items-center justify-end'>
+                                        <button>
+                                            <X className='h-6 w-6' />
+                                        </button>
+                                    </div>
+
+                                    <div className='flex flex-col gap-2'>
+                                        <h2 className='font-semibold text-2xl font-urbanist'>Details</h2>
+
+                                        
+                                    </div>
+                                </div> */}
+
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>
