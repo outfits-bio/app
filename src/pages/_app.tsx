@@ -22,7 +22,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta content="width=device-width, initial-scale=1.0" />
         <title>{metadata.title}</title>
         <link rel="icon" href="favicon.ico" sizes="32px" />
-        <meta username="description" content={metadata.description} />
+        <meta content={metadata.description} />
         <meta property="og:locale" content="en_US" />
         <meta property="og:url" content={metadata.url} />
         <meta property="og:type" content={metadata.og.type} />
