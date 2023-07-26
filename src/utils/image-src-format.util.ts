@@ -1,6 +1,8 @@
+import avatar from "../../public/favicon.ico";
+
 export const formatAvatar = (image?: string | null, userId?: string) => {
   if (!image || !userId) {
-    return `https://ui-avatars.com/api/?name=${userId}&background=random&length=1&rounded=true&size=128`;
+    return avatar.src;
   }
 
   return image.startsWith("https://")

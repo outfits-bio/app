@@ -43,6 +43,7 @@ export const authOptions: NextAuthOptions = {
       if (session.user) {
         session.user.id = user.id;
         session.user.username = user.username;
+        session.user.username = user.username;
         session.user.onboarded = user.onboarded;
       }
       return session;
@@ -59,7 +60,6 @@ export const authOptions: NextAuthOptions = {
       profile(profile) {
         return {
           id: profile.sub,
-          name: profile.name,
           email: profile.email,
           image: profile.picture,
           username: profile.name?.replaceAll(" ", "_"),
@@ -71,12 +71,18 @@ export const authOptions: NextAuthOptions = {
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
       profile(profile) {
+        if (profile.avatar === null) {
+          const defaultAvatarNumber = parseInt(profile.discriminator) % 5;
+          profile.image_url = `https://cdn.discordapp.com/embed/avatars/${defaultAvatarNumber}.png`;
+        } else {
+          const format = profile.avatar.startsWith("a_") ? "gif" : "png";
+          profile.image_url = `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.${format}`;
+        }
         return {
           id: profile.id,
-          name: profile.username,
           email: profile.email,
-          image: profile.image_url,
           username: profile.username,
+          image: profile.image_url,
           onboarded: profile.onboarded,
         };
       },

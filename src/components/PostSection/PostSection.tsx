@@ -6,15 +6,16 @@ import { useFileUpload } from '~/hooks/file-upload.hook';
 import { api } from '~/utils/api.util';
 import { formatImage } from '~/utils/image-src-format.util';
 
-import { Trash } from '@phosphor-icons/react';
+import { Plus, Trash } from '@phosphor-icons/react';
 
 import { PostCropModal } from '../PostCropModal';
 import { Spinner } from '../Spinner';
 import {
-    getPostTypeCount, getPostTypeName, onError, onMutate, onSettled, PostSectionProps
+    getPostTypeCount, getPostTypeIcon, getPostTypeName, onError, onMutate, onSettled,
+    PostSectionProps
 } from './post-section.util';
 
-export const PostSection = ({ profileData, postsData, type }: PostSectionProps) => {
+export const PostSection = ({ profileData, postsData, type, loading }: PostSectionProps) => {
     const { data: session } = useSession();
     const ctx = api.useContext();
 
@@ -68,7 +69,7 @@ export const PostSection = ({ profileData, postsData, type }: PostSectionProps) 
     if (!userIsProfileOwner && !postsExist) return null;
 
     return (
-        <div className="pt-10 pl-10 w-full">
+        <div className="w-full pr-2">
             {cropModalOpen && <PostCropModal
                 type={type}
                 setIsCropped={setIsCropped}
@@ -80,26 +81,45 @@ export const PostSection = ({ profileData, postsData, type }: PostSectionProps) 
             />
             }
 
-            {(postsExist || userIsProfileOwner) && <h2 className="text-2xl font-bold mb-10">{getPostTypeName(type)} ({getPostTypeCount(type, profileData)})</h2>}
+            {(postsExist || userIsProfileOwner) && !loading && <h2 className="pr-2 text-2xl font-bold mb-8 md:justify-end flex items-center gap-3">{getPostTypeIcon(type)}{`${getPostTypeCount(type, profileData)} ${getPostTypeName(type)}`}</h2>}
 
-            <div className='w-full overflow-scroll'>
-                <div className="flex gap-4 min-w-max">
+            <div className='w-full overflow-scroll mb-8'>
+                <div className="flex gap-4 min-w-max md:justify-end pb-1">
+                    {userIsProfileOwner && <div onDragEnter={handleDrag} className='relative'>
+                        <input ref={ref} type="file" className='hidden' onChange={handleChange} />
+                        {dragActive &&
+                            <div
+                                className='absolute w-full h-full t-0 r-0 b-0 l-0'
+                                onDragEnter={handleDrag}
+                                onDragLeave={handleDrag}
+                                onDragOver={handleDrag}
+                                onDrop={handleDrop}
+                            />
+                        }
+                        <button
+                            onClick={() => ref.current?.click()}
+                            type='submit'
+                            className='hover:bg-gray-100 dark:hover:bg-gray-700 w-44 h-72 border border-gray-500 flex items-center justify-center font-bold flex-col text-sm rounded-md'>
+                            <Plus className='w-12 h-12 text-gray-500' />
+                        </button>
+                    </div>}
+
                     {postsData?.filter(p => p.type === type).map((post, i) => (
                         <div
                             onMouseEnter={() => setDeleteButton(post.id)}
                             onMouseLeave={() => setDeleteButton(null)}
                             key={post.id ?? 'loading'}
-                            className="w-32 h-48 border border-slate-500 rounded-md relative">
+                            className="w-44 h-72 border border-gray-500 rounded-md relative">
 
                             {isLoading && i === 0 ?
-                                <div className='bg-slate-100 dark:bg-slate-700 w-full h-full flex items-center justify-center'>
+                                <div className='bg-gray-100 dark:bg-gray-700 w-full h-full flex items-center justify-center'>
                                     <Spinner />
                                 </div>
                                 :
                                 post.id &&
                                 <Image
-                                    // 128px is the same as w-32, the width of the container
-                                    sizes="128px"
+                                    // 176px is the same as w-44, the width of the container
+                                    sizes="176px"
                                     src={formatImage(post.image, profileData?.id)}
                                     className="object-cover"
                                     fill
@@ -118,28 +138,6 @@ export const PostSection = ({ profileData, postsData, type }: PostSectionProps) 
                             }
                         </div>
                     ))}
-
-
-                    {userIsProfileOwner && <div onDragEnter={handleDrag} className='relative'>
-                        <input ref={ref} type="file" className='hidden' onChange={handleChange} />
-                        {dragActive &&
-                            <div
-                                className='absolute w-full h-full t-0 r-0 b-0 l-0'
-                                onDragEnter={handleDrag}
-                                onDragLeave={handleDrag}
-                                onDragOver={handleDrag}
-                                onDrop={handleDrop}
-                            />
-                        }
-                        <button
-                            onClick={() => ref.current?.click()}
-                            type='submit'
-                            className='hover:bg-slate-100 dark:hover:bg-slate-700 w-32 h-48 border border-slate-500 flex items-center justify-center font-bold flex-col text-sm rounded-md'>
-                            <div>Create new:</div>
-                            <div>Drag & Drop</div>
-                            <div className='text-xs text-slate-500 font-semibold mt-2'>Or click here</div>
-                        </button>
-                    </div>}
                 </div>
             </div>
         </div>

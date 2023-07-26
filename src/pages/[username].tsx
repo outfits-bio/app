@@ -12,11 +12,11 @@ import { PostType } from '@prisma/client';
 
 export const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
     const { push } = useRouter();
-    const { data } = useSession();
+    const { data, status } = useSession();
 
-    const { data: profileData } = api.user.getProfile.useQuery({ username }, { onError: (e) => handleErrors({ e, message: "Failed to get user!", fn: () => push('/') }), retry: 0 });
+    const { data: profileData, isLoading } = api.user.getProfile.useQuery({ username }, { onError: (e) => handleErrors({ e, message: "Failed to get user!", fn: () => push('/') }), retry: 0 });
 
-    const { data: postsData } = api.post.getPostsAllTypes.useQuery({
+    const { data: postsData, isLoading: postsLoading } = api.post.getPostsAllTypes.useQuery({
         id: profileData?.id ?? ''
     }, { retry: 0, enabled: !!profileData?.id, refetchOnMount: false, refetchOnWindowFocus: false, onError: (e) => handleErrors({ e, message: "Failed to get posts!", fn: () => push('/') }) });
 
@@ -26,15 +26,19 @@ export const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
 
     return (
         <Layout title={pageTitle}>
-            <ProfileCard profileData={profileData} isCurrentUser={isCurrentUser} username={username} />
-            <PostSection key={PostType.OUTFIT} type={PostType.OUTFIT} profileData={profileData} postsData={postsData} />
-            <PostSection key={PostType.HOODIE} type={PostType.HOODIE} profileData={profileData} postsData={postsData} />
-            <PostSection key={PostType.SHIRT} type={PostType.SHIRT} profileData={profileData} postsData={postsData} />
-            <PostSection key={PostType.PANTS} type={PostType.PANTS} profileData={profileData} postsData={postsData} />
-            <PostSection key={PostType.SHOES} type={PostType.SHOES} profileData={profileData} postsData={postsData} />
-            <PostSection key={PostType.WATCH} type={PostType.WATCH} profileData={profileData} postsData={postsData} />
+            <div className='flex flex-col md:flex-row w-screen h-full gap-4 p-4 md:gap-12 md:p-12 overflow-y-scroll md:overflow-y-auto'>
+                <ProfileCard loading={isLoading} authStatus={status} currentUser={data?.user ?? null} profileData={profileData} username={username} isCurrentUser={isCurrentUser} />
 
-            <div className='h-10'></div>
+                <div className='md:overflow-y-scroll w-full'>
+                    <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.OUTFIT} />
+                    <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.HOODIE} />
+                    <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.PANTS} />
+                    <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.SHIRT} />
+                    <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.SHOES} />
+                    <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.WATCH} />
+                </div>
+
+            </div>
         </Layout>
     );
 };
