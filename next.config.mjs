@@ -21,5 +21,10 @@ const config = {
   images: {
     domains: ["pub-4bf8804d3efc464b862de36f974618d4.r2.dev", "lh3.googleusercontent.com", "cdn.discordapp.com", "ui-avatars.com"],
   },
+  modularizeImports: {
+    "@phosphor-icons/react": {
+      transform: "@phosphor-icons/react/{{member}}",
+    },
+  },
 };
 export default config;
