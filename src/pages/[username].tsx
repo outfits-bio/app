@@ -53,13 +53,21 @@ export const getStaticProps: GetStaticProps = async (context) => {
         props: {}
     }
 
-    await ssg.user.getProfile.prefetch({ username });
+    try {
+        await ssg.user.getProfile.prefetch({ username });
 
-    return {
-        props: {
-            username,
-            trpcState: ssg.dehydrate(),
-        },
+        return {
+            props: {
+                username,
+                trpcState: ssg.dehydrate(),
+            },
+        }
+    } catch (error) {
+        return {
+            props: {
+                username,
+            },
+        }
     }
 }
 
