@@ -1,14 +1,21 @@
-import { signIn } from 'next-auth/react';
-import Image from 'next/image';
-import React from 'react';
+import { signIn, useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
 
 import { ArrowRight, DiscordLogo, GoogleLogo } from '@phosphor-icons/react';
 
-import landing from '../../public/landing.png';
-
 const Home = () => {
+  const { status, data } = useSession();
+  const { push } = useRouter();
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      push(`/${data.user.username}`);
+    }
+  }, [status]);
+
   return (
     <Layout title='outfits.bio' showSlash={false}>
       <div className='w-screen h-full flex flex-col gap-4 justify-center items-center font-urbanist pb-20 overflow-x-hidden'>
