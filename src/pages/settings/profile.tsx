@@ -28,8 +28,14 @@ const SettingsPage = () => {
 
   const ref = useRef<HTMLInputElement>(null);
 
-  const { register, handleSubmit, getValues } = useForm({
+  const { data: userData } = api.user.getMe.useQuery();
+
+  const { register, handleSubmit, getValues } = useForm<EditProfileInput>({
     resolver: zodResolver(editProfileSchema),
+    defaultValues: {
+      username: userData?.username || '',
+      tagline: userData?.tagline || '',
+    }
   });
 
   useEffect(() => {
@@ -177,6 +183,7 @@ const SettingsPage = () => {
             <textarea
               id="tagline"
               className="w-full px-4 py-2 border rounded-md border-black dark:border-white dark:text-white dark:bg-black"
+              placeholder='Enter your catchy tagline...'
               {...register('tagline')}
             />
           </div>
