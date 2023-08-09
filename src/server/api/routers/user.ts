@@ -1,8 +1,10 @@
 import { env } from "~/env.mjs";
 import {
+  addLinkSchema,
   editProfileSchema,
   getProfileSchema,
   likeProfileSchema,
+  removeLinkSchema,
   userSchema,
 } from "~/schemas/user.schema";
 import {
@@ -57,6 +59,12 @@ export const userRouter = createTRPCRouter({
         tagline: true,
         image: true,
         onboarded: true,
+        website: true,
+        discord: true,
+        twitter: true,
+        instagram: true,
+        youtube: true,
+        tiktok: true,
       },
     });
 
@@ -190,6 +198,69 @@ export const userRouter = createTRPCRouter({
           (user) => user.id === ctx.session?.user.id
         ),
       };
+    }),
+
+  addLink: protectedProcedure
+    .input(addLinkSchema)
+    .mutation(async ({ input, ctx }) => {
+      const { url } = input;
+
+      const protocolTrimmedUrl = url.replace(/(^\w+:|^)\/\//, "");
+
+      const data: {
+        discord?: string;
+        twitter?: string;
+        instagram?: string;
+        youtube?: string;
+        website?: string;
+        tiktok?: string;
+      } = {};
+
+      if (protocolTrimmedUrl.startsWith("discord.gg")) {
+        data.discord = url;
+      } else if (protocolTrimmedUrl.startsWith("twitter.com")) {
+        data.twitter = url;
+      } else if (protocolTrimmedUrl.startsWith("instagram.com")) {
+        data.instagram = url;
+      } else if (protocolTrimmedUrl.startsWith("youtube.com")) {
+        data.youtube = url;
+      } else if (protocolTrimmedUrl.startsWith("tiktok.com")) {
+        data.tiktok = url;
+      } else {
+        data.website = url;
+      }
+
+      const user = await ctx.prisma.user.update({
+        where: {
+          id: ctx.session.user.id,
+        },
+        select: {
+          id: true,
+        },
+        data,
+      });
+
+      return user;
+    }),
+
+  removeLink: protectedProcedure
+    .input(removeLinkSchema)
+    .mutation(async ({ input, ctx }) => {
+      const { provider } = input;
+
+      const user = await ctx.prisma.user.update({
+        where: {
+          id: ctx.session.user.id,
+        },
+        select: {
+          id: true,
+        },
+        data: {
+          [provider]: null,
+        },
+      });
+
+      return user;
     }),
 
   editProfile: protectedProcedure
