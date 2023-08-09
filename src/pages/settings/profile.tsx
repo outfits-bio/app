@@ -10,7 +10,9 @@ import { DeleteModal } from '~/components/DeleteModal';
 import { Layout } from '~/components/Layout';
 import { SettingsLayout } from '~/components/SettingsLayout';
 import { useFileUpload } from '~/hooks/file-upload.hook';
-import { EditProfileInput, editProfileSchema } from '~/schemas/user.schema';
+import {
+  AddLinkInput, addLinkSchema, EditProfileInput, editProfileSchema
+} from '~/schemas/user.schema';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar } from '~/utils/image-src-format.util';
@@ -38,6 +40,10 @@ const SettingsPage = () => {
     }
   });
 
+  const { register: registerLink, handleSubmit: handleSubmitLink } = useForm<AddLinkInput>({
+    resolver: zodResolver(addLinkSchema),
+  });
+
   useEffect(() => {
     if (!session?.user) return;
 
@@ -54,6 +60,14 @@ const SettingsPage = () => {
       push(`/${data.username}`);
     },
     onError: (e) => handleErrors({ e, message: "Failed to edit profile!", fn: () => setLoading(false) })
+  });
+
+  const { mutate: addLink, isLoading: linkLoading } = api.user.addLink.useMutation({
+    onSuccess: () => {
+      toast.success("Link added!");
+      update();
+    },
+    onError: (e) => handleErrors({ e, message: "Failed to add link!", fn: () => setLoading(false) })
   });
 
   /**
@@ -104,112 +118,148 @@ const SettingsPage = () => {
     else {
       setLoading(false);
     }
-
   };
+
+  const handleFormSubmitLink = ({ url }: AddLinkInput) => addLink({ url });
 
   return (
     <SettingsLayout>
-      <div className="p-4 font-urbanist w-full md:w-[450px] overflow-y-scroll">
-        {cropModalOpen && <CropModal setFileUrl={setFileUrl} fileUrl={fileUrl} isOpen={cropModalOpen} setFile={setFile} setIsOpen={setCropModalOpen} />}
-        {isOpen && <DeleteModal deleteAccount={deleteProfile} isOpen={isOpen} setIsOpen={setIsOpen} />}
-        <h2 className="text-4xl font-black">Profile Details</h2><br></br>
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
-          <label htmlFor="avatar" className="block font-medium mb-1">
-            Profile Picture
-          </label>
-          <div className="mb-4 flex w-full gap-4">
-            <div>
-              <div className='rounded-full h-44 w-44 flex items-center justify-center border border-black' onClick={() => ref.current?.click()}>
-                {dragActive &&
-                  <div
-                    className='absolute w-full h-full t-0 r-0 b-0 l-0'
-                    onDragEnter={handleDrag}
-                    onDragLeave={handleDrag}
-                    onDragOver={handleDrag}
-                    onDrop={handleDrop} />
-                }
+      <div className='w-full p-4 overflow-y-scroll'>
+        <div className="font-urbanist w-full md:w-[450px]">
+          {cropModalOpen && <CropModal setFileUrl={setFileUrl} fileUrl={fileUrl} isOpen={cropModalOpen} setFile={setFile} setIsOpen={setCropModalOpen} />}
+          {isOpen && <DeleteModal deleteAccount={deleteProfile} isOpen={isOpen} setIsOpen={setIsOpen} />}
+          <h2 className="text-4xl font-black">Profile Details</h2><br></br>
+          <form onSubmit={handleSubmit(handleFormSubmit)}>
+            <label htmlFor="avatar" className="block font-medium mb-1">
+              Profile Picture
+            </label>
+            <div className="mb-4 flex w-full gap-4">
+              <div>
+                <div className='rounded-full h-44 w-44 flex items-center justify-center border border-black' onClick={() => ref.current?.click()}>
+                  {dragActive &&
+                    <div
+                      className='absolute w-full h-full t-0 r-0 b-0 l-0'
+                      onDragEnter={handleDrag}
+                      onDragLeave={handleDrag}
+                      onDragOver={handleDrag}
+                      onDrop={handleDrop} />
+                  }
 
-                <input
-                  ref={ref}
-                  id="avatar"
-                  type="file"
-                  className="hidden"
-                  onChange={handleChange}
-                />
-                {(file) ? (
-                  <img
-                    src={fileUrl ?? ""}
-                    alt="Avatar Preview"
-                    className="h-44 w-44 object-contain rounded-full cursor-pointer"
+                  <input
+                    ref={ref}
+                    id="avatar"
+                    type="file"
+                    className="hidden"
+                    onChange={handleChange}
                   />
-                ) : (
-                  fileUrl ? (
+                  {(file) ? (
                     <img
                       src={fileUrl ?? ""}
                       alt="Avatar Preview"
                       className="h-44 w-44 object-contain rounded-full cursor-pointer"
                     />
                   ) : (
-                    <div className="cursor-pointer text-center p-4">
-                      Drag and drop or click to upload
-                    </div>
-                  )
-                )}
+                    fileUrl ? (
+                      <img
+                        src={fileUrl ?? ""}
+                        alt="Avatar Preview"
+                        className="h-44 w-44 object-contain rounded-full cursor-pointer"
+                      />
+                    ) : (
+                      <div className="cursor-pointer text-center p-4">
+                        Drag and drop or click to upload
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+
+              <div className='grow space-y-2'>
+                <Button centerItems iconLeft={<Plus />} type='button' onClick={() => ref.current?.click()}>Upload</Button>
+                <Button color='outline' centerItems type='button' iconLeft={<Trash />} onClick={() => deleteImage()}>Remove</Button>
               </div>
             </div>
 
-            <div className='grow space-y-2'>
-              <Button centerItems iconLeft={<Plus />} type='button' onClick={() => ref.current?.click()}>Upload</Button>
-              <Button color='outline' centerItems type='button' iconLeft={<Trash />} onClick={() => deleteImage()}>Remove</Button>
+            <div className="mb-4">
+              <label htmlFor="username" className="block font-medium mb-1">
+                Username
+              </label>
+              <input
+                id="username"
+                type="text"
+                className="w-full px-4 py-2 border rounded-md border-black dark:border-white dark:text-white dark:bg-black"
+                {...register('username')}
+              />
             </div>
-          </div>
 
-          <div className="mb-4">
-            <label htmlFor="username" className="block font-medium mb-1">
-              Username
-            </label>
-            <input
-              id="username"
-              type="text"
-              className="w-full px-4 py-2 border rounded-md border-black dark:border-white dark:text-white dark:bg-black"
-              {...register('username')}
-            />
-          </div>
+            <div className="mb-4">
+              <label htmlFor="tagline" className="block font-medium mb-1">
+                Tagline
+              </label>
+              <textarea
+                id="tagline"
+                className="w-full px-4 py-2 border rounded-md border-black dark:border-white dark:text-white dark:bg-black"
+                placeholder='Enter your catchy tagline...'
+                {...register('tagline')}
+              />
+            </div>
 
-          <div className="mb-4">
-            <label htmlFor="tagline" className="block font-medium mb-1">
-              Tagline
-            </label>
-            <textarea
-              id="tagline"
-              className="w-full px-4 py-2 border rounded-md border-black dark:border-white dark:text-white dark:bg-black"
-              placeholder='Enter your catchy tagline...'
-              {...register('tagline')}
-            />
-          </div>
+            <Button
+              type="submit"
+              disabled={loading}
+              isLoading={loading}
+              centerItems
+            >
+              Save Changes
+            </Button>
+          </form>
 
+          <form className='mt-8 w-full' onSubmit={handleSubmitLink(handleFormSubmitLink)}>
+            {userData?.website && <p>{userData?.website}</p>}
+            {userData?.twitter && <p>{userData?.twitter}</p>}
+            {userData?.instagram && <p>{userData?.instagram}</p>}
+            {userData?.tiktok && <p>{userData?.tiktok}</p>}
+            {userData?.youtube && <p>{userData?.youtube}</p>}
+            {userData?.discord && <p>{userData?.discord}</p>}
+
+            <div className="mb-4">
+              <label htmlFor="link" className="block font-medium mb-1">
+                Add a Link
+              </label>
+              <div className='flex gap-2 w-full'>
+                <input
+                  id="link"
+                  type="text"
+                  className="px-4 py-2 w-full border rounded-md border-black dark:border-white dark:text-white dark:bg-black"
+                  {...registerLink('url')}
+                />
+                <div>
+                  <Button
+                    type="submit"
+                    disabled={linkLoading}
+                    isLoading={linkLoading}
+                    centerItems
+                    iconLeft={<Plus />}
+                  />
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <h2 className="text-4xl font-black mt-8">Danger Zone</h2><br></br>
+
+          <p className="mb-1">Delete Account</p>
           <Button
-            type="submit"
-            disabled={loading}
-            isLoading={loading}
+            color="warning"
+            type="button"
             centerItems
+            iconLeft={<Trash />}
+            onClick={() => setIsOpen(true)}
+            isLoading={deleteProfileLoading}
           >
-            Save Changes
+            Delete
           </Button>
-        </form>
-        <h2 className="text-4xl font-black mt-8">Danger Zone</h2><br></br>
-
-        <p className="mb-1">Delete Account</p>
-        <Button
-          color="warning"
-          type="button"
-          centerItems
-          iconLeft={<Trash />}
-          onClick={() => setIsOpen(true)}
-          isLoading={deleteProfileLoading}
-        >
-          Delete
-        </Button>
+        </div>
       </div>
     </SettingsLayout>
   );

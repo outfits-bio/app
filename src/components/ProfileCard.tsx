@@ -104,38 +104,38 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                 </div>
 
                 <div className={`flex text-sm gap-2 w-96 flex-wrap`}>
-                    {profileData?.twitter && <Link href={`https://twitter.com/${profileData?.twitter}`}>
+                    {profileData?.twitter && <Link href={`${profileData?.twitter}`}>
                         <p className='flex items-center gap-1'>
                             <TwitterLogo className='w-5 h-5' />
-                            <span className='underline'>https://twitter.com/{profileData?.twitter}</span>
+                            <span className='underline'>{profileData?.twitter}</span>
                         </p>
                     </Link>}
 
-                    {profileData?.youtube && <Link href={`https://youtube.com/@${profileData?.youtube}`}>
+                    {profileData?.youtube && <Link href={`${profileData?.youtube}`}>
                         <p className='flex items-center gap-1'>
                             <YoutubeLogo className='w-5 h-5' />
-                            <span className='underline'>https://youtube.com/@{profileData?.youtube}</span>
+                            <span className='underline'>{profileData?.youtube}</span>
                         </p>
                     </Link>}
 
-                    {profileData?.tiktok && <Link href={`https://tiktok.com/@${profileData?.tiktok}`}>
+                    {profileData?.tiktok && <Link href={`${profileData?.tiktok}`}>
                         <p className='flex items-center gap-1'>
                             <TiktokLogo className='w-5 h-5' />
-                            <span className='underline'>https://tiktok.com/@{profileData?.tiktok}</span>
+                            <span className='underline'>@{profileData?.tiktok}</span>
                         </p>
                     </Link>}
 
-                    {profileData?.discord && <Link href={`https://discord.gg/${profileData?.discord}`}>
+                    {profileData?.discord && <Link href={`${profileData?.discord}`}>
                         <p className='flex items-center gap-1'>
                             <DiscordLogo className='w-5 h-5' />
-                            <span className='underline'>https://discord.gg/{profileData?.discord}</span>
+                            <span className='underline'>{profileData?.discord}</span>
                         </p>
                     </Link>}
 
-                    {profileData?.instagram && <Link href={`https://instagram.com/@${profileData?.instagram}`}>
+                    {profileData?.instagram && <Link href={`${profileData?.instagram}`}>
                         <p className='flex items-center gap-1'>
                             <InstagramLogo className='w-5 h-5' />
-                            <span className='underline'>https://instagram.com/@{profileData?.instagram}</span>
+                            <span className='underline'>{profileData?.instagram}</span>
                         </p>
                     </Link>}
 

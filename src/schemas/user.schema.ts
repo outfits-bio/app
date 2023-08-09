@@ -20,3 +20,20 @@ export const editProfileSchema = z.object({
   tagline: z.string().max(180).optional(),
 });
 export type EditProfileInput = ReturnType<typeof editProfileSchema.parse>;
+
+export const addLinkSchema = z.object({
+  url: z.string().url(),
+});
+export type AddLinkInput = ReturnType<typeof addLinkSchema.parse>;
+
+export const removeLinkSchema = z.object({
+  provider: z.enum([
+    "discord",
+    "twitter",
+    "instagram",
+    "youtube",
+    "website",
+    "tiktok",
+  ]),
+});
+export type RemoveLinkInput = ReturnType<typeof removeLinkSchema.parse>;
