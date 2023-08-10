@@ -80,7 +80,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
         <div className="h-full flex flex-col justify-between font-inter">
             <div className='md:w-96 w-full flex flex-col gap-4'>
                 <div className='flex md:flex-col gap-4 md:justify-normal'>
-                    <div className={`object-contain w-32 h-32 md:w-96 md:h-96 relative ${loading && ' skeleton'}`}>
+                    <div className={`object-contain w-32 h-32 md:w-72 md:h-72 xl:w-96 xl:h-96 relative ${loading && ' skeleton'}`}>
                         <Image priority src={formatAvatar(profileData?.image, profileData?.id)} alt={profileData?.username ?? ''} fill className='rounded-full' />
                     </div>
 
