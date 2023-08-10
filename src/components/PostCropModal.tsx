@@ -31,7 +31,7 @@ const typeToSingular = (type: PostType) => {
         case PostType.SHOES:
             return 'Shoes';
         case PostType.WATCH:
-            return 'Watch';
+            return 'Accessory';
     }
 }
 

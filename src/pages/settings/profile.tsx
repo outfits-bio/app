@@ -33,13 +33,15 @@ const SettingsPage = () => {
 
   const ref = useRef<HTMLInputElement>(null);
 
-  const { data: userData } = api.user.getMe.useQuery();
 
-  const { register, handleSubmit, getValues } = useForm<EditProfileInput>({
+  const { register, handleSubmit, getValues, setValue } = useForm<EditProfileInput>({
     resolver: zodResolver(editProfileSchema),
-    defaultValues: {
-      username: userData?.username || '',
-      tagline: userData?.tagline || '',
+  });
+
+  const { data: userData } = api.user.getMe.useQuery(undefined, {
+    onSuccess: (data) => {
+      setValue("username", data.username ?? '');
+      setValue("tagline", data.tagline ?? '');
     }
   });
 
