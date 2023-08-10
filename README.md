@@ -46,7 +46,7 @@ npm run dev
 
 ## Need Help? 🙋‍♀️🙋‍♂️
 
-Don't hesitate to ask for help! Join our [Discord](https://discord.gg/aQZs9qVna3) and feel free to post your questions or problems.
+Don't hesitate to ask for help! Join our [Discord](https://discord.gg/f4KEs5TVz2) and feel free to post your questions or problems.
 
 ## Stay in Touch 💌
 

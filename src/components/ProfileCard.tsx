@@ -180,7 +180,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                         <Button color='ghost' onClick={handleShare} iconLeft={<ShareFat />} centerItems />
                     </div>
 
-                    <Link href={'https://discord.gg/atlis'}>
+                    <Link href={'https://discord.gg/f4KEs5TVz2'}>
                         <Button color='ghost' iconLeft={<DiscordLogo />} centerItems />
                     </Link>
                 </>}
