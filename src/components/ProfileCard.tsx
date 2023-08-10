@@ -12,13 +12,13 @@ import {
     Camera, DiscordLogo, DotsThree, Heart, InstagramLogo, LinkSimple, PencilSimple, ShareFat,
     TiktokLogo, TwitterLogo, YoutubeLogo
 } from '@phosphor-icons/react';
+import { LinkType } from '@prisma/client';
 import { inferRouterOutputs } from '@trpc/server';
 
 import { Button } from './Button';
 
 import type { AppRouter } from '~/server/api/root';
 import type { User } from 'next-auth';
-
 type RouterOutput = inferRouterOutputs<AppRouter>;
 
 interface Props {
@@ -104,47 +104,18 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                 </div>
 
                 <div className={`flex text-sm gap-2 w-96 flex-wrap`}>
-                    {profileData?.twitter && <Link href={`${profileData?.twitter}`}>
-                        <p className='flex items-center gap-1'>
-                            <TwitterLogo className='w-5 h-5' />
-                            <span className='underline'>{profileData?.twitter}</span>
-                        </p>
-                    </Link>}
-
-                    {profileData?.youtube && <Link href={`${profileData?.youtube}`}>
-                        <p className='flex items-center gap-1'>
-                            <YoutubeLogo className='w-5 h-5' />
-                            <span className='underline'>{profileData?.youtube}</span>
-                        </p>
-                    </Link>}
-
-                    {profileData?.tiktok && <Link href={`${profileData?.tiktok}`}>
-                        <p className='flex items-center gap-1'>
-                            <TiktokLogo className='w-5 h-5' />
-                            <span className='underline'>@{profileData?.tiktok}</span>
-                        </p>
-                    </Link>}
-
-                    {profileData?.discord && <Link href={`${profileData?.discord}`}>
-                        <p className='flex items-center gap-1'>
-                            <DiscordLogo className='w-5 h-5' />
-                            <span className='underline'>{profileData?.discord}</span>
-                        </p>
-                    </Link>}
-
-                    {profileData?.instagram && <Link href={`${profileData?.instagram}`}>
-                        <p className='flex items-center gap-1'>
-                            <InstagramLogo className='w-5 h-5' />
-                            <span className='underline'>{profileData?.instagram}</span>
-                        </p>
-                    </Link>}
-
-                    {profileData?.website && <Link href={profileData?.website ?? ''}>
-                        <p className='flex items-center gap-1'>
-                            <LinkSimple className='w-5 h-5' />
-                            <span className='underline'>{profileData?.website}</span>
-                        </p>
-                    </Link>}
+                    {profileData?.links.map(link =>
+                        <Link href={`${link.url}`}>
+                            <p className='flex items-center gap-1'>
+                                {link.type === LinkType.TWITTER && <TwitterLogo className='w-5 h-5' />}
+                                {link.type === LinkType.YOUTUBE && <YoutubeLogo className='w-5 h-5' />}
+                                {link.type === LinkType.TIKTOK && <TiktokLogo className='w-5 h-5' />}
+                                {link.type === LinkType.DISCORD && <DiscordLogo className='w-5 h-5' />}
+                                {link.type === LinkType.INSTAGRAM && <InstagramLogo className='w-5 h-5' />}
+                                {link.type === LinkType.WEBSITE && <LinkSimple className='w-5 h-5' />}
+                                <span className='underline'>{link.url}</span>
+                            </p>
+                        </Link>)}
                 </div>
 
                 <div className='w-full flex items-center justify-between gap-4'>

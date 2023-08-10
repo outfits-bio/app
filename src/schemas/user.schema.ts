@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { LinkType } from "@prisma/client";
+
 export const userSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).max(100),
@@ -27,13 +29,6 @@ export const addLinkSchema = z.object({
 export type AddLinkInput = ReturnType<typeof addLinkSchema.parse>;
 
 export const removeLinkSchema = z.object({
-  provider: z.enum([
-    "discord",
-    "twitter",
-    "instagram",
-    "youtube",
-    "website",
-    "tiktok",
-  ]),
+  id: z.string().cuid(),
 });
 export type RemoveLinkInput = ReturnType<typeof removeLinkSchema.parse>;
