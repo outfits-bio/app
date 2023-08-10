@@ -38,7 +38,7 @@ export const getPostTypeName = (type: PostType): string => {
     case PostType.SHOES:
       return "Shoes";
     case PostType.WATCH:
-      return "Watches";
+      return "Accessories";
   }
 };
 
