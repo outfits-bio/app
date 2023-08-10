@@ -6,6 +6,8 @@ Welcome to the source code repository of [outfits.bio](https://outfits.bio), you
 
 Outfits.bio is a digital platform where you can upload photos of your clothes and create your own personalized profile. It's as simple as snapping a picture, uploading it to your profile, and voila – you've got a sharable link like [https://outfits.bio/jeremy](https://outfits.bio/jeremy). Stay trendy and connected with your friends by sharing your latest looks. 📸🎉
 
+##### psst.. the card resolution is 168 x 300 (width x height)!!
+
 ## Built With 🛠
 
 Outfits.bio is built on Next.js using Typescript. Here are the major technologies we're using:
