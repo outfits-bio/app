@@ -103,7 +103,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                     </div>
                 </div>
 
-                <div className={`flex text-sm gap-2 w-96 flex-wrap`}>
+                <div className={`flex text-sm gap-2 w-96 max-w-full flex-wrap`}>
                     {profileData?.links.map(link =>
                         <Link href={`${link.url}`}>
                             <p className='flex items-center gap-1'>
