@@ -85,7 +85,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                     </div>
 
                     <div className='flex flex-col gap-1 md:gap-4'>
-                        <h1 className='font-black text-2xl md:text-4xl font-urbanist'>{username}</h1>
+                        <h1 className='font-black text-2xl md:text-4xl font-urbanist'>{profileData?.username}</h1>
 
                         <p className={`grow ${loading && 'skeleton'}`}>{profileData?.tagline}</p>
 
