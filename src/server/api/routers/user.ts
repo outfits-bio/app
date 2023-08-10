@@ -28,6 +28,8 @@ const badUsernames = [
   "onboarding",
   "profile",
   "[username]",
+  "explore",
+  "notifications",
 ];
 
 export const userRouter = createTRPCRouter({
@@ -59,12 +61,7 @@ export const userRouter = createTRPCRouter({
         tagline: true,
         image: true,
         onboarded: true,
-        website: true,
-        discord: true,
-        twitter: true,
-        instagram: true,
-        youtube: true,
-        tiktok: true,
+        links: true,
       },
     });
 
@@ -176,12 +173,7 @@ export const userRouter = createTRPCRouter({
             where: { id: ctx.session?.user.id },
             select: { id: true },
           },
-          discord: true,
-          twitter: true,
-          instagram: true,
-          youtube: true,
-          website: true,
-          tiktok: true,
+          links: true,
         },
       });
 
@@ -207,36 +199,45 @@ export const userRouter = createTRPCRouter({
 
       const protocolTrimmedUrl = url.replace(/(^\w+:|^)\/\//, "");
 
-      const data: {
-        discord?: string;
-        twitter?: string;
-        instagram?: string;
-        youtube?: string;
-        website?: string;
-        tiktok?: string;
-      } = {};
-
-      if (protocolTrimmedUrl.startsWith("discord.gg")) {
-        data.discord = url;
-      } else if (protocolTrimmedUrl.startsWith("twitter.com")) {
-        data.twitter = url;
-      } else if (protocolTrimmedUrl.startsWith("instagram.com")) {
-        data.instagram = url;
-      } else if (protocolTrimmedUrl.startsWith("youtube.com")) {
-        data.youtube = url;
-      } else if (protocolTrimmedUrl.startsWith("tiktok.com")) {
-        data.tiktok = url;
-      } else {
-        data.website = url;
-      }
-
-      const user = await ctx.prisma.user.update({
+      const user = await ctx.prisma.user.findUnique({
         where: {
           id: ctx.session.user.id,
         },
         select: {
-          id: true,
+          links: true,
         },
+      });
+
+      if (user?.links.length === 6) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "You can only have 6 links",
+        });
+      }
+
+      const data: Prisma.LinkCreateInput = {
+        type: "WEBSITE",
+        url,
+        user: {
+          connect: {
+            id: ctx.session.user.id,
+          },
+        },
+      };
+
+      if (protocolTrimmedUrl.startsWith("discord.gg")) {
+        data.type = "DISCORD";
+      } else if (protocolTrimmedUrl.startsWith("twitter.com")) {
+        data.type = "TWITTER";
+      } else if (protocolTrimmedUrl.startsWith("instagram.com")) {
+        data.type = "INSTAGRAM";
+      } else if (protocolTrimmedUrl.startsWith("youtube.com")) {
+        data.type = "YOUTUBE";
+      } else if (protocolTrimmedUrl.startsWith("tiktok.com")) {
+        data.type = "TIKTOK";
+      }
+
+      await ctx.prisma.link.create({
         data,
       });
 
@@ -246,21 +247,16 @@ export const userRouter = createTRPCRouter({
   removeLink: protectedProcedure
     .input(removeLinkSchema)
     .mutation(async ({ input, ctx }) => {
-      const { provider } = input;
+      const { id } = input;
 
-      const user = await ctx.prisma.user.update({
+      const link = await ctx.prisma.link.delete({
         where: {
-          id: ctx.session.user.id,
-        },
-        select: {
-          id: true,
-        },
-        data: {
-          [provider]: null,
+          id,
+          userId: ctx.session.user.id,
         },
       });
 
-      return user;
+      return true;
     }),
 
   editProfile: protectedProcedure

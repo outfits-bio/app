@@ -7,7 +7,6 @@ import { toast } from 'react-hot-toast';
 import { Button } from '~/components/Button';
 import { CropModal } from '~/components/CropModal';
 import { DeleteModal } from '~/components/DeleteModal';
-import { Layout } from '~/components/Layout';
 import { SettingsLayout } from '~/components/SettingsLayout';
 import { useFileUpload } from '~/hooks/file-upload.hook';
 import {
@@ -18,11 +17,15 @@ import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar } from '~/utils/image-src-format.util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Plus, Trash } from '@phosphor-icons/react';
+import {
+  DiscordLogo, InstagramLogo, LinkSimple, Plus, TiktokLogo, Trash, TwitterLogo, YoutubeLogo
+} from '@phosphor-icons/react';
+import { LinkType } from '@prisma/client';
 
 const SettingsPage = () => {
   const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
   const { data: session, update } = useSession();
+  const ctx = api.useContext();
   const [isOpen, setIsOpen] = useState(false);
   const { push } = useRouter();
 
@@ -64,10 +67,18 @@ const SettingsPage = () => {
 
   const { mutate: addLink, isLoading: linkLoading } = api.user.addLink.useMutation({
     onSuccess: () => {
+      ctx.user.getMe.invalidate();
       toast.success("Link added!");
-      update();
     },
     onError: (e) => handleErrors({ e, message: "Failed to add link!", fn: () => setLoading(false) })
+  });
+
+  const { mutate: removeLink, isLoading: removeLinkLoading, variables: removeLinkVariables } = api.user.removeLink.useMutation({
+    onSuccess: () => {
+      ctx.user.getMe.invalidate();
+      toast.success("Link removed!");
+    },
+    onError: (e) => handleErrors({ e, message: "Failed to remove link!", fn: () => setLoading(false) })
   });
 
   /**
@@ -215,21 +226,39 @@ const SettingsPage = () => {
           </form>
 
           <form className='mt-8 w-full' onSubmit={handleSubmitLink(handleFormSubmitLink)}>
-            {userData?.website && <p>{userData?.website}</p>}
-            {userData?.twitter && <p>{userData?.twitter}</p>}
-            {userData?.instagram && <p>{userData?.instagram}</p>}
-            {userData?.tiktok && <p>{userData?.tiktok}</p>}
-            {userData?.youtube && <p>{userData?.youtube}</p>}
-            {userData?.discord && <p>{userData?.discord}</p>}
+            <label htmlFor="link" className="block font-medium mb-1">
+              Social Links
+            </label>
 
-            <div className="mb-4">
-              <label htmlFor="link" className="block font-medium mb-1">
-                Add a Link
-              </label>
+            <div className='flex flex-col gap-2'>
+              {userData?.links.map(link =>
+                <div className='flex items-center gap-2'>
+                  <p className='gap-1 py-2 grow w-full cursor-default flex px-4 items-center select-none rounded-md border border-black dark:border-white'>
+                    {link.type === LinkType.TWITTER && <TwitterLogo className='w-5 h-5' />}
+                    {link.type === LinkType.YOUTUBE && <YoutubeLogo className='w-5 h-5' />}
+                    {link.type === LinkType.TIKTOK && <TiktokLogo className='w-5 h-5' />}
+                    {link.type === LinkType.DISCORD && <DiscordLogo className='w-5 h-5' />}
+                    {link.type === LinkType.INSTAGRAM && <InstagramLogo className='w-5 h-5' />}
+                    {link.type === LinkType.WEBSITE && <LinkSimple className='w-5 h-5' />}
+                    <span className='underline'>{link.url}</span>
+                  </p>
+                  <div>
+                    <Button color='outline' iconLeft={<Trash />}
+                      centerItems
+                      isLoading={removeLinkLoading && removeLinkVariables?.id === link.id}
+                      onClick={() => removeLink({ id: link.id })}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {userData?.links && userData?.links?.length < 6 && <div className="mt-2">
               <div className='flex gap-2 w-full'>
                 <input
                   id="link"
                   type="text"
+                  placeholder='https://example.com'
                   className="px-4 py-2 w-full border rounded-md border-black dark:border-white dark:text-white dark:bg-black"
                   {...registerLink('url')}
                 />
@@ -243,7 +272,7 @@ const SettingsPage = () => {
                   />
                 </div>
               </div>
-            </div>
+            </div>}
           </form>
 
           <h2 className="text-4xl font-black mt-8">Danger Zone</h2><br></br>

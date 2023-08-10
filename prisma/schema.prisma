@@ -65,16 +65,22 @@ model User {
     imageCount      Int @default(0)
     likeCount       Int @default(0)
 
-    twitter         String?
-    instagram       String?
-    youtube         String?
-    tiktok          String?
-    discord         String?
-    website         String?
+    links          Link[]
 
     posts           Post[]
     likedBy         User[]    @relation("Likes")
     liked           User[]    @relation("Likes")
+}
+
+model Link {
+    id          String   @id @default(cuid())
+    type        LinkType
+    url         String
+
+    userId      String
+    user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
 }
 
 model Post {
@@ -97,6 +103,15 @@ enum PostType {
     PANTS
     SHOES
     WATCH
+}
+
+enum LinkType {
+    INSTAGRAM
+    TWITTER
+    YOUTUBE
+    TIKTOK
+    DISCORD
+    WEBSITE
 }
 
 model VerificationToken {
