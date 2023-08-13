@@ -32,26 +32,26 @@ export const NavMenu = () => {
                         <div className="px-4 py-4 space-y-2">
                             <Menu.Item>
                                 {({ active }) => (
-                                    <button
+                                    <Link href={'/explore'}
                                         className={`${active ? 'bg-gray-100 dark:bg-opacity-20' : ''
                                             } group flex w-full items-center justify-between px-4 py-2 font-urbanist font-semibold`}
                                     >
                                         <h3>Explore</h3>
 
                                         <Compass className='w-6 h-6' />
-                                    </button>
+                                    </Link>
                                 )}
                             </Menu.Item>
                             <Menu.Item>
                                 {({ active }) => (
-                                    <button
+                                    <Link href={'https://discord.gg/f4KEs5TVz2'}
                                         className={`${active ? 'bg-gray-100 dark:bg-opacity-20' : ''
                                             } group flex w-full items-center justify-between px-4 py-2 font-urbanist font-semibold`}
                                     >
                                         <h3>Discord</h3>
 
                                         <DiscordLogo className='w-6 h-6' />
-                                    </button>
+                                    </Link>
                                 )}
                             </Menu.Item>
 
