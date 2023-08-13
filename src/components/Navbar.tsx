@@ -117,9 +117,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true }:
     }, [])
 
     const { data: searchData, isFetching, refetch, isFetched } = api.user.searchProfiles.useQuery({ username: input }, {
-        enabled: false, refetchOnWindowFocus: false, refetchOnReconnect: false, refetchOnMount: false, refetchInterval: false, queryFn: (ctx) => {
-            if (!input) return [];
-        }
+        enabled: false
     });
 
     useEffect(() => {
@@ -135,7 +133,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true }:
             <div className='flex items-center px-6 sm:px-12 h-full justify-between gap-2'>
                 {input.length > 0 && <div className='absolute w-screen h-screen inset-0' onClick={() => setInput('')}></div>}
                 <div className='flex items-center gap-20'>
-                    <Link href='/' className='flex items-center gap-4'>
+                    <Link href={session.data?.user ? `/${session.data.user.username}` : '/'} className='flex items-center gap-4'>
                         <CoatHanger className='h-10 w-10' />
                         {showSlash ? <h1 className='text-2xl font-black font-urbanist'>/ {title}</h1> : <h1 className='text-2xl font-black font-urbanist'>outfits.bio</h1>}
                     </Link>
@@ -192,7 +190,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true }:
                         <Link href='/explore'>
                             <Button color='ghost'>Explore</Button>
                         </Link>
-                        <Link href='/discord'>
+                        <Link href='https://discord.gg/f4KEs5TVz2'>
                             <Button color='ghost'>Discord</Button>
                         </Link>
 

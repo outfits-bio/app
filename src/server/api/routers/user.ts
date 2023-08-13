@@ -438,6 +438,8 @@ export const userRouter = createTRPCRouter({
     .query(async ({ input, ctx }) => {
       const { username } = input;
 
+      if (username.length === 0) return;
+
       const users = await ctx.prisma.user.findMany({
         where: {
           username: {
