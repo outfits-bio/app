@@ -1,27 +1,14 @@
-import { env } from "~/env.mjs";
+import { env } from '~/env.mjs';
 import {
-  addLinkSchema,
-  editProfileSchema,
-  getProfileSchema,
-  likeProfileSchema,
-  removeLinkSchema,
-  searchProfileSchema,
-  userSchema,
-} from "~/schemas/user.schema";
-import {
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from "~/server/api/trpc";
+    addLinkSchema, editProfileSchema, getProfileSchema, likeProfileSchema, removeLinkSchema,
+    searchProfileSchema, userSchema
+} from '~/schemas/user.schema';
+import { createTRPCRouter, protectedProcedure, publicProcedure } from '~/server/api/trpc';
 
-import {
-  DeleteObjectCommand,
-  PutObjectCommand,
-  S3Client,
-} from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { Prisma } from "@prisma/client";
-import { TRPCError } from "@trpc/server";
+import { DeleteObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { Prisma } from '@prisma/client';
+import { TRPCError } from '@trpc/server';
 
 const badUsernames = [
   "login",
@@ -31,6 +18,7 @@ const badUsernames = [
   "[username]",
   "explore",
   "notifications",
+  "shoot",
 ];
 
 export const userRouter = createTRPCRouter({
@@ -459,4 +447,10 @@ export const userRouter = createTRPCRouter({
 
       return users;
     }),
+
+  getTotalUsers: publicProcedure.query(async ({ ctx }) => {
+    const users = await ctx.prisma.user.count();
+
+    return users;
+  }),
 });

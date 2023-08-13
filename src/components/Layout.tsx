@@ -6,7 +6,9 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { formatAvatar } from '~/utils/image-src-format.util';
 
-import { Bell, DoorOpen, Gear, HouseSimple, Plus, UserPlus } from '@phosphor-icons/react';
+import {
+    Bell, DoorOpen, Gear, HouseSimple, MagnifyingGlass, Plus, UserPlus
+} from '@phosphor-icons/react';
 
 import { Navbar } from './Navbar';
 
@@ -55,8 +57,8 @@ export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActi
                         <HouseSimple />
                     </Link>
 
-                    <Link href={'/notifications'} className='grow hover:bg-slate-100 rounded-md flex items-center justify-center text-3xl'>
-                        <Bell />
+                    <Link href={'/search'} className='grow hover:bg-slate-100 rounded-md flex items-center justify-center text-3xl'>
+                        <MagnifyingGlass />
                     </Link>
 
                     <Link href={'/shoot'} className='grow hover:bg-slate-100 rounded-md flex items-center justify-center text-3xl'>
