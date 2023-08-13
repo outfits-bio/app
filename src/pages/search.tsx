@@ -74,7 +74,7 @@ export const SearchPage: NextPage = () => {
 
             </div>
         </div>
-        <p className='absolute bottom-4 left-1/2 -translate-x-1/2 text-sm text-gray-500 font-urbanist'>{totalUsers} users have signed up for outfits.bio!</p>
+        <p className='absolute md:bottom-4 bottom-28 left-1/2 -translate-x-1/2 text-sm text-gray-500 font-urbanist w-full text-center'>{totalUsers} users have signed up for outfits.bio!</p>
     </Layout>
 }
 
