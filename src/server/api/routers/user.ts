@@ -5,6 +5,7 @@ import {
   getProfileSchema,
   likeProfileSchema,
   removeLinkSchema,
+  searchProfileSchema,
   userSchema,
 } from "~/schemas/user.schema";
 import {
@@ -430,5 +431,30 @@ export const userRouter = createTRPCRouter({
       }
 
       return like;
+    }),
+
+  searchProfiles: publicProcedure
+    .input(searchProfileSchema)
+    .query(async ({ input, ctx }) => {
+      const { username } = input;
+
+      const users = await ctx.prisma.user.findMany({
+        where: {
+          username: {
+            contains: username,
+          },
+        },
+        select: {
+          id: true,
+          username: true,
+          image: true,
+          tagline: true,
+          imageCount: true,
+          likeCount: true,
+        },
+        take: 5,
+      });
+
+      return users;
     }),
 });
