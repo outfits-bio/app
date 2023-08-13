@@ -19,13 +19,13 @@ const Home = () => {
   return (
     <Layout title='outfits.bio' showSlash={false}>
       <div className='w-screen h-full flex flex-col gap-4 justify-center items-center font-urbanist pb-20 overflow-x-hidden'>
-        <h1 className='text-5xl font-black'>Your virtual wardrobe</h1>
+        <h1 className='text-5xl font-black text-center sm:text-left'>Your virtual wardrobe</h1>
 
-        <h3 className='font-inter text-gray-600 dark:text-white text-2xl w-[525px] text-center'>
+        <h3 className='font-inter text-gray-600 dark:text-white px-2 text-lg sm:text-2xl sm:w-[525px] text-center'>
           A virtual wardrobe where people can add photos of clothes to their profile and share them with a link like outfits.bio/jeremy.
         </h3>
 
-        <div className='flex w-[525px] items-center gap-2'>
+        <div className='flex flex-col sm:flex-row sm:w-[525px] items-center gap-2'>
           <Button iconLeft={<GoogleLogo />} iconRight={<ArrowRight />} color='outline' onClick={() => signIn('google')} centerItems>
             Join with Google
           </Button>

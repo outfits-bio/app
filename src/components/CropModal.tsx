@@ -81,9 +81,9 @@ export const CropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl }: P
                                     />
                                 </div>
 
-                                <div className='flex w-full justify-between items-center mt-4'>
-                                    <Button onClick={() => setIsOpen(false)}>Cancel</Button>
-                                    <Button onClick={handleClose}>Save</Button>
+                                <div className='flex w-full justify-between items-center mt-4 gap-2'>
+                                    <Button centerItems onClick={() => setIsOpen(false)}>Cancel</Button>
+                                    <Button centerItems onClick={handleClose}>Save</Button>
                                 </div>
                             </Dialog.Panel>
                         </Transition.Child>

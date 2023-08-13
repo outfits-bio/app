@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { formatAvatar } from '~/utils/image-src-format.util';
 
-import { Bell, Gear, HouseSimple, Plus } from '@phosphor-icons/react';
+import { Bell, DoorOpen, Gear, HouseSimple, Plus, UserPlus } from '@phosphor-icons/react';
 
 import { Navbar } from './Navbar';
 
@@ -67,9 +67,11 @@ export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActi
                         <Gear />
                     </Link>
 
-                    <Link href={`/${session.data?.user.username}`} className='grow hover:bg-slate-100 rounded-md flex items-center justify-center text-3xl'>
+                    {session.data?.user ? <Link href={`/${session.data?.user.username}`} className='grow hover:bg-slate-100 rounded-md flex items-center justify-center text-3xl'>
                         <Image className='rounded-full object-contain' src={formatAvatar(session.data?.user.image, session.data?.user.id)} alt={session.data?.user.username ?? ""} width={30} height={30} />
-                    </Link>
+                    </Link> : <Link href={'/login'} className='grow hover:bg-slate-100 rounded-md flex items-center justify-center text-3xl'>
+                        <UserPlus />
+                    </Link>}
                 </div>
             }
         </div>

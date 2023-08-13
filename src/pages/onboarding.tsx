@@ -35,8 +35,6 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
         resolver: zodResolver(editProfileSchema),
     });
 
-
-
     // This fetches the user's data and sets the username and username fields to the user's current username and username
     const { data } = api.user.getMe.useQuery(undefined, {
         onError: (e) => handleErrors({ e, message: "Failed to fetch you!", fn: () => { } }),

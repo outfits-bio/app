@@ -45,7 +45,7 @@ const SettingsPage = () => {
     }
   });
 
-  const { register: registerLink, handleSubmit: handleSubmitLink } = useForm<AddLinkInput>({
+  const { register: registerLink, handleSubmit: handleSubmitLink, resetField } = useForm<AddLinkInput>({
     resolver: zodResolver(addLinkSchema),
   });
 
@@ -69,6 +69,7 @@ const SettingsPage = () => {
 
   const { mutate: addLink, isLoading: linkLoading } = api.user.addLink.useMutation({
     onSuccess: () => {
+      resetField("url");
       ctx.user.getMe.invalidate();
       toast.success("Link added!");
     },
@@ -227,34 +228,34 @@ const SettingsPage = () => {
             </Button>
           </form>
 
-          <form className='mt-8 w-full' onSubmit={handleSubmitLink(handleFormSubmitLink)}>
-            <label htmlFor="link" className="block font-medium mb-1">
-              Social Links
-            </label>
+          <label htmlFor="link" className="block font-medium mb-1 mt-8 w-full">
+            Social Links
+          </label>
 
-            <div className='flex flex-col gap-2'>
-              {userData?.links.map(link =>
-                <div className='flex items-center gap-2'>
-                  <p className='gap-1 py-2 grow w-full cursor-default flex px-4 items-center select-none rounded-md border border-black dark:border-white'>
-                    {link.type === LinkType.TWITTER && <TwitterLogo className='w-5 h-5' />}
-                    {link.type === LinkType.YOUTUBE && <YoutubeLogo className='w-5 h-5' />}
-                    {link.type === LinkType.TIKTOK && <TiktokLogo className='w-5 h-5' />}
-                    {link.type === LinkType.DISCORD && <DiscordLogo className='w-5 h-5' />}
-                    {link.type === LinkType.INSTAGRAM && <InstagramLogo className='w-5 h-5' />}
-                    {link.type === LinkType.WEBSITE && <LinkSimple className='w-5 h-5' />}
-                    <span className='underline'>{link.url}</span>
-                  </p>
-                  <div>
-                    <Button color='outline' iconLeft={<Trash />}
-                      centerItems
-                      isLoading={removeLinkLoading && removeLinkVariables?.id === link.id}
-                      onClick={() => removeLink({ id: link.id })}
-                    />
-                  </div>
+          <div className='flex flex-col gap-2'>
+            {userData?.links.map(link =>
+              <div className='flex items-center gap-2 w-full'>
+                <p className='gap-1 py-2 w-full cursor-default overflow-x-hidden flex px-4 items-center select-none rounded-md border border-black dark:border-white'>
+                  {link.type === LinkType.TWITTER && <TwitterLogo className='w-5 h-5' />}
+                  {link.type === LinkType.YOUTUBE && <YoutubeLogo className='w-5 h-5' />}
+                  {link.type === LinkType.TIKTOK && <TiktokLogo className='w-5 h-5' />}
+                  {link.type === LinkType.DISCORD && <DiscordLogo className='w-5 h-5' />}
+                  {link.type === LinkType.INSTAGRAM && <InstagramLogo className='w-5 h-5' />}
+                  {link.type === LinkType.WEBSITE && <LinkSimple className='w-5 h-5' />}
+                  <span className='underline'>{link.url}</span>
+                </p>
+                <div>
+                  <Button color='outline' iconLeft={<Trash />}
+                    centerItems
+                    isLoading={removeLinkLoading && removeLinkVariables?.id === link.id}
+                    onClick={() => removeLink({ id: link.id })}
+                  />
                 </div>
-              )}
-            </div>
+              </div>
+            )}
+          </div>
 
+          <form className='' onSubmit={handleSubmitLink(handleFormSubmitLink)}>
             {userData?.links && userData?.links?.length < 6 && <div className="mt-2">
               <div className='flex gap-2 w-full'>
                 <input
