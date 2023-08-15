@@ -49,10 +49,9 @@ const Home = () => {
         </div>
       </div>
 
-      <div className='w-full flex xl:flex-row flex-col px-12 sm:px-20 py-24 border-y border-black justify-between items-center xl:items-start gap-8'>
+      <div id='more' className='w-full flex xl:flex-row flex-col px-12 sm:px-20 py-24 border-y border-black justify-between items-center xl:items-start gap-8'>
         <div className='w-full flex items-center justify-center xl:justify-start'>
-          {/* <Image src={landing} alt='Landing Image' priority placeholder='blur' className='object-cover object-right-top w-3/4' /> */}
-          <div className='max-w-full w-[450px] h-72 rounded-lg bg-black' />
+          <video src={'/share.mp4'} autoPlay controls={false} loop muted width={450} height={288} className='object-cover object-right-top max-w-full rounded-lg bg-black' />
         </div>
 
         <div className='xl:w-1/2 flex flex-col justify-center items-center gap-4 text-center xl:text-right sm:w-[550px]'>
@@ -80,18 +79,34 @@ const Home = () => {
         </div>
 
         <div className='w-full xl:w-1/2 flex justify-center xl:justify-end items-center'>
-          {/* <Image src={landing} alt='Landing Image' priority placeholder='blur' className='object-cover object-right-top w-3/4' /> */}
-          <div className='max-w-full w-[450px] h-72 rounded-lg bg-black' />
+          <video src={'/like.mp4'} autoPlay controls={false} loop muted width={450} height={288} className='object-cover object-right-top max-w-full rounded-lg bg-black' />
         </div>
       </div>
 
-      <div className='flex flex-col md:flex-row gap-12 items-center w-full py-12 px-20'>
+      <div className='flex flex-col md:flex-row gap-12 w-full py-12 px-20 justify-between'>
         <div className='flex flex-col items-center'>
           <h1 className='text-lg font-black font-urbanist flex items-center gap-2'><CoatHanger className='mt-1' /> outfits.bio</h1>
           <p className='text-sm text-gray-500'>Your wardrobe in your bio.</p>
         </div>
 
+        <div className='grid gap-8 lg:gap-20 xl:gap-32 grid-cols-1 sm:grid-cols-3'>
+          <div className='flex flex-col gap-1'>
+            <h3 className='font-bold font-urbanist'>Explore</h3>
+            <Link href='/explore' className='text-sm text-gray-500 underline'>Explore</Link>
+          </div>
 
+          <div className='flex flex-col gap-1'>
+            <h3 className='font-bold font-urbanist'>Socials</h3>
+            <Link href='https://www.producthunt.com/posts/outfits-bio' className='text-sm text-gray-500 underline'>Product Hunt</Link>
+            <Link href='https://discord.gg/f4KEs5TVz2' className='text-sm text-gray-500 underline'>Discord Server</Link>
+          </div>
+
+          <div className='flex flex-col gap-1'>
+            <h3 className='font-bold font-urbanist'>Legal</h3>
+            <Link href='/' className='text-sm text-gray-500 underline'>Privacy Policy</Link>
+            <Link href='/' className='text-sm text-gray-500 underline'>Terms of Service</Link>
+          </div>
+        </div>
       </div>
     </Layout>
   );
