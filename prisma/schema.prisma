@@ -55,6 +55,7 @@ model User {
     onboarded       Boolean   @default(false)
     accounts        Account[]
     sessions        Session[]
+    verified        Boolean @default(false)
 
     outfitPostCount Int @default(0)
     hoodiePostCount Int @default(0)

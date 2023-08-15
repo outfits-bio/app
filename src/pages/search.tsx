@@ -8,7 +8,7 @@ import { Layout } from '~/components/Layout';
 import { api } from '~/utils/api.util';
 import { formatAvatar } from '~/utils/image-src-format.util';
 
-import { Camera, Heart, MagnifyingGlass, SpinnerGap } from '@phosphor-icons/react';
+import { Camera, Heart, MagnifyingGlass, SealCheck, SpinnerGap } from '@phosphor-icons/react';
 
 export const SearchPage: NextPage = () => {
     const [input, setInput] = useState('');
@@ -52,7 +52,10 @@ export const SearchPage: NextPage = () => {
                                 <Image className='rounded-full object-contain' src={formatAvatar(user.image, user.id)} alt={user.username ?? ""} width={64} height={64} />
 
                                 <div className='flex flex-col gap-1'>
-                                    <h1 className='font-black'>{user.username}</h1>
+                                    <h1 className='font-black flex gap-1 items-center'>
+                                        <span>{user.username}</span>
+                                        {user.verified && <SealCheck className='w-4 h-4' />}
+                                    </h1>
                                     <p className='text-xs'>{user.tagline}</p>
 
                                     <div className='flex gap-2 items-center text-xs'>
