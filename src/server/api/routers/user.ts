@@ -1,14 +1,27 @@
-import { env } from '~/env.mjs';
+import { env } from "~/env.mjs";
 import {
-    addLinkSchema, editProfileSchema, getProfileSchema, likeProfileSchema, removeLinkSchema,
-    searchProfileSchema, userSchema
-} from '~/schemas/user.schema';
-import { createTRPCRouter, protectedProcedure, publicProcedure } from '~/server/api/trpc';
+  addLinkSchema,
+  editProfileSchema,
+  getProfileSchema,
+  likeProfileSchema,
+  removeLinkSchema,
+  searchProfileSchema,
+  userSchema,
+} from "~/schemas/user.schema";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
-import { DeleteObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { Prisma } from '@prisma/client';
-import { TRPCError } from '@trpc/server';
+import {
+  DeleteObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { Prisma } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
 
 const badUsernames = [
   "login",
@@ -19,7 +32,7 @@ const badUsernames = [
   "explore",
   "notifications",
   "shoot",
-  "discord"
+  "discord",
 ];
 
 export const userRouter = createTRPCRouter({
@@ -159,6 +172,7 @@ export const userRouter = createTRPCRouter({
           watchPostCount: true,
           imageCount: true,
           likeCount: true,
+          verified: true,
           likedBy: {
             where: { id: ctx.session?.user.id },
             select: { id: true },
@@ -442,6 +456,7 @@ export const userRouter = createTRPCRouter({
           tagline: true,
           imageCount: true,
           likeCount: true,
+          verified: true,
         },
         take: 5,
       });

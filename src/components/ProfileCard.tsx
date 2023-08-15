@@ -9,8 +9,8 @@ import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar } from '~/utils/image-src-format.util';
 
 import {
-    Camera, DiscordLogo, DotsThree, Heart, InstagramLogo, LinkSimple, PencilSimple, ShareFat,
-    TiktokLogo, TwitterLogo, YoutubeLogo
+    Camera, CheckCircle, DiscordLogo, DotsThree, Heart, InstagramLogo, LinkSimple, PencilSimple,
+    SealCheck, ShareFat, TiktokLogo, TwitterLogo, YoutubeLogo
 } from '@phosphor-icons/react';
 import { LinkType } from '@prisma/client';
 import { inferRouterOutputs } from '@trpc/server';
@@ -85,7 +85,10 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                     </div>
 
                     <div className='flex flex-col gap-1 md:gap-4'>
-                        <h1 className='font-black text-2xl md:text-4xl font-urbanist'>{profileData?.username}</h1>
+                        <h1 className='font-black text-2xl md:text-4xl font-urbanist gap-2 md:gap-3 flex items-center'>
+                            <span>{profileData?.username}</span>
+                            {profileData?.verified && <SealCheck className='w-6 h-6 md:w-8 md:h-8' />}
+                        </h1>
 
                         <p className={`grow ${loading && 'skeleton'}`}>{profileData?.tagline}</p>
 

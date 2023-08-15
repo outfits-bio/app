@@ -11,7 +11,7 @@ import { formatAvatar } from '~/utils/image-src-format.util';
 import { Menu, Transition } from '@headlessui/react';
 import {
     Bell, Camera, CoatHanger, Compass, Door, DoorOpen, Gear, Heart, MagnifyingGlass, Person, Plus,
-    SpinnerGap, User
+    SealCheck, SpinnerGap, User
 } from '@phosphor-icons/react';
 
 import { Button } from './Button';
@@ -160,7 +160,10 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true }:
                                         <Image className='rounded-full object-contain' src={formatAvatar(user.image, user.id)} alt={user.username ?? ""} width={64} height={64} />
 
                                         <div className='flex flex-col gap-1'>
-                                            <h1 className='font-black'>{user.username}</h1>
+                                            <h1 className='font-black flex gap-1 items-center'>
+                                                <span>{user.username}</span>
+                                                {user.verified && <SealCheck className='w-4 h-4' />}
+                                            </h1>
                                             <p className='text-xs'>{user.tagline}</p>
 
                                             <div className='flex gap-2 items-center text-xs'>
