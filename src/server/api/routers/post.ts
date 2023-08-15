@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { env } from "~/env.mjs";
+import { getPostsSchema, paginatedSchema } from "~/schemas/user.schema";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -185,5 +186,47 @@ export const postRouter = createTRPCRouter({
       });
 
       return posts;
+    }),
+  getLatestPosts: publicProcedure
+    .input(getPostsSchema)
+    .query(async ({ ctx, input }) => {
+      const { cursor, skip, type } = input;
+
+      const posts = await ctx.prisma.post.findMany({
+        where: {
+          type,
+        },
+        select: {
+          id: true,
+          image: true,
+          type: true,
+          user: {
+            select: {
+              image: true,
+              verified: true,
+              username: true,
+              id: true,
+            },
+          },
+        },
+        take: 21,
+        skip: skip,
+        cursor: cursor ? { id: cursor } : undefined,
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+
+      let nextCursor: typeof cursor | undefined = undefined;
+
+      if (posts.length > 20) {
+        const nextItem = posts.pop(); // return the last item from the array
+        nextCursor = nextItem?.id;
+      }
+
+      return {
+        posts,
+        nextCursor,
+      };
     }),
 });
