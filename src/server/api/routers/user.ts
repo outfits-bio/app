@@ -19,6 +19,7 @@ const badUsernames = [
   "explore",
   "notifications",
   "shoot",
+  "discord"
 ];
 
 export const userRouter = createTRPCRouter({
