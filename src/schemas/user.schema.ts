@@ -1,6 +1,6 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import { LinkType } from "@prisma/client";
+import { LinkType, PostType } from '@prisma/client';
 
 export const userSchema = z.object({
   email: z.string().email(),
@@ -36,3 +36,15 @@ export const removeLinkSchema = z.object({
   id: z.string().cuid(),
 });
 export type RemoveLinkInput = ReturnType<typeof removeLinkSchema.parse>;
+
+export const paginatedSchema = z.object({
+  cursor: z.string().nullish(),
+  skip: z.number().int().min(0).optional(),
+});
+
+export const getPostsSchema = z
+  .object({
+    type: z.nativeEnum(PostType).optional(),
+  })
+  .merge(paginatedSchema);
+export type GetPostsInput = ReturnType<typeof getPostsSchema.parse>;
