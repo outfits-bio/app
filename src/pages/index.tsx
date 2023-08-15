@@ -103,8 +103,8 @@ const Home = () => {
 
           <div className='flex flex-col gap-1'>
             <h3 className='font-bold font-urbanist'>Legal</h3>
-            <Link href='/' className='text-sm text-gray-500 underline'>Privacy Policy</Link>
-            <Link href='/' className='text-sm text-gray-500 underline'>Terms of Service</Link>
+            <Link href='/docs/privacy-policy' className='text-sm text-gray-500 underline'>Privacy Policy</Link>
+            <Link href='/docs/terms-of-service' className='text-sm text-gray-500 underline'>Terms of Service</Link>
           </div>
         </div>
       </div>

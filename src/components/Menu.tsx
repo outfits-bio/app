@@ -56,10 +56,10 @@ export const NavMenu = () => {
                             </Menu.Item>
 
                             <div className='flex w-full items-center justify-center gap-4 font-urbanist font-semibold opacity-50'>
-                                <Link href={'/'} className='px-4 py-2'>
+                                <Link href={'/docs/terms-of-service'} className='px-4 py-2'>
                                     Terms
                                 </Link>
-                                <Link href={'/'} className='px-4 py-2'>
+                                <Link href={'/docs/privacy-policy'} className='px-4 py-2'>
                                     Privacy
                                 </Link>
                             </div>
