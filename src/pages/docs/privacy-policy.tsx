@@ -56,7 +56,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             ➔ The termination of a User Profile, linked Account, Post, or Session
             <br />
-            ➔ Cookies expiring and clearing after seven 1 month
+            ➔ Cookies expiring and clearing after 1 month
             <br />
             <h2 className="font-bold font-urbanist mt-6">4. Data sharing with third-parties</h2>
             <br />
