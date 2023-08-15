@@ -50,7 +50,7 @@ export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActi
     return (
         <div className={`bg-white font-inter text-black flex flex-col dark:bg-black dark:text-white min-h-screen antialiased ${urbanist.variable} ${inter.variable}`}>
             <Navbar title={title} session={session} showSlash={showSlash} showActions={showActions} />
-            <main className='h-screen pt-20 overflow-x-hidden pb-24 md:pb-0'>{children}</main>
+            <main className='h-screen pt-20 overflow-x-hidden pb-24 md:pb-0 scroll-smooth'>{children}</main>
             {pathname !== '/login' && pathname !== '/onboarding' && pathname !== '/' &&
                 <div className='py-2 px-6 bg-white dark:bg-black border border-black dark:border-white flex justify-between w-screen h-24 fixed bottom-0 md:hidden gap-4'>
                     <Link href={session.data?.user ? `/${session.data?.user.username}` : '/'} className='grow hover:bg-slate-100 rounded-md flex items-center justify-center text-3xl'>
