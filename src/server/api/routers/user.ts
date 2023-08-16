@@ -37,7 +37,7 @@ const badUsernames = [
   "shoot",
   "shots",
   // Socials
-  "outfitsbio"
+  "outfitsbio",
   "outfits",
   "outfits.bio",
   "discord",
