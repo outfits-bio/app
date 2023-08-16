@@ -36,6 +36,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta name="twitter:title" content={metadata.twitter.title} />
         <meta name="twitter:description" content={metadata.twitter.description} />
         <meta name="twitter:image" content={metadata.twitter.image} />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icon.png"></link>
       </Head>
 
       <SessionProvider session={session}>
