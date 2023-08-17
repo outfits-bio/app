@@ -178,6 +178,7 @@ export const postRouter = createTRPCRouter({
           type: true,
           image: true,
           createdAt: true,
+          featured: true,
         },
         take: 20,
         orderBy: {
@@ -200,6 +201,7 @@ export const postRouter = createTRPCRouter({
           id: true,
           image: true,
           type: true,
+          featured: true,
           user: {
             select: {
               image: true,

@@ -15,14 +15,14 @@ const SettingsPage: NextPage = ({ }) => {
     return <Layout title="Settings" redirectIfNotAuth showActions showSlash>
         <div className="w-screen flex flex-col gap-2 p-4">
             <Link href='/settings/profile'>
-                <Button variant='ghost' disabled={pathname === '/settings/profile'} itemsLeft iconLeft={<User />}>Profile</Button>
+                <Button variant='ghost' disabled={pathname === '/settings/profile'} className='justify-start' iconLeft={<User />}>Profile</Button>
             </Link>
 
             <Link href='/settings/connections'>
-                <Button variant='ghost' disabled={pathname === '/settings/connections'} itemsLeft iconLeft={<SquaresFour />}>Connections</Button>
+                <Button variant='ghost' disabled={pathname === '/settings/connections'} className='justify-start' iconLeft={<SquaresFour />}>Connections</Button>
             </Link>
 
-            <Button variant="warning-ghost" itemsLeft iconLeft={<DoorOpen />} onClick={() => signOut({ callbackUrl: '/' })}>Logout</Button>
+            <Button variant="warning-ghost" className='justify-start' iconLeft={<DoorOpen />} onClick={() => signOut({ callbackUrl: '/' })}>Logout</Button>
         </div>
     </Layout>;
 }
