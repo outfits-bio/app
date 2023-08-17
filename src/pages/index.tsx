@@ -36,11 +36,11 @@ const Home = () => {
                 Sign up!
               </Link>
             </Button>
+          <Link href={'#more'}>
             <Button iconRight={<ArrowRight />} variant='ghost' centerItems>
-              <Link href={'#more'}>
                 Learn More
-              </Link>
             </Button>
+            </Link>
           </div>
         </div>
 
@@ -60,20 +60,20 @@ const Home = () => {
 
           <Link href='/login' className='w-full'>
             <Button variant='outline' centerItems iconRight={<ArrowRight />}>
-              Sign up now!
+              Create a profile!
             </Button>
           </Link>
         </div>
       </div>
 
       <div className='w-full flex xl:flex-row flex-col-reverse px-12 sm:px-20 py-24 justify-between items-center xl:items-start gap-8 text-center xl:text-left'>
-        <div className='flex flex-col justify-center items-center gap-4 sm:w-[550px]'>
+        <div className='flex flex-col justify-center items-left gap-4 sm:w-[550px]'>
           <h1 className='text-4xl sm:text-5xl font-black font-urbanist'>Show or recieve likes!</h1>
           <p className='font-inter text-gray-600 dark:text-white text-lg sm:text-2xl flex'>Do you like someones wardrobe? Make sure to show them love by liking their profile!</p>
 
-          <Link href='/login' className='w-full'>
+          <Link href='/explore' className='w-full'>
             <Button variant='outline' centerItems iconRight={<ArrowRight />}>
-              Sign up now!
+              Start exploring!
             </Button>
           </Link>
         </div>
@@ -84,7 +84,7 @@ const Home = () => {
       </div>
 
       <div className='flex flex-col md:flex-row gap-12 w-full py-12 px-20 justify-between'>
-        <div className='flex flex-col items-center'>
+        <div className='flex flex-col items-left'>
           <h1 className='text-lg font-black font-urbanist flex items-center gap-2'><CoatHanger className='mt-1' /> outfits.bio</h1>
           <p className='text-sm text-gray-500'>Your wardrobe in your bio.</p>
         </div>
