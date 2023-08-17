@@ -85,6 +85,23 @@ export const getPostTypeIcon = (type: PostType): React.ReactNode => {
   }
 };
 
+export const getPostTypeIconSmall = (type: PostType): React.ReactNode => {
+  switch (type) {
+    case PostType.OUTFIT:
+      return <CoatHanger className='w-6 h-6' />
+    case PostType.HOODIE:
+      return <Hoodie className='w-6 h-6' />
+    case PostType.SHIRT:
+      return <TShirt className='w-6 h-6' />
+    case PostType.PANTS:
+      return <Pants className='w-6 h-6' />
+    case PostType.SHOES:
+      return <Sneaker className='w-6 h-6' />
+    case PostType.WATCH:
+      return <Watch className='w-6 h-6' />
+  }
+}
+
 /**
  * Optimistically updates the previously fetched array of posts using the updateData function
  * @param ctx Context (from api.useContext)

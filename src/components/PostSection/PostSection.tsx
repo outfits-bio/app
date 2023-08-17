@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { useFileUpload } from '~/hooks/file-upload.hook';
 import { api } from '~/utils/api.util';
@@ -9,6 +11,7 @@ import { formatImage } from '~/utils/image-src-format.util';
 import { Plus, Trash } from '@phosphor-icons/react';
 
 import { PostCropModal } from '../PostCropModal';
+import { PostModal } from '../PostModal';
 import { Spinner } from '../Spinner';
 import {
     getPostTypeCount, getPostTypeIcon, getPostTypeName, onError, onMutate, onSettled,
@@ -16,8 +19,11 @@ import {
 } from './post-section.util';
 
 export const PostSection = ({ profileData, postsData, type, loading }: PostSectionProps) => {
+    const { query } = useRouter();
     const { data: session } = useSession();
     const ctx = api.useContext();
+
+    const { postId } = query;
 
     const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
 
@@ -105,38 +111,44 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
                     </div>}
 
                     {postsData?.filter(p => p.type === type).map((post, i) => (
-                        <div
-                            onMouseEnter={() => setDeleteButton(post.id)}
-                            onMouseLeave={() => setDeleteButton(null)}
-                            key={post.id ?? 'loading'}
-                            className="w-44 h-72 border border-gray-500 rounded-md relative">
+                        <>
+                            <Link
+                                href={`/${profileData?.username}?postId=${post.id}`}
+                                onMouseEnter={() => setDeleteButton(post.id)}
+                                onMouseLeave={() => setDeleteButton(null)}
+                                key={post.id ?? 'loading'}
+                                className="w-44 h-72 border border-gray-500 rounded-md relative">
 
-                            {isLoading && i === 0 ?
-                                <div className='bg-gray-100 dark:bg-gray-700 w-full h-full flex items-center justify-center'>
-                                    <Spinner />
-                                </div>
-                                :
-                                post.id &&
-                                <Image
-                                    // 176px is the same as w-44, the width of the container
-                                    sizes="176px"
-                                    src={formatImage(post.image, profileData?.id)}
-                                    className="object-cover"
-                                    fill
-                                    alt={post.type}
-                                    // Outfits and Hoodies are above the fold on most screens, so we want to prioritize them
-                                    priority={post.type === 'OUTFIT' || post.type === 'HOODIE'}
-                                />
-                            }
+                                {isLoading && i === 0 ?
+                                    <div className='bg-gray-100 dark:bg-gray-700 w-full h-full flex items-center justify-center'>
+                                        <Spinner />
+                                    </div>
+                                    :
+                                    post.id &&
+                                    <Image
+                                        // 176px is the same as w-44, the width of the container
+                                        sizes="176px"
+                                        src={formatImage(post.image, profileData?.id)}
+                                        className="object-cover"
+                                        fill
+                                        alt={post.type}
+                                        // Outfits and Hoodies are above the fold on most screens, so we want to prioritize them
+                                        priority={post.type === 'OUTFIT' || post.type === 'HOODIE'}
+                                    />
+                                }
 
-                            {userIsProfileOwner && deleteButton === post.id &&
-                                <button
-                                    onClick={() => deletePost({ id: post.id })}
-                                    className='flex items-center justify-center text-white text-lg absolute -top-2 -right-1 w-8 h-8 bg-red-500 rounded-full'>
-                                    <Trash />
-                                </button>
-                            }
-                        </div>
+                                {userIsProfileOwner && deleteButton === post.id &&
+                                    <button
+                                        onClick={() => deletePost({ id: post.id })}
+                                        className='flex items-center justify-center text-white text-lg absolute -top-2 -right-1 w-8 h-8 bg-red-500 rounded-full'>
+                                        <Trash />
+                                    </button>
+                                }
+
+
+                            </Link>
+                            <PostModal profilePost={postsData?.filter(p => p.type === type)} user={profileData} index={i} />
+                        </>
                     ))}
                 </div>
             </div>
