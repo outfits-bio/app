@@ -176,20 +176,6 @@ export const ProfilePostModal = ({ profilePost, user }: ProfilePostModalProps) =
                         </Dialog.Panel>
 
                     </Transition.Child>
-                    {/* <Transition.Child
-                        as={Fragment}
-                        enter="ease-out duration-100"
-                        enterFrom="opacity-0 scale-95"
-                        enterTo="opacity-100 scale-100"
-                        leave="ease-in duration-100"
-                        leaveFrom="opacity-100 scale-100"
-                        leaveTo="opacity-0 scale-95"
-                    >
-                        <button className='bg-black bg-opacity-10 w-12 h-12 rounded-full border border-black text-white hidden md:flex items-center justify-center hover:bg-opacity-20 transition-colors duration-100'>
-                            <ArrowRight className='w-5 h-5' />
-                        </button>
-
-                    </Transition.Child> */}
                 </div>
             </div>
         </Dialog>
