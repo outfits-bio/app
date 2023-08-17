@@ -9,8 +9,8 @@ import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar } from '~/utils/image-src-format.util';
 
 import {
-    Camera, CheckCircle, DiscordLogo, DotsThree, Hammer, Heart, InstagramLogo, LinkSimple,
-    PencilSimple, SealCheck, ShareFat, TiktokLogo, TwitterLogo, YoutubeLogo
+    Camera, CheckCircle, DiscordLogo, DotsThree, GithubLogo, Hammer, Heart, InstagramLogo,
+    LinkSimple, PencilSimple, SealCheck, ShareFat, TiktokLogo, TwitterLogo, YoutubeLogo
 } from '@phosphor-icons/react';
 import { LinkType } from '@prisma/client';
 import { inferRouterOutputs } from '@trpc/server';
@@ -116,8 +116,9 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                                 {link.type === LinkType.TIKTOK && <TiktokLogo className='w-5 h-5' />}
                                 {link.type === LinkType.DISCORD && <DiscordLogo className='w-5 h-5' />}
                                 {link.type === LinkType.INSTAGRAM && <InstagramLogo className='w-5 h-5' />}
+                                {link.type === LinkType.GITHUB && <GithubLogo className='w-5 h-5' />}
                                 {link.type === LinkType.WEBSITE && <LinkSimple className='w-5 h-5' />}
-                                <span className='underline'>{link.url}</span>
+                                <span className='underline'>{link.url.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '')}</span>
                             </p>
                         </Link>)}
                 </div>

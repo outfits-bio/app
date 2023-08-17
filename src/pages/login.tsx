@@ -1,4 +1,5 @@
 import { signIn } from 'next-auth/react';
+import Link from 'next/link';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
 
@@ -23,16 +24,9 @@ const LoginPage = () => {
             <Button onClick={handleDiscord} iconRight={<DiscordLogo />}>Continue with Discord</Button>
             <Button onClick={handleGoogle} iconRight={<GoogleLogo />}>Continue with Google</Button>
           </div>
+          <p className='bottom-0 fixed p-10 text-sm text-center w-96'>By clicking Get Started, you agree to our <span><Link href={'/docs/terms-of-service'} className='font-bold underline'>Terms of Service</Link></span> and <span><Link href={'/docs/privacy-policy'} className='font-bold underline'>Privacy Policy</Link></span>.</p>
         </div>
 
-        <div className='md:hidden absolute bottom-0 right-0 h-72 overflow-hidden'>
-          <div className='flex gap-10'>
-            <div className='w-52 h-80 bg-black dark:bg-white rounded-lg rotate-12'></div>
-            <div className='w-52 h-80 bg-black dark:bg-white rounded-lg rotate-12 mt-12'></div>
-            <div className='w-52 h-80 bg-black dark:bg-white rounded-lg rotate-12 mt-24'></div>
-            <div className='w-52 h-80 bg-black dark:bg-white rounded-lg rotate-12 mt-36'></div>
-          </div>
-        </div>
 
         <div className='h-full shrink-0 grow hidden overflow-hidden flex-col md:flex'>
           <div className='flex gap-10 -mt-96'>
@@ -73,6 +67,7 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
+
     </Layout>
   );
 };

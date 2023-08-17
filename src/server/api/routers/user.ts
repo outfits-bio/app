@@ -259,6 +259,8 @@ export const userRouter = createTRPCRouter({
         data.type = "YOUTUBE";
       } else if (protocolTrimmedUrl.startsWith("tiktok.com")) {
         data.type = "TIKTOK";
+      } else if (protocolTrimmedUrl.startsWith("github.com")) {
+        data.type = "GITHUB";
       }
 
       await ctx.prisma.link.create({

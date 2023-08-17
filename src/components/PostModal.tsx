@@ -10,7 +10,7 @@ import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
-    ArrowLeft, ArrowRight, DotsThree, Flag, Hammer, Prohibit, SealCheck, ShareFat
+    ArrowLeft, ArrowRight, DotsThree, Flag, Hammer, Prohibit, SealCheck, ShareFat, X
 } from '@phosphor-icons/react';
 
 import { Button } from './Button';
@@ -132,7 +132,11 @@ export const PostModal = ({ profilePost, explorePost, user }: PostModalProps) =>
                         <Dialog.Panel className={`relative transform overflow-hidden rounded-xl bg-white text-left align-middle shadow-xl transition-all w-[400px] h-[654px]`}>
                             {explorePost ?
                                 <>
+
                                     <Image src={formatImage(post.image, (post as ExplorePost[0]).user.id)} alt={post.type ?? ''} fill className='rounded-xl border-black border' />
+                                    <button className='absolute left-4 top-4 text-white' onClick={closeModal}>
+                                        <X className='w-5 h-4' />
+                                    </button>
 
                                     <div className='flex flex-col justify-end items-center p-4 absolute bottom-0 bg-gradient-to-b from-transparent to-black w-full h-1/4 bg-fixed'>
                                         <div className='text-white flex w-full gap-2 mb-2 pl-0.5'>
@@ -141,7 +145,7 @@ export const PostModal = ({ profilePost, explorePost, user }: PostModalProps) =>
                                         </div>
                                         <div className='flex justify-between items-center w-full'>
                                             <div className='flex gap-2'>
-                                                <Image className='rounded-full object-contain' src={formatAvatar((post as ExplorePost[0]).user.image, (post as ExplorePost[0]).user.id)} alt={(post as ExplorePost[0]).user.username ?? ""} width={30} height={30} />
+                                                <Image className='rounded-full object-cover' src={formatAvatar((post as ExplorePost[0]).user.image, (post as ExplorePost[0]).user.id)} alt={(post as ExplorePost[0]).user.username ?? ""} width={30} height={30} />
 
                                                 <h1 className='text-white flex gap-1 items-center text-sm w-full'>
                                                     <span className='truncate'>{(post as ExplorePost[0]).user.username}</span>
@@ -150,10 +154,8 @@ export const PostModal = ({ profilePost, explorePost, user }: PostModalProps) =>
                                             </div>
 
                                             <Menu as="div" className="relative inline-block text-left">
-                                                <Menu.Button as={React.Fragment}>
-                                                    <button className='text-white flex items-center justify-center rounded-lg w-12 h-8 hover:bg-white hover:bg-opacity-10 transition-colors duration-100'>
-                                                        <DotsThree className='w-5 h-5' />
-                                                    </button>
+                                                <Menu.Button className='text-white flex items-center justify-center rounded-lg w-12 h-8 hover:bg-white hover:bg-opacity-10 transition-colors duration-100'>
+                                                    <DotsThree className='w-5 h-5' />
                                                 </Menu.Button>
                                                 <Transition
                                                     as={Fragment}
@@ -190,6 +192,9 @@ export const PostModal = ({ profilePost, explorePost, user }: PostModalProps) =>
                                 </> :
                                 <>
                                     <Image src={formatImage(post.image, user?.id)} alt={post.type ?? ''} fill className='rounded-xl border-black border' />
+                                    <button className='absolute left-4 top-4 text-white' onClick={closeModal}>
+                                        <X className='w-5 h-4' />
+                                    </button>
 
                                     <div className='flex flex-col justify-end items-center p-4 absolute bottom-0 bg-gradient-to-b from-transparent to-black w-full h-1/4 bg-fixed'>
                                         <div className='text-white flex w-full gap-2 mb-2 pl-0.5'>
@@ -199,7 +204,7 @@ export const PostModal = ({ profilePost, explorePost, user }: PostModalProps) =>
 
                                         <div className='flex justify-between items-center w-full'>
                                             <div className='flex gap-2'>
-                                                <Image className='rounded-full object-contain' src={formatAvatar(user?.image, user?.id)} alt={user?.username ?? ""} width={30} height={30} />
+                                                <Image className='rounded-full object-cover' src={formatAvatar(user?.image, user?.id)} alt={user?.username ?? ""} width={30} height={30} />
 
                                                 <h1 className='text-white flex gap-1 items-center text-sm w-full'>
                                                     <span className='truncate'>{user?.username}</span>
@@ -208,10 +213,8 @@ export const PostModal = ({ profilePost, explorePost, user }: PostModalProps) =>
                                             </div>
 
                                             <Menu as="div" className="relative inline-block text-left">
-                                                <Menu.Button as={React.Fragment}>
-                                                    <button className='text-white flex items-center justify-center rounded-lg w-12 h-8 hover:bg-white hover:bg-opacity-10 transition-colors duration-100'>
-                                                        <DotsThree className='w-5 h-5' />
-                                                    </button>
+                                                <Menu.Button className='text-white flex items-center justify-center rounded-lg w-12 h-8 hover:bg-white hover:bg-opacity-10 transition-colors duration-100'>
+                                                    <DotsThree className='w-5 h-5' />
                                                 </Menu.Button>
                                                 <Transition
                                                     as={Fragment}
