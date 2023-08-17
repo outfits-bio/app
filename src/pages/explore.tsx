@@ -4,11 +4,12 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
+import { PostModal } from '~/components/PostModal';
 import { api } from '~/utils/api.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
 import {
-    CoatHanger, Hoodie, Pants, SealCheck, Sneaker, TShirt, Watch
+    CoatHanger, Hammer, Hoodie, Pants, SealCheck, Sneaker, TShirt, Watch
 } from '@phosphor-icons/react';
 import { PostType } from '@prisma/client';
 
@@ -81,28 +82,33 @@ export const ExplorePage: NextPage = () => {
                     <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse' />
                     <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse' />
                 </> : toShow?.map((post, i) => (
-                    <Link href={`/${post.user.username}`} key={post.id} className='w-44 h-72 min-w-[176px] border border-gray-500 rounded-md relative'>
-                        <Image
-                            // 176px is the same as w-44, the width of the container
-                            sizes="176px"
-                            src={formatImage(post.image, post.user.id)}
-                            className="object-cover"
-                            fill
-                            alt={post.type}
-                            priority
-                        />
+                    <>
+                        <Link href={`/explore/?postId=${post.id}`} key={post.id} className='w-44 h-72 min-w-[176px] border border-gray-500 rounded-md relative'>
+                            <Image
+                                // 176px is the same as w-44, the width of the container
+                                sizes="176px"
+                                src={formatImage(post.image, post.user.id)}
+                                className="object-cover"
+                                fill
+                                alt={post.type}
+                                priority
+                            />
 
-                        <div className='flex flex-col justify-end items-center p-2 absolute inset-0 bg-gradient-to-b from-transparent to-black w-full h-full bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100'>
-                            <div className='flex gap-2 w-full'>
-                                <Image className='rounded-full object-contain' src={formatAvatar(post.user.image, post.user.id)} alt={post.user.username ?? ""} width={30} height={30} />
+                            <div className='flex flex-col justify-end items-center p-2 absolute inset-0 bg-gradient-to-b from-transparent to-black w-full h-full bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100'>
+                                <div className='flex gap-2 w-full'>
+                                    <Image className='rounded-full object-contain' src={formatAvatar(post.user.image, post.user.id)} alt={post.user.username ?? ""} width={30} height={30} />
 
-                                <h1 className='text-white flex gap-1 items-center text-sm w-full'>
-                                    <span className='truncate'>{post.user.username}</span>
-                                    {post.user.verified && <SealCheck className='w-4 h-4' />}
-                                </h1>
+                                    <h1 className='text-white flex gap-1 items-center text-sm w-full'>
+                                        <span className='truncate'>{post.user.username}</span>
+                                        {post.user.admin ? <Hammer className='w-4 h-4' /> : post.user.verified && <SealCheck className='w-4 h-4' />}
+                                    </h1>
+                                </div>
                             </div>
-                        </div>
-                    </Link>
+
+                        </Link>
+
+                        <PostModal index={i} explorePost={toShow} key={post.id} />
+                    </>
                 ))}
 
                 {hasNextPage && <div className='h-72 w-44 flex items-center'>
@@ -122,28 +128,32 @@ export const ExplorePage: NextPage = () => {
                     <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse' />
                     <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse' />
                 </> : allTypesData?.pages.flatMap((page) => page.posts).map((post, i) => (
-                    <Link href={`/${post.user.username}`} key={post.id} className='w-44 h-72 min-w-[176px] border border-gray-500 rounded-md relative'>
-                        <Image
-                            // 176px is the same as w-44, the width of the container
-                            sizes="176px"
-                            src={formatImage(post.image, post.user.id)}
-                            className="object-cover"
-                            fill
-                            alt={post.type}
-                            priority
-                        />
+                    <>
+                        <Link href={`/explore?postId=${post.id}`} key={post.id} className='w-44 h-72 min-w-[176px] border border-gray-500 rounded-md relative'>
+                            <Image
+                                // 176px is the same as w-44, the width of the container
+                                sizes="176px"
+                                src={formatImage(post.image, post.user.id)}
+                                className="object-cover"
+                                fill
+                                alt={post.type}
+                                priority
+                            />
 
-                        <div className='flex flex-col justify-end items-center p-2 absolute inset-0 bg-gradient-to-b from-transparent to-black w-full h-full bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100'>
-                            <div className='flex gap-2 w-full'>
-                                <Image className='rounded-full object-contain' src={formatAvatar(post.user.image, post.user.id)} alt={post.user.username ?? ""} width={30} height={30} />
+                            <div className='flex flex-col justify-end items-center p-2 absolute inset-0 bg-gradient-to-b from-transparent to-black w-full h-full bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100'>
+                                <div className='flex gap-2 w-full'>
+                                    <Image className='rounded-full object-contain' src={formatAvatar(post.user.image, post.user.id)} alt={post.user.username ?? ""} width={30} height={30} />
 
-                                <h1 className='text-white flex gap-1 items-center text-sm w-full'>
-                                    <span className='truncate'>{post.user.username}</span>
-                                    {post.user.verified && <SealCheck className='w-4 h-4' />}
-                                </h1>
+                                    <h1 className='text-white flex gap-1 items-center text-sm w-full'>
+                                        <span className='truncate'>{post.user.username}</span>
+                                        {post.user.admin ? <Hammer className='w-4 h-4' /> : post.user.verified && <SealCheck className='w-4 h-4' />}
+                                    </h1>
+                                </div>
                             </div>
-                        </div>
-                    </Link>
+
+                        </Link>
+                        <PostModal index={i} explorePost={allTypesData?.pages.flatMap((page) => page.posts)} key={post.id} />
+                    </>
                 ))}
 
                 {allTypesHasNextPage && <div className='h-72 w-44 flex items-center'>

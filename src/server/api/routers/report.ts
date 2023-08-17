@@ -1,6 +1,7 @@
 import axios from "axios";
 import { env } from "~/env.mjs";
 import { createReportSchema, resolveReportSchema } from "~/schemas/user.schema";
+import { formatImage } from "~/utils/image-src-format.util";
 
 import { TRPCError } from "@trpc/server";
 
@@ -47,7 +48,7 @@ export const reportRouter = createTRPCRouter({
           ],
         });
       } else if (type === "POST") {
-        await ctx.prisma.post.update({
+        const report = await ctx.prisma.post.update({
           where: { id },
           data: {
             reports: {
@@ -62,6 +63,35 @@ export const reportRouter = createTRPCRouter({
               },
             },
           },
+          include: {
+            user: {
+              select: {
+                username: true,
+              },
+            },
+          },
+        });
+
+        await axios.post(env.DISCORD_WEBHOOK_URL ?? "", {
+          username: "Reports Bot",
+          avatar_url: "",
+          content: `New report from [${
+            ctx.session.user.username
+          }](https://outfits.bio/${encodeURI(ctx.session.user.username)})`,
+          embeds: [
+            {
+              title: "Report",
+              description: `**Type:** ${type}\n**Reason:** ${reason}\n**Offender:** [${
+                report.user.username
+              }](https://outfits.bio/${encodeURI(
+                report.user.username ?? ""
+              )}?postId=${id})`,
+              color: 0xff0000,
+              image: {
+                url: formatImage(report.image, report.userId),
+              },
+            },
+          ],
         });
       }
 
