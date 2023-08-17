@@ -9,13 +9,14 @@ import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar } from '~/utils/image-src-format.util';
 
 import {
-    Camera, CheckCircle, DiscordLogo, DotsThree, Heart, InstagramLogo, LinkSimple, PencilSimple,
-    SealCheck, ShareFat, TiktokLogo, TwitterLogo, YoutubeLogo
+    Camera, CheckCircle, DiscordLogo, DotsThree, Hammer, Heart, InstagramLogo, LinkSimple,
+    PencilSimple, SealCheck, ShareFat, TiktokLogo, TwitterLogo, YoutubeLogo
 } from '@phosphor-icons/react';
 import { LinkType } from '@prisma/client';
 import { inferRouterOutputs } from '@trpc/server';
 
 import { Button } from './Button';
+import { ProfileDropdown } from './ProfileDropdown';
 
 import type { AppRouter } from '~/server/api/root';
 import type { User } from 'next-auth';
@@ -87,7 +88,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                     <div className='flex flex-col gap-1 md:gap-4'>
                         <h1 className='font-black text-2xl md:text-4xl font-urbanist gap-2 md:gap-3 flex items-center'>
                             <span>{profileData?.username}</span>
-                            {profileData?.verified && <SealCheck className='w-6 h-6 md:w-8 md:h-8' />}
+                            {profileData?.admin ? <Hammer className='w-6 h-6 md:w-8 md:h-8' /> : profileData?.verified && <SealCheck className='w-6 h-6 md:w-8 md:h-8' />}
                         </h1>
 
                         <p className={`grow ${loading && 'skeleton'}`}>{profileData?.tagline}</p>
@@ -149,19 +150,19 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                         </div>
 
                         <div>
-                            <Button color='outline' iconLeft={<DotsThree />} centerItems />
+                            <ProfileDropdown userUrl={userUrl} userId={profileData?.id} />
                         </div>
                     </>}
 
                     {isCurrentUser && <>
                         <Link href='/settings/profile' className='grow'>
-                            <Button color='outline' iconLeft={<PencilSimple />} centerItems>
+                            <Button variant='outline' iconLeft={<PencilSimple />} centerItems>
                                 Edit
                             </Button>
                         </Link>
 
                         <div className='grow'>
-                            <Button color='outline' iconLeft={<ShareFat />} centerItems onClick={handleShare}>
+                            <Button variant='outline' iconLeft={<ShareFat />} centerItems onClick={handleShare}>
                                 Share
                             </Button>
                         </div>
@@ -172,7 +173,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
             <div className='md:w-96 w-full hidden md:flex items-center gap-4'>
                 {authStatus === 'authenticated' && currentUser && <>
                     <Link href={`/${currentUser.username}`}>
-                        <Button color='outline'>
+                        <Button variant='outline'>
                             <Image className='rounded-full object-contain' src={formatAvatar(currentUser.image, currentUser.id)} alt={currentUser.username ?? ""} width={24} height={24} />
 
                             <p className='font-semibold'>{currentUser.username}</p>
@@ -180,11 +181,11 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                     </Link>
 
                     <div>
-                        <Button color='ghost' onClick={handleShare} iconLeft={<ShareFat />} centerItems />
+                        <Button variant='ghost' onClick={handleShare} iconLeft={<ShareFat />} centerItems />
                     </div>
 
                     <Link href={'https://discord.gg/f4KEs5TVz2'}>
-                        <Button color='ghost' iconLeft={<DiscordLogo />} centerItems />
+                        <Button variant='ghost' iconLeft={<DiscordLogo />} centerItems />
                     </Link>
                 </>}
 
@@ -194,7 +195,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                     </Link>
 
                     <Link href={'/login'}>
-                        <Button color='ghost'>Login</Button>
+                        <Button variant='ghost'>Login</Button>
                     </Link>
                 </>}
             </div>

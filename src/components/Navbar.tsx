@@ -10,8 +10,8 @@ import { formatAvatar } from '~/utils/image-src-format.util';
 
 import { Menu, Transition } from '@headlessui/react';
 import {
-    Bell, Camera, CoatHanger, Compass, Door, DoorOpen, Gear, Heart, MagnifyingGlass, Person, Plus,
-    SealCheck, SpinnerGap, User
+    Bell, Camera, CoatHanger, Compass, Door, DoorOpen, Gear, Hammer, Heart, MagnifyingGlass, Person,
+    Plus, SealCheck, SpinnerGap, User
 } from '@phosphor-icons/react';
 
 import { Button } from './Button';
@@ -30,21 +30,21 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
 
     return <div className='hidden md:flex items-center justify-center gap-2'>
         <Link href='/shoot'>
-            <Button color='ghost' iconLeft={<Plus />} />
+            <Button variant='ghost' iconLeft={<Plus />} />
         </Link>
 
         <Link href='/explore'>
-            <Button color='ghost' iconLeft={<Compass />} />
+            <Button variant='ghost' iconLeft={<Compass />} />
         </Link>
 
         <Link href='/notifications'>
-            <Button color='ghost' iconLeft={<Bell />} />
+            <Button variant='ghost' iconLeft={<Bell />} />
         </Link>
 
         <Menu as="div" className="relative inline-block text-left">
             <div>
                 <Menu.Button>
-                    <Button color='outline'>
+                    <Button variant='outline'>
                         <Image className='rounded-full object-contain' src={formatAvatar(session.data?.user.image, session.data?.user.id)} alt={session.data?.user.username ?? ""} width={24} height={24} />
 
                         <p className='font-semibold'>{session.data?.user.username}</p>
@@ -65,7 +65,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
                         <Menu.Item>
                             <Link href={`/${session.data?.user.username}`}>
                                 <Button
-                                    color='ghost'
+                                    variant='ghost'
                                     iconRight={<User />}
                                 >
                                     <p className='font-semibold'>Profile</p>
@@ -75,7 +75,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
                         <Menu.Item>
                             <Link href={'/settings/profile'}>
                                 <Button
-                                    color='ghost'
+                                    variant='ghost'
                                     iconRight={<Gear />}
                                 >
                                     <p className='font-semibold'>Settings</p>
@@ -84,7 +84,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
                         </Menu.Item>
                         <Menu.Item>
                             <Button
-                                color='warning-ghost'
+                                variant='warning-ghost'
                                 iconRight={<DoorOpen />}
                                 onClick={() => signOut()}
                             >
@@ -162,7 +162,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true }:
                                         <div className='flex flex-col gap-1'>
                                             <h1 className='font-black flex gap-1 items-center'>
                                                 <span>{user.username}</span>
-                                                {user.verified && <SealCheck className='w-4 h-4' />}
+                                                {user.admin ? <Hammer className='w-4 h-4' /> : user.verified && <SealCheck className='w-4 h-4' />}
                                             </h1>
                                             <p className='text-xs'>{user.tagline}</p>
 
@@ -191,17 +191,17 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true }:
                     {isAuth ? <AuthSection isAuth={!!isAuth} session={session} /> : <NavMenu />}
                     {isAuth ? null : <div className='items-center gap-4 hidden md:flex'>
                         <Link href='/explore'>
-                            <Button color='ghost'>Explore</Button>
+                            <Button variant='ghost'>Explore</Button>
                         </Link>
                         <Link href='https://discord.gg/f4KEs5TVz2'>
-                            <Button color='ghost'>Discord</Button>
+                            <Button variant='ghost'>Discord</Button>
                         </Link>
 
                         <Link href='/login'>
-                            <Button color='outline'>Login</Button>
+                            <Button variant='outline'>Login</Button>
                         </Link>
                         <Link href='/login'>
-                            <Button color='primary'>Register</Button>
+                            <Button variant='primary'>Register</Button>
                         </Link>
                     </div>}
                 </>}

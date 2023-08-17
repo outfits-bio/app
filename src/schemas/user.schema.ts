@@ -1,6 +1,6 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-import { LinkType, PostType } from '@prisma/client';
+import { LinkType, PostType, ReportType } from "@prisma/client";
 
 export const userSchema = z.object({
   email: z.string().email(),
@@ -48,3 +48,15 @@ export const getPostsSchema = z
   })
   .merge(paginatedSchema);
 export type GetPostsInput = ReturnType<typeof getPostsSchema.parse>;
+
+export const createReportSchema = z.object({
+  id: z.string().cuid(),
+  reason: z.string().max(180),
+  type: z.nativeEnum(ReportType),
+});
+export type CreateReportInput = ReturnType<typeof createReportSchema.parse>;
+
+export const resolveReportSchema = z.object({
+  id: z.string().cuid(),
+});
+export type ResolveReportInput = ReturnType<typeof resolveReportSchema.parse>;

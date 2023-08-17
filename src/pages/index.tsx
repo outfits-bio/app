@@ -31,12 +31,12 @@ const Home = () => {
           </h3>
 
           <div className='w-full px-12 sm:px-0 flex flex-col sm:flex-row sm:w-[550px] items-center gap-2'>
-            <Button color='outline' centerItems>
+            <Button variant='outline' centerItems>
               <Link href='/login'>
                 Sign up!
               </Link>
             </Button>
-            <Button iconRight={<ArrowRight />} color='ghost' centerItems>
+            <Button iconRight={<ArrowRight />} variant='ghost' centerItems>
               <Link href={'#more'}>
                 Learn More
               </Link>
@@ -59,7 +59,7 @@ const Home = () => {
           <p className='font-inter text-gray-600 dark:text-white text-lg sm:text-2xl flex'>Upload your pictures and share your personal link in your tiktok or instagram bio!</p>
 
           <Link href='/login' className='w-full'>
-            <Button color='outline' centerItems iconRight={<ArrowRight />}>
+            <Button variant='outline' centerItems iconRight={<ArrowRight />}>
               Sign up now!
             </Button>
           </Link>
@@ -72,7 +72,7 @@ const Home = () => {
           <p className='font-inter text-gray-600 dark:text-white text-lg sm:text-2xl flex'>Do you like someones wardrobe? Make sure to show them love by liking their profile!</p>
 
           <Link href='/login' className='w-full'>
-            <Button color='outline' centerItems iconRight={<ArrowRight />}>
+            <Button variant='outline' centerItems iconRight={<ArrowRight />}>
               Sign up now!
             </Button>
           </Link>

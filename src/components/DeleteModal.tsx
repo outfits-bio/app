@@ -12,9 +12,10 @@ interface DeleteModalProps {
     isOpen: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>;
     deleteAccount: () => void;
+    admin?: boolean;
 }
 
-export const DeleteModal = ({ isOpen, setIsOpen, deleteAccount }: DeleteModalProps) => {
+export const DeleteModal = ({ isOpen, setIsOpen, deleteAccount, admin = false }: DeleteModalProps) => {
 
     return (
         <Transition appear show={isOpen} as={Fragment}>
@@ -45,11 +46,11 @@ export const DeleteModal = ({ isOpen, setIsOpen, deleteAccount }: DeleteModalPro
                             <Dialog.Panel className="w-96 gap-2 flex flex-col transform overflow-hidden rounded-md dark:text-white bg-white dark:bg-black border border-black dark:border-white p-4 text-left align-middle shadow-xl transition-all">
                                 <h1 className='text-2xl font-semibold'>Are you sure?</h1>
 
-                                <p className='w-full text-sm'>You&apos;re about to delete your account on outfits.bio, once you do you will no longer be able to login, and all of your data will be erased. Are you sure you would like to proceed?</p>
+                                <p className='w-full text-sm'>You&apos;re about to delete {admin ? "this" : 'your'} account on outfits.bio, once you do {admin ? 'they' : 'you'} will no longer be able to login, and all of {admin ? 'their' : 'your'} data will be erased. Are you sure you would like to proceed?</p>
 
                                 <div className='flex w-full gap-2'>
-                                    <Button color='outline' centerItems onClick={() => setIsOpen(false)}>No, Abort</Button>
-                                    <Button color='danger' centerItems onClick={() => { deleteAccount(); setIsOpen(false); }}>Delete Account</Button>
+                                    <Button variant='outline' centerItems onClick={() => setIsOpen(false)}>No, Abort</Button>
+                                    <Button variant='danger' centerItems onClick={() => { deleteAccount(); setIsOpen(false); }}>Delete Account</Button>
                                 </div>
                             </Dialog.Panel>
                         </Transition.Child>

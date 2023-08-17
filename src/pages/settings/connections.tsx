@@ -38,7 +38,7 @@ export const ConnectionsSettingsPage: NextPage = () => {
                             <span>Discord Connected</span>
                         </div>
 
-                        <div><Button color='outline' iconLeft={<Trash />} centerItems
+                        <div><Button variant='outline' iconLeft={<Trash />} centerItems
                             isLoading={unlinkLoading && variables?.id === discordAccount?.id}
                             onClick={() => unlinkAccount({ id: discordAccount?.id ?? '' })}
                         />
@@ -57,7 +57,7 @@ export const ConnectionsSettingsPage: NextPage = () => {
                             <span>Google Connected</span>
                         </div>
 
-                        <div><Button color='outline' iconLeft={<Trash />} centerItems
+                        <div><Button variant='outline' iconLeft={<Trash />} centerItems
                             isLoading={unlinkLoading && variables?.id === googleAccount?.id}
                             onClick={() => unlinkAccount({ id: googleAccount?.id ?? '' })}
                         />

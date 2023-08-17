@@ -23,7 +23,7 @@ export const OnboardingStartSection = ({ setOnboardingStarted, username }: Onboa
 
         <div className='w-full px-8 sm:px-0 sm:w-[500px] gap-4 flex flex-col mb-20'>
             <Button iconRight={<ArrowRight />} centerItems onClick={() => setOnboardingStarted(true)}>Get Started</Button>
-            <Button color='ghost' centerItems onClick={handleLogout}><p className='text-sm text-gray-500 font-inter'>Nevermind, log me out</p></Button>
+            <Button variant='ghost' centerItems onClick={handleLogout}><p className='text-sm text-gray-500 font-inter'>Nevermind, log me out</p></Button>
         </div>
     </>
 }

@@ -192,6 +192,7 @@ export const userRouter = createTRPCRouter({
           imageCount: true,
           likeCount: true,
           verified: true,
+          admin: true,
           likedBy: {
             where: { id: ctx.session?.user.id },
             select: { id: true },
@@ -476,6 +477,7 @@ export const userRouter = createTRPCRouter({
           imageCount: true,
           likeCount: true,
           verified: true,
+          admin: true,
         },
         take: 5,
       });

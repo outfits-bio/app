@@ -19,6 +19,7 @@ declare module "next-auth" {
       id: string;
       username: string;
       onboarded: boolean;
+      admin: boolean;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -27,6 +28,7 @@ declare module "next-auth" {
   interface User {
     username: string;
     onboarded: boolean;
+    admin: boolean;
     // ...other properties
     // role: UserRole;
   }
@@ -45,6 +47,7 @@ export const authOptions: NextAuthOptions = {
         session.user.username = user.username;
         session.user.username = user.username;
         session.user.onboarded = user.onboarded;
+        session.user.admin = user.admin;
       }
       return session;
     },
@@ -64,6 +67,7 @@ export const authOptions: NextAuthOptions = {
           image: profile.picture,
           username: profile.name?.replaceAll(" ", "_"),
           onboarded: profile.onboarded,
+          admin: profile.admin,
         };
       },
     }),
@@ -84,6 +88,7 @@ export const authOptions: NextAuthOptions = {
           username: profile.username,
           image: profile.image_url,
           onboarded: profile.onboarded,
+          admin: profile.admin,
         };
       },
     }),

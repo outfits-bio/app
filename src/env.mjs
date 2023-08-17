@@ -29,6 +29,7 @@ export const env = createEnv({
     GOOGLE_CLIENT_SECRET: z.string().min(1),
     DISCORD_CLIENT_ID: z.string().min(1),
     DISCORD_CLIENT_SECRET: z.string().min(1),
+    DISCORD_WEBHOOK_URL: z.string().url().optional(),
   },
 
   /**
@@ -57,5 +58,6 @@ export const env = createEnv({
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
+    DISCORD_WEBHOOK_URL: process.env.DISCORD_WEBHOOK_URL,
   },
 });
