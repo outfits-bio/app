@@ -24,7 +24,10 @@ import { Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 
 const badUsernames = [
+  // System
+  "home",
   "login",
+  "signup",
   "settings",
   "onboarding",
   "profile",
@@ -32,7 +35,23 @@ const badUsernames = [
   "explore",
   "notifications",
   "shoot",
+  "shots",
+  // Socials
+  "outfitsbio",
+  "outfits",
+  "outfits.bio",
   "discord",
+  "discordapp",
+  "twitter",
+  "instagram",
+  "bereal",
+  "tiktok",
+  "tumblr",
+  "patreon",
+  "kofi",
+  // Authentic People
+  "jecta",
+  // General
 ];
 
 export const userRouter = createTRPCRouter({
