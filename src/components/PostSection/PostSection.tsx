@@ -11,7 +11,7 @@ import { formatImage } from '~/utils/image-src-format.util';
 import { Plus, Trash } from '@phosphor-icons/react';
 
 import { PostCropModal } from '../PostCropModal';
-import { ProfilePostModal } from '../ProfilePostModal';
+import { ProfilePost, ProfilePostModal } from '../ProfilePostModal';
 import { Spinner } from '../Spinner';
 import {
     getPostTypeCount, getPostTypeIcon, getPostTypeName, onError, onMutate, onSettled,
@@ -22,6 +22,8 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
     const { query } = useRouter();
     const { data: session } = useSession();
     const ctx = api.useContext();
+    const [postModalOpen, setPostModalOpen] = useState<boolean>(false);
+    const [post, setPost] = useState<ProfilePost | null>(null);
 
     const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
 
@@ -29,6 +31,20 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
     const [deleteButton, setDeleteButton] = useState<string | null>(null);
 
     const ref = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (query.postId) {
+            const post = postsData?.find(p => p.id === query.postId);
+
+            if (post) {
+                setPost(post);
+                setPostModalOpen(true);
+            }
+        } else {
+            setPost(null);
+            setPostModalOpen(false);
+        }
+    }, [query.postId, postsData]);
 
     /**
      * This closes the crop modal and creates the post after the image has been cropped
@@ -74,6 +90,7 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
 
     return (
         <div className="w-full pr-2">
+            {postModalOpen && <ProfilePostModal setPostModalOpen={setPostModalOpen} post={post} user={profileData ?? null} />}
             {cropModalOpen && <PostCropModal
                 type={type}
                 setIsCropped={setIsCropped}
@@ -145,7 +162,6 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
 
 
                             </Link>
-                            <ProfilePostModal profilePost={postsData?.filter(p => p.type === type)} user={profileData} index={i} />
                         </>
                     ))}
                 </div>

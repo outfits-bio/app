@@ -3,7 +3,7 @@ import { Inter, Urbanist } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { Fragment, useState } from 'react';
+import React, { Dispatch, Fragment, SetStateAction, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { api, RouterOutputs } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
@@ -19,14 +19,12 @@ import { DeleteModal } from './DeleteModal';
 import { getPostTypeIcon, getPostTypeIconSmall } from './PostSection/post-section.util';
 import { ReportModal } from './ReportModal';
 
-type ProfilePost = RouterOutputs['post']['getPostsAllTypes'];
+export type ProfilePost = RouterOutputs['post']['getPostsAllTypes'][0];
 
 interface ProfilePostModalProps {
-    profilePost?: ProfilePost;
-    user?: RouterOutputs['user']['getProfile'];
-    username?: string;
-    userId?: string;
-    index: number;
+    post: ProfilePost | null;
+    user: RouterOutputs['user']['getProfile'] | null;
+    setPostModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const urbanist = Urbanist({
@@ -41,7 +39,7 @@ const inter = Inter({
     variable: '--font-inter',
 });
 
-export const ProfilePostModal = ({ profilePost, user }: ProfilePostModalProps) => {
+export const ProfilePostModal = ({ post, user, setPostModalOpen }: ProfilePostModalProps) => {
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false);
 
@@ -54,7 +52,7 @@ export const ProfilePostModal = ({ profilePost, user }: ProfilePostModalProps) =
     });
 
     const handleDeletePost = () => {
-        if (!query.postId) {
+        if (!post?.id) {
             toast.error('An error occurred while deleting this post.');
             return;
         }
@@ -79,11 +77,9 @@ export const ProfilePostModal = ({ profilePost, user }: ProfilePostModalProps) =
         toast.success('Copied post link to clipboard!');
     }
 
-    const post = profilePost?.find((post) => post.id === query.postId);
+    if (!post || !user) return null;
 
-    if (!post) return null;
-
-    return <Transition appear show={!!query.postId} as={Fragment}>
+    return <Transition appear show={true} as={Fragment}>
         <Dialog as="div" className={`relative z-10 ${urbanist.variable} ${inter.variable} font-urbanist`} onClose={closeModal}>
             <Transition.Child
                 as={Fragment}
