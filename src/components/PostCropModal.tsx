@@ -90,7 +90,7 @@ export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
                                 <div>
                                     <div className='flex justify-end w-full mb-2'>
                                         <div>
-                                            <Button color='ghost' centerItems>
+                                            <Button variant='ghost' centerItems>
                                                 <X className='h-6 w-6' />
                                             </Button>
                                         </div>

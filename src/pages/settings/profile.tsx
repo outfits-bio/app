@@ -190,7 +190,7 @@ const SettingsPage = () => {
 
               <div className='grow space-y-2'>
                 <Button centerItems iconLeft={<Plus />} type='button' onClick={() => ref.current?.click()}>Upload</Button>
-                <Button color='outline' centerItems type='button' iconLeft={<Trash />} onClick={() => deleteImage()}>Remove</Button>
+                <Button variant='outline' centerItems type='button' iconLeft={<Trash />} onClick={() => deleteImage()}>Remove</Button>
               </div>
             </div>
 
@@ -245,7 +245,7 @@ const SettingsPage = () => {
                   <span className='underline'>{link.url}</span>
                 </p>
                 <div>
-                  <Button color='outline' iconLeft={<Trash />}
+                  <Button variant='outline' iconLeft={<Trash />}
                     centerItems
                     isLoading={removeLinkLoading && removeLinkVariables?.id === link.id}
                     onClick={() => removeLink({ id: link.id })}
@@ -282,7 +282,7 @@ const SettingsPage = () => {
 
           <p className="mb-1">Delete Account</p>
           <Button
-            color="warning"
+            variant="warning"
             type="button"
             centerItems
             iconLeft={<Trash />}

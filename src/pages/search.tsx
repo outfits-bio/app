@@ -8,7 +8,9 @@ import { Layout } from '~/components/Layout';
 import { api } from '~/utils/api.util';
 import { formatAvatar } from '~/utils/image-src-format.util';
 
-import { Camera, Heart, MagnifyingGlass, SealCheck, SpinnerGap } from '@phosphor-icons/react';
+import {
+    Camera, Hammer, Heart, MagnifyingGlass, SealCheck, SpinnerGap
+} from '@phosphor-icons/react';
 
 export const SearchPage: NextPage = () => {
     const [input, setInput] = useState('');
@@ -54,7 +56,7 @@ export const SearchPage: NextPage = () => {
                                 <div className='flex flex-col gap-1'>
                                     <h1 className='font-black flex gap-1 items-center'>
                                         <span>{user.username}</span>
-                                        {user.verified && <SealCheck className='w-4 h-4' />}
+                                        {user.admin ? <Hammer className='w-4 h-4' /> : user.verified && <SealCheck className='w-4 h-4' />}
                                     </h1>
                                     <p className='text-xs'>{user.tagline}</p>
 

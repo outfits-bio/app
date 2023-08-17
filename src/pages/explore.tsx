@@ -48,27 +48,27 @@ export const ExplorePage: NextPage = () => {
     >
         <div className='p-4'>
             <div className='overflow-x-scroll flex gap-4 pb-1'>
-                <Button onClick={() => setActivePage('OUTFIT')} color={activePage === 'OUTFIT' ? 'primary' : 'outline'} iconLeft={<CoatHanger />} centerItems>
+                <Button onClick={() => setActivePage('OUTFIT')} variant={activePage === 'OUTFIT' ? 'primary' : 'outline'} iconLeft={<CoatHanger />} centerItems>
                     Outfits
                 </Button>
 
-                <Button onClick={() => setActivePage('HOODIE')} color={activePage === 'HOODIE' ? 'primary' : 'outline'} iconLeft={<Hoodie />} centerItems>
+                <Button onClick={() => setActivePage('HOODIE')} variant={activePage === 'HOODIE' ? 'primary' : 'outline'} iconLeft={<Hoodie />} centerItems>
                     Hoodies
                 </Button>
 
-                <Button onClick={() => setActivePage('PANTS')} color={activePage === 'PANTS' ? 'primary' : 'outline'} iconLeft={<Pants />} centerItems>
+                <Button onClick={() => setActivePage('PANTS')} variant={activePage === 'PANTS' ? 'primary' : 'outline'} iconLeft={<Pants />} centerItems>
                     Pants
                 </Button>
 
-                <Button onClick={() => setActivePage('SHIRT')} color={activePage === 'SHIRT' ? 'primary' : 'outline'} iconLeft={<TShirt />} centerItems>
+                <Button onClick={() => setActivePage('SHIRT')} variant={activePage === 'SHIRT' ? 'primary' : 'outline'} iconLeft={<TShirt />} centerItems>
                     Shirts
                 </Button>
 
-                <Button onClick={() => setActivePage('SHOES')} color={activePage === 'SHOES' ? 'primary' : 'outline'} iconLeft={<Sneaker />} centerItems>
+                <Button onClick={() => setActivePage('SHOES')} variant={activePage === 'SHOES' ? 'primary' : 'outline'} iconLeft={<Sneaker />} centerItems>
                     Shoes
                 </Button>
 
-                <Button onClick={() => setActivePage('WATCH')} color={activePage === 'WATCH' ? 'primary' : 'outline'} iconLeft={<Watch />} centerItems>
+                <Button onClick={() => setActivePage('WATCH')} variant={activePage === 'WATCH' ? 'primary' : 'outline'} iconLeft={<Watch />} centerItems>
                     Accessories
                 </Button>
             </div>
@@ -106,7 +106,7 @@ export const ExplorePage: NextPage = () => {
                 ))}
 
                 {hasNextPage && <div className='h-72 w-44 flex items-center'>
-                    <Button onClick={handleFetchNextPage} color='outline' centerItems>
+                    <Button onClick={handleFetchNextPage} variant='outline' centerItems>
                         Load More
                     </Button>
                 </div>}
@@ -147,7 +147,7 @@ export const ExplorePage: NextPage = () => {
                 ))}
 
                 {allTypesHasNextPage && <div className='h-72 w-44 flex items-center'>
-                    <Button onClick={handleFetchAllTypesNextPage} color='outline' centerItems>
+                    <Button onClick={handleFetchAllTypesNextPage} variant='outline' centerItems>
                         Load More
                     </Button>
                 </div>}

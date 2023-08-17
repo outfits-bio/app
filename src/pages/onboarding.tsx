@@ -154,7 +154,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
                         </div>
 
                         <div className='w-full flex gap-2 mt-4'>
-                            <Button color='outline' iconLeft={<ArrowLeft />} onClick={() => setOnboardingStarted(false)} centerItems>Back</Button>
+                            <Button variant='outline' iconLeft={<ArrowLeft />} onClick={() => setOnboardingStarted(false)} centerItems>Back</Button>
                             <Button isLoading={loading} type='submit' iconRight={<ArrowRight />} centerItems>Continue</Button>
                         </div>
                     </form> :

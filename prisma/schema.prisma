@@ -56,6 +56,7 @@ model User {
     accounts        Account[]
     sessions        Session[]
     verified        Boolean @default(false)
+    admin           Boolean @default(false)
 
     outfitPostCount Int @default(0)
     hoodiePostCount Int @default(0)
@@ -71,6 +72,8 @@ model User {
     posts           Post[]
     likedBy         User[]    @relation("Likes")
     liked           User[]    @relation("Likes")
+    createdReports  Report[]
+    reports         Report[]    @relation("ReportedUser")
 }
 
 model Link {
@@ -90,11 +93,33 @@ model Post {
     updatedAt   DateTime @updatedAt
     userId      String
     user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    featured    Boolean  @default(false)
     
     type       PostType
     image      String?
 
+    reports     Report[] @relation("ReportedPost")
+
     @@index([userId])
+}
+
+model Report {
+    id              String   @id @default(cuid())
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime @updatedAt
+    creatorId       String
+    creator         User     @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+    reason          String
+    resolved        Boolean  @default(false)
+    type            ReportType
+    reportedUser    User?    @relation("ReportedUser", fields: [reportedUserId], references: [id], onDelete: Cascade)
+    reportedUserId  String?
+    reportedPost    Post?    @relation("ReportedPost", fields: [reportedPostId], references: [id], onDelete: Cascade)
+    reportedPostId  String?
+
+    @@index([creatorId])
+    @@index([reportedPostId])
+    @@index([reportedUserId])
 }
 
 enum PostType {
@@ -113,6 +138,11 @@ enum LinkType {
     TIKTOK
     DISCORD
     WEBSITE
+}
+
+enum ReportType {
+    USER
+    POST
 }
 
 model VerificationToken {

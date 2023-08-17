@@ -18,14 +18,14 @@ export const SettingsLayout = ({ children }: SettingsLayoutProps) => {
         <div className='flex w-screen h-full'>
             <div className='hidden md:flex flex-col h-full w-96 border-r border-black dark:border-white p-4'>
                 <Link href='/settings/profile'>
-                    <Button color='ghost' disabled={pathname === '/settings/profile'} itemsLeft iconLeft={<User />}>Profile</Button>
+                    <Button variant='ghost' disabled={pathname === '/settings/profile'} className='justify-start' iconLeft={<User />}>Profile</Button>
                 </Link>
 
                 <Link href='/settings/connections'>
-                    <Button color='ghost' disabled={pathname === '/settings/connections'} itemsLeft iconLeft={<SquaresFour />}>Connections</Button>
+                    <Button variant='ghost' disabled={pathname === '/settings/connections'} className='justify-start' iconLeft={<SquaresFour />}>Connections</Button>
                 </Link>
 
-                <Button color="warning-ghost" itemsLeft iconLeft={<DoorOpen />} onClick={() => signOut({ callbackUrl: '/' })}>Logout</Button>
+                <Button variant="warning-ghost" className='justify-start' iconLeft={<DoorOpen />} onClick={() => signOut({ callbackUrl: '/' })}>Logout</Button>
             </div>
             {children}
         </div>
