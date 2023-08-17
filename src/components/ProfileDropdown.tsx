@@ -62,7 +62,7 @@ export const ProfileDropdown = ({ userUrl, userId }: ProfileDropdownProps) => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
         >
-            <Menu.Items className="absolute left-2 bottom-0 rounded-md w-56 origin-top-right border border-black dark:border-white bg-white dark:bg-black">
+            <Menu.Items className="absolute right-2 md:right-auto md:left-2 md:bottom-0 top-0 md:top-auto rounded-md w-56 origin-top-right border border-black dark:border-white bg-white dark:bg-black">
                 <div className="px-1 py-1 space-y-1">
                     <Menu.Item>
                         <Button variant='ghost' iconRight={<ShareFat />} onClick={handleShare}>
