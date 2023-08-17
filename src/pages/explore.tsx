@@ -21,11 +21,11 @@ export const ExplorePage: NextPage = () => {
     });
 
     const { data: allTypesData,
-        refetch: allTypesRefetch,
         isFetching: allTypesIsFetching,
         hasNextPage: allTypesHasNextPage,
         isFetchingNextPage: allTypesIsFetchingNextPage,
-        isRefetching: allTypesIsRefetching
+        isRefetching: allTypesIsRefetching,
+        fetchNextPage: allTypesFetchNextPage
     } = api.post.getLatestPosts.useInfiniteQuery({}, {
         getNextPageParam: (lastPage) => lastPage.nextCursor,
     });
@@ -35,7 +35,7 @@ export const ExplorePage: NextPage = () => {
     };
 
     const handleFetchAllTypesNextPage = () => {
-        allTypesRefetch();
+        allTypesFetchNextPage();
     };
 
     useEffect(() => {

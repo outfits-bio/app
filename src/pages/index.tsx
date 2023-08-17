@@ -31,16 +31,20 @@ const Home = () => {
           </h3>
 
           <div className='w-full px-12 sm:px-0 flex flex-col sm:flex-row sm:w-[550px] items-center gap-2'>
-            <Button variant='outline' centerItems>
-              <Link href='/login'>
-                Sign up!
+            <div className='grow w-full'>
+              <Button variant='outline' centerItems>
+                <Link href='/login'>
+                  Sign up!
+                </Link>
+              </Button>
+            </div>
+            <div className='grow w-full'>
+              <Link href={'#more'}>
+                <Button iconRight={<ArrowRight />} variant='ghost' centerItems>
+                  Learn More
+                </Button>
               </Link>
-            </Button>
-          <Link href={'#more'}>
-            <Button iconRight={<ArrowRight />} variant='ghost' centerItems>
-                Learn More
-            </Button>
-            </Link>
+            </div>
           </div>
         </div>
 

@@ -138,6 +138,7 @@ enum LinkType {
     TIKTOK
     DISCORD
     WEBSITE
+    GITHUB
 }
 
 enum ReportType {

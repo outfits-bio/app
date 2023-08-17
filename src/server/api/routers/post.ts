@@ -212,7 +212,7 @@ export const postRouter = createTRPCRouter({
             },
           },
         },
-        take: 21,
+        take: 2,
         skip: skip,
         cursor: cursor ? { id: cursor } : undefined,
         orderBy: {
@@ -222,7 +222,7 @@ export const postRouter = createTRPCRouter({
 
       let nextCursor: typeof cursor | undefined = undefined;
 
-      if (posts.length > 20) {
+      if (posts.length > 1) {
         const nextItem = posts.pop(); // return the last item from the array
         nextCursor = nextItem?.id;
       }
