@@ -11,7 +11,7 @@ import { formatImage } from '~/utils/image-src-format.util';
 import { Plus, Trash } from '@phosphor-icons/react';
 
 import { PostCropModal } from '../PostCropModal';
-import { PostModal } from '../PostModal';
+import { ProfilePostModal } from '../ProfilePostModal';
 import { Spinner } from '../Spinner';
 import {
     getPostTypeCount, getPostTypeIcon, getPostTypeName, onError, onMutate, onSettled,
@@ -22,8 +22,6 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
     const { query } = useRouter();
     const { data: session } = useSession();
     const ctx = api.useContext();
-
-    const { postId } = query;
 
     const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
 
@@ -147,7 +145,7 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
 
 
                             </Link>
-                            <PostModal profilePost={postsData?.filter(p => p.type === type)} user={profileData} index={i} />
+                            <ProfilePostModal profilePost={postsData?.filter(p => p.type === type)} user={profileData} index={i} />
                         </>
                     ))}
                 </div>

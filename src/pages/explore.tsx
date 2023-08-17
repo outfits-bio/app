@@ -1,10 +1,11 @@
+import { randomUUID } from 'crypto';
 import { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '~/components/Button';
+import { ExplorePostModal } from '~/components/ExplorePostModal';
 import { Layout } from '~/components/Layout';
-import { PostModal } from '~/components/PostModal';
 import { api } from '~/utils/api.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
@@ -107,7 +108,7 @@ export const ExplorePage: NextPage = () => {
 
                         </Link>
 
-                        <PostModal index={i} explorePost={toShow} key={post.id} />
+                        <ExplorePostModal explorePost={toShow} key={post.id + '_modal'} />
                     </>
                 ))}
 
@@ -152,7 +153,7 @@ export const ExplorePage: NextPage = () => {
                             </div>
 
                         </Link>
-                        <PostModal index={i} explorePost={allTypesData?.pages.flatMap((page) => page.posts)} key={post.id} />
+                        <ExplorePostModal explorePost={allTypesData?.pages.flatMap((page) => page.posts)} key={post.id + '_modal'} />
                     </>
                 ))}
 
