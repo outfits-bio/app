@@ -10,9 +10,7 @@ import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
 import { Dialog, Menu, Transition } from '@headlessui/react';
-import {
-    ArrowLeft, ArrowRight, DotsThree, Flag, Hammer, Prohibit, SealCheck, ShareFat, X
-} from '@phosphor-icons/react';
+import { DotsThree, Flag, Hammer, Prohibit, SealCheck, ShareFat, X } from '@phosphor-icons/react';
 
 import { Button } from './Button';
 import { DeleteModal } from './DeleteModal';

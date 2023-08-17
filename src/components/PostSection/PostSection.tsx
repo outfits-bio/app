@@ -19,11 +19,10 @@ import {
 } from './post-section.util';
 
 export const PostSection = ({ profileData, postsData, type, loading }: PostSectionProps) => {
-    const { query } = useRouter();
+
     const { data: session } = useSession();
     const ctx = api.useContext();
-    const [postModalOpen, setPostModalOpen] = useState<boolean>(false);
-    const [post, setPost] = useState<ProfilePost | null>(null);
+
 
     const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
 
@@ -31,20 +30,6 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
     const [deleteButton, setDeleteButton] = useState<string | null>(null);
 
     const ref = useRef<HTMLInputElement>(null);
-
-    useEffect(() => {
-        if (query.postId) {
-            const post = postsData?.find(p => p.id === query.postId);
-
-            if (post) {
-                setPost(post);
-                setPostModalOpen(true);
-            }
-        } else {
-            setPost(null);
-            setPostModalOpen(false);
-        }
-    }, [query.postId, postsData]);
 
     /**
      * This closes the crop modal and creates the post after the image has been cropped
@@ -90,7 +75,6 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
 
     return (
         <div className="w-full pr-2">
-            {postModalOpen && <ProfilePostModal setPostModalOpen={setPostModalOpen} post={post} user={profileData ?? null} />}
             {cropModalOpen && <PostCropModal
                 type={type}
                 setIsCropped={setIsCropped}
