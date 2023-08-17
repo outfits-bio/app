@@ -2,9 +2,10 @@ import { randomUUID } from 'crypto';
 import { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '~/components/Button';
-import { ExplorePostModal } from '~/components/ExplorePostModal';
+import { ExplorePost, ExplorePostModal } from '~/components/ExplorePostModal';
 import { Layout } from '~/components/Layout';
 import { api } from '~/utils/api.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
@@ -16,6 +17,11 @@ import { PostType } from '@prisma/client';
 
 export const ExplorePage: NextPage = () => {
     const [activePage, setActivePage] = useState<PostType>('OUTFIT');
+    const [latestPost, setLatestPost] = useState<ExplorePost | null>(null);
+    const [post, setPost] = useState<ExplorePost | null>(null);
+    const [postModalOpen, setPostModalOpen] = useState<boolean>(false);
+
+    const { query } = useRouter();
 
     const { data, refetch, fetchNextPage, isFetching, hasNextPage, isFetchingNextPage, isRefetching } = api.post.getLatestPosts.useInfiniteQuery({ type: activePage }, {
         getNextPageParam: (lastPage) => lastPage.nextCursor,
@@ -45,10 +51,27 @@ export const ExplorePage: NextPage = () => {
 
     const toShow = data?.pages.flatMap((page) => page.posts);
 
+    useEffect(() => {
+        if (query.postId) {
+            const post = toShow?.find(p => p.id === query.postId) ?? allTypesData?.pages.flatMap((page) => page.posts).find(p => p.id === query.postId);
+
+            if (post) {
+                setPost(post);
+                setPostModalOpen(true);
+            }
+        } else {
+            setPost(null);
+            setPostModalOpen(false);
+        }
+    }, [query.postId, toShow]);
+
+
     return <Layout
         title="Explore"
     >
         <div className='p-4'>
+            {postModalOpen && <ExplorePostModal setPostModalOpen={setPostModalOpen} post={post} />}
+
             <div className='overflow-x-scroll flex gap-4 pb-1'>
                 <Button onClick={() => setActivePage('OUTFIT')} variant={activePage === 'OUTFIT' ? 'primary' : 'outline'} iconLeft={<CoatHanger />} centerItems>
                     Outfits
@@ -82,7 +105,7 @@ export const ExplorePage: NextPage = () => {
                     <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse' />
                     <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse' />
                     <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse' />
-                </> : toShow?.map((post, i) => (
+                </> : toShow?.map((post) => (
                     <>
                         <Link href={`/explore/?postId=${post.id}`} key={post.id} className='w-44 h-72 min-w-[176px] border border-gray-500 rounded-md relative'>
                             <Image
@@ -107,8 +130,6 @@ export const ExplorePage: NextPage = () => {
                             </div>
 
                         </Link>
-
-                        <ExplorePostModal explorePost={toShow} key={post.id + '_modal'} />
                     </>
                 ))}
 
@@ -153,7 +174,6 @@ export const ExplorePage: NextPage = () => {
                             </div>
 
                         </Link>
-                        <ExplorePostModal explorePost={allTypesData?.pages.flatMap((page) => page.posts)} key={post.id + '_modal'} />
                     </>
                 ))}
 
