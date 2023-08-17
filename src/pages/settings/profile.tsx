@@ -18,7 +18,8 @@ import { formatAvatar } from '~/utils/image-src-format.util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  DiscordLogo, InstagramLogo, LinkSimple, Plus, TiktokLogo, Trash, TwitterLogo, YoutubeLogo
+  DiscordLogo, GithubLogo, InstagramLogo, LinkSimple, Plus, TiktokLogo, Trash, TwitterLogo,
+  YoutubeLogo
 } from '@phosphor-icons/react';
 import { LinkType } from '@prisma/client';
 
@@ -241,6 +242,7 @@ const SettingsPage = () => {
                   {link.type === LinkType.TIKTOK && <TiktokLogo className='w-5 h-5' />}
                   {link.type === LinkType.DISCORD && <DiscordLogo className='w-5 h-5' />}
                   {link.type === LinkType.INSTAGRAM && <InstagramLogo className='w-5 h-5' />}
+                  {link.type === LinkType.GITHUB && <GithubLogo className='w-5 h-5' />}
                   {link.type === LinkType.WEBSITE && <LinkSimple className='w-5 h-5' />}
                   <span className='underline'>{link.url}</span>
                 </p>
