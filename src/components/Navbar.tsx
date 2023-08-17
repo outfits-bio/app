@@ -29,7 +29,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
     if (!isAuth) return null;
 
     return <div className='hidden md:flex items-center justify-center gap-2'>
-        <Link href='/explore'>
+        <Link href='/shoot'>
             <Button color='ghost' iconLeft={<Plus />} />
         </Link>
 
