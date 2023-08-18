@@ -54,6 +54,7 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     newUser: "/onboarding",
+    error: "/auth/error",
   },
   adapter: PrismaAdapter(prisma),
   providers: [

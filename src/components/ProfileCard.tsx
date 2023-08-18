@@ -78,11 +78,11 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
     }
 
     return (
-        <div className="h-full flex flex-col justify-between font-inter">
+        <div className="h-full -mt-8 flex flex-col justify-evenly font-inter">
             <div className='md:w-96 w-full flex flex-col gap-4'>
                 <div className='flex md:flex-col gap-4 md:justify-normal'>
-                    <div className={`object-contain w-32 h-32 md:w-72 md:h-72 xl:w-96 xl:h-96 relative ${loading && ' skeleton'}`}>
-                        <Image priority src={formatAvatar(profileData?.image, profileData?.id)} alt={profileData?.username ?? ''} fill className='rounded-full' />
+                    <div className={`w-32 h-32 basis-32 grow-0 shrink-0 md:basis-auto md:w-72 md:h-72 xl:w-96 xl:h-96 relative ${loading && ' skeleton'}`}>
+                        <Image priority src={formatAvatar(profileData?.image, profileData?.id)} alt={profileData?.username ?? ''} fill className='rounded-full object-contain' />
                     </div>
 
                     <div className='flex flex-col gap-1 md:gap-4'>
@@ -171,7 +171,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                 </div>
             </div>
 
-            <div className='md:w-96 w-full hidden md:flex items-center gap-4'>
+            <div className='md:w-96 w-full hidden md:flex items-center gap-4 mt-2 fixed bottom-6'>
                 {authStatus === 'authenticated' && currentUser && <>
                     <Link href={`/${currentUser.username}`}>
                         <Button variant='outline'>

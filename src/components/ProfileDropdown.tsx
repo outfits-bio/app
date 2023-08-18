@@ -46,7 +46,7 @@ export const ProfileDropdown = ({ userUrl, userId }: ProfileDropdownProps) => {
 
     return <Menu as="div" className="relative inline-block text-left">
         {reportModalOpen && <ReportModal isOpen={reportModalOpen} setIsOpen={setReportModalOpen} type='USER' id={userId} />}
-        {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} admin deleteAccount={() => {
+        {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} admin deleteFn={() => {
             mutate({ id: userId ?? '' });
             push('/explore');
         }} />}
@@ -69,11 +69,11 @@ export const ProfileDropdown = ({ userUrl, userId }: ProfileDropdownProps) => {
                             <p>Share</p>
                         </Button>
                     </Menu.Item>
-                    <Menu.Item>
+                    {data?.user && <Menu.Item>
                         <Button variant='warning-ghost' iconRight={<Flag />} onClick={() => setReportModalOpen(true)}>
                             <p>Report</p>
                         </Button>
-                    </Menu.Item>
+                    </Menu.Item>}
                     {data?.user.admin && <Menu.Item>
                         <Button variant='warning-ghost' iconRight={<Prohibit />} onClick={handleDeleteUser}>
                             <p>Delete</p>

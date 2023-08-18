@@ -125,6 +125,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
                                     type="file"
                                     className="hidden"
                                     onChange={handleChange}
+                                    accept='image/*'
                                 />
                                 {(file) ? (
                                     <img

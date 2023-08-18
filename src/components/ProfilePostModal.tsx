@@ -92,7 +92,7 @@ export const ProfilePostModal = ({ post, user, setPostModalOpen }: ProfilePostMo
             </Transition.Child>
 
             {reportModalOpen && <ReportModal isOpen={reportModalOpen} setIsOpen={setReportModalOpen} type='POST' id={query.postId?.toString()} />}
-            {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} admin deleteAccount={() => {
+            {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} admin post deleteFn={() => {
                 mutate({ id: query.postId?.toString() ?? '' });
                 push('/explore');
             }} />}
@@ -151,11 +151,11 @@ export const ProfilePostModal = ({ post, user, setPostModalOpen }: ProfilePostMo
                                                             <p>Share</p>
                                                         </Button>
                                                     </Menu.Item>
-                                                    <Menu.Item>
+                                                    {data?.user && <Menu.Item>
                                                         <Button variant='warning-ghost' iconRight={<Flag />} onClick={() => setReportModalOpen(true)}>
                                                             <p>Report</p>
                                                         </Button>
-                                                    </Menu.Item>
+                                                    </Menu.Item>}
                                                     {data?.user.admin && <Menu.Item>
                                                         <Button variant='warning-ghost' iconRight={<Prohibit />} onClick={handleDeletePost}>
                                                             <p>Delete</p>
