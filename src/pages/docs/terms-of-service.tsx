@@ -1,7 +1,7 @@
 import { Layout } from '~/components/Layout';
 
 export const PrivacyPolicyPage = () => {
-    return <Layout title='Terms of Service'>
+    return <Layout title='Terms of Service' showSearch={false}>
         <div className='container p-6 md:p-12'>
             <h1 className='font-black font-urbanist text-4xl sm:text-5xl'>Outfits.bio Terms of Service</h1>
             <p className='mt-2 text-sm italic font-urbanist'>Last Updated: 15 August 2023</p>

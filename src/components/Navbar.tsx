@@ -22,9 +22,11 @@ interface Props {
     session: ReturnType<typeof useSession>;
     showSlash?: boolean;
     showActions?: boolean;
+    showSearch?: boolean;
 }
 
 export const AuthSection = ({ session, isAuth }: { session: Props['session'], isAuth: boolean }) => {
+    const { pathname } = useRouter();
 
     if (!isAuth) return null;
 
@@ -33,9 +35,9 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
             <Button variant='ghost' iconLeft={<Plus />} />
         </Link>
 
-        <Link href='/explore'>
+        {pathname !== '/explore' && <Link href='/explore'>
             <Button variant='ghost' iconLeft={<Compass />} />
-        </Link>
+        </Link>}
 
         <Link href='/notifications'>
             <Button variant='ghost' iconLeft={<Bell />} />
@@ -98,8 +100,8 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
     </div>
 }
 
-export const Navbar = ({ title, session, showSlash = true, showActions = true }: Props) => {
-    const { asPath } = useRouter();
+export const Navbar = ({ title, session, showSlash = true, showActions = true, showSearch = true }: Props) => {
+    const { asPath, pathname } = useRouter();
 
     const [input, setInput] = useState('');
 
@@ -138,7 +140,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true }:
                         {showSlash ? <h1 className='text-2xl font-black font-urbanist'>/ {title}</h1> : <h1 className='text-2xl font-black font-urbanist'>outfits.bio</h1>}
                     </Link>
 
-                    <div className='hidden relative items-center font-urbanist font-medium xl:flex'>
+                    {showSearch && <div className='hidden relative items-center font-urbanist font-medium xl:flex'>
                         {isFetching ? <SpinnerGap className='absolute left-4 text-gray-400 dark:text-white w-6 h-6 animate-spin' /> : <MagnifyingGlass className='absolute left-4 text-gray-400 dark:text-white w-6 h-6' />}
                         <input
                             id="link"
@@ -184,7 +186,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true }:
                             )) : <div className='bg-white border border-black p-4 rounded-md'>No results</div>}
                         </div>
                         }
-                    </div>
+                    </div>}
 
 
                 </div>
@@ -192,9 +194,10 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true }:
                 {showActions && status !== 'loading' && <>
                     {isAuth ? <AuthSection isAuth={!!isAuth} session={session} /> : <NavMenu />}
                     {isAuth ? null : <div className='items-center gap-4 hidden md:flex'>
-                        <Link href='/explore'>
+                        {pathname !== '/explore' && <Link href='/explore'>
                             <Button variant='ghost'>Explore</Button>
-                        </Link>
+                        </Link>}
+
                         <Link href='https://discord.gg/f4KEs5TVz2'>
                             <Button variant='ghost'>Discord</Button>
                         </Link>
