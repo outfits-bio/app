@@ -14,7 +14,9 @@ import { DotsThree, Flag, Hammer, Prohibit, SealCheck, ShareFat, X } from '@phos
 
 import { Button } from './Button';
 import { DeleteModal } from './DeleteModal';
-import { getPostTypeIcon, getPostTypeIconSmall } from './PostSection/post-section.util';
+import {
+    getPostTypeIconSmall, onError, onMutate, onSettled
+} from './PostSection/post-section.util';
 import { ReportModal } from './ReportModal';
 
 export type ProfilePost = RouterOutputs['post']['getPostsAllTypes'][0];
@@ -40,14 +42,38 @@ const inter = Inter({
 export const ProfilePostModal = ({ post, user, setPostModalOpen }: ProfilePostModalProps) => {
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false);
+    const [confirmDeleteUserModalOpen, setConfirmDeleteUserModalOpen] = useState(false);
 
     const { data } = useSession();
     const { asPath, push, query } = useRouter();
+    const ctx = api.useContext();
 
     const { mutate } = api.admin.deletePost.useMutation({
-        onSuccess: () => toast.success('Post deleted successfully!'),
+        onSuccess: () => {
+            toast.success('Post deleted successfully!');
+            ctx.post.getLatestPosts.invalidate();
+            ctx.post.getPostsAllTypes.invalidate();
+            closeModal();
+        },
         onError: (e) => handleErrors({ e, message: 'An error occurred while deleting this post.' })
     });
+
+    /**
+     * This deletes the post
+     * The image gets removed from the s3 bucket in the backend
+     * onMutate, onError, and onSettled are custom functions in ./post-section.util.ts that handle optimistic updates
+     */
+    const { mutate: deletePost } = api.post.deletePost.useMutation({
+        onSuccess: () => {
+            toast.success('Post deleted successfully!');
+            ctx.post.getLatestPosts.invalidate();
+            ctx.post.getPostsAllTypes.invalidate();
+            closeModal();
+        },
+        onError: (e) => handleErrors({ e, message: 'An error occurred while deleting this post.' })
+    });
+
+    const userIsProfileOwner = data?.user.id === user?.id;
 
     const handleDeletePost = () => {
         if (!post?.id) {
@@ -56,6 +82,15 @@ export const ProfilePostModal = ({ post, user, setPostModalOpen }: ProfilePostMo
         }
 
         setConfirmDeleteModalOpen(true);
+    }
+
+    const handleDeleteUserPost = () => {
+        if (!post?.id) {
+            toast.error('An error occurred while deleting this post.');
+            return;
+        }
+
+        setConfirmDeleteUserModalOpen(true);
     }
 
     const closeModal = () => {
@@ -95,6 +130,9 @@ export const ProfilePostModal = ({ post, user, setPostModalOpen }: ProfilePostMo
             {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} admin post deleteFn={() => {
                 mutate({ id: query.postId?.toString() ?? '' });
                 push('/explore');
+            }} />}
+            {confirmDeleteUserModalOpen && <DeleteModal isOpen={confirmDeleteUserModalOpen} setIsOpen={setConfirmDeleteUserModalOpen} post deleteFn={() => {
+                deletePost({ id: query.postId?.toString() ?? '' });
             }} />}
 
             <div className="fixed inset-0 overflow-y-auto">
@@ -156,8 +194,13 @@ export const ProfilePostModal = ({ post, user, setPostModalOpen }: ProfilePostMo
                                                             <p>Report</p>
                                                         </Button>
                                                     </Menu.Item>}
+                                                    {userIsProfileOwner && <Menu.Item>
+                                                        <Button variant='warning-ghost' iconRight={<Prohibit />} onClick={handleDeleteUserPost}>
+                                                            <p>Delete</p>
+                                                        </Button>
+                                                    </Menu.Item>}
                                                     {data?.user.admin && <Menu.Item>
-                                                        <Button variant='warning-ghost' iconRight={<Prohibit />} onClick={handleDeletePost}>
+                                                        <Button variant='warning-ghost' iconRight={<Hammer />} onClick={handleDeletePost}>
                                                             <p>Delete</p>
                                                         </Button>
                                                     </Menu.Item>}

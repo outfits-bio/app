@@ -232,4 +232,30 @@ export const postRouter = createTRPCRouter({
         nextCursor,
       };
     }),
+  getLoginPosts: publicProcedure.query(async ({ ctx }) => {
+    const posts = await ctx.prisma.post.findMany({
+      where: {},
+      select: {
+        id: true,
+        image: true,
+        type: true,
+        featured: true,
+        user: {
+          select: {
+            image: true,
+            verified: true,
+            username: true,
+            id: true,
+            admin: true,
+          },
+        },
+      },
+      take: 24,
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return posts;
+  }),
 });
