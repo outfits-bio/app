@@ -1,8 +1,8 @@
 {
   "theme_color": "#ffffff",
-  "background_color": "#ffffff",
+  "background_color": "#F9F9F9",
   "display": "fullscreen",
-  "scope": "",
+  "scope": "https://outfits.bio/",
   "start_url": "https://outfits.bio/explore",
   "name": "outfits.bio",
   "short_name": "outfits.bio",
