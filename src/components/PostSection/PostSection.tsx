@@ -56,17 +56,6 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
         }
     });
 
-    /**
-     * This deletes the post
-     * The image gets removed from the s3 bucket in the backend
-     * onMutate, onError, and onSettled are custom functions in ./post-section.util.ts that handle optimistic updates
-     */
-    const { mutate: deletePost } = api.post.deletePost.useMutation({
-        onMutate: (newPost) => onMutate(ctx, (old) => old?.filter((p) => p.id !== newPost.id), profileData?.id),
-        onError: (err, context) => onError(ctx, err, context, "Failed to delete post!", profileData?.id),
-        onSettled: () => onSettled(ctx, profileData?.username)
-    });
-
     const posts = postsData?.filter(p => p.type === type);
     const userIsProfileOwner = session?.user.id === profileData?.id;
     const postsExist = posts?.length !== 0;
@@ -136,16 +125,6 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
                                         priority={post.type === 'OUTFIT' || post.type === 'HOODIE'}
                                     />
                                 }
-
-                                {userIsProfileOwner && deleteButton === post.id &&
-                                    <button
-                                        onClick={() => deletePost({ id: post.id })}
-                                        className='flex items-center justify-center text-white text-lg absolute -top-2 -right-1 w-8 h-8 bg-red-500 rounded-full'>
-                                        <Trash />
-                                    </button>
-                                }
-
-
                             </Link>
                         </>
                     ))}
