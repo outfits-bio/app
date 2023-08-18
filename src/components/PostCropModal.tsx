@@ -58,6 +58,7 @@ export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
         } catch (e) {
             console.error(e)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [croppedAreaPixelsState]);
 
     return (

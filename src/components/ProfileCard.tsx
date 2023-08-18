@@ -109,7 +109,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
 
                 <div className={`flex text-sm gap-2 w-96 max-w-full flex-wrap`}>
                     {profileData?.links.map(link =>
-                        <Link href={`${link.url}`}>
+                        <Link href={`${link.url}`} key={link.id}>
                             <p className='flex items-center gap-1'>
                                 {link.type === LinkType.TWITTER && <TwitterLogo className='w-5 h-5' />}
                                 {link.type === LinkType.YOUTUBE && <YoutubeLogo className='w-5 h-5' />}

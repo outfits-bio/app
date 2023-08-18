@@ -1,9 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { toast } from "react-hot-toast";
 
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 export const formatErrors = (e: any) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const zodError = e.data?.zodError;
 
   if (zodError && zodError.fieldErrors) {

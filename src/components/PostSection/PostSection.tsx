@@ -40,6 +40,7 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
             mutate({ type });
             setIsCropped(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isCropped]);
 
     /**

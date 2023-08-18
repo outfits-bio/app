@@ -77,3 +77,5 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ className, c
         {children}
     </button>;
 });
+
+Button.displayName = 'Button';

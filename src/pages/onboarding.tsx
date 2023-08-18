@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import axios from 'axios';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import { signOut, useSession } from 'next-auth/react';

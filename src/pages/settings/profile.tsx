@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import axios from 'axios';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -236,7 +237,7 @@ const SettingsPage = () => {
 
           <div className='flex flex-col gap-2'>
             {userData?.links.map(link =>
-              <div className='flex items-center gap-2 w-full'>
+              <div className='flex items-center gap-2 w-full' key={link.id}>
                 <p className='gap-1 py-2 w-full cursor-default overflow-x-hidden flex px-4 items-center select-none rounded-md border border-black dark:border-white'>
                   {link.type === LinkType.TWITTER && <TwitterLogo className='w-5 h-5' />}
                   {link.type === LinkType.YOUTUBE && <YoutubeLogo className='w-5 h-5' />}

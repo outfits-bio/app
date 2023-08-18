@@ -14,7 +14,7 @@ import { DotsThree, Flag, Hammer, Prohibit, SealCheck, ShareFat, X } from '@phos
 
 import { Button } from './Button';
 import { DeleteModal } from './DeleteModal';
-import { getPostTypeIcon, getPostTypeIconSmall } from './PostSection/post-section.util';
+import { getPostTypeIconSmall } from './PostSection/post-section.util';
 import { ReportModal } from './ReportModal';
 
 export type ExplorePost = RouterOutputs['post']['getLatestPosts']['posts'][0];

@@ -347,7 +347,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             C. Concerns or inquiries that are not relevant in any way to the general usage of Outfits.bio
             <br />
-            and its technical “how tos'.”
+            and its technical “how tos&apos;.”
             <br />
             D. Refunds or any other form of regular money-back requests.
             <br />

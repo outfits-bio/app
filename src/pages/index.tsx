@@ -18,6 +18,7 @@ const Home = () => {
     if (status === 'authenticated') {
       push(`/${data.user.username}`);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   return (

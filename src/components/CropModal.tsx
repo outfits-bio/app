@@ -36,6 +36,7 @@ export const CropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl }: P
         } catch (e) {
             console.error(e)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [croppedAreaPixelsState]);
 
     return (
