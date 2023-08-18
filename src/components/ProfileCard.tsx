@@ -78,7 +78,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
     }
 
     return (
-        <div className="h-full -mt-8 flex flex-col justify-evenly font-inter">
+        <div className="h-full md:-mt-8 flex flex-col justify-evenly font-inter">
             <div className='md:w-96 w-full flex flex-col gap-4'>
                 <div className='flex md:flex-col gap-4 md:justify-normal'>
                     <div className={`w-32 h-32 basis-32 grow-0 shrink-0 md:basis-auto md:w-72 md:h-72 xl:w-96 xl:h-96 relative ${loading && ' skeleton'}`}>
