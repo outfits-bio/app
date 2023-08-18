@@ -1,8 +1,10 @@
+import { GetServerSideProps } from 'next';
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
+import { getServerAuthSession } from '~/server/auth';
 import { api } from '~/utils/api.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
@@ -17,10 +19,10 @@ const LoginPage = () => {
     signIn('discord', { callbackUrl: `/profile`, redirect: true });
   };
 
-  const { data: posts } = api.post.getLoginPosts.useQuery(undefined, {});
+  const { data: posts, isLoading } = api.post.getLoginPosts.useQuery(undefined, {});
 
   return (
-    <Layout title='Login' showSlash={false} showActions={false}>
+    <Layout title='Login' showSlash={false} showActions={false} showSearch={false}>
       <div className='flex flex-col md:flex-row w-screen h-full'>
         <div className='h-full flex w-full md:px-[90px] md:w-auto flex-col justify-center items-center gap-4 md:border-r border-black dark:border-white'>
           <h1 className='text-3xl sm:text-5xl font-black font-urbanist sm:w-72'>Your virtual wardrobe</h1>
@@ -29,14 +31,59 @@ const LoginPage = () => {
             <Button onClick={handleDiscord} iconRight={<DiscordLogo />}>Continue with Discord</Button>
             <Button onClick={handleGoogle} iconRight={<GoogleLogo />}>Continue with Google</Button>
           </div>
-          <p className='bottom-0 fixed p-10 text-sm text-center w-96'>By clicking Get Started, you agree to our <span><Link href={'/docs/terms-of-service'} className='font-bold underline'>Terms of Service</Link></span> and <span><Link href={'/docs/privacy-policy'} className='font-bold underline'>Privacy Policy</Link></span>.</p>
+          <p className='bottom-0 fixed p-10 text-sm text-center w-96'>By signing up, you agree to our <span><Link href={'/docs/terms-of-service'} className='font-bold underline'>Terms of Service</Link></span> and <span><Link href={'/docs/privacy-policy'} className='font-bold underline'>Privacy Policy</Link></span>.</p>
         </div>
         <div className='h-full shrink-0 grow hidden overflow-hidden flex-col md:flex'>
 
+          {isLoading && <>
+            <div className='flex gap-8 -mt-44'>
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-12' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-24' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-36' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-48' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-60' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-72' />
+              <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[336px]`} />
+            </div>
+
+            <div className='flex gap-8 -mt-72'>
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-12' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-24' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-36' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-48' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-60' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-72' />
+              <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[336px]`} />
+              <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[384px]`} />
+            </div>
+
+            <div className='flex gap-8 -mt-[336px]'>
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-12' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-24' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-36' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-48' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-60' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-72' />
+              <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[336px]`} />
+              <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[384px]`} />
+            </div>
+
+            <div className='flex gap-8 -mt-40'>
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-12' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-24' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-36' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-48' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-60' />
+              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-72' />
+              <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[336px]`} />
+              <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[384px]`} />
+            </div>
+          </>}
+
 
           <div className='flex gap-8 -mt-44'>
-            {posts && posts.slice(0, 5).map((post, i) =>
-              <Link href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-${12 * i}`}>
+            {posts && posts.slice(0, 7).map((post, i) =>
+              <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative`}>
                 <Image
                   // 176px is the same as w-44, the width of the container
                   sizes="176px"
@@ -63,8 +110,8 @@ const LoginPage = () => {
           </div>
 
           <div className='flex gap-8 -mt-40'>
-            {posts && posts.slice(6, 12).map((post, i) =>
-              <Link href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-${12 * i}`}>
+            {posts && posts.slice(8, 14).map((post, i) =>
+              <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
                 <Image
                   // 176px is the same as w-44, the width of the container
                   sizes="176px"
@@ -91,8 +138,8 @@ const LoginPage = () => {
           </div>
 
           <div className='flex gap-8 -mt-40'>
-            {posts && posts.slice(13, 19).map((post, i) =>
-              <Link href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-${12 * i}`}>
+            {posts && posts.slice(15, 21).map((post, i) =>
+              <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
                 <Image
                   // 176px is the same as w-44, the width of the container
                   sizes="176px"
@@ -119,8 +166,8 @@ const LoginPage = () => {
           </div>
 
           <div className='flex gap-8 -mt-40'>
-            {posts && posts.slice(20, 23).map((post, i) =>
-              <Link href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-${12 * i}`}>
+            {posts && posts.slice(22, 24).map((post, i) =>
+              <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
                 <Image
                   // 176px is the same as w-44, the width of the container
                   sizes="176px"
@@ -151,5 +198,22 @@ const LoginPage = () => {
     </Layout>
   );
 };
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getServerAuthSession(ctx);
+
+  if (session?.user) {
+    return {
+      redirect: {
+        destination: `/${session.user.username}`,
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+}
 
 export default LoginPage;

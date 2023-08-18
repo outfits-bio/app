@@ -30,7 +30,7 @@ export const SearchPage: NextPage = () => {
 
     const { data: totalUsers } = api.user.getTotalUsers.useQuery(undefined);
 
-    return <Layout title='Search'>
+    return <Layout title='Search' showSearch={false}>
         <div className='flex flex-col items-center p-4 w-screen'>
             <div className='flex relative items-center font-urbanist font-medium w-full md:w-5/6 lg:w-3/4 xl:w-1/2'>
                 {isFetching ? <SpinnerGap className='absolute left-4 text-gray-400 dark:text-white w-6 h-6 animate-spin' /> : <MagnifyingGlass className='absolute left-4 text-gray-400 dark:text-white w-6 h-6' />}
