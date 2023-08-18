@@ -109,8 +109,36 @@ const LoginPage = () => {
             )}
           </div>
 
-          <div className='flex gap-8 -mt-40'>
-            {posts && posts.slice(8, 14).map((post, i) =>
+          <div className='flex gap-8 -mt-60'>
+            {posts && posts.slice(0, 7).map((post, i) =>
+              <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
+                <Image
+                  // 176px is the same as w-44, the width of the container
+                  sizes="176px"
+                  src={formatImage(post.image, post.user.id)}
+                  className="object-cover"
+                  fill
+                  alt={post.type}
+                  priority
+                />
+
+                <div className='flex flex-col justify-end items-center p-2 absolute inset-0 bg-gradient-to-b from-transparent to-black w-full h-full bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100'>
+                  <div className='flex gap-2 w-full'>
+                    <Image className='rounded-full object-contain' src={formatAvatar(post.user.image, post.user.id)} alt={post.user.username ?? ""} width={30} height={30} />
+
+                    <h1 className='text-white flex gap-1 items-center text-sm w-full'>
+                      <span className='truncate'>{post.user.username}</span>
+                      {post.user.admin ? <Hammer className='w-4 h-4' /> : post.user.verified && <SealCheck className='w-4 h-4' />}
+                    </h1>
+                  </div>
+                </div>
+
+              </Link>
+            )}
+          </div>
+
+          <div className='flex gap-8 -mt-60'>
+            {posts && posts.slice(0, 7).map((post, i) =>
               <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
                 <Image
                   // 176px is the same as w-44, the width of the container
@@ -138,35 +166,7 @@ const LoginPage = () => {
           </div>
 
           <div className='flex gap-8 -mt-40'>
-            {posts && posts.slice(15, 21).map((post, i) =>
-              <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
-                <Image
-                  // 176px is the same as w-44, the width of the container
-                  sizes="176px"
-                  src={formatImage(post.image, post.user.id)}
-                  className="object-cover"
-                  fill
-                  alt={post.type}
-                  priority
-                />
-
-                <div className='flex flex-col justify-end items-center p-2 absolute inset-0 bg-gradient-to-b from-transparent to-black w-full h-full bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100'>
-                  <div className='flex gap-2 w-full'>
-                    <Image className='rounded-full object-contain' src={formatAvatar(post.user.image, post.user.id)} alt={post.user.username ?? ""} width={30} height={30} />
-
-                    <h1 className='text-white flex gap-1 items-center text-sm w-full'>
-                      <span className='truncate'>{post.user.username}</span>
-                      {post.user.admin ? <Hammer className='w-4 h-4' /> : post.user.verified && <SealCheck className='w-4 h-4' />}
-                    </h1>
-                  </div>
-                </div>
-
-              </Link>
-            )}
-          </div>
-
-          <div className='flex gap-8 -mt-40'>
-            {posts && posts.slice(22, 24).map((post, i) =>
+            {posts && posts.slice(0, 7).map((post, i) =>
               <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
                 <Image
                   // 176px is the same as w-44, the width of the container
