@@ -4,9 +4,9 @@
  */
 await import("./src/env.mjs");
 
-import nextPWA from 'next-pwa';
+import nextPWA from "next-pwa";
 
-const withPWA = nextPWA({ 
+const withPWA = nextPWA({
   dest: "public",
   register: true,
   skipWaiting: true,

@@ -3,7 +3,6 @@ import Cropper, { Area } from 'react-easy-crop';
 import getCroppedImg from '~/utils/crop-image.util';
 
 import { Dialog, Transition } from '@headlessui/react';
-import { PostType } from '@prisma/client';
 
 import { Button } from './Button';
 
@@ -36,6 +35,7 @@ export const CropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl }: P
         } catch (e) {
             console.error(e)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [croppedAreaPixelsState]);
 
     return (

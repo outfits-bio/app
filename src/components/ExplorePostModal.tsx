@@ -14,7 +14,7 @@ import { DotsThree, Flag, Hammer, Prohibit, SealCheck, ShareFat, X } from '@phos
 
 import { Button } from './Button';
 import { DeleteModal } from './DeleteModal';
-import { getPostTypeIcon, getPostTypeIconSmall } from './PostSection/post-section.util';
+import { getPostTypeIconSmall } from './PostSection/post-section.util';
 import { ReportModal } from './ReportModal';
 
 export type ExplorePost = RouterOutputs['post']['getLatestPosts']['posts'][0];
@@ -91,7 +91,7 @@ export const ExplorePostModal = ({ post, setPostModalOpen }: ExplorePostModalPro
             </Transition.Child>
 
             {reportModalOpen && <ReportModal isOpen={reportModalOpen} setIsOpen={setReportModalOpen} type='POST' id={query.postId?.toString()} />}
-            {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} admin deleteAccount={() => {
+            {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} post admin deleteFn={() => {
                 mutate({ id: query.postId?.toString() ?? '' });
                 push('/explore');
             }} />}
@@ -150,11 +150,11 @@ export const ExplorePostModal = ({ post, setPostModalOpen }: ExplorePostModalPro
                                                             <p>Share</p>
                                                         </Button>
                                                     </Menu.Item>
-                                                    <Menu.Item>
+                                                    {data?.user && <Menu.Item>
                                                         <Button variant='warning-ghost' iconRight={<Flag />} onClick={() => setReportModalOpen(true)}>
                                                             <p>Report</p>
                                                         </Button>
-                                                    </Menu.Item>
+                                                    </Menu.Item>}
                                                     {data?.user.admin && <Menu.Item>
                                                         <Button variant='warning-ghost' iconRight={<Prohibit />} onClick={handleDeletePost}>
                                                             <p>Delete</p>

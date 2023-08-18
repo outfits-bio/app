@@ -18,6 +18,7 @@ const Home = () => {
     if (status === 'authenticated') {
       push(`/${data.user.username}`);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   return (
@@ -32,11 +33,11 @@ const Home = () => {
 
           <div className='w-full px-12 sm:px-0 flex flex-col sm:flex-row sm:w-[550px] items-center gap-2'>
             <div className='grow w-full'>
-              <Button variant='outline' centerItems>
-                <Link href='/login'>
+              <Link href='/login'>
+                <Button variant='outline' centerItems>
                   Sign up!
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </div>
             <div className='grow w-full'>
               <Link href={'#more'}>

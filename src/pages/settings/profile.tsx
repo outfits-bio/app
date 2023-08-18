@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import axios from 'axios';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -142,7 +143,7 @@ const SettingsPage = () => {
       <div className='w-full p-4 overflow-y-scroll'>
         <div className="font-urbanist w-full md:w-[450px]">
           {cropModalOpen && <CropModal setFileUrl={setFileUrl} fileUrl={fileUrl} isOpen={cropModalOpen} setFile={setFile} setIsOpen={setCropModalOpen} />}
-          {isOpen && <DeleteModal deleteAccount={deleteProfile} isOpen={isOpen} setIsOpen={setIsOpen} />}
+          {isOpen && <DeleteModal deleteFn={deleteProfile} isOpen={isOpen} setIsOpen={setIsOpen} />}
           <h2 className="text-4xl font-black">Profile Details</h2><br></br>
           <form onSubmit={handleSubmit(handleFormSubmit)}>
             <label htmlFor="avatar" className="block font-medium mb-1">
@@ -166,6 +167,7 @@ const SettingsPage = () => {
                     type="file"
                     className="hidden"
                     onChange={handleChange}
+                    accept='image/*'
                   />
                   {(file) ? (
                     <img
@@ -235,7 +237,7 @@ const SettingsPage = () => {
 
           <div className='flex flex-col gap-2'>
             {userData?.links.map(link =>
-              <div className='flex items-center gap-2 w-full'>
+              <div className='flex items-center gap-2 w-full' key={link.id}>
                 <p className='gap-1 py-2 w-full cursor-default overflow-x-hidden flex px-4 items-center select-none rounded-md border border-black dark:border-white'>
                   {link.type === LinkType.TWITTER && <TwitterLogo className='w-5 h-5' />}
                   {link.type === LinkType.YOUTUBE && <YoutubeLogo className='w-5 h-5' />}

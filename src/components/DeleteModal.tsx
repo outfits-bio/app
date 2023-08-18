@@ -1,21 +1,18 @@
-import { Dispatch, Fragment, SetStateAction, useCallback, useState } from 'react';
-import Cropper, { Area } from 'react-easy-crop';
-import getCroppedImg from '~/utils/crop-image.util';
+import { Dispatch, Fragment, SetStateAction } from 'react';
 
 import { Dialog, Transition } from '@headlessui/react';
-import { X } from '@phosphor-icons/react';
-import { PostType } from '@prisma/client';
 
 import { Button } from './Button';
 
 interface DeleteModalProps {
     isOpen: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>;
-    deleteAccount: () => void;
+    deleteFn: () => void;
     admin?: boolean;
+    post?: boolean;
 }
 
-export const DeleteModal = ({ isOpen, setIsOpen, deleteAccount, admin = false }: DeleteModalProps) => {
+export const DeleteModal = ({ isOpen, setIsOpen, deleteFn, admin = false, post = false }: DeleteModalProps) => {
 
     return (
         <Transition appear show={isOpen} as={Fragment}>
@@ -46,11 +43,13 @@ export const DeleteModal = ({ isOpen, setIsOpen, deleteAccount, admin = false }:
                             <Dialog.Panel className="w-96 gap-2 flex flex-col transform overflow-hidden rounded-md dark:text-white bg-white dark:bg-black border border-black dark:border-white p-4 text-left align-middle shadow-xl transition-all">
                                 <h1 className='text-2xl font-semibold'>Are you sure?</h1>
 
-                                <p className='w-full text-sm'>You&apos;re about to delete {admin ? "this" : 'your'} account on outfits.bio, once you do {admin ? 'they' : 'you'} will no longer be able to login, and all of {admin ? 'their' : 'your'} data will be erased. Are you sure you would like to proceed?</p>
+                                {post ? <p className='text-sm'>
+                                    You&apos;re about to delete this post, once you do it will be gone forever. Are you sure you would like to proceed?
+                                </p> : <p className='w-full text-sm'>You&apos;re about to delete {admin ? "this" : 'your'} account on outfits.bio, once you do {admin ? 'they' : 'you'} will no longer be able to login, and all of {admin ? 'their' : 'your'} data will be erased. Are you sure you would like to proceed?</p>}
 
                                 <div className='flex w-full gap-2'>
                                     <Button variant='outline' centerItems onClick={() => setIsOpen(false)}>No, Abort</Button>
-                                    <Button variant='danger' centerItems onClick={() => { deleteAccount(); setIsOpen(false); }}>Delete Account</Button>
+                                    <Button variant='danger' centerItems onClick={() => { deleteFn(); setIsOpen(false); }}>Delete {post ? 'Post' : 'Account'}</Button>
                                 </div>
                             </Dialog.Panel>
                         </Transition.Child>

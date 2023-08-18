@@ -40,6 +40,7 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
             mutate({ type });
             setIsCropped(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isCropped]);
 
     /**
@@ -91,7 +92,7 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
             <div className='w-full overflow-scroll mb-8'>
                 <div className="flex gap-4 min-w-max md:justify-end pb-1">
                     {userIsProfileOwner && <div onDragEnter={handleDrag} className='relative'>
-                        <input ref={ref} type="file" className='hidden' onChange={handleChange} />
+                        <input ref={ref} type="file" className='hidden' accept='image/*' onChange={handleChange} />
                         {dragActive &&
                             <div
                                 className='absolute w-full h-full t-0 r-0 b-0 l-0'

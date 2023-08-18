@@ -41,6 +41,7 @@ export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActi
         if (redirectIfNotAuth && session.status === 'unauthenticated') {
             push('/login');
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [session, redirectIfNotAuth]);
 
     if (redirectIfNotAuth && session.status !== 'authenticated') {

@@ -82,7 +82,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             payments, please notice that Stripe has their own privacy policy and that we do not
             <br />
-            accept any responsibility or liability for these policies. To view Stripe's privacy policy,
+            accept any responsibility or liability for these policies. To view Stripe&apos;s privacy policy,
             <br />
             which you should check before submitting any payment information to Stripe, review as
             <br />

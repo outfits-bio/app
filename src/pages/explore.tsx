@@ -1,9 +1,8 @@
-import { randomUUID } from 'crypto';
 import { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '~/components/Button';
 import { ExplorePost, ExplorePostModal } from '~/components/ExplorePostModal';
 import { Layout } from '~/components/Layout';
@@ -17,7 +16,6 @@ import { PostType } from '@prisma/client';
 
 export const ExplorePage: NextPage = () => {
     const [activePage, setActivePage] = useState<PostType>('OUTFIT');
-    const [latestPost, setLatestPost] = useState<ExplorePost | null>(null);
     const [post, setPost] = useState<ExplorePost | null>(null);
     const [postModalOpen, setPostModalOpen] = useState<boolean>(false);
 
@@ -47,6 +45,7 @@ export const ExplorePage: NextPage = () => {
 
     useEffect(() => {
         refetch();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activePage])
 
     const toShow = data?.pages.flatMap((page) => page.posts);
@@ -63,6 +62,7 @@ export const ExplorePage: NextPage = () => {
             setPost(null);
             setPostModalOpen(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [query.postId, toShow]);
 
 

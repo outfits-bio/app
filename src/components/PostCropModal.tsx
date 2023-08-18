@@ -58,6 +58,7 @@ export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
         } catch (e) {
             console.error(e)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [croppedAreaPixelsState]);
 
     return (
@@ -96,14 +97,14 @@ export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
                                         </div>
                                     </div>
 
-                                    <div className='relative w-[320px] h-[574px]'>
+                                    <div className='relative w-[320px] h-[524px]'>
                                         <Cropper
                                             image={fileUrl ?? ""}
                                             crop={crop}
                                             zoom={zoom}
                                             rotation={rotation}
-                                            aspect={2 / 3}
-                                            cropSize={{ width: 320, height: 574 }}
+                                            aspect={176 / 288}
+                                            cropSize={{ width: 320, height: 524 }}
                                             classes={{ containerClassName: 'bg-gray-100 rounded-md' }}
                                             showGrid={true}
                                             onCropChange={(crop) => setCrop(crop)}
