@@ -250,7 +250,7 @@ export const postRouter = createTRPCRouter({
           },
         },
       },
-      take: 24,
+      take: 25,
       orderBy: {
         createdAt: "desc",
       },

@@ -35,7 +35,7 @@ const LoginPage = () => {
 
 
           <div className='flex gap-8 -mt-44'>
-            {posts && posts.slice(0, 5).map((post, i) =>
+            {posts && posts.slice(0, 7).map((post, i) =>
               <Link href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-${12 * i}`}>
                 <Image
                   // 176px is the same as w-44, the width of the container
@@ -63,7 +63,7 @@ const LoginPage = () => {
           </div>
 
           <div className='flex gap-8 -mt-40'>
-            {posts && posts.slice(6, 12).map((post, i) =>
+            {posts && posts.slice(8, 14).map((post, i) =>
               <Link href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-${12 * i}`}>
                 <Image
                   // 176px is the same as w-44, the width of the container
@@ -91,7 +91,7 @@ const LoginPage = () => {
           </div>
 
           <div className='flex gap-8 -mt-40'>
-            {posts && posts.slice(13, 19).map((post, i) =>
+            {posts && posts.slice(15, 21).map((post, i) =>
               <Link href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-${12 * i}`}>
                 <Image
                   // 176px is the same as w-44, the width of the container
@@ -119,7 +119,7 @@ const LoginPage = () => {
           </div>
 
           <div className='flex gap-8 -mt-40'>
-            {posts && posts.slice(20, 23).map((post, i) =>
+            {posts && posts.slice(22, 24).map((post, i) =>
               <Link href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-${12 * i}`}>
                 <Image
                   // 176px is the same as w-44, the width of the container
