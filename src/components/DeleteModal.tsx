@@ -1,10 +1,6 @@
-import { Dispatch, Fragment, SetStateAction, useCallback, useState } from 'react';
-import Cropper, { Area } from 'react-easy-crop';
-import getCroppedImg from '~/utils/crop-image.util';
+import { Dispatch, Fragment, SetStateAction } from 'react';
 
 import { Dialog, Transition } from '@headlessui/react';
-import { X } from '@phosphor-icons/react';
-import { PostType } from '@prisma/client';
 
 import { Button } from './Button';
 
