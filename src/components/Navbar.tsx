@@ -18,6 +18,8 @@ import {
 import { Button } from './Button';
 import { Logo } from './Logo';
 import { NavMenu } from './Menu';
+import { BugReportModal } from './Modals/BugReportModal';
+import { FeedbackModal } from './Modals/FeedbackModal';
 
 interface Props {
     title: string;
@@ -28,6 +30,9 @@ interface Props {
 }
 
 export const AuthSection = ({ session, isAuth }: { session: Props['session'], isAuth: boolean }) => {
+    const [bugReportModalOpen, setBugReportModalOpen] = useState(false);
+    const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
+
     const { pathname } = useRouter();
 
 
@@ -40,6 +45,9 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
     if (!isAuth) return null;
 
     return <>
+        {bugReportModalOpen && <BugReportModal isOpen={bugReportModalOpen} setIsOpen={setBugReportModalOpen} />}
+        {feedbackModalOpen && <FeedbackModal isOpen={feedbackModalOpen} setIsOpen={setFeedbackModalOpen} />}
+
         <div className='hidden md:flex items-center justify-center gap-4'>
             <Link href='/shoot'>
                 <Button variant='outline-ghost' iconLeft={<Plus />}>Create</Button>
@@ -110,7 +118,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
                             <Menu.Item>
                                 <Button
                                     variant='ghost'
-                                    onClick={() => toast.success('Coming soon!')}
+                                    onClick={() => setBugReportModalOpen(true)}
                                 >
                                     <p className='font-semibold'>Report Bug</p>
                                 </Button>
@@ -118,7 +126,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
                             <Menu.Item>
                                 <Button
                                     variant='ghost'
-                                    onClick={() => toast.success('Coming soon!')}
+                                    onClick={() => setFeedbackModalOpen(true)}
                                 >
                                     <p className='font-semibold'>Feedback</p>
                                 </Button>

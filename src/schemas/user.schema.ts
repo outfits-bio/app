@@ -60,3 +60,10 @@ export const resolveReportSchema = z.object({
   id: z.string().cuid(),
 });
 export type ResolveReportInput = ReturnType<typeof resolveReportSchema.parse>;
+
+export const createBugReportSchema = z.object({
+  description: z.string().max(1000),
+});
+export type CreateBugReportInput = ReturnType<
+  typeof createBugReportSchema.parse
+>;
