@@ -193,7 +193,7 @@ export const ExplorePostModal = ({ post, setPostModalOpen }: ExplorePostModalPro
                                                             <p>Report</p>
                                                         </Button>
                                                     </Menu.Item>}
-                                                    {userIsProfileOwner && <Menu.Item>
+                                                    {(userIsProfileOwner && !data?.user.admin) && <Menu.Item>
                                                         <Button variant={'ghost'} iconRight={<Prohibit />} onClick={handleDeleteUserPost}>
                                                             <p>Delete</p>
                                                         </Button>

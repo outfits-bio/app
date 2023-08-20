@@ -1,6 +1,10 @@
 import axios from "axios";
 import { env } from "~/env.mjs";
-import { createReportSchema, resolveReportSchema } from "~/schemas/user.schema";
+import {
+  createBugReportSchema,
+  createReportSchema,
+  resolveReportSchema,
+} from "~/schemas/user.schema";
 import { formatImage } from "~/utils/image-src-format.util";
 
 import { TRPCError } from "@trpc/server";
@@ -31,7 +35,7 @@ export const reportRouter = createTRPCRouter({
           },
         });
 
-        await axios.post(env.DISCORD_WEBHOOK_URL ?? "", {
+        await axios.post(env.DISCORD_MOD_REPORT_WEBHOOK_URL ?? "", {
           username: "Reports Bot",
           avatar_url: "",
           content: `New report from [${
@@ -72,7 +76,7 @@ export const reportRouter = createTRPCRouter({
           },
         });
 
-        await axios.post(env.DISCORD_WEBHOOK_URL ?? "", {
+        await axios.post(env.DISCORD_MOD_REPORT_WEBHOOK_URL ?? "", {
           username: "Reports Bot",
           avatar_url: "",
           content: `New report from [${
@@ -119,6 +123,52 @@ export const reportRouter = createTRPCRouter({
         data: {
           resolved: true,
         },
+      });
+
+      return true;
+    }),
+
+  reportBug: protectedProcedure
+    .input(createBugReportSchema)
+    .mutation(async ({ ctx, input }) => {
+      const { description } = input;
+
+      await axios.post(env.DISCORD_BUG_WEBHOOK_URL ?? "", {
+        username: "Bug Reports Bot",
+        avatar_url: "",
+        content: `New bug report from [${
+          ctx.session.user.username
+        }](https://outfits.bio/${encodeURI(ctx.session.user.username)})`,
+        embeds: [
+          {
+            title: "Bug Report",
+            description: description,
+            color: 0xff0000,
+          },
+        ],
+      });
+
+      return true;
+    }),
+
+  feedback: protectedProcedure
+    .input(createBugReportSchema)
+    .mutation(async ({ ctx, input }) => {
+      const { description } = input;
+
+      await axios.post(env.DISCORD_FEEDBACK_WEBHOOK_URL ?? "", {
+        username: "Feedback Bot",
+        avatar_url: "",
+        content: `New feedback from [${
+          ctx.session.user.username
+        }](https://outfits.bio/${encodeURI(ctx.session.user.username)})`,
+        embeds: [
+          {
+            title: "Feedback",
+            description: description,
+            color: 0xff0000,
+          },
+        ],
       });
 
       return true;
