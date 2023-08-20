@@ -2,6 +2,8 @@
 import axios from 'axios';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import { signOut, useSession } from 'next-auth/react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -17,9 +19,10 @@ import { getServerAuthSession } from '~/server/auth';
 import { prisma } from '~/server/db';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
+import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeft, ArrowRight } from '@phosphor-icons/react';
+import { ArrowLeft, ArrowRight, Hammer, SealCheck } from '@phosphor-icons/react';
 import { createServerSideHelpers } from '@trpc/react-query/server';
 
 export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) => {
@@ -35,6 +38,8 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
     const { register, handleSubmit, setValue, getValues } = useForm({
         resolver: zodResolver(editProfileSchema),
     });
+
+    const { data: posts, isLoading } = api.post.getLoginPosts.useQuery(undefined, {});
 
     // This fetches the user's data and sets the username and username fields to the user's current username and username
     const { data } = api.user.getMe.useQuery(undefined, {
@@ -99,7 +104,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
     };
 
     return (
-        <Layout title='Onboarding' showActions={false} showSlash={false}>
+        <Layout title='Onboarding' showActions={false} showSlash={false} showSearch={false}>
             {cropModalOpen && <CropModal setFileUrl={setFileUrl} fileUrl={fileUrl} isOpen={cropModalOpen} setFile={setFile} setIsOpen={setCropModalOpen} />}
             <div className='flex flex-col lg:flex-row w-screen h-full'>
                 <div className='h-full flex w-full lg:px-56 lg:w-auto flex-col py-4 sm:justify-center items-center gap-4 lg:border-r border-black dark:border-white'>
@@ -164,45 +169,167 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
                 </div>
 
                 <div className='h-full shrink-0 grow hidden overflow-hidden flex-col lg:flex'>
-                    <div className='flex gap-10 -mt-96'>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-12'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-24'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-36'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-48'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-60'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-72'></div>
+                    {isLoading && <>
+                        <div className='flex gap-8 -mt-72'>
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-12' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-24' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-36' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-48' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-60' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-72' />
+                            <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[336px]`} />
+                            <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[384px]`} />
+                        </div>
+
+                        <div className='flex gap-8 -mt-[336px]'>
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-12' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-24' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-36' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-48' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-60' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-72' />
+                            <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[336px]`} />
+                            <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[384px]`} />
+                        </div>
+
+                        <div className='flex gap-8 -mt-[336px]'>
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-12' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-24' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-36' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-48' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-60' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-72' />
+                            <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[336px]`} />
+                            <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[384px]`} />
+                        </div>
+
+                        <div className='flex gap-8 -mt-[336px]'>
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-12' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-24' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-36' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-48' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-60' />
+                            <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-72' />
+                            <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[336px]`} />
+                            <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[384px]`} />
+                        </div>
+                    </>}
+
+
+                    <div className='flex gap-8 -mt-72'>
+                        {posts && posts.slice(0, 7).map((post, i) =>
+                            <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative`}>
+                                <Image
+                                    // 176px is the same as w-44, the width of the container
+                                    sizes="176px"
+                                    src={formatImage(post.image, post.user.id)}
+                                    className="object-cover"
+                                    fill
+                                    alt={post.type}
+                                    priority
+                                />
+
+                                <div className='flex flex-col justify-end items-center p-2 absolute inset-0 bg-gradient-to-b from-transparent to-black w-full h-full bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100'>
+                                    <div className='flex gap-2 w-full'>
+                                        <Image className='rounded-full object-contain' src={formatAvatar(post.user.image, post.user.id)} alt={post.user.username ?? ""} width={30} height={30} />
+
+                                        <h1 className='text-white flex gap-1 items-center text-sm w-full'>
+                                            <span className='truncate'>{post.user.username}</span>
+                                            {post.user.admin ? <Hammer className='w-4 h-4' /> : post.user.verified && <SealCheck className='w-4 h-4' />}
+                                        </h1>
+                                    </div>
+                                </div>
+
+                            </Link>
+                        )}
                     </div>
-                    <div className='flex gap-10 -mt-60'>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-12'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-24'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-36'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-48'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-60'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-72'></div>
+
+                    <div className='flex gap-8 -mt-60'>
+                        {posts && posts.slice(8, 15).map((post, i) =>
+                            <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
+                                <Image
+                                    // 176px is the same as w-44, the width of the container
+                                    sizes="176px"
+                                    src={formatImage(post.image, post.user.id)}
+                                    className="object-cover"
+                                    fill
+                                    alt={post.type}
+                                    priority
+                                />
+
+                                <div className='flex flex-col justify-end items-center p-2 absolute inset-0 bg-gradient-to-b from-transparent to-black w-full h-full bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100'>
+                                    <div className='flex gap-2 w-full'>
+                                        <Image className='rounded-full object-contain' src={formatAvatar(post.user.image, post.user.id)} alt={post.user.username ?? ""} width={30} height={30} />
+
+                                        <h1 className='text-white flex gap-1 items-center text-sm w-full'>
+                                            <span className='truncate'>{post.user.username}</span>
+                                            {post.user.admin ? <Hammer className='w-4 h-4' /> : post.user.verified && <SealCheck className='w-4 h-4' />}
+                                        </h1>
+                                    </div>
+                                </div>
+
+                            </Link>
+                        )}
                     </div>
-                    <div className='flex gap-10 -mt-60'>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-12'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-24'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-36'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-48'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-60'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-72'></div>
+
+                    <div className='flex gap-8 -mt-60'>
+                        {posts && posts.slice(16, 23).map((post, i) =>
+                            <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
+                                <Image
+                                    // 176px is the same as w-44, the width of the container
+                                    sizes="176px"
+                                    src={formatImage(post.image, post.user.id)}
+                                    className="object-cover"
+                                    fill
+                                    alt={post.type}
+                                    priority
+                                />
+
+                                <div className='flex flex-col justify-end items-center p-2 absolute inset-0 bg-gradient-to-b from-transparent to-black w-full h-full bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100'>
+                                    <div className='flex gap-2 w-full'>
+                                        <Image className='rounded-full object-contain' src={formatAvatar(post.user.image, post.user.id)} alt={post.user.username ?? ""} width={30} height={30} />
+
+                                        <h1 className='text-white flex gap-1 items-center text-sm w-full'>
+                                            <span className='truncate'>{post.user.username}</span>
+                                            {post.user.admin ? <Hammer className='w-4 h-4' /> : post.user.verified && <SealCheck className='w-4 h-4' />}
+                                        </h1>
+                                    </div>
+                                </div>
+
+                            </Link>
+                        )}
                     </div>
-                    <div className='flex gap-10 -mt-60'>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-12'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-24'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-36'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-48'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-60'></div>
-                        <div className='w-52 h-80 bg-black rounded-lg rotate-12 mt-72'></div>
+
+                    <div className='flex gap-8 -mt-60'>
+                        {posts && posts.slice(24, 31).map((post, i) =>
+                            <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
+                                <Image
+                                    // 176px is the same as w-44, the width of the container
+                                    sizes="176px"
+                                    src={formatImage(post.image, post.user.id)}
+                                    className="object-cover"
+                                    fill
+                                    alt={post.type}
+                                    priority
+                                />
+
+                                <div className='flex flex-col justify-end items-center p-2 absolute inset-0 bg-gradient-to-b from-transparent to-black w-full h-full bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100'>
+                                    <div className='flex gap-2 w-full'>
+                                        <Image className='rounded-full object-contain' src={formatAvatar(post.user.image, post.user.id)} alt={post.user.username ?? ""} width={30} height={30} />
+
+                                        <h1 className='text-white flex gap-1 items-center text-sm w-full'>
+                                            <span className='truncate'>{post.user.username}</span>
+                                            {post.user.admin ? <Hammer className='w-4 h-4' /> : post.user.verified && <SealCheck className='w-4 h-4' />}
+                                        </h1>
+                                    </div>
+                                </div>
+
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>
-        </Layout >
+        </Layout>
     );
 };
 
