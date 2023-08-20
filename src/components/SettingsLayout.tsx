@@ -16,7 +16,7 @@ export const SettingsLayout = ({ children }: SettingsLayoutProps) => {
 
     return <Layout title="Settings" redirectIfNotAuth showActions showSlash>
         <div className='flex w-screen h-full'>
-            <div className='hidden md:flex flex-col h-full w-96 border-r border-black dark:border-white p-4'>
+            <div className='hidden md:flex flex-col h-full w-96 border-r border-black dark:border-white p-4 gap-2'>
                 <Link href='/settings/profile'>
                     <Button variant='ghost' disabled={pathname === '/settings/profile'} className='justify-start' iconLeft={<User />}>Profile</Button>
                 </Link>

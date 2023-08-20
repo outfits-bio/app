@@ -238,7 +238,7 @@ const SettingsPage = () => {
           <div className='flex flex-col gap-2'>
             {userData?.links.map(link =>
               <div className='flex items-center gap-2 w-full' key={link.id}>
-                <p className='gap-1 py-2 w-full cursor-default overflow-x-hidden flex px-4 items-center select-none rounded-md border border-black dark:border-white'>
+                <p className='gap-1 py-2 h-12 w-full cursor-default overflow-x-hidden flex px-4 items-center select-none rounded-md border border-black dark:border-white'>
                   {link.type === LinkType.TWITTER && <TwitterLogo className='w-5 h-5' />}
                   {link.type === LinkType.YOUTUBE && <YoutubeLogo className='w-5 h-5' />}
                   {link.type === LinkType.TIKTOK && <TiktokLogo className='w-5 h-5' />}
@@ -266,7 +266,7 @@ const SettingsPage = () => {
                   id="link"
                   type="text"
                   placeholder='https://example.com'
-                  className="px-4 py-2 w-full border rounded-md border-black dark:border-white dark:text-white dark:bg-black"
+                  className="px-4 py-2 h-12 w-full border rounded-md border-black dark:border-white dark:text-white dark:bg-black"
                   {...registerLink('url')}
                 />
                 <div>

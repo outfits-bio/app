@@ -30,10 +30,10 @@ export const ConnectionsSettingsPage: NextPage = () => {
         <div className="p-4 font-urbanist w-full md:w-[400px]">
             <h2 className="text-4xl font-black">Connections</h2><br></br>
 
-            <div className={`w-full md:w-[400px] h-24 flex flex-col justify-between ${isLoading ? 'skeleton' : ''}`}>
+            <div className={`w-full md:w-[400px] h-24 flex flex-col gap-2 justify-between ${isLoading ? 'skeleton' : ''}`}>
                 {discordAccount ?
                     <div className='flex items-center gap-2'>
-                        <div className='py-2 grow w-full cursor-default flex justify-center items-center select-none rounded-md border border-black dark:border-white'>
+                        <div className='py-2 h-12 grow w-full cursor-default flex justify-center items-center select-none rounded-md border border-black dark:border-white'>
                             <DiscordLogo className='w-6 h-6 mr-2' />
                             <span>Discord Connected</span>
                         </div>
@@ -52,7 +52,7 @@ export const ConnectionsSettingsPage: NextPage = () => {
 
                 {googleAccount ?
                     <div className='flex items-center gap-2'>
-                        <div className='py-2 grow w-full cursor-default flex justify-center items-center select-none rounded-md border border-black dark:border-white'>
+                        <div className='py-2 h-12 grow w-full cursor-default flex justify-center items-center select-none rounded-md border border-black dark:border-white'>
                             <GoogleLogo className='w-6 h-6 mr-2' />
                             <span>Google Connected</span>
                         </div>
