@@ -170,36 +170,6 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                     </>}
                 </div>
             </div>
-
-            <div className='md:w-96 w-full hidden md:flex items-center gap-4 mt-2 fixed bottom-6'>
-                {authStatus === 'authenticated' && currentUser && <>
-                    <Link href={`/${currentUser.username}`}>
-                        <Button variant='outline'>
-                            <Image className='rounded-full object-contain' src={formatAvatar(currentUser.image, currentUser.id)} alt={currentUser.username ?? ""} width={24} height={24} />
-
-                            <p className='font-semibold'>{currentUser.username}</p>
-                        </Button>
-                    </Link>
-
-                    <div>
-                        <Button variant='ghost' onClick={handleShare} iconLeft={<ShareFat />} centerItems />
-                    </div>
-
-                    <Link href={'https://discord.gg/f4KEs5TVz2'}>
-                        <Button variant='ghost' iconLeft={<DiscordLogo />} centerItems />
-                    </Link>
-                </>}
-
-                {authStatus === 'unauthenticated' && <>
-                    <Link href={'/login'}>
-                        <Button>Create your profile</Button>
-                    </Link>
-
-                    <Link href={'/login'}>
-                        <Button variant='ghost'>Login</Button>
-                    </Link>
-                </>}
-            </div>
         </div>
     )
 }
