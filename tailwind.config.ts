@@ -21,6 +21,9 @@ export default {
         "purple-accent": "var(--purple-accent)",
         hover: "var(--hover)",
       },
+      boxShadow: {
+        dropdown: "0px 4px 16px 0px rgba(0, 0, 0, 0.25);",
+      },
       animation: {
         ping: "ping 200ms ease-in-out",
         "spin-words": "spin-words 6s infinite",

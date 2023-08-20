@@ -5,12 +5,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import { api } from '~/utils/api.util';
 import { formatAvatar } from '~/utils/image-src-format.util';
 
 import { Menu, Transition } from '@headlessui/react';
 import {
-    Bell, BellSimple, Camera, CoatHanger, Compass, Door, DoorOpen, Gear, Hammer, Heart,
+    Bell, BellSimple, Camera, CoatHanger, Compass, CopySimple, Door, DoorOpen, Gear, Hammer, Heart,
     MagnifyingGlass, Person, Plus, SealCheck, SpinnerGap, User
 } from '@phosphor-icons/react';
 
@@ -29,72 +30,116 @@ interface Props {
 export const AuthSection = ({ session, isAuth }: { session: Props['session'], isAuth: boolean }) => {
     const { pathname } = useRouter();
 
+
+    const handleShare = () => {
+        navigator.clipboard.writeText(session.data?.user.username ?? "");
+
+        toast.success('Username copied to clipboard!');
+    }
+
     if (!isAuth) return null;
 
-    return <div className='hidden md:flex items-center justify-center gap-2'>
-        <Link href='/shoot'>
-            <Button variant='ghost' iconLeft={<Plus />}>Create</Button>
-        </Link>
+    return <>
+        <div className='hidden md:flex items-center justify-center gap-4'>
+            <Link href='/shoot'>
+                <Button variant='outline-ghost' iconLeft={<Plus />}>Create</Button>
+            </Link>
 
-        {pathname !== '/explore' && <Link href='/explore'>
-            <Button variant='ghost' iconLeft={<Compass />} />
-        </Link>}
+            {pathname !== '/explore' && <Link href='/explore'>
+                <Button variant='outline-ghost' shape={'square'} iconLeft={<Compass />} />
+            </Link>}
 
-        <Link href='/notifications'>
-            <Button variant='ghost' iconLeft={<BellSimple />} />
-        </Link>
+            <Link href='/notifications'>
+                <Button variant='outline-ghost' shape={'circle'} iconLeft={<BellSimple />} />
+            </Link>
 
-        <Menu as="div" className="relative inline-block text-left">
-            <div>
-                <Menu.Button>
-                    <Image className='rounded-full object-contain mt-2' src={formatAvatar(session.data?.user.image, session.data?.user.id)} alt={session.data?.user.username ?? ""} width={40} height={40} />
-                </Menu.Button>
-            </div>
-            <Transition
-                as={Fragment}
-                enter="transition ease-out duration-100"
-                enterFrom="transform opacity-0 scale-95"
-                enterTo="transform opacity-100 scale-100"
-                leave="transition ease-in duration-75"
-                leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
-            >
-                <Menu.Items className="absolute right-1 -mt-1 rounded-md w-56 origin-top-right border border-black dark:border-white bg-white dark:bg-black">
-                    <div className="px-1 py-1 space-y-1">
-                        <Menu.Item>
-                            <Link href={`/${session.data?.user.username}`}>
+            <Menu as="div" className="relative inline-block text-left">
+                <div>
+                    <Menu.Button>
+                        <Image className='rounded-full object-contain border border-stroke mt-2' src={formatAvatar(session.data?.user.image, session.data?.user.id)} alt={session.data?.user.username ?? ""} width={46} height={46} />
+                    </Menu.Button>
+                </div>
+                <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                >
+                    <Menu.Items className="absolute right-1 rounded-md divide-y divide-stroke mt-1 w-56 origin-top-right border border-stroke dark:border-white bg-white dark:bg-black shadow-dropdown p-4">
+                        <div className="px-6 pb-2 space-y-1 font-urbanist font-bold h-12 flex items-center gap-2">
+                            <p className='peer cursor-pointer hover:underline' onClick={handleShare}>{session.data?.user.username}</p>
+
+                            <div className='h-full peer-hover:flex items-center pb-1 hidden'>
+                                <CopySimple className='w-4 h-4 text-secondary-text' />
+                            </div>
+                        </div>
+
+                        <div className="py-2 space-y-1">
+                            <Menu.Item>
+                                <Link href={`/${session.data?.user.username}`}>
+                                    <Button
+                                        variant='ghost'
+                                    >
+                                        <p className='font-semibold'>Profile</p>
+                                    </Button>
+                                </Link>
+                            </Menu.Item>
+                            <Menu.Item>
+                                <Link href={'/settings/profile'}>
+                                    <Button
+                                        variant='ghost'
+                                    >
+                                        <p className='font-semibold'>Settings</p>
+                                    </Button>
+                                </Link>
+                            </Menu.Item>
+                            <Menu.Item>
+                                <Link href={'https://discord.gg/f4KEs5TVz2'}>
+                                    <Button
+                                        variant='ghost'
+                                    >
+                                        <p className='font-semibold'>Discord</p>
+                                    </Button>
+                                </Link>
+                            </Menu.Item>
+                        </div>
+                        <div className="pt-2 space-y-1">
+                            <Menu.Item>
                                 <Button
                                     variant='ghost'
-                                    iconRight={<User />}
+                                    onClick={() => toast.success('Coming soon!')}
                                 >
-                                    <p className='font-semibold'>Profile</p>
+                                    <p className='font-semibold'>Report Bug</p>
                                 </Button>
-                            </Link>
-                        </Menu.Item>
-                        <Menu.Item>
-                            <Link href={'/settings/profile'}>
+                            </Menu.Item>
+                            <Menu.Item>
                                 <Button
                                     variant='ghost'
-                                    iconRight={<Gear />}
+                                    onClick={() => toast.success('Coming soon!')}
                                 >
-                                    <p className='font-semibold'>Settings</p>
+                                    <p className='font-semibold'>Feedback</p>
                                 </Button>
-                            </Link>
-                        </Menu.Item>
-                        <Menu.Item>
-                            <Button
-                                variant='ghost'
-                                iconRight={<DoorOpen />}
-                                onClick={() => signOut()}
-                            >
-                                <p className='font-semibold'>Logout</p>
-                            </Button>
-                        </Menu.Item>
-                    </div>
-                </Menu.Items>
-            </Transition>
-        </Menu>
-    </div>
+                            </Menu.Item>
+                            <Menu.Item>
+                                <Button
+                                    variant='ghost'
+                                    onClick={() => signOut()}
+                                >
+                                    <p className='font-semibold'>Logout</p>
+                                </Button>
+                            </Menu.Item>
+                        </div>
+                    </Menu.Items>
+                </Transition>
+            </Menu>
+        </div>
+        <Link href='/notifications' className='md:hidden'>
+            <Button variant='outline-ghost' shape={'circle'} iconLeft={<BellSimple />} />
+        </Link>
+    </>
 }
 
 export const Navbar = ({ title, session, showSlash = true, showActions = true, showSearch = false }: Props) => {
@@ -142,7 +187,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, s
                         id="link"
                         type="text"
                         placeholder='Search for users'
-                        className="pl-12 py-2 w-[400px] border rounded-md border-stroke text-secondary-text"
+                        className="pl-12 py-2 h-12 w-[400px] border rounded-md border-stroke text-secondary-text"
                         onChange={(e) => {
                             setInput(e.target.value)
                             debounceRequest()
@@ -150,7 +195,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, s
                         value={input}
                     />
 
-                    {input.length > 0 && <div className='absolute top-12 w-full flex flex-col gap-1'>
+                    {input.length > 0 && <div className='absolute top-14 w-full flex flex-col gap-1'>
                         {(searchData?.length ?? 0) > 0 ? searchData?.map((user) => (
                             <Link href={`/${user.username}`} key={user.id}>
                                 <div className='bg-white border border-black p-4 rounded-md hover:bg-slate-100 dark:hover:bg-slate-950 cursor-pointer flex gap-2'>
@@ -187,11 +232,11 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, s
                     {isAuth ? <AuthSection isAuth={!!isAuth} session={session} /> : <NavMenu />}
                     {isAuth ? null : <div className='items-center gap-4 hidden md:flex'>
                         {pathname !== '/explore' && <Link href='/explore'>
-                            <Button variant='ghost'>Explore</Button>
+                            <Button variant='outline-ghost'>Explore</Button>
                         </Link>}
 
                         <Link href='https://discord.gg/f4KEs5TVz2'>
-                            <Button variant='ghost'>Discord</Button>
+                            <Button variant='outline-ghost'>Discord</Button>
                         </Link>
 
                         <Link href='/login'>
