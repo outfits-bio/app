@@ -126,7 +126,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, s
     return (
         <div className='border-b h-20 border-stroke fixed w-full z-10 bg-white dark:bg-black font-urbanist'>
             <Head>
-                <title>{title}</title>
+                <title>outfits.bio - {title.toLowerCase()}</title>
             </Head>
 
             <div className='flex items-center px-6 sm:px-12 h-full justify-between gap-2'>
