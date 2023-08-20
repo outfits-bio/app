@@ -286,7 +286,7 @@ const SettingsPage = () => {
 
           <p className="mb-1">Delete Account</p>
           <Button
-            variant="warning"
+            variant={'outline'}
             type="button"
             centerItems
             iconLeft={<Trash />}

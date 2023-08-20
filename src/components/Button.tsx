@@ -6,15 +6,12 @@ import { SpinnerGap } from '@phosphor-icons/react';
 
 import type { VariantProps } from 'class-variance-authority';
 
-const variants = cva('w-full font-semibold font-urbanist self-stretch px-6 py-2 rounded-lg gap-3 flex items-center', {
+const variants = cva('w-full font-semibold font-urbanist self-stretch px-6 h-12 py-2 rounded-lg gap-3 flex items-center', {
     variants: {
         variant: {
-            primary: 'dark:bg-white border dark:border-white border-black dark:text-black text-white bg-black hover:bg-opacity-80 disabled:bg-opacity-80',
-            outline: 'border dark:border-white border-black hover:bg-gray-100 dark:hover:bg-opacity-20 disabled:bg-gray-100 dark:disabled:bg-opacity-20 dark:bg-black bg-white',
-            ghost: 'border border-white dark:border-black hover:bg-gray-100 dark:hover:bg-opacity-20 disabled:bg-gray-100 dark:disabled:bg-opacity-20 dark:bg-black bg-white',
-            warning: 'border text-red-600 border-red-600 hover:bg-gray-100 dark:hover:bg-opacity-20 disabled:bg-gray-100 dark:disabled:bg-opacity-20 dark:bg-black bg-white',
-            'warning-ghost': 'text-red-600 hover:bg-gray-100 dark:hover:bg-opacity-20 disabled:bg-gray-100 dark:disabled:bg-opacity-20 dark:bg-black bg-white',
-            danger: 'border text-white bg-red-600 border-red-600 hover:bg-opacity-90 disabled:bg-opacity-20',
+            primary: 'dark:bg-white border dark:border-white border-black dark:text-black text-white bg-black hover:bg-opacity-80 dark:hover:bg-opacity-80 disabled:bg-opacity-80 dark:disabled:bg-opacity-80',
+            outline: 'border dark:border-white border-black disabled:bg-hover bg-transparent hover:bg-hover',
+            ghost: 'border border-transparent hover:bg-hover disabled:bg-hover',
         },
         centerItems: {
             true: 'justify-center',

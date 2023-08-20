@@ -57,7 +57,6 @@ export const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
                     <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.SHOES} />
                     <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.WATCH} />
                 </div>
-
             </div>
         </Layout>
     );

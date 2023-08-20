@@ -10,6 +10,8 @@ import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
 import { DiscordLogo, GoogleLogo, Hammer, SealCheck } from '@phosphor-icons/react';
 
+import { PostSkeleton } from '../components/Skeletons/PostSkeleton';
+
 const LoginPage = () => {
   const handleGoogle = async () => {
     signIn('google', { callbackUrl: `/profile`, redirect: true });
@@ -37,47 +39,47 @@ const LoginPage = () => {
 
           {isLoading && <>
             <div className='flex gap-8 -mt-72'>
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-12' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-24' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-36' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-48' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-60' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-72' />
-              <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[336px]`} />
-              <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[384px]`} />
+              <PostSkeleton className='rotate-12 mt-12' />
+              <PostSkeleton className='rotate-12 mt-24' />
+              <PostSkeleton className='rotate-12 mt-36' />
+              <PostSkeleton className='rotate-12 mt-48' />
+              <PostSkeleton className='rotate-12 mt-60' />
+              <PostSkeleton className='rotate-12 mt-72' />
+              <PostSkeleton className='rotate-12 mt-[336px]' />
+              <PostSkeleton className='rotate-12 mt-[384px]' />
             </div>
 
             <div className='flex gap-8 -mt-[336px]'>
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-12' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-24' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-36' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-48' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-60' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-72' />
-              <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[336px]`} />
-              <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[384px]`} />
+              <PostSkeleton className='rotate-12 mt-12' />
+              <PostSkeleton className='rotate-12 mt-24' />
+              <PostSkeleton className='rotate-12 mt-36' />
+              <PostSkeleton className='rotate-12 mt-48' />
+              <PostSkeleton className='rotate-12 mt-60' />
+              <PostSkeleton className='rotate-12 mt-72' />
+              <PostSkeleton className='rotate-12 mt-[336px]' />
+              <PostSkeleton className='rotate-12 mt-[384px]' />
             </div>
 
             <div className='flex gap-8 -mt-[336px]'>
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-12' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-24' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-36' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-48' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-60' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-72' />
-              <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[336px]`} />
-              <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[384px]`} />
+              <PostSkeleton className='rotate-12 mt-12' />
+              <PostSkeleton className='rotate-12 mt-24' />
+              <PostSkeleton className='rotate-12 mt-36' />
+              <PostSkeleton className='rotate-12 mt-48' />
+              <PostSkeleton className='rotate-12 mt-60' />
+              <PostSkeleton className='rotate-12 mt-72' />
+              <PostSkeleton className='rotate-12 mt-[336px]' />
+              <PostSkeleton className='rotate-12 mt-[384px]' />
             </div>
 
             <div className='flex gap-8 -mt-[336px]'>
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-12' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-24' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-36' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-48' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-60' />
-              <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-72' />
-              <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[336px]`} />
-              <div className={`w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse rotate-12 mt-[384px]`} />
+              <PostSkeleton className='rotate-12 mt-12' />
+              <PostSkeleton className='rotate-12 mt-24' />
+              <PostSkeleton className='rotate-12 mt-36' />
+              <PostSkeleton className='rotate-12 mt-48' />
+              <PostSkeleton className='rotate-12 mt-60' />
+              <PostSkeleton className='rotate-12 mt-72' />
+              <PostSkeleton className='rotate-12 mt-[336px]' />
+              <PostSkeleton className='rotate-12 mt-[384px]' />
             </div>
           </>}
 

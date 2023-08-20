@@ -22,7 +22,7 @@ const SettingsPage: NextPage = ({ }) => {
                 <Button variant='ghost' disabled={pathname === '/settings/connections'} className='justify-start' iconLeft={<SquaresFour />}>Connections</Button>
             </Link>
 
-            <Button variant="warning-ghost" className='justify-start' iconLeft={<DoorOpen />} onClick={() => signOut({ callbackUrl: '/' })}>Logout</Button>
+            <Button variant={'ghost'} className='justify-start' iconLeft={<DoorOpen />} onClick={() => signOut({ callbackUrl: '/' })}>Logout</Button>
         </div>
     </Layout>;
 }

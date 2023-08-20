@@ -70,12 +70,12 @@ export const ProfileDropdown = ({ userUrl, userId }: ProfileDropdownProps) => {
                         </Button>
                     </Menu.Item>
                     {data?.user && <Menu.Item>
-                        <Button variant='warning-ghost' iconRight={<Flag />} onClick={() => setReportModalOpen(true)}>
+                        <Button variant={'ghost'} iconRight={<Flag />} onClick={() => setReportModalOpen(true)}>
                             <p>Report</p>
                         </Button>
                     </Menu.Item>}
                     {data?.user.admin && <Menu.Item>
-                        <Button variant='warning-ghost' iconRight={<Prohibit />} onClick={handleDeleteUser}>
+                        <Button variant={'ghost'} iconRight={<Prohibit />} onClick={handleDeleteUser}>
                             <p>Delete</p>
                         </Button>
                     </Menu.Item>}
