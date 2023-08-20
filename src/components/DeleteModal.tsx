@@ -49,7 +49,7 @@ export const DeleteModal = ({ isOpen, setIsOpen, deleteFn, admin = false, post =
 
                                 <div className='flex w-full gap-2'>
                                     <Button variant='outline' centerItems onClick={() => setIsOpen(false)}>No, Abort</Button>
-                                    <Button variant='danger' centerItems onClick={() => { deleteFn(); setIsOpen(false); }}>Delete {post ? 'Post' : 'Account'}</Button>
+                                    <Button centerItems onClick={() => { deleteFn(); setIsOpen(false); }}>Delete {post ? 'Post' : 'Account'}</Button>
                                 </div>
                             </Dialog.Panel>
                         </Transition.Child>
