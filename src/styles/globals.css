@@ -1,13 +1,33 @@
 @tailwind base;
 
 :root {
-  --primary: rgba(0, 0, 0, 0.5);
-  @apply dark:bg-slate-950;
+  --body: #f9f9f9;
+  --stroke: #e7e7e7;
+  --secondary-text: rgba(0, 0, 0, 0.5);
+  --blur: rgba(0, 0, 0, 0.25);
+  --fade: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
+  --error: #f85555;
+  --blue-accent: #5b89ff;
+  --red-accent: #ff5b5b;
+  --orange-accent: #ffaa5b;
+  --purple-accent: #9a5bff;
+  --hover: rgba(0, 0, 0, 0.15);
+
+  color: #000;
+}
+
+.dark {
+  --body: #121212;
+  --stroke: #2d2d2d;
+  --secondary-text: #858585;
+  --hover: rgba(255, 255, 255, 0.15);
+
+  color: #fff;
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: transparent var(--primary);
+  scrollbar-color: transparent var(--blur);
 }
 
 *::-webkit-scrollbar {
@@ -24,7 +44,7 @@
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: var(--primary);
+  background-color: var(--blur);
   @apply dark:bg-slate-500;
   border-radius: 9999999px;
 }

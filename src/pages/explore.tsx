@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '~/components/Button';
 import { ExplorePost, ExplorePostModal } from '~/components/ExplorePostModal';
 import { Layout } from '~/components/Layout';
+import { PostSkeleton } from '~/components/Skeletons/PostSkeleton';
 import { api } from '~/utils/api.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
@@ -100,11 +101,11 @@ export const ExplorePage: NextPage = () => {
 
             <div className='flex mt-4 gap-4 overflow-x-scroll pb-1'>
                 {isFetching && !isFetchingNextPage && !isRefetching ? <>
-                    <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse' />
-                    <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse' />
-                    <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse' />
-                    <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse' />
-                    <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse' />
+                    <PostSkeleton />
+                    <PostSkeleton />
+                    <PostSkeleton />
+                    <PostSkeleton />
+                    <PostSkeleton />
                 </> : toShow?.map((post) => (
                     <>
                         <Link href={`/explore/?postId=${post.id}`} key={post.id} className='w-44 h-72 min-w-[176px] border border-gray-500 rounded-md relative'>
@@ -144,11 +145,11 @@ export const ExplorePage: NextPage = () => {
 
             <div className='flex mt-4 gap-4 overflow-x-scroll pb-1'>
                 {allTypesIsFetching && !allTypesIsFetchingNextPage && !allTypesIsRefetching ? <>
-                    <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse' />
-                    <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse' />
-                    <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse' />
-                    <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse' />
-                    <div className='w-44 h-72 min-w-[176px] border border-gray-200 rounded-md relative bg-gray-200 animate-pulse' />
+                    <PostSkeleton />
+                    <PostSkeleton />
+                    <PostSkeleton />
+                    <PostSkeleton />
+                    <PostSkeleton />
                 </> : allTypesData?.pages.flatMap((page) => page.posts).map((post, i) => (
                     <>
                         <Link href={`/explore?postId=${post.id}`} key={post.id} className='w-44 h-72 min-w-[176px] border border-gray-500 rounded-md relative'>

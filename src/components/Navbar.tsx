@@ -10,11 +10,12 @@ import { formatAvatar } from '~/utils/image-src-format.util';
 
 import { Menu, Transition } from '@headlessui/react';
 import {
-    Bell, Camera, CoatHanger, Compass, Door, DoorOpen, Gear, Hammer, Heart, MagnifyingGlass, Person,
-    Plus, SealCheck, SpinnerGap, User
+    Bell, BellSimple, Camera, CoatHanger, Compass, Door, DoorOpen, Gear, Hammer, Heart,
+    MagnifyingGlass, Person, Plus, SealCheck, SpinnerGap, User
 } from '@phosphor-icons/react';
 
 import { Button } from './Button';
+import { Logo } from './Logo';
 import { NavMenu } from './Menu';
 
 interface Props {
@@ -32,7 +33,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
 
     return <div className='hidden md:flex items-center justify-center gap-2'>
         <Link href='/shoot'>
-            <Button variant='ghost' iconLeft={<Plus />} />
+            <Button variant='ghost' iconLeft={<Plus />}>Create</Button>
         </Link>
 
         {pathname !== '/explore' && <Link href='/explore'>
@@ -40,17 +41,13 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
         </Link>}
 
         <Link href='/notifications'>
-            <Button variant='ghost' iconLeft={<Bell />} />
+            <Button variant='ghost' iconLeft={<BellSimple />} />
         </Link>
 
         <Menu as="div" className="relative inline-block text-left">
             <div>
                 <Menu.Button>
-                    <Button variant='outline'>
-                        <Image className='rounded-full object-contain' src={formatAvatar(session.data?.user.image, session.data?.user.id)} alt={session.data?.user.username ?? ""} width={24} height={24} />
-
-                        <p className='font-semibold'>{session.data?.user.username}</p>
-                    </Button>
+                    <Image className='rounded-full object-contain mt-2' src={formatAvatar(session.data?.user.image, session.data?.user.id)} alt={session.data?.user.username ?? ""} width={40} height={40} />
                 </Menu.Button>
             </div>
             <Transition
@@ -62,7 +59,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
             >
-                <Menu.Items className="absolute right-1 -mt-2 rounded-md w-56 origin-top-right border border-black dark:border-white bg-white dark:bg-black">
+                <Menu.Items className="absolute right-1 -mt-1 rounded-md w-56 origin-top-right border border-black dark:border-white bg-white dark:bg-black">
                     <div className="px-1 py-1 space-y-1">
                         <Menu.Item>
                             <Link href={`/${session.data?.user.username}`}>
@@ -86,7 +83,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
                         </Menu.Item>
                         <Menu.Item>
                             <Button
-                                variant='warning-ghost'
+                                variant='ghost'
                                 iconRight={<DoorOpen />}
                                 onClick={() => signOut()}
                             >
@@ -100,7 +97,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
     </div>
 }
 
-export const Navbar = ({ title, session, showSlash = true, showActions = true, showSearch = true }: Props) => {
+export const Navbar = ({ title, session, showSlash = true, showActions = true, showSearch = false }: Props) => {
     const { asPath, pathname } = useRouter();
 
     const [input, setInput] = useState('');
@@ -118,7 +115,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, s
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const { data: searchData, isFetching, refetch, isFetched } = api.user.searchProfiles.useQuery({ username: input }, {
+    const { data: searchData, isFetching, refetch } = api.user.searchProfiles.useQuery({ username: input }, {
         enabled: false
     });
 
@@ -127,69 +124,64 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, s
     }, [asPath]);
 
     return (
-        <div className='border-b h-20 border-black dark:border-white fixed w-full z-10 bg-white dark:bg-black'>
+        <div className='border-b h-20 border-stroke fixed w-full z-10 bg-white dark:bg-black font-urbanist'>
             <Head>
                 <title>{title}</title>
             </Head>
 
             <div className='flex items-center px-6 sm:px-12 h-full justify-between gap-2'>
                 {input.length > 0 && <div className='absolute w-screen h-screen inset-0' onClick={() => setInput('')}></div>}
-                <div className='flex items-center gap-20'>
-                    <Link href={'/explore'} className='flex items-center gap-4'>
-                        <CoatHanger className='h-10 w-10' />
-                        {showSlash ? <h1 className='text-2xl font-black font-urbanist'>/ {title}</h1> : <h1 className='text-2xl font-black font-urbanist'>outfits.bio</h1>}
-                    </Link>
+                <Link href={isAuth ? '/explore' : '/'} className='flex items-center gap-4'>
+                    <Logo size={'lg'} />
+                    {showSlash ? <h1 className='text-2xl font-black font-urbanist'>/ {title.toLowerCase()}</h1> : <h1 className='text-2xl font-black font-urbanist'>outfits.bio</h1>}
+                </Link>
 
-                    {showSearch && <div className='hidden relative items-center font-urbanist font-medium xl:flex'>
-                        {isFetching ? <SpinnerGap className='absolute left-4 text-gray-400 dark:text-white w-6 h-6 animate-spin' /> : <MagnifyingGlass className='absolute left-4 text-gray-400 dark:text-white w-6 h-6' />}
-                        <input
-                            id="link"
-                            type="text"
-                            placeholder='Search for users'
-                            className="pl-12 py-2 w-[400px] border rounded-md border-black dark:border-white dark:text-white dark:bg-black"
-                            onChange={(e) => {
-                                setInput(e.target.value)
-                                debounceRequest()
-                            }}
-                            value={input}
-                        />
+                {(isAuth || showSearch) && <div className='hidden relative items-center font-urbanist font-medium xl:flex'>
+                    {isFetching ? <SpinnerGap className='absolute left-4 text-gray-400 w-6 h-6 animate-spin' /> : <MagnifyingGlass className='absolute left-4 text-gray-400 dark:text-white w-6 h-6' />}
+                    <input
+                        id="link"
+                        type="text"
+                        placeholder='Search for users'
+                        className="pl-12 py-2 w-[400px] border rounded-md border-stroke text-secondary-text"
+                        onChange={(e) => {
+                            setInput(e.target.value)
+                            debounceRequest()
+                        }}
+                        value={input}
+                    />
 
-                        {input.length > 0 && <div className='absolute top-12 w-full flex flex-col gap-1'>
+                    {input.length > 0 && <div className='absolute top-12 w-full flex flex-col gap-1'>
+                        {(searchData?.length ?? 0) > 0 ? searchData?.map((user) => (
+                            <Link href={`/${user.username}`} key={user.id}>
+                                <div className='bg-white border border-black p-4 rounded-md hover:bg-slate-100 dark:hover:bg-slate-950 cursor-pointer flex gap-2'>
+                                    <div className='basis-16 w-16 h-16 grow-0 shrink-0 md:basis-auto relative'>
+                                        <Image className='rounded-full object-contain' priority src={formatAvatar(user.image, user.id)} alt={user.username ?? ""} fill />
+                                    </div>
 
-                            {(searchData?.length ?? 0) > 0 ? searchData?.map((user) => (
-                                <Link href={`/${user.username}`} key={user.id}>
-                                    <div className='bg-white border border-black p-4 rounded-md hover:bg-slate-100 dark:hover:bg-slate-950 cursor-pointer flex gap-2'>
-                                        <div className='basis-16 w-16 h-16 grow-0 shrink-0 md:basis-auto relative'>
-                                            <Image className='rounded-full object-contain' priority src={formatAvatar(user.image, user.id)} alt={user.username ?? ""} fill />
-                                        </div>
+                                    <div className='flex flex-col gap-1'>
+                                        <h1 className='font-black flex gap-1 items-center'>
+                                            <span>{user.username}</span>
+                                            {user.admin ? <Hammer className='w-4 h-4' /> : user.verified && <SealCheck className='w-4 h-4' />}
+                                        </h1>
+                                        <p className='text-xs'>{user.tagline}</p>
 
-                                        <div className='flex flex-col gap-1'>
-                                            <h1 className='font-black flex gap-1 items-center'>
-                                                <span>{user.username}</span>
-                                                {user.admin ? <Hammer className='w-4 h-4' /> : user.verified && <SealCheck className='w-4 h-4' />}
-                                            </h1>
-                                            <p className='text-xs'>{user.tagline}</p>
-
-                                            <div className='flex gap-2 items-center text-xs'>
-                                                <span className='flex gap-1 items-center'>
-                                                    <Camera className='w-3 h-3' />
-                                                    <span>{user.imageCount} Shots</span>
-                                                </span>
-                                                <span className='flex gap-1 items-center'>
-                                                    <Heart className='w-3 h-3' />
-                                                    <span>{user.likeCount} Likes</span>
-                                                </span>
-                                            </div>
+                                        <div className='flex gap-2 items-center text-xs'>
+                                            <span className='flex gap-1 items-center'>
+                                                <Camera className='w-3 h-3' />
+                                                <span>{user.imageCount} Shots</span>
+                                            </span>
+                                            <span className='flex gap-1 items-center'>
+                                                <Heart className='w-3 h-3' />
+                                                <span>{user.likeCount} Likes</span>
+                                            </span>
                                         </div>
                                     </div>
-                                </Link>
-                            )) : <div className='bg-white border border-black p-4 rounded-md'>No results</div>}
-                        </div>
-                        }
-                    </div>}
-
-
-                </div>
+                                </div>
+                            </Link>
+                        )) : <div className='bg-white border border-black p-4 rounded-md'>No results</div>}
+                    </div>
+                    }
+                </div>}
 
                 {showActions && status !== 'loading' && <>
                     {isAuth ? <AuthSection isAuth={!!isAuth} session={session} /> : <NavMenu />}
@@ -206,7 +198,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, s
                             <Button variant='outline'>Login</Button>
                         </Link>
                         <Link href='/login'>
-                            <Button variant='primary'>Register</Button>
+                            <Button variant='primary'>Create your profile</Button>
                         </Link>
                     </div>}
                 </>}

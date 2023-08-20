@@ -190,17 +190,17 @@ export const ProfilePostModal = ({ post, user, setPostModalOpen }: ProfilePostMo
                                                         </Button>
                                                     </Menu.Item>
                                                     {data?.user && <Menu.Item>
-                                                        <Button variant='warning-ghost' iconRight={<Flag />} onClick={() => setReportModalOpen(true)}>
+                                                        <Button variant={'ghost'} iconRight={<Flag />} onClick={() => setReportModalOpen(true)}>
                                                             <p>Report</p>
                                                         </Button>
                                                     </Menu.Item>}
                                                     {userIsProfileOwner && <Menu.Item>
-                                                        <Button variant='warning-ghost' iconRight={<Prohibit />} onClick={handleDeleteUserPost}>
+                                                        <Button variant={'ghost'} iconRight={<Prohibit />} onClick={handleDeleteUserPost}>
                                                             <p>Delete</p>
                                                         </Button>
                                                     </Menu.Item>}
                                                     {data?.user.admin && <Menu.Item>
-                                                        <Button variant='warning-ghost' iconRight={<Hammer />} onClick={handleDeletePost}>
+                                                        <Button variant={'ghost'} iconRight={<Hammer />} onClick={handleDeletePost}>
                                                             <p>Delete</p>
                                                         </Button>
                                                     </Menu.Item>}
