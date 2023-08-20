@@ -18,6 +18,7 @@ import {
 import { Button } from './Button';
 import { Logo } from './Logo';
 import { NavMenu } from './Menu';
+import { NavbarMenu } from './Menus/NavbarMenu';
 import { BugReportModal } from './Modals/BugReportModal';
 import { FeedbackModal } from './Modals/FeedbackModal';
 
@@ -34,13 +35,6 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
     const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
 
     const { pathname } = useRouter();
-
-
-    const handleShare = () => {
-        navigator.clipboard.writeText(session.data?.user.username ?? "");
-
-        toast.success('Username copied to clipboard!');
-    }
 
     if (!isAuth) return null;
 
@@ -61,88 +55,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
                 <Button variant='outline-ghost' shape={'circle'} iconLeft={<BellSimple />} />
             </Link>
 
-            <Menu as="div" className="relative inline-block text-left">
-                <div>
-                    <Menu.Button>
-                        <Image className='rounded-full object-contain border border-stroke mt-2' src={formatAvatar(session.data?.user.image, session.data?.user.id)} alt={session.data?.user.username ?? ""} width={46} height={46} />
-                    </Menu.Button>
-                </div>
-                <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                >
-                    <Menu.Items className="absolute right-1 rounded-md divide-y divide-stroke mt-1 w-56 origin-top-right border border-stroke dark:border-white bg-white dark:bg-black shadow-dropdown p-4">
-                        <div className="px-6 pb-2 space-y-1 font-urbanist font-bold h-12 flex items-center gap-2">
-                            <p className='peer cursor-pointer hover:underline' onClick={handleShare}>{session.data?.user.username}</p>
-
-                            <div className='h-full peer-hover:flex items-center pb-1 hidden'>
-                                <CopySimple className='w-4 h-4 text-secondary-text' />
-                            </div>
-                        </div>
-
-                        <div className="py-2 space-y-1">
-                            <Menu.Item>
-                                <Link href={`/${session.data?.user.username}`}>
-                                    <Button
-                                        variant='ghost'
-                                    >
-                                        <p className='font-semibold'>Profile</p>
-                                    </Button>
-                                </Link>
-                            </Menu.Item>
-                            <Menu.Item>
-                                <Link href={'/settings/profile'}>
-                                    <Button
-                                        variant='ghost'
-                                    >
-                                        <p className='font-semibold'>Settings</p>
-                                    </Button>
-                                </Link>
-                            </Menu.Item>
-                            <Menu.Item>
-                                <Link href={'https://discord.gg/f4KEs5TVz2'}>
-                                    <Button
-                                        variant='ghost'
-                                    >
-                                        <p className='font-semibold'>Discord</p>
-                                    </Button>
-                                </Link>
-                            </Menu.Item>
-                        </div>
-                        <div className="pt-2 space-y-1">
-                            <Menu.Item>
-                                <Button
-                                    variant='ghost'
-                                    onClick={() => setBugReportModalOpen(true)}
-                                >
-                                    <p className='font-semibold'>Report Bug</p>
-                                </Button>
-                            </Menu.Item>
-                            <Menu.Item>
-                                <Button
-                                    variant='ghost'
-                                    onClick={() => setFeedbackModalOpen(true)}
-                                >
-                                    <p className='font-semibold'>Feedback</p>
-                                </Button>
-                            </Menu.Item>
-                            <Menu.Item>
-                                <Button
-                                    variant='ghost'
-                                    onClick={() => signOut()}
-                                >
-                                    <p className='font-semibold'>Logout</p>
-                                </Button>
-                            </Menu.Item>
-                        </div>
-                    </Menu.Items>
-                </Transition>
-            </Menu>
+            {session.data?.user && <NavbarMenu user={session.data.user} setBugReportModalOpen={setBugReportModalOpen} setFeedbackModalOpen={setFeedbackModalOpen} />}
         </div>
         <Link href='/notifications' className='md:hidden'>
             <Button variant='outline-ghost' shape={'circle'} iconLeft={<BellSimple />} />

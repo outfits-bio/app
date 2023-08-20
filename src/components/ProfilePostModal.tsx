@@ -10,10 +10,10 @@ import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
 import { Dialog, Menu, Transition } from '@headlessui/react';
-import { DotsThree, Flag, Hammer, Prohibit, SealCheck, ShareFat, X } from '@phosphor-icons/react';
+import { Hammer, SealCheck, X } from '@phosphor-icons/react';
 
-import { Button } from './Button';
 import { DeleteModal } from './DeleteModal';
+import { PostMenu } from './Menus/PostMenu';
 import {
     getPostTypeIconSmall, onError, onMutate, onSettled
 } from './PostSection/post-section.util';
@@ -97,19 +97,6 @@ export const ProfilePostModal = ({ post, user, setPostModalOpen }: ProfilePostMo
         push(asPath.split('?')[0] ?? '/');
     }
 
-    const handleShare = () => {
-        const origin =
-            typeof window !== 'undefined' && window.location.origin
-                ? window.location.origin
-                : '';
-
-        const url = `${origin}${asPath}`;
-
-        navigator.clipboard.writeText(url);
-
-        toast.success('Copied post link to clipboard!');
-    }
-
     if (!post || !user) return null;
 
     return <Transition appear show={true} as={Fragment}>
@@ -169,45 +156,13 @@ export const ProfilePostModal = ({ post, user, setPostModalOpen }: ProfilePostMo
                                         </h1>
                                     </Link>
 
-                                    <Menu as="div" className="relative inline-block text-left">
-                                        <Menu.Button className='text-white flex items-center justify-center rounded-lg w-12 h-8 hover:bg-white hover:bg-opacity-10 transition-colors duration-100'>
-                                            <DotsThree className='w-5 h-5' />
-                                        </Menu.Button>
-                                        <Transition
-                                            as={Fragment}
-                                            enter="transition ease-out duration-100"
-                                            enterFrom="transform opacity-0 scale-95"
-                                            enterTo="transform opacity-100 scale-100"
-                                            leave="transition ease-in duration-75"
-                                            leaveFrom="transform opacity-100 scale-100"
-                                            leaveTo="transform opacity-0 scale-95"
-                                        >
-                                            <Menu.Items className="absolute z-50 right-0 bottom-0 rounded-md w-44 origin-top-right border border-black dark:border-white bg-white dark:bg-black">
-                                                <div className="px-1 py-1 space-y-1">
-                                                    <Menu.Item>
-                                                        <Button variant='ghost' iconRight={<ShareFat />} onClick={handleShare}>
-                                                            <p>Share</p>
-                                                        </Button>
-                                                    </Menu.Item>
-                                                    {data?.user && <Menu.Item>
-                                                        <Button variant={'ghost'} iconRight={<Flag />} onClick={() => setReportModalOpen(true)}>
-                                                            <p>Report</p>
-                                                        </Button>
-                                                    </Menu.Item>}
-                                                    {(userIsProfileOwner && !data?.user.admin) && <Menu.Item>
-                                                        <Button variant={'ghost'} iconRight={<Prohibit />} onClick={handleDeleteUserPost}>
-                                                            <p>Delete</p>
-                                                        </Button>
-                                                    </Menu.Item>}
-                                                    {data?.user.admin && <Menu.Item>
-                                                        <Button variant={'ghost'} iconRight={<Hammer />} onClick={handleDeletePost}>
-                                                            <p>Delete</p>
-                                                        </Button>
-                                                    </Menu.Item>}
-                                                </div>
-                                            </Menu.Items>
-                                        </Transition>
-                                    </Menu>
+                                    {data?.user && <PostMenu
+                                        handleDeleteUserPost={handleDeleteUserPost}
+                                        handleDeletePost={handleDeletePost}
+                                        setReportModalOpen={setReportModalOpen}
+                                        user={data.user}
+                                        userIsProfileOwner={userIsProfileOwner}
+                                    />}
                                 </div>
                             </div>
                         </Dialog.Panel>

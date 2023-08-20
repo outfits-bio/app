@@ -9,14 +9,16 @@ import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar } from '~/utils/image-src-format.util';
 
 import {
-    Camera, CheckCircle, DiscordLogo, DotsThree, GithubLogo, Hammer, Heart, InstagramLogo,
-    LinkSimple, PencilSimple, SealCheck, ShareFat, TiktokLogo, TwitterLogo, YoutubeLogo
+    Camera, DiscordLogo, GithubLogo, Hammer, Heart, InstagramLogo, LinkSimple, PencilSimple,
+    SealCheck, ShareFat, TiktokLogo, TwitterLogo, YoutubeLogo
 } from '@phosphor-icons/react';
 import { LinkType } from '@prisma/client';
 import { inferRouterOutputs } from '@trpc/server';
 
 import { Button } from './Button';
-import { ProfileDropdown } from './ProfileDropdown';
+import { DeleteModal } from './DeleteModal';
+import { ProfileMenu } from './Menus/ProfileMenu';
+import { ReportModal } from './ReportModal';
 
 import type { AppRouter } from '~/server/api/root';
 import type { User } from 'next-auth';
@@ -36,6 +38,22 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
     const ctx = api.useContext();
 
     const [likeAnimation, setLikeAnimation] = useState(false);
+    const [reportModalOpen, setReportModalOpen] = useState(false);
+    const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false);
+
+    const { mutate: deleteUser } = api.admin.deleteUser.useMutation({
+        onSuccess: () => toast.success('User deleted successfully!'),
+        onError: (e) => handleErrors({ e, message: 'An error occurred while deleting this user.' })
+    });
+
+    const handleDeleteUser = () => {
+        if (!profileData?.id) {
+            toast.error('An error occurred while deleting this user.');
+            return;
+        }
+
+        setConfirmDeleteModalOpen(true);
+    }
 
     const { mutate, isLoading } = api.user.likeProfile.useMutation({
         onMutate: async () => {
@@ -78,7 +96,12 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
     }
 
     return (
-        <div className="h-full md:-mt-8 flex flex-col justify-evenly font-inter">
+        <div className="h-full flex flex-col justify-center font-inter">
+            {reportModalOpen && <ReportModal isOpen={reportModalOpen} setIsOpen={setReportModalOpen} type='USER' id={profileData?.id} />}
+            {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} admin deleteFn={() => {
+                deleteUser({ id: profileData?.id ?? '' });
+                push('/explore');
+            }} />}
             <div className='md:w-96 w-full flex flex-col gap-4'>
                 <div className='flex md:flex-col gap-4 md:justify-normal'>
                     <div className={`w-32 h-32 basis-32 grow-0 shrink-0 md:basis-auto md:w-72 md:h-72 xl:w-96 xl:h-96 relative ${loading && ' skeleton'}`}>
@@ -151,7 +174,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                         </div>
 
                         <div>
-                            <ProfileDropdown userUrl={userUrl} userId={profileData?.id} />
+                            {(currentUser && profileData?.id) && <ProfileMenu user={currentUser} userUrl={userUrl} handleDeleteUser={handleDeleteUser} setReportModalOpen={setReportModalOpen} />}
                         </div>
                     </>}
 
