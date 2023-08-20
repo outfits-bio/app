@@ -1,0 +1,38 @@
+import { cva, VariantProps } from 'class-variance-authority';
+import { Dispatch, forwardRef, Fragment, SetStateAction } from 'react';
+import { cn } from '~/utils/cn.util';
+
+import { Menu, Transition } from '@headlessui/react';
+
+const variants = cva('absolute right-1 rounded-md divide-y divide-stroke mt-1 w-56 origin-top-right border border-stroke dark:border-white bg-white dark:bg-black shadow-dropdown p-4');
+
+export interface BaseMenuProps
+    extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof variants> {
+    button: React.ReactNode;
+}
+
+export const BaseMenu = forwardRef<HTMLDivElement, BaseMenuProps>(({ className, children, button, ...props }, ref) => {
+    return <Menu as="div" className="relative inline-block text-left" {...props} ref={ref}>
+        <div>
+            <Menu.Button>
+                {button}
+            </Menu.Button>
+        </div>
+        <Transition
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+        >
+            <Menu.Items className={cn(variants({ className }))}>
+                {children}
+            </Menu.Items>
+        </Transition>
+    </Menu>
+});
+
+BaseMenu.displayName = 'BaseMenu';
