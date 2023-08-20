@@ -84,7 +84,7 @@ export const ReportModal = ({ isOpen, setIsOpen, type, id }: ReportModalProps) =
 
                                     <div className='flex w-full gap-2'>
                                         <Button variant='outline' centerItems onClick={() => setIsOpen(false)}>No, Abort</Button>
-                                        <Button variant='danger' centerItems type='submit'>Report</Button>
+                                        <Button centerItems type='submit'>Report</Button>
                                     </div>
                                 </form>
                             </Dialog.Panel>
