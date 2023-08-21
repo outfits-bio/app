@@ -46,7 +46,7 @@ export const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
     return (
         <Layout title={pageTitle}>
             {postModalOpen && <ProfilePostModal setPostModalOpen={setPostModalOpen} post={post} user={profileData ?? null} />}
-            <div className='flex flex-col md:flex-row w-screen h-full gap-4 p-4 md:gap-12 md:p-12 overflow-y-scroll md:overflow-y-auto'>
+            <div className='flex flex-col md:flex-row w-screen h-full gap-4 p-4 md:gap-20 lg:gap-36 md:pl-12 md:pt-12 overflow-y-scroll md:overflow-y-auto'>
                 <ProfileCard loading={isLoading} authStatus={status} currentUser={data?.user ?? null} profileData={profileData} username={username} isCurrentUser={isCurrentUser} />
 
                 <div className='md:overflow-y-scroll w-full'>

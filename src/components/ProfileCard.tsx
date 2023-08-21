@@ -1,12 +1,10 @@
 import { useSession } from 'next-auth/react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
-import { formatAvatar } from '~/utils/image-src-format.util';
 
 import {
     Camera, DiscordLogo, GithubLogo, Hammer, Heart, InstagramLogo, LinkSimple, PencilSimple,
@@ -15,6 +13,7 @@ import {
 import { LinkType } from '@prisma/client';
 import { inferRouterOutputs } from '@trpc/server';
 
+import { Avatar } from './Avatar';
 import { Button } from './Button';
 import { DeleteModal } from './DeleteModal';
 import { ProfileMenu } from './Menus/ProfileMenu';
@@ -96,7 +95,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
     }
 
     return (
-        <div className="h-full flex flex-col justify-center font-inter">
+        <div className="h-full flex flex-col font-inter">
             {reportModalOpen && <ReportModal isOpen={reportModalOpen} setIsOpen={setReportModalOpen} type='USER' id={profileData?.id} />}
             {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} admin deleteFn={() => {
                 deleteUser({ id: profileData?.id ?? '' });
@@ -104,27 +103,25 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
             }} />}
             <div className='md:w-96 w-full flex flex-col gap-4'>
                 <div className='flex md:flex-col gap-4 md:justify-normal'>
-                    <div className={`w-32 h-32 basis-32 grow-0 shrink-0 md:basis-auto md:w-72 md:h-72 xl:w-96 xl:h-96 relative ${loading && ' skeleton'}`}>
-                        <Image priority src={formatAvatar(profileData?.image, profileData?.id)} alt={profileData?.username ?? ''} fill className='rounded-full object-contain' />
-                    </div>
+                    <Avatar size='jumbo' image={profileData?.image} id={profileData?.id} username={profileData?.username} />
 
                     <div className='flex flex-col gap-1 md:gap-4'>
                         <h1 className='font-black text-2xl md:text-4xl font-urbanist gap-2 md:gap-3 flex items-center'>
                             <span>{profileData?.username}</span>
-                            {profileData?.admin ? <Hammer className='w-6 h-6 md:w-8 md:h-8' /> : profileData?.verified && <SealCheck className='w-6 h-6 md:w-8 md:h-8' />}
+                            {profileData?.admin ? <Hammer className='w-6 h-6 md:w-8 md:h-8' weight='bold' /> : profileData?.verified && <SealCheck weight='bold' className='w-6 h-6 md:w-8 md:h-8' />}
                         </h1>
 
                         <p className={`grow ${loading && 'skeleton'}`}>{profileData?.tagline}</p>
 
                         <div className='flex gap-4 text-sm md:text-base'>
                             <p className={`flex items-center gap-1`}>
-                                <Camera className='w-5 h-5' />
-                                <span className={loading ? 'skeleton' : ''}>{profileData?.imageCount} Shot{profileData?.imageCount !== 1 ? 's' : ''}</span>
+                                <Camera className='w-5 h-5' weight='bold' />
+                                <span className={loading ? 'skeleton' : ''}><span className='font-bold'>{profileData?.imageCount}</span> Shot{profileData?.imageCount !== 1 ? 's' : ''}</span>
                             </p>
 
                             <p className='flex items-center gap-1'>
-                                <Heart className='w-5 h-5' />
-                                <span className={loading ? 'skeleton' : ''}>{profileData?.likeCount} Like{profileData?.likeCount !== 1 ? 's' : ''}</span>
+                                <Heart className='w-5 h-5' weight='bold' />
+                                <span className={loading ? 'skeleton' : ''}><span className='font-bold'>{profileData?.likeCount}</span> Like{profileData?.likeCount !== 1 ? 's' : ''}</span>
                             </p>
                         </div>
                     </div>
@@ -134,13 +131,13 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                     {profileData?.links.map(link =>
                         <Link href={`${link.url}`} key={link.id}>
                             <p className='flex items-center gap-1'>
-                                {link.type === LinkType.TWITTER && <TwitterLogo className='w-5 h-5' />}
-                                {link.type === LinkType.YOUTUBE && <YoutubeLogo className='w-5 h-5' />}
-                                {link.type === LinkType.TIKTOK && <TiktokLogo className='w-5 h-5' />}
-                                {link.type === LinkType.DISCORD && <DiscordLogo className='w-5 h-5' />}
-                                {link.type === LinkType.INSTAGRAM && <InstagramLogo className='w-5 h-5' />}
-                                {link.type === LinkType.GITHUB && <GithubLogo className='w-5 h-5' />}
-                                {link.type === LinkType.WEBSITE && <LinkSimple className='w-5 h-5' />}
+                                {link.type === LinkType.TWITTER && <TwitterLogo weight="bold" className='w-5 h-5' />}
+                                {link.type === LinkType.YOUTUBE && <YoutubeLogo weight="bold" className='w-5 h-5' />}
+                                {link.type === LinkType.TIKTOK && <TiktokLogo weight="bold" className='w-5 h-5' />}
+                                {link.type === LinkType.DISCORD && <DiscordLogo weight="bold" className='w-5 h-5' />}
+                                {link.type === LinkType.INSTAGRAM && <InstagramLogo weight="bold" className='w-5 h-5' />}
+                                {link.type === LinkType.GITHUB && <GithubLogo weight="bold" className='w-5 h-5' />}
+                                {link.type === LinkType.WEBSITE && <LinkSimple weight="bold" className='w-5 h-5' />}
                                 <span className='underline'>{link.url.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '')}</span>
                             </p>
                         </Link>)}

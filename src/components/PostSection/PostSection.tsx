@@ -64,7 +64,7 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
     if (!userIsProfileOwner && !postsExist) return null;
 
     return (
-        <div className="w-full pr-2">
+        <div className="w-full pr-2" key={type}>
             {cropModalOpen && <PostCropModal
                 type={type}
                 setIsCropped={setIsCropped}
@@ -76,10 +76,41 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
             />
             }
 
-            {(postsExist || userIsProfileOwner) && !loading && <h2 className="pr-2 text-2xl font-bold mb-8 md:justify-end flex items-center gap-3">{getPostTypeIcon(type)}{`${getPostTypeCount(type, profileData)} ${getPostTypeName(type)}`}</h2>}
+            {(postsExist || userIsProfileOwner) && !loading && <h2 className="pr-2 text-2xl md:text-4xl mb-5 flex items-center gap-3 font-urbanist">
+                {getPostTypeIcon(type)}
+                <span><span className='font-semibold'>{getPostTypeCount(type, profileData)}</span> {getPostTypeName(type)}</span>
+            </h2>}
 
-            <div className='w-full overflow-scroll mb-8'>
-                <div className="flex gap-4 min-w-max md:justify-end pb-1">
+            <div className='w-full overflow-scroll mb-5'>
+                <div className="flex gap-4 min-w-max pb-1">
+                    {postsData?.filter(p => p.type === type).map((post, i) => (
+                        <>
+                            <Link
+                                href={`/${profileData?.username}?postId=${post.id}`}
+                                onMouseEnter={() => setDeleteButton(post.id)}
+                                onMouseLeave={() => setDeleteButton(null)}
+                                key={post.id ?? `loading_${i}`}
+                                className="w-[126px] h-[206px] border border-secondary-text rounded-md relative">
+
+                                {isLoading && i === 0 ?
+                                    <div className='bg-hover w-full h-full flex items-center justify-center'>
+                                        <Spinner />
+                                    </div>
+                                    :
+                                    post.id &&
+                                    <Image
+                                        sizes="126px"
+                                        src={formatImage(post.image, profileData?.id)}
+                                        className="object-cover"
+                                        fill
+                                        alt={post.type}
+                                        // Outfits and Hoodies are above the fold on most screens, so we want to prioritize them
+                                        priority={post.type === 'OUTFIT' || post.type === 'HOODIE'}
+                                    />
+                                }
+                            </Link>
+                        </>
+                    ))}
                     {userIsProfileOwner && <div onDragEnter={handleDrag} className='relative'>
                         <input ref={ref} type="file" className='hidden' accept='image/*' onChange={handleChange} />
                         {dragActive &&
@@ -94,40 +125,10 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
                         <button
                             onClick={() => ref.current?.click()}
                             type='submit'
-                            className='hover:bg-gray-100 dark:hover:bg-gray-700 w-44 h-72 border border-gray-500 flex items-center justify-center font-bold flex-col text-sm rounded-md'>
-                            <Plus className='w-12 h-12 text-gray-500' />
+                            className=' w-[126px] h-[206px] border hover:bg-hover border-secondary-text flex items-center justify-center font-bold flex-col text-sm rounded-md'>
+                            <Plus className='w-12 h-12 text-secondary-text' />
                         </button>
                     </div>}
-
-                    {postsData?.filter(p => p.type === type).map((post, i) => (
-                        <>
-                            <Link
-                                href={`/${profileData?.username}?postId=${post.id}`}
-                                onMouseEnter={() => setDeleteButton(post.id)}
-                                onMouseLeave={() => setDeleteButton(null)}
-                                key={post.id ?? 'loading'}
-                                className="w-44 h-72 border border-gray-500 rounded-md relative">
-
-                                {isLoading && i === 0 ?
-                                    <div className='bg-gray-100 dark:bg-gray-700 w-full h-full flex items-center justify-center'>
-                                        <Spinner />
-                                    </div>
-                                    :
-                                    post.id &&
-                                    <Image
-                                        // 176px is the same as w-44, the width of the container
-                                        sizes="176px"
-                                        src={formatImage(post.image, profileData?.id)}
-                                        className="object-cover"
-                                        fill
-                                        alt={post.type}
-                                        // Outfits and Hoodies are above the fold on most screens, so we want to prioritize them
-                                        priority={post.type === 'OUTFIT' || post.type === 'HOODIE'}
-                                    />
-                                }
-                            </Link>
-                        </>
-                    ))}
                 </div>
             </div>
         </div>

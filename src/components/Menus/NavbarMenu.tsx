@@ -8,11 +8,11 @@ import { formatAvatar } from '~/utils/image-src-format.util';
 import { Menu } from '@headlessui/react';
 import { CopySimple } from '@phosphor-icons/react';
 
+import { Avatar } from '../Avatar';
 import { Button } from '../Button';
 import { BaseMenu } from './BaseMenu';
 
 import type { User } from 'next-auth';
-
 interface NavbarMenuProps {
     user: User;
     setBugReportModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -26,7 +26,7 @@ export const NavbarMenu = ({ user, setBugReportModalOpen, setFeedbackModalOpen, 
         toast.success('Username copied to clipboard!');
     }
 
-    return <BaseMenu {...props} button={<Image className='rounded-full object-contain border border-stroke mt-2' src={formatAvatar(user.image, user.id)} alt={user.username ?? ""} width={46} height={46} />}>
+    return <BaseMenu {...props} button={<Avatar size={'sm'} image={user.image} id={user.id} username={user.username} className='mt-2' />}>
         <div className="px-6 pb-2 space-y-1 font-urbanist font-bold h-12 flex items-center gap-2">
             <p className='peer cursor-pointer hover:underline' onClick={handleShare}>{user.username}</p>
 
