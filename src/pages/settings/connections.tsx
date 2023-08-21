@@ -56,13 +56,11 @@ export const ConnectionsSettingsPage: NextPage = () => {
     }
 
     return <SettingsLayout>
-        {spotifySetupModalOpen && <SpotifySetupModal isOpen={spotifySetupModalOpen} setIsOpen={setSpotifySetupModalOpen} />}
-        {spotifyConnectDiscordModalOpen && <SpotifyConnectDiscordModal isOpen={spotifyConnectDiscordModalOpen} setIsOpen={setSpotifyConnectDiscordModalOpen} />}
-
-        <div className="p-4 font-urbanist w-full md:w-[400px]">
+        <div className="p-4 font-urbanist w-full">
+            {spotifyConnectDiscordModalOpen && <SpotifyConnectDiscordModal isOpen={spotifyConnectDiscordModalOpen} setIsOpen={setSpotifyConnectDiscordModalOpen} />}
+            {spotifySetupModalOpen && <SpotifySetupModal isOpen={spotifySetupModalOpen} setIsOpen={setSpotifySetupModalOpen} />}
             <h2 className="text-4xl font-black">Connections</h2><br></br>
-
-            <div className={`w-full md:w-[400px] h-24 flex flex-col gap-2 justify-between ${isLoading ? 'skeleton' : ''}`}>
+            <div className={`w-full md:w-[450px] h-24 flex flex-col gap-2 justify-between ${isLoading ? 'skeleton' : ''}`}>
                 {discordAccount ?
                     <div className='flex items-center gap-2'>
                         <div className='py-2 h-12 grow w-full cursor-default flex justify-center items-center select-none rounded-md border border-black dark:border-white'>

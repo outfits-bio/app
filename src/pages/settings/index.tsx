@@ -2,27 +2,48 @@
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
-
-import { DoorOpen, SquaresFour, User } from '@phosphor-icons/react';
+import { BugReportModal } from '~/components/Modals/BugReportModal';
+import { FeedbackModal } from '~/components/Modals/FeedbackModal';
 
 import type { NextPage } from "next";
 
 const SettingsPage: NextPage = ({ }) => {
+    const [bugReportModalOpen, setBugReportModalOpen] = useState(false);
+    const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
+
     const { pathname } = useRouter();
 
     return <Layout title="Settings" redirectIfNotAuth showActions showSlash>
-        <div className="w-screen flex flex-col gap-2 p-4">
-            <Link href='/settings/profile'>
-                <Button variant='ghost' disabled={pathname === '/settings/profile'} className='justify-start' iconLeft={<User />}>Profile</Button>
-            </Link>
+        {bugReportModalOpen && <BugReportModal isOpen={bugReportModalOpen} setIsOpen={setBugReportModalOpen} />}
+        {feedbackModalOpen && <FeedbackModal isOpen={feedbackModalOpen} setIsOpen={setFeedbackModalOpen} />}
 
-            <Link href='/settings/connections'>
-                <Button variant='ghost' disabled={pathname === '/settings/connections'} className='justify-start' iconLeft={<SquaresFour />}>Connections</Button>
-            </Link>
+        <div className="w-screen flex flex-col gap-2 p-4 divide-y divide-stroke">
+            <div className='gap-2 flex flex-col'>
+                <Link href='/settings/profile'>
+                    <Button variant='ghost' disabled={pathname === '/settings/profile'} className='justify-start'>Profile</Button>
+                </Link>
 
-            <Button variant={'ghost'} className='justify-start' iconLeft={<DoorOpen />} onClick={() => signOut({ callbackUrl: '/' })}>Logout</Button>
+                <Link href='/settings/connections'>
+                    <Button variant='ghost' disabled={pathname === '/settings/connections'} className='justify-start'>Connections</Button>
+                </Link>
+
+                <Link href='/settings/appearance'>
+                    <Button variant='ghost' disabled={pathname === '/settings/appearance'} className='justify-start'>Appearance</Button>
+                </Link>
+            </div>
+
+            <div className='gap-2 flex flex-col pt-2'>
+                <Button variant='ghost' className='justify-start' onClick={() => setBugReportModalOpen(true)}>Report Bug</Button>
+
+                <Button variant='ghost' className='justify-start' onClick={() => setFeedbackModalOpen(true)}>Send Feedback</Button>
+            </div>
+
+            <div className='flex flex-col gap-2 pt-2'>
+                <Button variant={'ghost'} className='justify-start' onClick={() => signOut({ callbackUrl: '/' })}>Logout</Button>
+            </div>
         </div>
     </Layout>;
 }
