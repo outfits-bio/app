@@ -1,15 +1,19 @@
 import { signIn, useSession } from 'next-auth/react';
+import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { Button } from '~/components/Button';
+import { SpotifySetupModal } from '~/components/Modals/SpotifySetupModal';
 import { SettingsLayout } from '~/components/SettingsLayout';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 import { Switch } from '@headlessui/react';
-import { DiscordLogo, GoogleLogo, SpinnerGap, Trash } from '@phosphor-icons/react';
+import { DiscordLogo, GoogleLogo, Question, SpinnerGap, Trash } from '@phosphor-icons/react';
 
 import type { NextPage } from "next";
 export const ConnectionsSettingsPage: NextPage = () => {
+    const [spotifySetupModalOpen, setSpotifySetupModalOpen] = useState(false);
+
     const ctx = api.useContext();
 
     const { data: lanyardEnabledData } = api.user.getLanyardEnabled.useQuery(undefined, {
@@ -40,6 +44,8 @@ export const ConnectionsSettingsPage: NextPage = () => {
     const googleAccount = accountsData?.find(a => a.provider === 'google');
 
     return <SettingsLayout>
+        {spotifySetupModalOpen && <SpotifySetupModal isOpen={spotifySetupModalOpen} setIsOpen={setSpotifySetupModalOpen} />}
+
         <div className="p-4 font-urbanist w-full md:w-[400px]">
             <h2 className="text-4xl font-black">Connections</h2><br></br>
 
@@ -83,7 +89,10 @@ export const ConnectionsSettingsPage: NextPage = () => {
                 }
 
                 {discordAccount && <div className='flex items-center py-2 font-bold text-xl justify-between'>
-                    <p>Toggle Discord Status</p>
+                    <span className='flex items-center gap-2'>
+                        <p>Toggle Spotify Status</p>
+                        <Question onClick={() => setSpotifySetupModalOpen(true)} className='w-4 h-4 cursor-pointer' />
+                    </span>
                     <Switch
                         checked={lanyardEnabledData ?? false}
                         onChange={() => setLanyardEnabled()}

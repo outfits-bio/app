@@ -1,15 +1,16 @@
-import axios from 'axios';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
+import Marquee from 'react-fast-marquee';
 import { toast } from 'react-hot-toast';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 import {
     Camera, DiscordLogo, GithubLogo, Hammer, Heart, InstagramLogo, LinkSimple, PencilSimple,
-    SealCheck, ShareFat, TiktokLogo, TwitterLogo, YoutubeLogo
+    Question, SealCheck, ShareFat, TiktokLogo, TwitterLogo, YoutubeLogo
 } from '@phosphor-icons/react';
 import { LinkType } from '@prisma/client';
 import { inferRouterOutputs } from '@trpc/server';
@@ -18,6 +19,7 @@ import { Avatar } from './Avatar';
 import { Button } from './Button';
 import { DeleteModal } from './DeleteModal';
 import { ProfileMenu } from './Menus/ProfileMenu';
+import { SpotifySetupModal } from './Modals/SpotifySetupModal';
 import { ReportModal } from './ReportModal';
 
 import type { AppRouter } from '~/server/api/root';
@@ -41,8 +43,9 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
     const [likeAnimation, setLikeAnimation] = useState(false);
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false);
-    const [hasLanyard, setHasLanyard] = useState(false);
-    const [lanyardError, setLanyardError] = useState(false);
+    const [spotifySetupModalOpen, setSpotifySetupModalOpen] = useState(false);
+
+    const { data: lanyardData } = api.user.getLanyardStatus.useQuery({ username });
 
     const { mutate: deleteUser } = api.admin.deleteUser.useMutation({
         onSuccess: () => toast.success('User deleted successfully!'),
@@ -84,28 +87,6 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
             }
         }),
     })
-    const discordId = profileData?.accounts.find(a => a.provider === 'discord')?.providerAccountId;
-
-    const fetchLanyard = useCallback(async () => {
-        if (!discordId) return;
-        if (!profileData?.lanyardEnabled) return;
-
-        try {
-            await axios.get(`https://api.lanyard.rest/v1/users/${discordId}`);
-
-            setHasLanyard(true);
-
-        } catch (error) {
-            if (isCurrentUser) setLanyardError(true);
-
-            setHasLanyard(false);
-        }
-
-    }, [discordId, profileData?.lanyardEnabled, isCurrentUser]);
-
-    useEffect(() => {
-        fetchLanyard();
-    }, [fetchLanyard, profileData]);
 
     const origin =
         typeof window !== 'undefined' && window.location.origin
@@ -127,6 +108,8 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                 deleteUser({ id: profileData?.id ?? '' });
                 push('/explore');
             }} />}
+            {spotifySetupModalOpen && <SpotifySetupModal isOpen={spotifySetupModalOpen} setIsOpen={setSpotifySetupModalOpen} />}
+
             <div className='md:w-96 w-full flex flex-col gap-4'>
                 <div className='flex md:flex-col gap-4 md:justify-normal'>
                     <Avatar size='jumbo' image={profileData?.image} id={profileData?.id} username={profileData?.username} />
@@ -168,6 +151,20 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                             </p>
                         </Link>)}
                 </div>
+
+                {profileData?.lanyardEnabled && <div className='w-full flex items-center gap-4'>
+                    {lanyardData && lanyardData.albumArt && <>
+                        <div className='relative w-6 h-6'>
+                            <Image src={lanyardData.albumArt} alt={lanyardData.title} fill className='rounded-md' />
+                        </div>
+
+                        <Marquee pauseOnHover autoFill speed={40} className='cursor-pointer'>
+                            <p className='text-sm mx-4'>Listening to <span className='font-bold'>{lanyardData?.title}</span> by <span className='font-bold'>{lanyardData?.artist}</span>
+                            </p>
+                        </Marquee>
+                    </>}
+                    {lanyardData === null && isCurrentUser && <p onClick={() => setSpotifySetupModalOpen(true)} className='text-sm text-error flex gap-2 items-center cursor-pointer hover:underline'>More setup required to display Spotify. <Question className='w-4 h-4' /></p>}
+                </div>}
 
                 <div className='w-full flex items-center justify-between gap-4'>
                     {!isCurrentUser && <>
@@ -214,13 +211,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                             </Button>
                         </div>
                     </>}
-
                 </div>
-
-                {lanyardError ? <div className='flex items-center justify-center h-32'>
-                    <p className='text-error'>You&apos;re not completely set up to use Lanyard! Please join their <Link className='underline' href={'https://discord.gg/UrXF2cfJ7F'}>Discord Server</Link> to display your Discord presence.</p>
-                </div> :
-                    (hasLanyard && profileData?.lanyardEnabled) && <iframe className='-ml-5 rounded-md hidden md:flex' src={`https://lanyard-profile-readme.vercel.app/api/${discordId}?theme=light&animated=false&hideProfile=true&borderRadius=8px&idleMessage=Not%20doing%20anything...`} />}
             </div>
         </div>
     )

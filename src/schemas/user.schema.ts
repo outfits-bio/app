@@ -67,3 +67,12 @@ export const createBugReportSchema = z.object({
 export type CreateBugReportInput = ReturnType<
   typeof createBugReportSchema.parse
 >;
+
+export interface SpotifyStatus {
+  track_id: string;
+  timestamps: any;
+  song: string;
+  artist: string;
+  album_art_url: string;
+  album: string;
+}
