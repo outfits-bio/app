@@ -158,7 +158,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                             <Image src={lanyardData.albumArt} alt={lanyardData.title} fill className='rounded-md' />
                         </div>
 
-                        <Marquee pauseOnHover autoFill speed={40} className='cursor-pointer'>
+                        <Marquee pauseOnHover autoFill speed={40} className='cursor-pointer select-none'>
                             <p className='text-sm mx-4'>Listening to <span className='font-bold'>{lanyardData?.title}</span> by <span className='font-bold'>{lanyardData?.artist}</span>
                             </p>
                         </Marquee>

@@ -2,6 +2,7 @@ import { signIn, useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { Button } from '~/components/Button';
+import { SpotifyConnectDiscordModal } from '~/components/Modals/SpotifyConnectDiscordModal';
 import { SpotifySetupModal } from '~/components/Modals/SpotifySetupModal';
 import { SettingsLayout } from '~/components/SettingsLayout';
 import { api } from '~/utils/api.util';
@@ -13,6 +14,7 @@ import { DiscordLogo, GoogleLogo, Question, SpinnerGap, Trash } from '@phosphor-
 import type { NextPage } from "next";
 export const ConnectionsSettingsPage: NextPage = () => {
     const [spotifySetupModalOpen, setSpotifySetupModalOpen] = useState(false);
+    const [spotifyConnectDiscordModalOpen, setSpotifyConnectDiscordModalOpen] = useState(false);
 
     const ctx = api.useContext();
 
@@ -27,6 +29,7 @@ export const ConnectionsSettingsPage: NextPage = () => {
     const { mutate: unlinkAccount, isLoading: unlinkLoading, variables } = api.user.unlinkAccount.useMutation({
         onSuccess: () => {
             ctx.user.getAccounts.invalidate();
+            ctx.user.getLanyardEnabled.invalidate();
             toast.success('Account unlinked successfully!');
         },
         onError: (e) => handleErrors({ e, message: 'Failed to unlink account' })
@@ -43,8 +46,18 @@ export const ConnectionsSettingsPage: NextPage = () => {
     const discordAccount = accountsData?.find(a => a.provider === 'discord');
     const googleAccount = accountsData?.find(a => a.provider === 'google');
 
+    const handleLanyard = () => {
+        if (!discordAccount && !lanyardEnabledData) {
+            setSpotifyConnectDiscordModalOpen(true);
+            return;
+        }
+
+        setLanyardEnabled();
+    }
+
     return <SettingsLayout>
         {spotifySetupModalOpen && <SpotifySetupModal isOpen={spotifySetupModalOpen} setIsOpen={setSpotifySetupModalOpen} />}
+        {spotifyConnectDiscordModalOpen && <SpotifyConnectDiscordModal isOpen={spotifyConnectDiscordModalOpen} setIsOpen={setSpotifyConnectDiscordModalOpen} />}
 
         <div className="p-4 font-urbanist w-full md:w-[400px]">
             <h2 className="text-4xl font-black">Connections</h2><br></br>
@@ -88,14 +101,14 @@ export const ConnectionsSettingsPage: NextPage = () => {
                     </Button>
                 }
 
-                {discordAccount && <div className='flex items-center py-2 font-bold text-xl justify-between'>
+                {<div className='flex items-center py-2 font-bold text-xl justify-between'>
                     <span className='flex items-center gap-2'>
                         <p>Toggle Spotify Status</p>
                         <Question onClick={() => setSpotifySetupModalOpen(true)} className='w-4 h-4 cursor-pointer' />
                     </span>
                     <Switch
                         checked={lanyardEnabledData ?? false}
-                        onChange={() => setLanyardEnabled()}
+                        onChange={handleLanyard}
                         className={`${lanyardEnabledData ?? false ? 'bg-black' : 'bg-hover'}
           relative inline-flex h-8 w-[72px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
                     >

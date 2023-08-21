@@ -161,12 +161,23 @@ export const userRouter = createTRPCRouter({
         });
       }
 
-      await ctx.prisma.account.delete({
+      const account = await ctx.prisma.account.delete({
         where: {
           id,
           userId: ctx.session.user.id,
         },
       });
+
+      if (account.provider === "discord") {
+        await ctx.prisma.user.update({
+          where: {
+            id: ctx.session.user.id,
+          },
+          data: {
+            lanyardEnabled: false,
+          },
+        });
+      }
 
       return true;
     }),
