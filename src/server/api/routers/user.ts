@@ -1,3 +1,4 @@
+import axios from "axios";
 import { env } from "~/env.mjs";
 import {
   addLinkSchema,
@@ -6,6 +7,7 @@ import {
   likeProfileSchema,
   removeLinkSchema,
   searchProfileSchema,
+  SpotifyStatus,
   userSchema,
 } from "~/schemas/user.schema";
 import {
@@ -197,7 +199,14 @@ export const userRouter = createTRPCRouter({
             where: { id: ctx.session?.user.id },
             select: { id: true },
           },
+          accounts: {
+            select: {
+              providerAccountId: true,
+              provider: true,
+            },
+          },
           links: true,
+          lanyardEnabled: true,
         },
       });
 
@@ -492,4 +501,104 @@ export const userRouter = createTRPCRouter({
 
     return users;
   }),
+
+  toggleEnableLanyard: protectedProcedure.mutation(async ({ ctx }) => {
+    const user = await ctx.prisma.user.findUnique({
+      where: {
+        id: ctx.session.user.id,
+        accounts: {
+          some: {
+            provider: "discord",
+          },
+        },
+      },
+      select: {
+        id: true,
+        lanyardEnabled: true,
+      },
+    });
+
+    if (!user) {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "You must have a discord account linked",
+      });
+    }
+
+    await ctx.prisma.user.update({
+      where: {
+        id: ctx.session.user.id,
+      },
+      data: {
+        lanyardEnabled: {
+          set: !user.lanyardEnabled,
+        },
+      },
+    });
+
+    return true;
+  }),
+
+  getLanyardEnabled: protectedProcedure.query(async ({ ctx }) => {
+    const user = await ctx.prisma.user.findUnique({
+      where: {
+        id: ctx.session.user.id,
+      },
+      select: {
+        lanyardEnabled: true,
+      },
+    });
+
+    return user?.lanyardEnabled;
+  }),
+
+  getLanyardStatus: publicProcedure
+    .input(getProfileSchema)
+    .query(async ({ input, ctx }) => {
+      const { username } = input;
+
+      const user = await ctx.prisma.user.findUnique({
+        where: {
+          username,
+          accounts: {
+            some: {
+              provider: "discord",
+            },
+          },
+          lanyardEnabled: true,
+        },
+        select: {
+          accounts: {
+            select: {
+              providerAccountId: true,
+              provider: true,
+            },
+          },
+        },
+      });
+
+      if (!user) return {};
+
+      const discordId = user.accounts.find(
+        (account) => account.provider === "discord"
+      )?.providerAccountId;
+
+      try {
+        const { data } = await axios.get(
+          `https://api.lanyard.rest/v1/users/${discordId}`
+        );
+
+        const { spotify }: { spotify: SpotifyStatus | null } = data.data;
+
+        if (!spotify) return {};
+
+        return {
+          title: spotify?.song,
+          artist: spotify?.artist,
+          albumArt: spotify?.album_art_url,
+        };
+      } catch (error) {
+        return null;
+      }
+    }),
 });

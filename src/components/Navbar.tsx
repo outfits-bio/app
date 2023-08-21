@@ -90,10 +90,12 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, s
         setInput('');
     }, [asPath]);
 
+    const pageTitle = title === 'outfits.bio' ? 'outfits.bio' : `outfits.bio - ${title.toLowerCase()}`;
+
     return (
         <div className='border-b h-20 border-stroke fixed w-full z-10 bg-white dark:bg-black font-urbanist'>
             <Head>
-                <title>outfits.bio - {title.toLowerCase()}</title>
+                <title>{pageTitle}</title>
             </Head>
 
             <div className='flex items-center px-6 sm:px-12 h-full justify-between gap-2'>
