@@ -197,7 +197,14 @@ export const userRouter = createTRPCRouter({
             where: { id: ctx.session?.user.id },
             select: { id: true },
           },
+          accounts: {
+            select: {
+              providerAccountId: true,
+              provider: true,
+            },
+          },
           links: true,
+          lanyardEnabled: true,
         },
       });
 
@@ -491,5 +498,55 @@ export const userRouter = createTRPCRouter({
     const users = await ctx.prisma.user.count();
 
     return users;
+  }),
+
+  toggleEnableLanyard: protectedProcedure.mutation(async ({ ctx }) => {
+    const user = await ctx.prisma.user.findUnique({
+      where: {
+        id: ctx.session.user.id,
+        accounts: {
+          some: {
+            provider: "discord",
+          },
+        },
+      },
+      select: {
+        id: true,
+        lanyardEnabled: true,
+      },
+    });
+
+    if (!user) {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "You must have a discord account linked",
+      });
+    }
+
+    await ctx.prisma.user.update({
+      where: {
+        id: ctx.session.user.id,
+      },
+      data: {
+        lanyardEnabled: {
+          set: !user.lanyardEnabled,
+        },
+      },
+    });
+
+    return true;
+  }),
+
+  getLanyardEnabled: protectedProcedure.query(async ({ ctx }) => {
+    const user = await ctx.prisma.user.findUnique({
+      where: {
+        id: ctx.session.user.id,
+      },
+      select: {
+        lanyardEnabled: true,
+      },
+    });
+
+    return user?.lanyardEnabled;
   }),
 });

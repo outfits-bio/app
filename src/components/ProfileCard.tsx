@@ -1,7 +1,8 @@
+import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
@@ -21,6 +22,7 @@ import { ReportModal } from './ReportModal';
 
 import type { AppRouter } from '~/server/api/root';
 import type { User } from 'next-auth';
+
 type RouterOutput = inferRouterOutputs<AppRouter>;
 
 interface Props {
@@ -39,6 +41,8 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
     const [likeAnimation, setLikeAnimation] = useState(false);
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false);
+    const [hasLanyard, setHasLanyard] = useState(false);
+    const [lanyardError, setLanyardError] = useState(false);
 
     const { mutate: deleteUser } = api.admin.deleteUser.useMutation({
         onSuccess: () => toast.success('User deleted successfully!'),
@@ -80,6 +84,28 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
             }
         }),
     })
+    const discordId = profileData?.accounts.find(a => a.provider === 'discord')?.providerAccountId;
+
+    const fetchLanyard = useCallback(async () => {
+        if (!discordId) return;
+        if (!profileData?.lanyardEnabled) return;
+
+        try {
+            await axios.get(`https://api.lanyard.rest/v1/users/${discordId}`);
+
+            setHasLanyard(true);
+
+        } catch (error) {
+            if (isCurrentUser) setLanyardError(true);
+
+            setHasLanyard(false);
+        }
+
+    }, [discordId, profileData?.lanyardEnabled, isCurrentUser]);
+
+    useEffect(() => {
+        fetchLanyard();
+    }, [fetchLanyard, profileData]);
 
     const origin =
         typeof window !== 'undefined' && window.location.origin
@@ -188,7 +214,13 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                             </Button>
                         </div>
                     </>}
+
                 </div>
+
+                {lanyardError ? <div className='flex items-center justify-center h-32'>
+                    <p className='text-error'>You&apos;re not completely set up to use Lanyard! Please join their <Link className='underline' href={'https://discord.gg/UrXF2cfJ7F'}>Discord Server</Link> to display your Discord presence.</p>
+                </div> :
+                    (hasLanyard && profileData?.lanyardEnabled) && <iframe className='-ml-5 rounded-md hidden md:flex' src={`https://lanyard-profile-readme.vercel.app/api/${discordId}?theme=light&animated=false&hideProfile=true&borderRadius=8px&idleMessage=Not%20doing%20anything...`} />}
             </div>
         </div>
     )
