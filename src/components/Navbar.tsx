@@ -15,6 +15,7 @@ import {
     MagnifyingGlass, Person, Plus, SealCheck, SpinnerGap, User
 } from '@phosphor-icons/react';
 
+import { Avatar } from './Avatar';
 import { Button } from './Button';
 import { Logo } from './Logo';
 import { NavMenu } from './Menu';
@@ -120,9 +121,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, s
                         {(searchData?.length ?? 0) > 0 ? searchData?.map((user) => (
                             <Link href={`/${user.username}`} key={user.id}>
                                 <div className='bg-white border border-black p-4 rounded-md hover:bg-slate-100 dark:hover:bg-slate-950 cursor-pointer flex gap-2'>
-                                    <div className='basis-16 w-16 h-16 grow-0 shrink-0 md:basis-auto relative'>
-                                        <Image className='rounded-full object-contain' priority src={formatAvatar(user.image, user.id)} alt={user.username ?? ""} fill />
-                                    </div>
+                                    <Avatar image={user.image} id={user.id} username={user.username} />
 
                                     <div className='flex flex-col gap-1'>
                                         <h1 className='font-black flex gap-1 items-center'>

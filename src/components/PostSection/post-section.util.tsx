@@ -71,34 +71,34 @@ export const getPostTypeCount = (
 export const getPostTypeIcon = (type: PostType): React.ReactNode => {
   switch (type) {
     case PostType.OUTFIT:
-      return <CoatHanger className='md:w-12 md:h-12 w-8 h-8' />
+      return <CoatHanger weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
     case PostType.HOODIE:
-      return <Hoodie className='md:w-12 md:h-12 w-8 h-8' />
+      return <Hoodie weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
     case PostType.SHIRT:
-      return <TShirt className='md:w-12 md:h-12 w-8 h-8' />
+      return <TShirt weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
     case PostType.PANTS:
-      return <Pants className='md:w-12 md:h-12 w-8 h-8' />
+      return <Pants weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
     case PostType.SHOES:
-      return <Sneaker className='md:w-12 md:h-12 w-8 h-8' />
+      return <Sneaker weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
     case PostType.WATCH:
-      return <Watch className='md:w-12 md:h-12 w-8 h-8' />
+      return <Watch weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
   }
 };
 
 export const getPostTypeIconSmall = (type: PostType): React.ReactNode => {
   switch (type) {
     case PostType.OUTFIT:
-      return <CoatHanger className='w-6 h-6' />
+      return <CoatHanger weight='bold' className='w-6 h-6' />
     case PostType.HOODIE:
-      return <Hoodie className='w-6 h-6' />
+      return <Hoodie weight='bold' className='w-6 h-6' />
     case PostType.SHIRT:
-      return <TShirt className='w-6 h-6' />
+      return <TShirt weight='bold' className='w-6 h-6' />
     case PostType.PANTS:
-      return <Pants className='w-6 h-6' />
+      return <Pants weight='bold' className='w-6 h-6' />
     case PostType.SHOES:
-      return <Sneaker className='w-6 h-6' />
+      return <Sneaker weight='bold' className='w-6 h-6' />
     case PostType.WATCH:
-      return <Watch className='w-6 h-6' />
+      return <Watch weight='bold' className='w-6 h-6' />
   }
 }
 
