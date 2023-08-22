@@ -194,7 +194,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                         </div>
 
                         <div>
-                            {(currentUser && profileData?.id) && <ProfileMenu user={currentUser} userUrl={userUrl} handleDeleteUser={handleDeleteUser} setReportModalOpen={setReportModalOpen} />}
+                            {(currentUser && profileData) && <ProfileMenu username={profileData.username ?? ''} user={currentUser} userUrl={userUrl} handleDeleteUser={handleDeleteUser} setReportModalOpen={setReportModalOpen} />}
                         </div>
                     </>}
 

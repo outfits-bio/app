@@ -13,7 +13,7 @@ export interface BaseMenuProps
 }
 
 export const BaseMenu = forwardRef<HTMLDivElement, BaseMenuProps>(({ className, children, button, ...props }, ref) => {
-    return <Menu as="div" className="relative inline-block text-left" {...props} ref={ref}>
+    return <Menu as="div" className="relative inline-block text-left z-50" {...props} ref={ref}>
         <div>
             <Menu.Button>
                 {button}

@@ -8,7 +8,7 @@ export const SpotifySetupModal = (props: BaseModalProps) => {
         <div className='flex flex-col gap-2'>
             <h1 className='text-2xl font-black font-urbanist'>Set Up Spotify Status</h1>
 
-            <p className='text-sm text-secondary-text w-96'>We use <Link className='underline' href='https://github.com/Phineas/lanyard'>Lanyard</Link> to power our Spotify Status feature.
+            <p className='text-sm text-secondary-text w-full sm:w-96'>We use <Link className='underline' href='https://github.com/Phineas/lanyard'>Lanyard</Link> to power our Spotify Status feature.
                 To use Lanyard, you must join their Discord Server using the Discord account that&apos;s connected to outfits.bio.
             </p>
 
