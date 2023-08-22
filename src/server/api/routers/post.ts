@@ -17,14 +17,7 @@ import { PostType } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 
 export const postTypeSchema = z.object({
-  type: z.enum([
-    PostType.HOODIE,
-    PostType.OUTFIT,
-    PostType.PANTS,
-    PostType.SHIRT,
-    PostType.SHOES,
-    PostType.WATCH,
-  ]),
+  type: z.nativeEnum(PostType),
 });
 
 export const idSchema = z.object({

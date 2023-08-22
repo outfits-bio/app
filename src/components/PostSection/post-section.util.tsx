@@ -4,7 +4,10 @@ import { AppRouter } from '~/server/api/root';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
-import { CoatHanger, Hoodie, Pants, Sneaker, TShirt, Watch } from '@phosphor-icons/react';
+import {
+  Backpack, BaseballCap, CoatHanger, Eyeglasses, Hoodie, Pants, ShirtFolded, Sneaker, TShirt,
+  Watch
+} from '@phosphor-icons/react';
 import { Post, PostType } from '@prisma/client';
 import { inferRouterOutputs } from '@trpc/server';
 
@@ -30,15 +33,21 @@ export const getPostTypeName = (type: PostType): string => {
     case PostType.OUTFIT:
       return "Outfits";
     case PostType.HOODIE:
-      return "Hoodies";
+      return "Outerwear";
     case PostType.SHIRT:
-      return "Shirts";
+      return "Tops";
     case PostType.PANTS:
-      return "Pants";
+      return "Bottoms";
     case PostType.SHOES:
-      return "Shoes";
+      return "Footwear";
     case PostType.WATCH:
       return "Accessories";
+    case PostType.GLASSES:
+      return "Glasses";
+    case PostType.HEADWEAR:
+      return "Headwear";
+    case PostType.JEWELRY:
+      return "Jewelry";
   }
 };
 
@@ -65,6 +74,12 @@ export const getPostTypeCount = (
       return profileData?.shoesPostCount ?? 0;
     case PostType.WATCH:
       return profileData?.watchPostCount ?? 0;
+    case PostType.GLASSES:
+      return profileData?.glassesPostCount ?? 0;
+    case PostType.HEADWEAR:
+      return profileData?.headwearPostCount ?? 0;
+    case PostType.JEWELRY:
+      return profileData?.jewelryPostCount ?? 0;
   }
 };
 
@@ -73,7 +88,7 @@ export const getPostTypeIcon = (type: PostType): React.ReactNode => {
     case PostType.OUTFIT:
       return <CoatHanger weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
     case PostType.HOODIE:
-      return <Hoodie weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
+      return <ShirtFolded weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
     case PostType.SHIRT:
       return <TShirt weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
     case PostType.PANTS:
@@ -81,6 +96,12 @@ export const getPostTypeIcon = (type: PostType): React.ReactNode => {
     case PostType.SHOES:
       return <Sneaker weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
     case PostType.WATCH:
+      return <Backpack weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
+    case PostType.GLASSES:
+      return <Eyeglasses weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
+    case PostType.HEADWEAR:
+      return <BaseballCap weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
+    case PostType.JEWELRY:
       return <Watch weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
   }
 };
@@ -98,6 +119,12 @@ export const getPostTypeIconSmall = (type: PostType): React.ReactNode => {
     case PostType.SHOES:
       return <Sneaker weight='bold' className='w-6 h-6' />
     case PostType.WATCH:
+      return <Watch weight='bold' className='w-6 h-6' />
+    case PostType.GLASSES:
+      return <Eyeglasses weight='bold' className='w-6 h-6' />
+    case PostType.HEADWEAR:
+      return <BaseballCap weight='bold' className='w-6 h-6' />
+    case PostType.JEWELRY:
       return <Watch weight='bold' className='w-6 h-6' />
   }
 }

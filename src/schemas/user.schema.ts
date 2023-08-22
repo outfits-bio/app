@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { LinkType, PostType, ReportType } from "@prisma/client";
+import { PostType, ReportType } from "@prisma/client";
 
 export const userSchema = z.object({
   email: z.string().email(),

@@ -46,36 +46,39 @@ model Session {
 }
 
 model User {
-    id              String    @id @default(cuid())
-    tagline         String?
-    username        String?   @unique
-    email           String?   @unique
-    emailVerified   DateTime?
-    image           String?
-    onboarded       Boolean   @default(false)
-    accounts        Account[]
-    sessions        Session[]
-    verified        Boolean @default(false)
-    admin           Boolean @default(false)
+    id                  String    @id @default(cuid())
+    tagline             String?
+    username            String?   @unique
+    email               String?   @unique
+    emailVerified       DateTime?
+    image               String?
+    onboarded           Boolean   @default(false)
+    accounts            Account[]
+    sessions            Session[]
+    verified            Boolean @default(false)
+    admin               Boolean @default(false)
 
-    outfitPostCount Int @default(0)
-    hoodiePostCount Int @default(0)
-    shirtPostCount  Int @default(0)
-    pantsPostCount  Int @default(0)
-    shoesPostCount  Int @default(0)
-    watchPostCount  Int @default(0)
-    imageCount      Int @default(0)
-    likeCount       Int @default(0)
+    outfitPostCount     Int @default(0)
+    hoodiePostCount     Int @default(0)
+    shirtPostCount      Int @default(0)
+    pantsPostCount      Int @default(0)
+    shoesPostCount      Int @default(0)
+    watchPostCount      Int @default(0)
+    headwearPostCount   Int @default(0)
+    jewelryPostCount    Int @default(0)
+    glassesPostCount    Int @default(0)
+    imageCount          Int @default(0)
+    likeCount           Int @default(0)
 
-    links          Link[]
+    links               Link[]
 
-    posts           Post[]
-    likedBy         User[]    @relation("Likes")
-    liked           User[]    @relation("Likes")
-    createdReports  Report[]
-    reports         Report[]    @relation("ReportedUser")
+    posts               Post[]
+    likedBy             User[]    @relation("Likes")
+    liked               User[]    @relation("Likes")
+    createdReports      Report[]
+    reports             Report[]  @relation("ReportedUser")
 
-    lanyardEnabled  Boolean @default(false)
+    lanyardEnabled      Boolean   @default(false)
 }
 
 model Link {
@@ -131,6 +134,9 @@ enum PostType {
     PANTS
     SHOES
     WATCH
+    HEADWEAR
+    JEWELRY
+    GLASSES
 }
 
 enum LinkType {
