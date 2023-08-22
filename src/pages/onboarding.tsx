@@ -105,7 +105,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
     };
 
     return (
-        <Layout title='Onboarding' showActions={false} showSlash={false} showSearch={false}>
+        <Layout title='Onboarding' showActions={false} showSlash={false} hideSearch={true}>
             {cropModalOpen && <CropModal setFileUrl={setFileUrl} fileUrl={fileUrl} isOpen={cropModalOpen} setFile={setFile} setIsOpen={setCropModalOpen} />}
             <div className='flex flex-col lg:flex-row w-screen h-full'>
                 <div className='h-full flex w-full lg:px-56 lg:w-auto flex-col py-4 sm:justify-center items-center gap-4 lg:border-r border-stroke'>

@@ -28,7 +28,7 @@ interface Props {
     session: ReturnType<typeof useSession>;
     showSlash?: boolean;
     showActions?: boolean;
-    showSearch?: boolean;
+    hideSearch?: boolean;
 }
 
 export const AuthSection = ({ session, isAuth }: { session: Props['session'], isAuth: boolean }) => {
@@ -64,7 +64,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
     </>
 }
 
-export const Navbar = ({ title, session, showSlash = true, showActions = true, showSearch = false }: Props) => {
+export const Navbar = ({ title, session, showSlash = true, showActions = true, hideSearch = false }: Props) => {
     const { asPath, pathname } = useRouter();
 
     const [input, setInput] = useState('');
@@ -105,7 +105,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, s
                     {showSlash ? <h1 className='text-2xl font-black font-urbanist'>{title.toLowerCase()}</h1> : <h1 className='text-2xl font-black font-urbanist'>outfits.bio</h1>}
                 </Link>
 
-                {(isAuth || showSearch) && <div className='hidden relative items-center font-urbanist font-medium xl:flex'>
+                {(isAuth && !hideSearch) && <div className='hidden relative items-center font-urbanist font-medium xl:flex'>
                     {isFetching ? <SpinnerGap className='absolute left-4 text-gray-400 w-6 h-6 animate-spin' /> : <MagnifyingGlass className='absolute left-4 text-gray-400 dark:text-white w-6 h-6' />}
                     <input
                         id="link"

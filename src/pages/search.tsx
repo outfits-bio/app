@@ -31,7 +31,7 @@ export const SearchPage: NextPage = () => {
 
     const { data: totalUsers } = api.user.getTotalUsers.useQuery(undefined);
 
-    return <Layout title='Search' showSearch={false}>
+    return <Layout title='Search' hideSearch={true}>
         <div className='flex flex-col items-center p-4 w-screen'>
             <div className='flex relative items-center font-urbanist font-medium w-full md:w-5/6 lg:w-3/4 xl:w-1/2'>
                 {isFetching ? <SpinnerGap className='absolute left-4 text-gray-400 dark:text-white w-6 h-6 animate-spin' /> : <MagnifyingGlass className='absolute left-4 text-gray-400 dark:text-white w-6 h-6' />}
@@ -39,7 +39,7 @@ export const SearchPage: NextPage = () => {
                     id="link"
                     type="text"
                     placeholder='Search for users'
-                    className="pl-12 py-2 w-full border rounded-md border-black dark:border-white dark:text-white dark:bg-black"
+                    className="pl-12 py-2 w-full border rounded-md border-stroke dark:text-white dark:bg-black"
                     onChange={(e) => {
                         setInput(e.target.value)
                         debounceRequest()
@@ -51,7 +51,7 @@ export const SearchPage: NextPage = () => {
 
                     {(searchData?.length ?? 0) > 0 ? searchData?.map((user) => (
                         <Link href={`/${user.username}`} key={user.id}>
-                            <div className='bg-white border border-black p-4 rounded-md hover:bg-slate-100 dark:hover:bg-slate-950 cursor-pointer flex gap-2'>
+                            <div className='bg-white dark:bg-black border border-stroke p-4 rounded-md hover:bg-body dark:hover:bg-body cursor-pointer flex gap-2'>
                                 <Avatar image={user.image} id={user.id} username={user.username} />
 
                                 <div className='flex flex-col gap-1'>
@@ -74,13 +74,13 @@ export const SearchPage: NextPage = () => {
                                 </div>
                             </div>
                         </Link>
-                    )) : <div className='bg-white border border-black p-4 rounded-md'>No results</div>}
+                    )) : <div className='bg-white dark:bg-black border border-stroke p-4 rounded-md'>No results</div>}
                 </div>
                 }
 
             </div>
         </div>
-        <p className='absolute md:bottom-4 bottom-28 left-1/2 -translate-x-1/2 text-sm text-gray-500 font-urbanist w-full text-center'>{totalUsers} users have signed up for outfits.bio!</p>
+        <p className='absolute md:bottom-4 bottom-28 left-1/2 -translate-x-1/2 text-sm text-secondary-text font-urbanist w-full text-center'>{totalUsers} users have signed up for outfits.bio!</p>
     </Layout>
 }
 

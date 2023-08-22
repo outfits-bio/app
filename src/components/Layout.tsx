@@ -18,7 +18,7 @@ interface Props {
     showSlash?: boolean;
     redirectIfNotAuth?: boolean;
     showActions?: boolean;
-    showSearch?: boolean;
+    hideSearch?: boolean;
 }
 
 const urbanist = Urbanist({
@@ -33,7 +33,7 @@ const inter = Inter({
     variable: '--font-inter',
 });
 
-export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActions, showSearch }: Props) => {
+export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActions, hideSearch }: Props) => {
     const { push, pathname } = useRouter();
 
     const session = useSession();
@@ -51,29 +51,29 @@ export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActi
 
     return (
         <div className={`bg-body font-inter flex flex-col min-h-screen antialiased transition-colors duration-300 ${urbanist.variable} ${inter.variable}`}>
-            <Navbar title={title} session={session} showSlash={showSlash} showActions={showActions} showSearch={showSearch} />
+            <Navbar title={title} session={session} showSlash={showSlash} showActions={showActions} hideSearch={hideSearch} />
             <main className='h-screen pt-20 overflow-x-hidden pb-24 md:pb-0 scroll-smooth'>{children}</main>
             {pathname !== '/login' && pathname !== '/onboarding' && pathname !== '/' &&
-                <div className='py-2 px-6 bg-body border border-black dark:border-white flex justify-between w-screen h-24 fixed bottom-0 md:hidden gap-4'>
-                    <Link href={'/explore'} className='grow hover:bg-slate-100 rounded-md flex items-center justify-center text-3xl'>
+                <div className='py-2 px-6 bg-white dark:bg-black border border-stroke flex justify-between w-screen h-24 fixed bottom-0 md:hidden gap-4'>
+                    <Link href={'/explore'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl'>
                         <HouseSimple />
                     </Link>
 
-                    <Link href={'/search'} className='grow hover:bg-slate-100 rounded-md flex items-center justify-center text-3xl'>
+                    <Link href={'/search'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl'>
                         <MagnifyingGlass />
                     </Link>
 
-                    <Link href={'/shoot'} className='grow hover:bg-slate-100 rounded-md flex items-center justify-center text-3xl'>
+                    <Link href={'/shoot'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl'>
                         <Plus />
                     </Link>
 
-                    <Link href={'/settings'} className='grow hover:bg-slate-100 rounded-md flex items-center justify-center text-3xl'>
+                    <Link href={'/settings'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl'>
                         <Gear />
                     </Link>
 
-                    {session.data?.user ? <Link href={`/${session.data?.user.username}`} className='grow hover:bg-slate-100 rounded-md flex items-center justify-center text-3xl'>
+                    {session.data?.user ? <Link href={`/${session.data?.user.username}`} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl'>
                         <Image className='rounded-full object-contain' src={formatAvatar(session.data?.user.image, session.data?.user.id)} alt={session.data?.user.username ?? ""} width={30} height={30} />
-                    </Link> : <Link href={'/login'} className='grow hover:bg-slate-100 rounded-md flex items-center justify-center text-3xl'>
+                    </Link> : <Link href={'/login'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl'>
                         <UserPlus />
                     </Link>}
                 </div>
