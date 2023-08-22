@@ -24,7 +24,7 @@ export const SettingsLayout = ({ children }: SettingsLayoutProps) => {
         {bugReportModalOpen && <BugReportModal isOpen={bugReportModalOpen} setIsOpen={setBugReportModalOpen} />}
         {feedbackModalOpen && <FeedbackModal isOpen={feedbackModalOpen} setIsOpen={setFeedbackModalOpen} />}
 
-        <div className='flex w-screen h-full'>
+        <div className='flex w-screen h-full transition-colors duration-100'>
             <div className='hidden md:flex flex-col h-full w-[300px] border-r border-stroke bg-white dark:bg-black p-4 gap-2 divide-y divide-stroke'>
                 <div className='gap-2 flex flex-col'>
                     <Link href='/settings/profile'>

@@ -105,10 +105,10 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
     };
 
     return (
-        <Layout title='Onboarding' showActions={false} showSlash={false} showSearch={false}>
+        <Layout title='Onboarding' showActions={false} showSlash={false} hideSearch={true}>
             {cropModalOpen && <CropModal setFileUrl={setFileUrl} fileUrl={fileUrl} isOpen={cropModalOpen} setFile={setFile} setIsOpen={setCropModalOpen} />}
             <div className='flex flex-col lg:flex-row w-screen h-full'>
-                <div className='h-full flex w-full lg:px-56 lg:w-auto flex-col py-4 sm:justify-center items-center gap-4 lg:border-r border-black dark:border-white'>
+                <div className='h-full flex w-full lg:px-56 lg:w-auto flex-col py-4 sm:justify-center items-center gap-4 lg:border-r border-stroke'>
                     {onboardingStarted ? <form
                         onSubmit={handleSubmit(handleFormSubmit)}
                         className='w-full px-8 sm:px-0 sm:w-[500px] gap-6 flex flex-col sm:mb-20 justify-between sm:justify-normal h-full sm:h-auto'
@@ -156,8 +156,8 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
                             </div>
 
                             <div className='flex grow h-full flex-col gap-2 w-full sm:w-auto mt-11 sm:mt-auto'>
-                                <input {...register("username")} type="text" className='border border-black dark:border-white px-3 py-2 rounded-lg placeholder:text-gray-500 dark:bg-black' placeholder='Your special @username, here' />
-                                <textarea {...register("tagline")} className='border border-black dark:border-white px-3 py-2 rounded-lg grow resize-none placeholder:text-gray-500 h-20 dark:bg-black' placeholder='Your tagline, short description, bio, whatnot' />
+                                <input {...register("username")} type="text" className='border border-stroke px-3 py-2 rounded-lg placeholder:text-gray-500 dark:bg-black' placeholder='Your special @username, here' />
+                                <textarea {...register("tagline")} className='border border-stroke px-3 py-2 rounded-lg grow resize-none placeholder:text-gray-500 h-20 dark:bg-black' placeholder='Your tagline, short description, bio, whatnot' />
                             </div>
                         </div>
 
