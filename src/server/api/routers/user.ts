@@ -1,29 +1,15 @@
-import axios from "axios";
-import { env } from "~/env.mjs";
+import axios from 'axios';
+import { env } from '~/env.mjs';
 import {
-  addLinkSchema,
-  editProfileSchema,
-  getProfileSchema,
-  likeProfileSchema,
-  removeLinkSchema,
-  searchProfileSchema,
-  SpotifyStatus,
-  userSchema,
-} from "~/schemas/user.schema";
-import {
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from "~/server/api/trpc";
+    addLinkSchema, editProfileSchema, getProfileSchema, likeProfileSchema, removeLinkSchema,
+    searchProfileSchema, SpotifyStatus, userSchema
+} from '~/schemas/user.schema';
+import { createTRPCRouter, protectedProcedure, publicProcedure } from '~/server/api/trpc';
 
-import {
-  DeleteObjectCommand,
-  PutObjectCommand,
-  S3Client,
-} from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { Prisma } from "@prisma/client";
-import { TRPCError } from "@trpc/server";
+import { DeleteObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { Prisma } from '@prisma/client';
+import { TRPCError } from '@trpc/server';
 
 const badUsernames = [
   // System
@@ -202,6 +188,9 @@ export const userRouter = createTRPCRouter({
           shoesPostCount: true,
           pantsPostCount: true,
           watchPostCount: true,
+          glassesPostCount: true,
+          headwearPostCount: true,
+          jewelryPostCount: true,
           imageCount: true,
           likeCount: true,
           verified: true,

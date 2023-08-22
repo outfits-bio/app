@@ -52,10 +52,13 @@ export const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
                 <div className='md:overflow-y-scroll w-full'>
                     <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.OUTFIT} />
                     <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.HOODIE} />
-                    <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.PANTS} />
                     <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.SHIRT} />
+                    <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.PANTS} />
                     <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.SHOES} />
                     <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.WATCH} />
+                    <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.JEWELRY} />
+                    <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.HEADWEAR} />
+                    <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.GLASSES} />
                 </div>
             </div>
         </Layout>
