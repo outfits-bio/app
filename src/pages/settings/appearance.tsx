@@ -12,7 +12,7 @@ export const AppearanceSettingsPage: NextPage = () => {
 
             <div className="flex flex-col gap-4">
                 <h2 className="font-black text-2xl">Themes</h2>
-                <div className="flex gap-4">
+                <div className="flex gap-4 overflow-x-scroll pb-1">
                     <ThemeCard variant='light' active={theme === 'light'} onClick={() => setTheme('light')} />
                     <ThemeCard variant='dark' active={theme === 'dark'} onClick={() => setTheme('dark')} />
                     <ThemeCard variant='system' active={theme === 'system'} onClick={() => setTheme('system')} />
