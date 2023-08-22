@@ -111,7 +111,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, s
                         id="link"
                         type="text"
                         placeholder='Search for users'
-                        className="pl-12 py-2 h-12 w-[400px] border rounded-md border-stroke text-secondary-text"
+                        className="pl-12 py-2 h-12 w-[400px] border rounded-md border-stroke text-secondary-text dark:bg-black"
                         onChange={(e) => {
                             setInput(e.target.value)
                             debounceRequest()
@@ -122,7 +122,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, s
                     {input.length > 0 && <div className='absolute top-14 w-full flex flex-col gap-1'>
                         {(searchData?.length ?? 0) > 0 ? searchData?.map((user) => (
                             <Link href={`/${user.username}`} key={user.id}>
-                                <div className='bg-white border border-black p-4 rounded-md hover:bg-slate-100 dark:hover:bg-slate-950 cursor-pointer flex gap-2'>
+                                <div className='bg-white dark:bg-black border border-stroke p-4 rounded-md hover:bg-body dark:hover:bg-body cursor-pointer flex gap-2'>
                                     <Avatar image={user.image} id={user.id} username={user.username} />
 
                                     <div className='flex flex-col gap-1'>
@@ -145,7 +145,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, s
                                     </div>
                                 </div>
                             </Link>
-                        )) : <div className='bg-white border border-black p-4 rounded-md'>No results</div>}
+                        )) : <div className='bg-white dark:bg-black border border-stroke p-4 rounded-md'>No results</div>}
                     </div>
                     }
                 </div>}

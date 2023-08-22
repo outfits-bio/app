@@ -19,8 +19,8 @@ import { formatAvatar } from '~/utils/image-src-format.util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  DiscordLogo, GithubLogo, InstagramLogo, LinkSimple, Plus, TiktokLogo, Trash, TwitterLogo,
-  YoutubeLogo
+  DiscordLogo, GithubLogo, InstagramLogo, LinkSimple, Plus, Subtract, TiktokLogo, Trash,
+  TwitterLogo, YoutubeLogo
 } from '@phosphor-icons/react';
 import { LinkType } from '@prisma/client';
 
@@ -193,6 +193,7 @@ const SettingsPage = () => {
 
               <div className='grow space-y-2'>
                 <Button centerItems iconLeft={<Plus />} type='button' onClick={() => ref.current?.click()}>Upload</Button>
+                <Button variant='outline' centerItems iconLeft={<Subtract />} type='button' onClick={() => setCropModalOpen(true)}>Edit/Crop</Button>
                 <Button variant='outline' centerItems type='button' iconLeft={<Trash />} onClick={() => deleteImage()}>Remove</Button>
               </div>
             </div>
@@ -204,7 +205,7 @@ const SettingsPage = () => {
               <input
                 id="username"
                 type="text"
-                className="w-full px-4 py-2 border rounded-md border-black dark:border-white dark:text-white dark:bg-black"
+                className="w-full px-4 py-2 border rounded-md border-stroke dark:text-white dark:bg-black"
                 {...register('username')}
               />
             </div>
@@ -215,7 +216,7 @@ const SettingsPage = () => {
               </label>
               <textarea
                 id="tagline"
-                className="w-full px-4 py-2 border rounded-md border-black dark:border-white dark:text-white dark:bg-black"
+                className="w-full px-4 py-2 border rounded-md border-stroke dark:text-white dark:bg-black"
                 placeholder='Enter your catchy tagline...'
                 {...register('tagline')}
               />
@@ -238,7 +239,7 @@ const SettingsPage = () => {
           <div className='flex flex-col gap-2'>
             {userData?.links.map(link =>
               <div className='flex items-center gap-2 w-full' key={link.id}>
-                <p className='gap-1 py-2 h-12 w-full cursor-default overflow-x-hidden flex px-4 items-center select-none rounded-md border border-black dark:border-white'>
+                <p className='gap-1 py-2 h-12 w-full cursor-default overflow-x-hidden flex px-4 items-center select-none rounded-md border border-stroke'>
                   {link.type === LinkType.TWITTER && <TwitterLogo className='w-5 h-5' />}
                   {link.type === LinkType.YOUTUBE && <YoutubeLogo className='w-5 h-5' />}
                   {link.type === LinkType.TIKTOK && <TiktokLogo className='w-5 h-5' />}
@@ -266,7 +267,7 @@ const SettingsPage = () => {
                   id="link"
                   type="text"
                   placeholder='https://example.com'
-                  className="px-4 py-2 h-12 w-full border rounded-md border-black dark:border-white dark:text-white dark:bg-black"
+                  className="px-4 py-2 h-12 w-full border rounded-md border-stroke dark:text-white dark:bg-black"
                   {...registerLink('url')}
                 />
                 <div>

@@ -50,7 +50,7 @@ export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActi
     }
 
     return (
-        <div className={`bg-body font-inter flex flex-col min-h-screen antialiased ${urbanist.variable} ${inter.variable}`}>
+        <div className={`bg-body font-inter flex flex-col min-h-screen antialiased transition-colors duration-300 ${urbanist.variable} ${inter.variable}`}>
             <Navbar title={title} session={session} showSlash={showSlash} showActions={showActions} showSearch={showSearch} />
             <main className='h-screen pt-20 overflow-x-hidden pb-24 md:pb-0 scroll-smooth'>{children}</main>
             {pathname !== '/login' && pathname !== '/onboarding' && pathname !== '/' &&

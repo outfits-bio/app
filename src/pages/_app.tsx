@@ -2,6 +2,7 @@ import '~/styles/globals.css';
 
 import { SessionProvider } from 'next-auth/react';
 import { metadata } from 'next-seo.config';
+import { ThemeProvider } from 'next-themes';
 import Head from 'next/head';
 import { Toaster } from 'react-hot-toast';
 import { api } from '~/utils/api.util';
@@ -10,7 +11,6 @@ import { Analytics } from '@vercel/analytics/react';
 
 import type { Session } from 'next-auth';
 import type { AppType } from 'next/app';
-
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
@@ -41,9 +41,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
       </Head>
 
       <SessionProvider session={session}>
-        <Toaster />
-        <Analytics />
-        <Component {...pageProps} />
+        <ThemeProvider enableSystem attribute="class" defaultTheme='light'>
+          <Toaster />
+          <Analytics />
+          <Component {...pageProps} />
+        </ThemeProvider>
       </SessionProvider>
 
     </>
