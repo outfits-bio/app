@@ -117,4 +117,54 @@ export const adminRouter = createTRPCRouter({
 
       return true;
     }),
+  removeUserAvatar: protectedProcedure
+    .input(deleteUserSchema)
+    .mutation(async ({ ctx, input }) => {
+      const s3 = new S3Client({
+        region: env.AWS_REGION,
+        endpoint: env.AWS_ENDPOINT,
+      });
+
+      const { id } = input;
+
+      const currentUser = await ctx.prisma.user.findUnique({
+        where: { id: ctx.session.user.id },
+        select: { admin: true },
+      });
+
+      if (!currentUser?.admin) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "You are not authorized to remove user avatars.",
+        });
+      }
+
+      const oldImage = await ctx.prisma.user.findUnique({
+        where: { id },
+        select: { image: true },
+      });
+
+      if (!oldImage?.image) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "User not found!",
+        });
+      }
+
+      await ctx.prisma.user.update({
+        where: { id },
+        data: {
+          image: null,
+        },
+      });
+
+      s3.send(
+        new DeleteObjectCommand({
+          Bucket: "outfits",
+          Key: `${id}/${oldImage.image}.png`,
+        })
+      );
+
+      return true;
+    }),
 });

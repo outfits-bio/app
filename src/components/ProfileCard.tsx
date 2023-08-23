@@ -19,12 +19,12 @@ import { Avatar } from './Avatar';
 import { Button } from './Button';
 import { DeleteModal } from './DeleteModal';
 import { ProfileMenu } from './Menus/ProfileMenu';
+import { AdminEditUserModal } from './Modals/AdminEditUserModal';
 import { SpotifySetupModal } from './Modals/SpotifySetupModal';
 import { ReportModal } from './ReportModal';
 
 import type { AppRouter } from '~/server/api/root';
 import type { User } from 'next-auth';
-
 type RouterOutput = inferRouterOutputs<AppRouter>;
 
 interface Props {
@@ -44,6 +44,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false);
     const [spotifySetupModalOpen, setSpotifySetupModalOpen] = useState(false);
+    const [adminEditUserModalOpen, setAdminEditUserModalOpen] = useState(false);
 
     const { data: lanyardData } = api.user.getLanyardStatus.useQuery({ username });
 
@@ -109,6 +110,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                 push('/explore');
             }} />}
             {spotifySetupModalOpen && <SpotifySetupModal isOpen={spotifySetupModalOpen} setIsOpen={setSpotifySetupModalOpen} />}
+            {(adminEditUserModalOpen && profileData) && <AdminEditUserModal targetUser={profileData} isOpen={adminEditUserModalOpen} setIsOpen={setAdminEditUserModalOpen} />}
 
             <div className='md:w-96 w-full flex flex-col gap-4'>
                 <div className='flex md:flex-col gap-4 md:justify-normal'>
@@ -194,7 +196,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                         </div>
 
                         <div>
-                            {(currentUser && profileData) && <ProfileMenu username={profileData.username ?? ''} user={currentUser} userUrl={userUrl} handleDeleteUser={handleDeleteUser} setReportModalOpen={setReportModalOpen} />}
+                            {(currentUser && profileData) && <ProfileMenu setAdminEditUserModalOpen={setAdminEditUserModalOpen} username={profileData.username ?? ''} user={currentUser} userUrl={userUrl} handleDeleteUser={handleDeleteUser} setReportModalOpen={setReportModalOpen} />}
                         </div>
                     </>}
 

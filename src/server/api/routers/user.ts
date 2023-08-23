@@ -8,7 +8,6 @@ import {
   removeLinkSchema,
   searchProfileSchema,
   SpotifyStatus,
-  userSchema,
 } from "~/schemas/user.schema";
 import {
   createTRPCRouter,
