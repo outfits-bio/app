@@ -10,6 +10,7 @@ import { formatImage } from '~/utils/image-src-format.util';
 
 import { Plus, Trash } from '@phosphor-icons/react';
 
+import { Button } from '../Button';
 import { PostCropModal } from '../PostCropModal';
 import { ProfilePost, ProfilePostModal } from '../ProfilePostModal';
 import { Spinner } from '../Spinner';
@@ -79,11 +80,15 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
             {(postsExist || userIsProfileOwner) && !loading && <h2 className="pr-2 text-2xl md:text-4xl mb-5 flex items-center gap-3 font-urbanist">
                 {getPostTypeIcon(type)}
                 <span><span className='font-semibold'>{getPostTypeCount(type, profileData)}</span> {getPostTypeName(type)}</span>
+
+                <div>
+                    {(userIsProfileOwner && !postsExist) && <Button iconLeft={<Plus />} onClick={() => ref.current?.click()} type='submit' variant={'ghost'} shape={'square'}></Button>}
+                </div>
             </h2>}
 
             <div className='w-full overflow-scroll mb-5'>
                 <div className="flex gap-4 min-w-max pb-1">
-                    {postsData?.filter(p => p.type === type).map((post, i) => (
+                    {posts?.map((post, i) => (
                         <>
                             <Link
                                 href={`/${profileData?.username}?postId=${post.id}`}
@@ -111,23 +116,25 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
                             </Link>
                         </>
                     ))}
-                    {userIsProfileOwner && <div onDragEnter={handleDrag} className='relative'>
+                    {(userIsProfileOwner) && <div onDragEnter={handleDrag} className='relative'>
                         <input ref={ref} type="file" className='hidden' accept='image/*' onChange={handleChange} />
-                        {dragActive &&
-                            <div
-                                className='absolute w-full h-full t-0 r-0 b-0 l-0'
-                                onDragEnter={handleDrag}
-                                onDragLeave={handleDrag}
-                                onDragOver={handleDrag}
-                                onDrop={handleDrop}
-                            />
-                        }
-                        <button
-                            onClick={() => ref.current?.click()}
-                            type='submit'
-                            className='w-[126px] h-[206px] border hover:bg-hover border-secondary-text flex items-center justify-center font-bold flex-col text-sm rounded-md'>
-                            <Plus className='w-12 h-12 text-secondary-text' />
-                        </button>
+                        {postsExist && <>
+                            {dragActive &&
+                                <div
+                                    className='absolute w-full h-full t-0 r-0 b-0 l-0'
+                                    onDragEnter={handleDrag}
+                                    onDragLeave={handleDrag}
+                                    onDragOver={handleDrag}
+                                    onDrop={handleDrop}
+                                />
+                            }
+                            <button
+                                onClick={() => ref.current?.click()}
+                                type='submit'
+                                className='w-[126px] h-[206px] border hover:bg-hover border-secondary-text flex items-center justify-center font-bold flex-col text-sm rounded-md'>
+                                <Plus className='w-12 h-12 text-secondary-text' />
+                            </button>
+                        </>}
                     </div>}
                 </div>
             </div>

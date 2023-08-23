@@ -1,11 +1,11 @@
 import type { GetServerSidePropsContext } from "next";
-import { DefaultSession, getServerSession, NextAuthOptions } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
-import GoogleProvider from "next-auth/providers/google";
-import { env } from "~/env.mjs";
-import { prisma } from "~/server/db";
+import { DefaultSession, getServerSession, NextAuthOptions } from 'next-auth';
+import DiscordProvider from 'next-auth/providers/discord';
+import GoogleProvider from 'next-auth/providers/google';
+import { env } from '~/env.mjs';
+import { prisma } from '~/server/db';
 
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -20,6 +20,7 @@ declare module "next-auth" {
       username: string;
       onboarded: boolean;
       admin: boolean;
+      hideLanyard: boolean;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -29,6 +30,7 @@ declare module "next-auth" {
     username: string;
     onboarded: boolean;
     admin: boolean;
+    hideLanyard: boolean;
     // ...other properties
     // role: UserRole;
   }
@@ -48,6 +50,7 @@ export const authOptions: NextAuthOptions = {
         session.user.username = user.username;
         session.user.onboarded = user.onboarded;
         session.user.admin = user.admin;
+        session.user.hideLanyard = user.hideLanyard;
       }
       return session;
     },
@@ -69,6 +72,7 @@ export const authOptions: NextAuthOptions = {
           username: profile.name?.replaceAll(" ", "_"),
           onboarded: profile.onboarded,
           admin: profile.admin,
+          hideLanyard: profile.hideLanyard,
         };
       },
     }),
@@ -90,6 +94,7 @@ export const authOptions: NextAuthOptions = {
           image: profile.image_url,
           onboarded: profile.onboarded,
           admin: profile.admin,
+          hideLanyard: profile.hideLanyard,
         };
       },
     }),
