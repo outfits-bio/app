@@ -14,10 +14,11 @@ interface ProfileMenuProps {
     username: string;
     userUrl: string;
     setReportModalOpen: Dispatch<SetStateAction<boolean>>;
+    setAdminEditUserModalOpen: Dispatch<SetStateAction<boolean>>;
     handleDeleteUser: () => void;
 }
 
-export const ProfileMenu = ({ user, userUrl, username, setReportModalOpen, handleDeleteUser, ...props }: ProfileMenuProps) => {
+export const ProfileMenu = ({ user, userUrl, username, setReportModalOpen, setAdminEditUserModalOpen, handleDeleteUser, ...props }: ProfileMenuProps) => {
     const handleShare = () => {
         navigator.clipboard.writeText(userUrl);
 
@@ -48,6 +49,11 @@ export const ProfileMenu = ({ user, userUrl, username, setReportModalOpen, handl
             <Menu.Item>
                 <Button variant={'ghost'} onClick={handleDeleteUser}>
                     <p>Delete</p>
+                </Button>
+            </Menu.Item>
+            <Menu.Item>
+                <Button variant={'ghost'} onClick={() => setAdminEditUserModalOpen(true)}>
+                    <p>Edit Profile</p>
                 </Button>
             </Menu.Item>
         </div>}
