@@ -65,7 +65,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
 }
 
 export const Navbar = ({ title, session, showSlash = true, showActions = true, hideSearch = false }: Props) => {
-    const { asPath, pathname } = useRouter();
+    const { asPath, pathname, push } = useRouter();
 
     const [input, setInput] = useState('');
 
@@ -115,6 +115,11 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
                         onChange={(e) => {
                             setInput(e.target.value)
                             debounceRequest()
+                        }}
+                        onKeyUp={(e) => {
+                            if (e.key === 'Enter') {
+                                push(`/search?username=${input}`)
+                            }
                         }}
                         value={input}
                     />

@@ -1,4 +1,4 @@
-import avatar from "../../public/favicon.ico";
+import avatar from "../../public/circle-white.png";
 
 export const formatAvatar = (image?: string | null, userId?: string) => {
   if (!image || !userId) {
