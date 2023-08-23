@@ -1,20 +1,18 @@
 import debounce from 'lodash.debounce';
-import { NextPage } from 'next';
-import Image from 'next/image';
+import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { Avatar } from '~/components/Avatar';
 import { Layout } from '~/components/Layout';
 import { api } from '~/utils/api.util';
-import { formatAvatar } from '~/utils/image-src-format.util';
 
 import {
     Camera, Hammer, Heart, MagnifyingGlass, SealCheck, SpinnerGap
 } from '@phosphor-icons/react';
 
-export const SearchPage: NextPage = () => {
-    const [input, setInput] = useState('');
+export const SearchPage: NextPage = ({ username }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+    const [input, setInput] = useState(username ?? '');
 
     const request = debounce(async () => {
         refetch();
@@ -25,8 +23,16 @@ export const SearchPage: NextPage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const { data: searchData, isFetching, refetch, isFetched } = api.user.searchProfiles.useQuery({ username: input }, {
-        enabled: false
+    useEffect(() => {
+        if (username) {
+            debounceRequest();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [username]);
+
+    const { data: searchData, isFetching, refetch } = api.user.searchProfiles.useQuery({ username: input }, {
+        enabled: false,
+        refetchOnMount: true,
     });
 
     const { data: totalUsers } = api.user.getTotalUsers.useQuery(undefined);
@@ -82,6 +88,16 @@ export const SearchPage: NextPage = () => {
         </div>
         <p className='absolute md:bottom-4 bottom-28 left-1/2 -translate-x-1/2 text-sm text-secondary-text font-urbanist w-full text-center'>{totalUsers} users have signed up for outfits.bio!</p>
     </Layout>
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const { username } = ctx.query;
+
+    return {
+        props: {
+            username
+        }
+    }
 }
 
 export default SearchPage;
