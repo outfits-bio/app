@@ -2,6 +2,7 @@ import { signIn, useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { Button } from '~/components/Button';
+import { HideAllPresencesModal } from '~/components/Modals/HideAllPresencesModal';
 import { SpotifyConnectDiscordModal } from '~/components/Modals/SpotifyConnectDiscordModal';
 import { SpotifySetupModal } from '~/components/Modals/SpotifySetupModal';
 import { SettingsLayout } from '~/components/SettingsLayout';
@@ -38,9 +39,8 @@ export const ConnectionsSettingsPage: NextPage = () => {
     const { mutate: setLanyardEnabled, isLoading: setLanyardEnabledLoading } = api.user.toggleEnableLanyard.useMutation({
         onSuccess: () => {
             ctx.user.getLanyardEnabled.invalidate();
-            toast.success('Lanyard enabled successfully!');
         },
-        onError: (e) => handleErrors({ e, message: 'Failed to enable lanyard' })
+        onError: (e) => handleErrors({ e, message: 'Failed to toggle lanyard' })
     });
 
     const discordAccount = accountsData?.find(a => a.provider === 'discord');

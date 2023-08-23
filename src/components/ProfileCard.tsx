@@ -152,7 +152,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                         </Link>)}
                 </div>
 
-                {profileData?.lanyardEnabled && <div className='w-full flex items-center gap-4'>
+                {(profileData?.lanyardEnabled && !currentUser?.hideLanyard) && <div className='w-full flex items-center gap-4'>
                     {lanyardData && lanyardData.albumArt && <>
                         <div className='relative w-6 h-6'>
                             <Image src={lanyardData.albumArt} alt={lanyardData.title} fill className='rounded-md' />

@@ -79,6 +79,7 @@ model User {
     reports             Report[]  @relation("ReportedUser")
 
     lanyardEnabled      Boolean   @default(false)
+    hideLanyard         Boolean   @default(false)
 }
 
 model Link {
