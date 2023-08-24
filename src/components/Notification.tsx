@@ -36,7 +36,7 @@ const NotificationCard: FC<NotificationCardProps> = ({ notification }) => {
         onError: (e) => handleErrors({ e, message: 'Failed to delete notification' })
     });
 
-    return <div className='w-full md:w-[400px] rounded-md px-4 py-2 flex items-center justify-between hover:bg-white dark:hover:bg-black'>
+    return <div className='w-full rounded-md px-4 py-2 flex items-center justify-between hover:bg-white dark:hover:bg-black'>
         <Link href={href} className='flex items-center gap-3'>
             <Avatar size={'xs'} image={image} username={notification.user?.username} id={notification.user?.id} />
             <span className='font-medium'>

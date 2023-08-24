@@ -22,6 +22,7 @@ import { NavMenu } from './Menu';
 import { NavbarMenu } from './Menus/NavbarMenu';
 import { BugReportModal } from './Modals/BugReportModal';
 import { FeedbackModal } from './Modals/FeedbackModal';
+import { NotificationsMenu } from './Menus/NotificationsMenu';
 
 interface Props {
     title: string;
@@ -52,9 +53,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
                 <Button variant='outline-ghost' shape={'square'} iconLeft={<Compass />} />
             </Link>}
 
-            <Link href='/notifications'>
-                <Button variant='outline-ghost' shape={'circle'} iconLeft={<BellSimple />} />
-            </Link>
+            <NotificationsMenu />
 
             {session.data?.user && <NavbarMenu user={session.data.user} setBugReportModalOpen={setBugReportModalOpen} setFeedbackModalOpen={setFeedbackModalOpen} />}
         </div>
