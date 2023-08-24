@@ -77,6 +77,8 @@ model User {
     liked               User[]    @relation("Likes")
     createdReports      Report[]
     reports             Report[]  @relation("ReportedUser")
+    notifications       Notification[] @relation("Notifications")
+    sentNotifications   Notification[] @relation("SentNotifications")
 
     lanyardEnabled      Boolean   @default(false)
     hideLanyard         Boolean   @default(false)
@@ -105,6 +107,7 @@ model Post {
     image      String?
 
     reports     Report[] @relation("ReportedPost")
+    notifications Notification[] @relation("Notifications")
 
     @@index([userId])
 }
@@ -126,6 +129,31 @@ model Report {
     @@index([creatorId])
     @@index([reportedPostId])
     @@index([reportedUserId])
+}
+
+model Notification {
+    id          String   @id @default(cuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    targetUserId String
+    targetUser  User     @relation("Notifications", fields: [targetUserId], references: [id], onDelete: Cascade)
+    type        NotificationType
+    read        Boolean  @default(false)
+    postId      String?
+    post        Post?    @relation("Notifications", fields: [postId], references: [id], onDelete: Cascade)
+    userId      String?
+    user        User?    @relation("SentNotifications", fields: [userId], references: [id], onDelete: Cascade)
+    message     String?
+    link        String?
+
+    @@index([targetUserId])
+    @@index([postId])
+    @@index([userId])
+}
+
+enum NotificationType {
+    PROFILE_LIKE
+    OTHER
 }
 
 enum PostType {
