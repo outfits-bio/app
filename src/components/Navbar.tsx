@@ -33,7 +33,7 @@ interface Props {
 }
 
 export const AuthSection = ({ session, isAuth }: { session: Props['session'], isAuth: boolean }) => {
-    const { data } = api.notifications.getUnreadNotificationsCount.useQuery();
+    const { data, refetch } = api.notifications.getUnreadNotificationsCount.useQuery(undefined);
 
     const [bugReportModalOpen, setBugReportModalOpen] = useState(false);
     const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);

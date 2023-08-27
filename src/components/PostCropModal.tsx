@@ -18,23 +18,6 @@ interface Props {
     type: PostType;
 }
 
-const typeToSingular = (type: PostType) => {
-    switch (type) {
-        case PostType.OUTFIT:
-            return 'Outfit';
-        case PostType.HOODIE:
-            return 'Hoodie';
-        case PostType.SHIRT:
-            return 'Shirt';
-        case PostType.PANTS:
-            return 'Pants';
-        case PostType.SHOES:
-            return 'Shoes';
-        case PostType.WATCH:
-            return 'Accessory';
-    }
-}
-
 export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl, setIsCropped, type }: Props) => {
     const [crop, setCrop] = useState({ x: 0, y: 0 })
     const [rotation, setRotation] = useState(0)

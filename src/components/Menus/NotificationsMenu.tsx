@@ -10,6 +10,7 @@ interface NotificationsMenuProps {
 }
 
 export const NotificationsMenu = ({ unreadCount }: NotificationsMenuProps) => {
+
     const ctx = api.useContext();
 
     const { data: notifications, isLoading } = api.notifications.getNotifications.useQuery(undefined, {

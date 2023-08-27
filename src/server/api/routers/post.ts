@@ -73,6 +73,7 @@ export const postRouter = createTRPCRouter({
         select: {
           createdAt: true,
           type: true,
+          id: true,
         },
       });
 
