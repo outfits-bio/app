@@ -22,6 +22,7 @@ import { NavMenu } from './Menu';
 import { NavbarMenu } from './Menus/NavbarMenu';
 import { BugReportModal } from './Modals/BugReportModal';
 import { FeedbackModal } from './Modals/FeedbackModal';
+import { NotificationsMenu } from './Menus/NotificationsMenu';
 
 interface Props {
     title: string;
@@ -32,8 +33,12 @@ interface Props {
 }
 
 export const AuthSection = ({ session, isAuth }: { session: Props['session'], isAuth: boolean }) => {
+    const { data, refetch } = api.notifications.getUnreadNotificationsCount.useQuery(undefined);
+
     const [bugReportModalOpen, setBugReportModalOpen] = useState(false);
     const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
+
+    const hasNotifications = data && data > 0;
 
     const { pathname } = useRouter();
 
@@ -52,14 +57,15 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
                 <Button variant='outline-ghost' shape={'square'} iconLeft={<Compass />} />
             </Link>}
 
-            <Link href='/notifications'>
-                <Button variant='outline-ghost' shape={'circle'} iconLeft={<BellSimple />} />
-            </Link>
+            <NotificationsMenu unreadCount={data} />
 
             {session.data?.user && <NavbarMenu user={session.data.user} setBugReportModalOpen={setBugReportModalOpen} setFeedbackModalOpen={setFeedbackModalOpen} />}
         </div>
-        <Link href='/notifications' className='md:hidden'>
+        <Link href='/notifications' className='md:hidden relative'>
             <Button variant='outline-ghost' shape={'circle'} iconLeft={<BellSimple />} />
+            {hasNotifications ? <div className="absolute top-0 right-0 w-4 h-4 rounded-full bg-error text-white text-[9px] font-bold flex items-center justify-center">
+                {data}
+            </div> : null}
         </Link>
     </>
 }

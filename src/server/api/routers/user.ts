@@ -21,7 +21,7 @@ import {
   S3Client,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { Prisma } from "@prisma/client";
+import { NotificationType, Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 
 const badUsernames = [
@@ -449,6 +449,22 @@ export const userRouter = createTRPCRouter({
           },
           select: {
             id: true,
+          },
+        });
+
+        await ctx.prisma.notification.create({
+          data: {
+            type: NotificationType.PROFILE_LIKE,
+            targetUser: {
+              connect: {
+                id,
+              },
+            },
+            user: {
+              connect: {
+                id: ctx.session.user.id,
+              },
+            },
           },
         });
       } catch (error) {

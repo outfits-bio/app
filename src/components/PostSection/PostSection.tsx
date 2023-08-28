@@ -77,16 +77,16 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
             />
             }
 
-            {(postsExist || userIsProfileOwner) && !loading && <h2 className="pr-2 text-2xl md:text-4xl mb-5 flex items-center gap-3 font-urbanist">
+            {(postsExist || userIsProfileOwner) && !loading && <h2 className={postsExist ? "pr-2 text-2xl md:text-4xl mb-5 flex items-center gap-3 font-urbanist" : "pr-2 text-2xl md:text-4xl md:mb-5 items-center gap-3 font-urbanist hidden md:flex"}>
                 {getPostTypeIcon(type)}
                 <span><span className='font-semibold'>{getPostTypeCount(type, profileData)}</span> {getPostTypeName(type)}</span>
 
                 <div>
-                    {(userIsProfileOwner && !postsExist) && <Button iconLeft={<Plus />} onClick={() => ref.current?.click()} type='submit' variant={'ghost'} shape={'square'}></Button>}
+                    {(userIsProfileOwner && !postsExist) && <Button className='hidden md:block' iconLeft={<Plus />} onClick={() => ref.current?.click()} type='submit' variant={'ghost'} shape={'square'}></Button>}
                 </div>
             </h2>}
 
-            <div className='w-full overflow-scroll mb-5'>
+            <div className={postsExist ? 'w-full overflow-scroll mb-5' : 'w-full overflow-scroll md:mb-5'}>
                 <div className="flex gap-4 min-w-max pb-1">
                     {posts?.map((post, i) => (
                         <>
@@ -116,7 +116,7 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
                             </Link>
                         </>
                     ))}
-                    {(userIsProfileOwner) && <div onDragEnter={handleDrag} className='relative'>
+                    {(userIsProfileOwner) && <div onDragEnter={handleDrag} className='relative hidden md:block'>
                         <input ref={ref} type="file" className='hidden' accept='image/*' onChange={handleChange} />
                         {postsExist && <>
                             {dragActive &&

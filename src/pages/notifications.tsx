@@ -1,12 +1,20 @@
 import { NextPage } from 'next';
 import { Layout } from '~/components/Layout';
+import NotificationCard from '~/components/Notification';
+import { api } from '~/utils/api.util';
+
+
 
 export const NotificationsPage: NextPage = () => {
+    const { data: notifications, isLoading } = api.notifications.getNotifications.useQuery();
+
     return <Layout
-        title="Explore"
+        title="notifications"
     >
-        <div className='pb-20 w-screen h-full flex items-center justify-center'>
-            <h1 className='font-black font-urbanist text-3xl'>Coming Soon!</h1>
+        <div className='w-screen flex h-full justify-center'>
+            <div className="flex flex-col w-full sm:w-[400px] gap-2 font-urbanist py-2">
+                {notifications?.map((notification, index) => <NotificationCard key={index} notification={notification} />) ?? <></>}
+            </div>
         </div>
     </Layout>
 }
