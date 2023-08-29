@@ -82,7 +82,7 @@ export const ShootPage: NextPage = () => {
     return <Layout
         title="Shoot"
     >
-        <div className='w-screen h-full flex items-center justify-center'>
+        <div className='w-screen h-full flex justify-center'>
             <div className="flex flex-col gap-2 w-full p-12 sm:w-[400px] items-center">
                 <div className='relative w-[244.4px] h-[400px]'>
                     {fileUrl ? <Cropper
@@ -148,7 +148,7 @@ export const ShootPage: NextPage = () => {
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                         >
-                            <Listbox.Options className="absolute bottom-0 max-h-60 w-full overflow-auto rounded-md bg-white p-2 gap-2 shadow-lg border border-stroke font-urbanist font-semibold">
+                            <Listbox.Options className="absolute bottom-0 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-black p-2 gap-2 shadow-lg border border-stroke font-urbanist font-semibold">
                                 <Listbox.Option
                                     key={PostType.OUTFIT}
                                     value={PostType.OUTFIT}
