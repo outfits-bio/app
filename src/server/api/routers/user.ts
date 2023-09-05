@@ -17,38 +17,7 @@ import {
 import { NotificationType, Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { deleteImage, generatePresignedUrl } from "~/server/utils/image.util";
-import { prisma } from "~/server/db";
-
-const badUsernames = [
-  // System
-  "home",
-  "login",
-  "signup",
-  "settings",
-  "onboarding",
-  "profile",
-  "[username]",
-  "explore",
-  "notifications",
-  "shoot",
-  "shots",
-  // Socials
-  "outfitsbio",
-  "outfits",
-  "outfits.bio",
-  "discord",
-  "discordapp",
-  "twitter",
-  "instagram",
-  "bereal",
-  "tiktok",
-  "tumblr",
-  "patreon",
-  "kofi",
-  // Authentic People
-  "jecta",
-  // General
-];
+import { filterBadWords, validateUsername } from "~/server/utils/username.util";
 
 export const userRouter = createTRPCRouter({
   profileExists: publicProcedure
@@ -308,16 +277,16 @@ export const userRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       const { tagline, username } = input;
 
-      if (
-        username &&
-        (badUsernames.includes(username) ||
-          username.startsWith("api/") ||
-          username.startsWith("settings/") ||
-          username.length < 3)
-      )
+      if (username && !validateUsername(username))
         throw new TRPCError({
           code: "BAD_REQUEST",
           message: "Invalid username",
+        });
+
+      if (tagline && filterBadWords(tagline))
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Invalid tagline",
         });
 
       try {
