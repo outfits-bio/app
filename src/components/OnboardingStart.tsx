@@ -5,7 +5,7 @@ import { ArrowRight } from '@phosphor-icons/react';
 import { Button } from './Button';
 
 interface OnboardingStartSectionProps {
-    setOnboardingStarted: React.Dispatch<React.SetStateAction<boolean>>;
+    setOnboardingStarted: React.Dispatch<React.SetStateAction<number>>;
     username?: string;
 }
 
@@ -21,7 +21,7 @@ export const OnboardingStartSection = ({ setOnboardingStarted, username }: Onboa
         </div>
 
         <div className='w-full px-8 sm:px-0 sm:w-[500px] gap-4 flex flex-col mb-20'>
-            <Button iconRight={<ArrowRight />} centerItems onClick={() => setOnboardingStarted(true)}>Get Started</Button>
+            <Button iconRight={<ArrowRight />} centerItems onClick={() => setOnboardingStarted(1)}>Get Started</Button>
             <Button variant='ghost' centerItems onClick={handleLogout}><p className='text-sm text-gray-500 font-inter'>Nevermind, log me out</p></Button>
         </div>
     </>

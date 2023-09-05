@@ -25,6 +25,7 @@ import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowLeft, ArrowRight, Hammer, SealCheck } from '@phosphor-icons/react';
 import { createServerSideHelpers } from '@trpc/react-query/server';
+import { OnboardingAppearance } from '~/components/OnboardingAppearance';
 
 export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) => {
     const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
@@ -32,7 +33,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
     const { update } = useSession();
 
     const [loading, setLoading] = useState<boolean>(false);
-    const [onboardingStarted, setOnboardingStarted] = useState<boolean>(false);
+    const [onboardingStarted, setOnboardingStarted] = useState<number>(0);
 
     const ref = useRef<HTMLInputElement>(null);
 
@@ -60,8 +61,8 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
     const { mutate } = api.user.editProfile.useMutation({
         onSuccess: (data) => {
             update();
-
-            push(`/${data.username}`);
+            setLoading(false);
+            setOnboardingStarted(2);
         },
         onError: (e) => handleErrors({ e, message: "Failed to edit profile!", fn: () => setLoading(false) }),
     });
@@ -77,7 +78,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
 
             if ((getValues('tagline') === data?.tagline) && (getValues('username') === data?.username)) {
                 update();
-                push(`/${data?.username}`)
+                setOnboardingStarted(2);
             }
         },
         onError: (e) => handleErrors({ e, message: "Failed to set image!", fn: () => setLoading(false) }),
@@ -99,7 +100,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
         }
         else {
             setLoading(false);
-            push(`/${data?.username}`);
+            setOnboardingStarted(2);
         }
 
     };
@@ -109,7 +110,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
             {cropModalOpen && <CropModal setFileUrl={setFileUrl} fileUrl={fileUrl} isOpen={cropModalOpen} setFile={setFile} setIsOpen={setCropModalOpen} />}
             <div className='flex flex-col lg:flex-row w-screen h-full'>
                 <div className='h-full flex w-full lg:px-56 lg:w-auto flex-col py-4 sm:justify-center items-center gap-4 lg:border-r border-stroke'>
-                    {onboardingStarted ? <form
+                    {onboardingStarted === 1 ? <form
                         onSubmit={handleSubmit(handleFormSubmit)}
                         className='w-full px-8 sm:px-0 sm:w-[500px] gap-6 flex flex-col sm:mb-20 justify-between sm:justify-normal h-full sm:h-auto'
                     >
@@ -162,11 +163,13 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
                         </div>
 
                         <div className='w-full flex gap-2 mt-4'>
-                            <Button variant='outline' iconLeft={<ArrowLeft />} onClick={() => setOnboardingStarted(false)} centerItems>Back</Button>
+                            <Button variant='outline' iconLeft={<ArrowLeft />} onClick={() => setOnboardingStarted(0)} centerItems>Back</Button>
                             <Button isLoading={loading} type='submit' iconRight={<ArrowRight />} centerItems>Continue</Button>
                         </div>
                     </form> :
-                        <OnboardingStartSection username={username} setOnboardingStarted={setOnboardingStarted} />}
+                        onboardingStarted === 2 ? <OnboardingAppearance username={username} setOnboardingStarted={setOnboardingStarted} onboardingStarted={onboardingStarted} />
+                            :
+                            <OnboardingStartSection username={username} setOnboardingStarted={setOnboardingStarted} />}
                 </div>
 
                 <div className='h-full shrink-0 grow hidden overflow-hidden flex-col lg:flex'>
