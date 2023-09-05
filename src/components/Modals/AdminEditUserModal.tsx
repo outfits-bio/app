@@ -49,6 +49,14 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
         onError: (e) => handleErrors({ e, message: 'Failed to remove link' })
     });
 
+    const { mutate: givePremium, isLoading: givePremiumLoading } = api.admin.toggleUserPremium.useMutation({
+        onSuccess: () => {
+            ctx.user.getProfile.invalidate({ username: props.targetUser.username! });
+            toast.success('Premium changed successfully!');
+        },
+        onError: (e) => handleErrors({ e, message: 'Failed to change premium' })
+    });
+
     const { handleSubmit, register } = useForm({
         defaultValues: {
             id: props.targetUser.id,
@@ -73,6 +81,7 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
                     <textarea {...register('tagline')} className='w-full h-24 p-2 rounded-md border border-stroke bg-white dark:bg-black text-black dark:text-white' />
 
                     <Button variant='outline-ghost' type="button" centerItems isLoading={removeImageLoading} onClick={() => removeImage({ id: props.targetUser.id })}>Remove Avatar</Button>
+                    {<Button variant={'outline-ghost'} type="button" isLoading={givePremiumLoading} centerItems onClick={() => givePremium({ id: props.targetUser.id })}>{props.targetUser.premium ? 'Revoke Premium' : 'Give Premium'}</Button>}
 
                     <ul className='text-left w-full flex flex-col items-start gap-2'>
                         {props.targetUser.links?.map((link) =>
