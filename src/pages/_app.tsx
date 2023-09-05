@@ -21,6 +21,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{metadata.title}</title>
+        <meta name="theme-color" content={metadata.og.embedColor} />
         <link rel="icon" href="favicon.ico" sizes="32px" />
         <meta name="description" content={metadata.description} />
         <meta property="og:locale" content="en_US" />
