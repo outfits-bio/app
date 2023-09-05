@@ -27,6 +27,7 @@
     "@vercel/analytics": "^1.0.2",
     "@vercel/og": "^0.5.11",
     "axios": "^1.4.0",
+    "bad-words": "^3.0.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "date-fns": "^2.30.0",
@@ -53,6 +54,7 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
     "@total-typescript/ts-reset": "^0.5.1",
+    "@types/bad-words": "^3.0.1",
     "@types/eslint": "^8.44.2",
     "@types/lodash.debounce": "^4.0.7",
     "@types/next-pwa": "^5.6.4",
