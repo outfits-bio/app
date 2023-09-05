@@ -11,6 +11,7 @@ export const metadata = {
     description:
       "outfits is a virtual wardrobe where you can seamlessly share and explore outfits with your friends and viewers!",
     image: "https://outfits.bio/ogimage.png",
+    embedColor: "#ff6200",
     imageWidth: 1200,
     imageHeight: 630,
     siteName: "outfits.bio",
