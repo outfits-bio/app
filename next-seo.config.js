@@ -1,7 +1,7 @@
 export const metadata = {
   title: "outfits.bio",
   description:
-    "Your wardrobe in the cloud, share and inspire your followers through a simple link for in your bio",
+    "outfits is a virtual wardrobe where you can seamlessly share and explore outfits with your friends and viewers!",
   image: "https://outfits.bio/ogimage.png",
   url: "https://outfits.bio",
   og: {
@@ -9,7 +9,7 @@ export const metadata = {
     type: "website",
     title: "outfits.bio",
     description:
-      "Your wardrobe in the cloud, share and inspire your followers through a simple link for in your bio",
+      "outfits is a virtual wardrobe where you can seamlessly share and explore outfits with your friends and viewers!",
     image: "https://outfits.bio/ogimage.png",
     imageWidth: 1200,
     imageHeight: 630,
@@ -21,7 +21,7 @@ export const metadata = {
     url: "https://outfits.bio",
     title: "outfits.bio",
     description:
-      "Your wardrobe in the cloud, share and inspire your followers through a simple link for in your bio",
+      "outfits is a virtual wardrobe where you can seamlessly share and explore outfits with your friends and viewers!",
     image: "https://outfits.bio/ogimage.png",
     imageWidth: 1200,
     imageHeight: 630,

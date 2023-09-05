@@ -1,4 +1,4 @@
-import { NextPage } from 'next';
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -7,18 +7,19 @@ import { Button } from '~/components/Button';
 import { ExplorePost, ExplorePostModal } from '~/components/ExplorePostModal';
 import { Layout } from '~/components/Layout';
 import {
-    getPostTypeIcon, getPostTypeIconSmall, getPostTypeName
+    getPostTypeIconSmall, getPostTypeName
 } from '~/components/PostSection/post-section.util';
 import { PostSkeleton } from '~/components/Skeletons/PostSkeleton';
 import { api } from '~/utils/api.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
 import {
-    CoatHanger, Hammer, Hoodie, Pants, SealCheck, Sneaker, TShirt, Watch
+    Hammer, SealCheck
 } from '@phosphor-icons/react';
 import { PostType } from '@prisma/client';
+import { getSortedPostsData } from '~/utils/blog.util';
 
-export const ExplorePage: NextPage = () => {
+export const ExplorePage = ({ blogPosts }: InferGetStaticPropsType<typeof getStaticProps>) => {
     const [activePage, setActivePage] = useState<PostType>('OUTFIT');
     const [post, setPost] = useState<ExplorePost | null>(null);
     const [postModalOpen, setPostModalOpen] = useState<boolean>(false);
@@ -203,8 +204,35 @@ export const ExplorePage: NextPage = () => {
                     </Button>
                 </div>}
             </div>
+
+            <h1 className='font-black text-3xl mb-2 mt-5 font-urbanist'>Blog Posts</h1>
+            <div className='flex mt-4 gap-4 overflow-x-scroll pb-1 w-full'>
+                {blogPosts.map((post) => (
+                    <Link href={`/blog/${post.id}`} key={post.id} className='w-72 h-44 min-w-[288px] p-4 flex flex-col items-start justify-end border border-stroke rounded-md hover:shadow-lg transition-all duration-200'>
+                        <h1 className='font-urbanist font-bold text-3xl'>{post.title}</h1>
+                        <p>{Intl.DateTimeFormat('en-us', {
+                            dateStyle: 'long',
+                        }).format(new Date(post.date))}</p>
+                    </Link>
+                ))}
+            </div>
         </div>
     </Layout>
+}
+
+export const getStaticProps: GetStaticProps<{
+    blogPosts: {
+        date: string;
+        title: string;
+        id: string;
+    }[]
+}> = async () => {
+    const blogPosts = getSortedPostsData();
+    return {
+        props: {
+            blogPosts,
+        },
+    };
 }
 
 export default ExplorePage;

@@ -1,5 +1,5 @@
 import { useSession } from 'next-auth/react';
-import { Inter, Poppins, Urbanist } from 'next/font/google';
+import localFont from 'next/font/local';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { formatAvatar } from '~/utils/image-src-format.util';
 
 import {
-    Bell, DoorOpen, Gear, HouseSimple, MagnifyingGlass, Plus, UserPlus
+    Gear, HouseSimple, MagnifyingGlass, Plus, UserPlus
 } from '@phosphor-icons/react';
 
 import { Navbar } from './Navbar';
@@ -21,14 +21,14 @@ interface Props {
     hideSearch?: boolean;
 }
 
-const urbanist = Urbanist({
-    subsets: ['latin-ext'],
+const urbanist = localFont({
+    src: '../../public/fonts/ClashDisplay-Variable.woff2',
     display: 'swap',
     variable: '--font-urbanist',
 });
 
-const inter = Inter({
-    subsets: ['latin'],
+const inter = localFont({
+    src: '../../public/fonts/Satoshi-Variable.woff2',
     display: 'swap',
     variable: '--font-inter',
 });

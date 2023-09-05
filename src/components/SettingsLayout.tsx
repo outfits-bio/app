@@ -3,8 +3,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-import { DoorOpen, SquaresFour, User } from '@phosphor-icons/react';
-
 import { Button } from './Button';
 import { Layout } from './Layout';
 import { BugReportModal } from './Modals/BugReportModal';
