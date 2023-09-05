@@ -104,12 +104,14 @@ const Home = () => {
             <h3 className='font-bold font-urbanist'>Socials</h3>
             <Link href='https://www.producthunt.com/posts/outfits-bio' className='text-sm text-gray-500 underline'>Product Hunt</Link>
             <Link href='https://discord.gg/f4KEs5TVz2' className='text-sm text-gray-500 underline'>Discord Server</Link>
+            <Link href='https://twitter.com/linkyouroutfits' className='text-sm text-gray-500 underline'>Twitter</Link>
           </div>
 
           <div className='flex flex-col gap-1'>
             <h3 className='font-bold font-urbanist'>Legal</h3>
             <Link href='/docs/privacy-policy' className='text-sm text-gray-500 underline'>Privacy Policy</Link>
             <Link href='/docs/terms-of-service' className='text-sm text-gray-500 underline'>Terms of Service</Link>
+            <Link href='/docs/brand-guide' className='text-sm text-gray-500 underline'>Brand Guide</Link>
           </div>
         </div>
       </div>

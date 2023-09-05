@@ -1,7 +1,6 @@
 import debounce from 'lodash.debounce';
 import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { Avatar } from '~/components/Avatar';
 import { Layout } from '~/components/Layout';
@@ -39,6 +38,7 @@ export const SearchPage: NextPage = ({ username }: InferGetServerSidePropsType<t
 
     return <Layout title='Search' hideSearch={true}>
         <div className='flex flex-col items-center p-4 w-screen'>
+            
             <div className='flex relative items-center font-urbanist font-medium w-full md:w-5/6 lg:w-3/4 xl:w-1/2'>
                 {isFetching ? <SpinnerGap className='absolute left-4 text-gray-400 dark:text-white w-6 h-6 animate-spin' /> : <MagnifyingGlass className='absolute left-4 text-gray-400 dark:text-white w-6 h-6' />}
                 <input

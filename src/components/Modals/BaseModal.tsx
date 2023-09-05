@@ -1,5 +1,5 @@
 import { cva } from 'class-variance-authority';
-import { Inter, Urbanist } from 'next/font/google';
+import localFont from 'next/font/local';
 import { Dispatch, forwardRef, Fragment, SetStateAction } from 'react';
 import { cn } from '~/utils/cn.util';
 
@@ -7,14 +7,14 @@ import { Dialog, Transition, TransitionChildProps } from '@headlessui/react';
 
 import type { VariantProps } from "class-variance-authority";
 
-const urbanist = Urbanist({
-    subsets: ['latin-ext'],
+const urbanist = localFont({
+    src: '../../../public/fonts/ClashDisplay-Variable.woff2',
     display: 'swap',
     variable: '--font-urbanist',
 });
 
-const inter = Inter({
-    subsets: ['latin'],
+const inter = localFont({
+    src: '../../../public/fonts/Satoshi-Variable.woff2',
     display: 'swap',
     variable: '--font-inter',
 });

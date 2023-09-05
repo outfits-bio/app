@@ -1,5 +1,4 @@
 import axios from "axios";
-import { env } from "~/env.mjs";
 import {
   addLinkSchema,
   editProfileSchema,
@@ -15,14 +14,10 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 
-import {
-  DeleteObjectCommand,
-  PutObjectCommand,
-  S3Client,
-} from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { NotificationType, Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
+import { deleteImage, generatePresignedUrl } from "~/server/utils/image.util";
+import { prisma } from "~/server/db";
 
 const badUsernames = [
   // System
@@ -208,6 +203,7 @@ export const userRouter = createTRPCRouter({
           likeCount: true,
           verified: true,
           admin: true,
+          premium: true,
           likedBy: {
             where: { id: ctx.session?.user.id },
             select: { id: true },
@@ -297,7 +293,7 @@ export const userRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       const { id } = input;
 
-      const link = await ctx.prisma.link.delete({
+      await ctx.prisma.link.delete({
         where: {
           id,
           userId: ctx.session.user.id,
@@ -356,57 +352,28 @@ export const userRouter = createTRPCRouter({
       });
     }),
 
-  setImage: protectedProcedure.mutation(async ({ input, ctx }) => {
-    const s3 = new S3Client({
-      region: env.AWS_REGION,
-      endpoint: env.AWS_ENDPOINT,
-    });
+  setImage: protectedProcedure.mutation(async ({ ctx }) => {
+    const { url, id } = await generatePresignedUrl(ctx.session.user.id);
 
-    const imageId = `${ctx.session.user.id}-${Date.now()}`;
-
-    let res: string;
-
-    try {
-      res = await getSignedUrl(
-        s3,
-        new PutObjectCommand({
-          Bucket: "outfits",
-          Key: `${ctx.session.user.id}/${imageId}.png`,
-          ContentType: "image/png",
-        }),
-        {
-          expiresIn: 30,
-        }
-      );
-    } catch (error) {
-      console.error(error);
-
-      throw new TRPCError({
-        code: "BAD_REQUEST",
-        message: "Invalid image!",
-      });
-    }
-
-    s3.send(
-      new DeleteObjectCommand({
-        Bucket: "outfits",
-        Key: `${ctx.session.user.id}/${ctx.session.user.image}.png`,
-      })
-    );
+    if (ctx.session.user.image && url)
+      await deleteImage(ctx.session.user.id, ctx.session.user.image);
 
     await ctx.prisma.user.update({
       where: {
         id: ctx.session.user.id,
       },
       data: {
-        image: imageId,
+        image: id,
       },
     });
 
-    return res;
+    return url;
   }),
 
   deleteImage: protectedProcedure.mutation(async ({ ctx }) => {
+    if (ctx.session.user.image)
+      await deleteImage(ctx.session.user.id, ctx.session.user.image);
+
     await ctx.prisma.user.update({
       where: {
         id: ctx.session.user.id,
@@ -425,10 +392,10 @@ export const userRouter = createTRPCRouter({
       // like profile, or unlike if already liked
       const { id } = input;
 
-      let like: { id: string };
+      let likeData: { id: string };
 
       try {
-        like = await ctx.prisma.user.update({
+        let like = ctx.prisma.user.update({
           where: {
             id,
             likedBy: {
@@ -452,7 +419,7 @@ export const userRouter = createTRPCRouter({
           },
         });
 
-        await ctx.prisma.notification.create({
+        let notification = ctx.prisma.notification.create({
           data: {
             type: NotificationType.PROFILE_LIKE,
             targetUser: {
@@ -467,8 +434,12 @@ export const userRouter = createTRPCRouter({
             },
           },
         });
+
+        const [res] = await ctx.prisma.$transaction([like, notification]);
+
+        likeData = res;
       } catch (error) {
-        like = await ctx.prisma.user.update({
+        likeData = await ctx.prisma.user.update({
           where: {
             id,
             likedBy: {
@@ -493,7 +464,7 @@ export const userRouter = createTRPCRouter({
         });
       }
 
-      return like;
+      return likeData;
     }),
 
   searchProfiles: publicProcedure

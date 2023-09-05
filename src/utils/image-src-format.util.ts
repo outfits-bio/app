@@ -1,8 +1,6 @@
-import avatar from "../../public/circle-white.png";
-
 export const formatAvatar = (image?: string | null, userId?: string) => {
   if (!image || !userId) {
-    return avatar.src;
+    return "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
   }
 
   return image.startsWith("https://")

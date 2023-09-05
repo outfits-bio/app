@@ -1,20 +1,14 @@
 import { z } from "zod";
-import { env } from "~/env.mjs";
-import { getPostsSchema, paginatedSchema } from "~/schemas/user.schema";
+import { getPostsSchema } from "~/schemas/user.schema";
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
 
-import {
-  DeleteObjectCommand,
-  PutObjectCommand,
-  S3Client,
-} from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { PostType } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
+import { deleteImage, generatePresignedUrl } from "~/server/utils/image.util";
 
 export const postTypeSchema = z.object({
   type: z.nativeEnum(PostType),
@@ -30,35 +24,7 @@ export const postRouter = createTRPCRouter({
   createPost: protectedProcedure
     .input(postTypeSchema)
     .mutation(async ({ input, ctx }) => {
-      const s3 = new S3Client({
-        region: env.AWS_REGION,
-        endpoint: env.AWS_ENDPOINT,
-      });
-
-      const imageId = `${ctx.session.user.id}-${Date.now()}`;
-
-      let res: string;
-
-      try {
-        res = await getSignedUrl(
-          s3,
-          new PutObjectCommand({
-            Bucket: "outfits",
-            Key: `${ctx.session.user.id}/${imageId}.png`,
-            ContentType: "image/png",
-          }),
-          {
-            expiresIn: 30,
-          }
-        );
-      } catch (error) {
-        console.error(error);
-
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Invalid image!",
-        });
-      }
+      const { id, url } = await generatePresignedUrl(ctx.session.user.id);
 
       const post = await ctx.prisma.post.create({
         data: {
@@ -68,7 +34,7 @@ export const postRouter = createTRPCRouter({
               id: ctx.session.user.id,
             },
           },
-          image: imageId,
+          image: id,
         },
         select: {
           createdAt: true,
@@ -100,7 +66,7 @@ export const postRouter = createTRPCRouter({
 
       return {
         ...post,
-        res,
+        res: url,
       };
     }),
 
@@ -108,11 +74,6 @@ export const postRouter = createTRPCRouter({
     .input(idSchema)
     .mutation(async ({ input, ctx }) => {
       const { id } = input;
-
-      const s3 = new S3Client({
-        region: env.AWS_REGION,
-        endpoint: env.AWS_ENDPOINT,
-      });
 
       const post = await ctx.prisma.post.delete({
         where: {
@@ -131,12 +92,7 @@ export const postRouter = createTRPCRouter({
           message: "Invalid post!",
         });
 
-      s3.send(
-        new DeleteObjectCommand({
-          Bucket: "outfits",
-          Key: `${ctx.session.user.id}/${post.image}.png`,
-        })
-      );
+      if (post.image) await deleteImage(ctx.session.user.id, post.image);
 
       await ctx.prisma.user.update({
         where: {

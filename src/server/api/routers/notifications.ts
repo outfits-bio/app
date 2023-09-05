@@ -6,7 +6,7 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const notificationsRouter = createTRPCRouter({
   getNotifications: protectedProcedure.query(async ({ ctx }) => {
-    const notifications = await ctx.prisma.notification.findMany({
+    const notifications = ctx.prisma.notification.findMany({
       where: {
         targetUserId: ctx.session.user.id,
       },
@@ -35,7 +35,7 @@ export const notificationsRouter = createTRPCRouter({
       },
     });
 
-    await ctx.prisma.notification.updateMany({
+    const update = ctx.prisma.notification.updateMany({
       where: {
         targetUserId: ctx.session.user.id,
         read: false,
@@ -45,21 +45,19 @@ export const notificationsRouter = createTRPCRouter({
       },
     });
 
-    return notifications;
+    const [res] = await ctx.prisma.$transaction([notifications, update]);
+
+    return res;
   }),
   deleteNotification: protectedProcedure
     .input(deleteNotificationSchema)
     .mutation(async ({ ctx, input }) => {
       const { id } = input;
 
-      const notification = await ctx.prisma.notification.findUnique({
+      const notification = await ctx.prisma.notification.delete({
         where: {
           id,
           targetUserId: ctx.session.user.id,
-        },
-        select: {
-          id: true,
-          targetUserId: true,
         },
       });
 
@@ -70,22 +68,16 @@ export const notificationsRouter = createTRPCRouter({
         });
       }
 
-      await ctx.prisma.notification.delete({
-        where: {
-          id,
-        },
-      });
-
       return true;
     }),
-    getUnreadNotificationsCount: protectedProcedure.query(async ({ ctx }) => {
-      const count = await ctx.prisma.notification.count({
-        where: {
-          targetUserId: ctx.session.user.id,
-          read: false,
-        },
-      });
+  getUnreadNotificationsCount: protectedProcedure.query(async ({ ctx }) => {
+    const count = await ctx.prisma.notification.count({
+      where: {
+        targetUserId: ctx.session.user.id,
+        read: false,
+      },
+    });
 
-      return count;
-    }),
+    return count;
+  }),
 });
