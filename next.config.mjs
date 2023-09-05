@@ -33,6 +33,7 @@ const config = withPWA({
       "lh3.googleusercontent.com",
       "cdn.discordapp.com",
       "ui-avatars.com",
+      "upload.wikimedia.org",
     ],
     unoptimized: true,
   },
