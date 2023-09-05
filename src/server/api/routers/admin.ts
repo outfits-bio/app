@@ -1,4 +1,8 @@
-import { deleteUserSchema, editUserSchema } from "~/schemas/admin.schema";
+import {
+  deleteUserLinkSchema,
+  deleteUserSchema,
+  editUserSchema,
+} from "~/schemas/admin.schema";
 
 import { TRPCError } from "@trpc/server";
 
@@ -145,5 +149,33 @@ export const adminRouter = createTRPCRouter({
       await deleteImage(id, oldImage.image);
 
       return true;
+    }),
+  removeUserLink: protectedProcedure
+    .input(deleteUserLinkSchema)
+    .mutation(async ({ ctx, input }) => {
+      const { id, linkId } = input;
+
+      const currentUser = await ctx.prisma.user.findUnique({
+        where: { id: ctx.session.user.id },
+        select: { admin: true },
+      });
+
+      if (!currentUser?.admin) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "You are not authorized to remove user links.",
+        });
+      }
+
+      const link = await ctx.prisma.link.delete({
+        where: { id: linkId, userId: id },
+      });
+
+      if (link) return true;
+
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "Link not found!",
+      });
     }),
 });

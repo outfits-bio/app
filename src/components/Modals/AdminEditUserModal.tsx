@@ -13,6 +13,7 @@ import { Button } from '../Button';
 import { BaseModal } from './BaseModal';
 
 import type { BaseModalProps } from './BaseModal';
+import { SpinnerGap, TrashSimple } from '@phosphor-icons/react';
 type RouterOutput = inferRouterOutputs<AppRouter>;
 
 interface AdminEditUserModalProps extends BaseModalProps {
@@ -40,6 +41,14 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
         onError: (e) => handleErrors({ e, message: 'Failed to remove avatar' })
     });
 
+    const { mutate: removeLink, isLoading: removeLinkLoading, variables } = api.admin.removeUserLink.useMutation({
+        onSuccess: () => {
+            ctx.user.getProfile.invalidate({ username: props.targetUser.username! });
+            toast.success('Link removed successfully!');
+        },
+        onError: (e) => handleErrors({ e, message: 'Failed to remove link' })
+    });
+
     const { handleSubmit, register } = useForm({
         defaultValues: {
             id: props.targetUser.id,
@@ -64,6 +73,15 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
                     <textarea {...register('tagline')} className='w-full h-24 p-2 rounded-md border border-stroke bg-white dark:bg-black text-black dark:text-white' />
 
                     <Button variant='outline-ghost' type="button" centerItems isLoading={removeImageLoading} onClick={() => removeImage({ id: props.targetUser.id })}>Remove Avatar</Button>
+
+                    <ul className='text-left w-full flex flex-col items-start gap-2'>
+                        {props.targetUser.links?.map((link) =>
+                            <button type='button' key={link.id} className='text-sm flex items-center font-semibold py-2 border-stroke rounded-md border w-full text-left px-4 hover:bg-hover' onClick={() => removeLink({ id: link.userId, linkId: link.id })}>
+                                {link.url}
+                                {(removeLinkLoading && variables?.linkId === link.id) ? <SpinnerGap className='animate-spin ml-auto' /> : <TrashSimple className='ml-auto' />}
+                            </button>
+                        )}
+                    </ul>
                 </div>
 
                 <div className='flex w-full gap-2'>

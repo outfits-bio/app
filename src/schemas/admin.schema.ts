@@ -13,3 +13,9 @@ export const editUserSchema = z
   })
   .merge(editProfileSchema);
 export type EditUserInput = z.infer<typeof editUserSchema>;
+
+export const deleteUserLinkSchema = z.object({
+  id: z.string().cuid(),
+  linkId: z.string().cuid(),
+});
+export type DeleteUserLinkInput = z.infer<typeof deleteUserLinkSchema>;
