@@ -1,10 +1,9 @@
-import { env } from "~/env.mjs";
 import { deleteUserSchema, editUserSchema } from "~/schemas/admin.schema";
 
-import { DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { TRPCError } from "@trpc/server";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { deleteImage } from "~/server/utils/image.util";
 
 export const adminRouter = createTRPCRouter({
   deleteUser: protectedProcedure
@@ -45,11 +44,6 @@ export const adminRouter = createTRPCRouter({
         });
       }
 
-      const s3 = new S3Client({
-        region: env.AWS_REGION,
-        endpoint: env.AWS_ENDPOINT,
-      });
-
       const post = await ctx.prisma.post.delete({
         where: {
           id,
@@ -67,12 +61,7 @@ export const adminRouter = createTRPCRouter({
           message: "Invalid post!",
         });
 
-      s3.send(
-        new DeleteObjectCommand({
-          Bucket: "outfits",
-          Key: `${post.userId}/${post.image}.png`,
-        })
-      );
+      if (post.image) await deleteImage(post.userId, post.image);
 
       await ctx.prisma.user.update({
         where: {
@@ -120,11 +109,6 @@ export const adminRouter = createTRPCRouter({
   removeUserAvatar: protectedProcedure
     .input(deleteUserSchema)
     .mutation(async ({ ctx, input }) => {
-      const s3 = new S3Client({
-        region: env.AWS_REGION,
-        endpoint: env.AWS_ENDPOINT,
-      });
-
       const { id } = input;
 
       const currentUser = await ctx.prisma.user.findUnique({
@@ -158,12 +142,7 @@ export const adminRouter = createTRPCRouter({
         },
       });
 
-      s3.send(
-        new DeleteObjectCommand({
-          Bucket: "outfits",
-          Key: `${id}/${oldImage.image}.png`,
-        })
-      );
+      await deleteImage(id, oldImage.image);
 
       return true;
     }),
