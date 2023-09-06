@@ -177,12 +177,6 @@ export const userRouter = createTRPCRouter({
             where: { id: ctx.session?.user.id },
             select: { id: true },
           },
-          accounts: {
-            select: {
-              providerAccountId: true,
-              provider: true,
-            },
-          },
           links: true,
           lanyardEnabled: true,
         },
