@@ -57,7 +57,6 @@ model User {
     sessions            Session[]
     verified            Boolean @default(false)
     admin               Boolean @default(false)
-    premium             Boolean @default(false)
 
     outfitPostCount     Int @default(0)
     hoodiePostCount     Int @default(0)

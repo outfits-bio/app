@@ -53,7 +53,6 @@ export const profileRouter = createTRPCRouter({
           likeCount: true,
           verified: true,
           admin: true,
-          premium: true,
           likedBy: {
             where: { id: ctx.session?.user.id },
             select: { id: true },
