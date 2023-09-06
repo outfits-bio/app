@@ -99,7 +99,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
     const pageTitle = title === 'outfits.bio' ? 'outfits.bio' : `outfits.bio - ${title.toLowerCase()}`;
 
     return (
-        <div className='border-b h-20 border-stroke fixed w-full z-10 bg-white dark:bg-black font-urbanist'>
+        <div className='border-b h-20 border-stroke fixed w-full z-10 bg-white dark:bg-black font-clash'>
             <Head>
                 <title>{pageTitle}</title>
             </Head>
@@ -108,10 +108,10 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
                 {input.length > 0 && <div className='absolute w-screen h-screen inset-0' onClick={() => setInput('')}></div>}
                 <Link href={isAuth ? '/explore' : '/'} className='flex items-center gap-2'>
                     <Logo size={'lg'} />
-                    {showSlash ? <h1 className='text-2xl font-black font-urbanist'>{title.toLowerCase()}</h1> : <h1 className='text-2xl font-black font-urbanist'>outfits.bio</h1>}
+                    {showSlash ? <h1 className='text-2xl font-black font-clash'>{title.toLowerCase()}</h1> : <h1 className='text-2xl font-black font-clash'>outfits.bio</h1>}
                 </Link>
 
-                {(isAuth && !hideSearch) && <div className='hidden relative items-center font-urbanist font-medium xl:flex'>
+                {(isAuth && !hideSearch) && <div className='hidden relative items-center font-clash font-medium xl:flex'>
                     {isFetching ? <SpinnerGap className='absolute left-4 text-gray-400 w-6 h-6 animate-spin' /> : <MagnifyingGlass className='absolute left-4 text-gray-400 dark:text-white w-6 h-6' />}
                     <input
                         id="link"

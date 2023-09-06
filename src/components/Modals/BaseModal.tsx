@@ -7,16 +7,16 @@ import { Dialog, Transition, TransitionChildProps } from '@headlessui/react';
 
 import type { VariantProps } from "class-variance-authority";
 
-const urbanist = localFont({
+const clash = localFont({
     src: '../../../public/fonts/ClashDisplay-Variable.woff2',
     display: 'swap',
-    variable: '--font-urbanist',
+    variable: '--font-clash',
 });
 
-const inter = localFont({
+const satoshi = localFont({
     src: '../../../public/fonts/Satoshi-Variable.woff2',
     display: 'swap',
-    variable: '--font-inter',
+    variable: '--font-satoshi',
 });
 
 const variants = cva('w-96 gap-2 overflow-hidden rounded-md bg-white dark:bg-black border border-stroke p-4 text-left align-middle shadow-xl transition-all', {
@@ -42,7 +42,7 @@ export interface BaseModalProps
 
 export const BaseModal = forwardRef<HTMLDivElement, BaseModalProps>(({ className, children, size, isOpen, setIsOpen, ...props }, ref) => {
     return <Transition appear show={isOpen} as={Fragment} {...props}>
-        <Dialog as="div" className={`relative z-10 ${urbanist.variable} ${inter.variable} font-urbanist`} open={isOpen} onClose={() => setIsOpen(false)}>
+        <Dialog as="div" className={`relative z-10 ${clash.variable} ${satoshi.variable} font-clash`} open={isOpen} onClose={() => setIsOpen(false)}>
             <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"

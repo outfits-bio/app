@@ -3,11 +3,11 @@ import { Layout } from '~/components/Layout';
 export const PrivacyPolicyPage = () => {
     return <Layout title='Terms of Service' hideSearch={true}>
         <div className='container p-6 md:p-12'>
-            <h1 className='font-black font-urbanist text-4xl sm:text-5xl'>Outfits.bio Terms of Service</h1>
-            <p className='mt-2 text-sm italic font-urbanist'>Last Updated: 15 August 2023</p>
+            <h1 className='font-black font-clash text-4xl sm:text-5xl'>Outfits.bio Terms of Service</h1>
+            <p className='mt-2 text-sm italic font-clash'>Last Updated: 15 August 2023</p>
 
             <br />
-            <h2 className='font-bold font-urbanist mt-6'>1. Definitions</h2>
+            <h2 className='font-bold font-clash mt-6'>1. Definitions</h2>
             <br />
             1.1 Outfits.bio: Outfits.bio (“we”, “our”, “us”) means the outfits.bio website, company, and anything bound
             <br />
@@ -51,7 +51,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             rules, functionality, etc. but all must abide by all of the agreement(s) made by Outfits.bio.
             <br />
-            <h2 className='font-bold font-urbanist mt-6'>2. Applicability of Terms</h2>
+            <h2 className='font-bold font-clash mt-6'>2. Applicability of Terms</h2>
             <br />
             2.1 These terms apply to the Users that associate with, create an account at, or are in any
             <br />
@@ -79,7 +79,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             the User.
             <br />
-            <h2 className='font-bold font-urbanist mt-6'>3. Outfits.bio&apos;s Obligations</h2>
+            <h2 className='font-bold font-clash mt-6'>3. Outfits.bio&apos;s Obligations</h2>
             <br />
             3.1 Trust and safety are considered one of the top priorities and motives of Outfits.bio. We will
             <br />
@@ -95,7 +95,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             services, if the User is in violation of the provisions thereof (Art 7.1.I and 5.3.1).
             <br />
-            <h2 className='font-bold font-urbanist mt-6'>4. User Obligations and Liability</h2>
+            <h2 className='font-bold font-clash mt-6'>4. User Obligations and Liability</h2>
             <br />
             4.1 The User is at least thirteen (13) years of age before accessing the content within Outfits.bio
             <br />
@@ -121,7 +121,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             communit(ies/y) created on Outfits.bio, if applicable.
             <br />
-            <h2 className='font-bold font-urbanist mt-6'>5. Usage of Service</h2>
+            <h2 className='font-bold font-clash mt-6'>5. Usage of Service</h2>
             <br />
             5.1 If the User intentionally or deliberately fails to secure their account page,
             <br />
@@ -195,7 +195,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             notice.
             <br />
-            <h2 className='font-bold font-urbanist mt-6'>6. Disclaimer of Warranty</h2>
+            <h2 className='font-bold font-clash mt-6'>6. Disclaimer of Warranty</h2>
             <br />
             6.1 The entirety of Outfits.bio and its services is provided and licensed “as is” without warrant of
             <br />
@@ -217,7 +217,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             C. The use of Outfits.bio being uninterrupted or error-free.
             <br />
-            <h2 className='font-bold font-urbanist mt-6'>7. Account</h2>
+            <h2 className='font-bold font-clash mt-6'>7. Account</h2>
             <br />
             7.1 Upon account creation at Outfits.bio, you automatically abide by these following provisions
             <br />
@@ -265,7 +265,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             should survive termination and shall survive as such.
             <br />
-            <h2 className='font-bold font-urbanist mt-6'>9. Prices, offers, and quotations</h2>
+            <h2 className='font-bold font-clash mt-6'>9. Prices, offers, and quotations</h2>
             <br />
             9.1 Outfits.bio is authorized to adjust the prices of its products at any time, with or without any
             <br />
@@ -285,7 +285,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             consequences thereof.
             <br />
-            <h2 className='font-bold font-urbanist mt-6'>10. Payment(s)</h2>
+            <h2 className='font-bold font-clash mt-6'>10. Payment(s)</h2>
             <br />
             10.1 Subscription plans and its information thereof are available on Outfits.bio. You agree and
             <br />
@@ -333,7 +333,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             the refund should be processed or not due to the validity of such.
             <br />
-            <h2 className='font-bold font-urbanist mt-6'>11. Customer Service</h2>
+            <h2 className='font-bold font-clash mt-6'>11. Customer Service</h2>
             <br />
             11.1 Customer Service is given in standard English (ISO 639-1: en-US and en-GB) only.
             <br />
@@ -367,7 +367,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             spoken or written in standard en-GB or en-US english.
             <br />
-            <h2 className='font-bold font-urbanist mt-6'>12. Sponsorships and partnerships</h2>
+            <h2 className='font-bold font-clash mt-6'>12. Sponsorships and partnerships</h2>
             <br />
             12.1 Outfits.bio has the right to terminate partnerships or sponsorships, effective immediately, if
             <br />
@@ -391,7 +391,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             be charged and any related services will be suspended until the full amount is received.
             <br />
-            <h2 className='font-bold font-urbanist mt-6'>13. COPPA Act</h2>
+            <h2 className='font-bold font-clash mt-6'>13. COPPA Act</h2>
             <br />
             13.1 This provision is in effect for Art. 4.1. COPPA is defined as the Children&apos;s Online
             <br />
@@ -431,7 +431,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             Outfits.bio for any other form of damage is excluded.
             <br />
-            <p className='font-urbanist italic text-sm mt-6'>Copyright © Outfits.bio (outfits.bio), all rights reserved</p>
+            <p className='font-clash italic text-sm mt-6'>Copyright © Outfits.bio (outfits.bio), all rights reserved</p>
         </div>
     </Layout>
 }

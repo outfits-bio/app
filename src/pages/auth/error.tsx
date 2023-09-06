@@ -16,8 +16,8 @@ export const ErrorPage: NextPage = () => {
     }
 
     return <Layout title="Error">
-        <div className='flex flex-col items-center justify-center w-full h-full font-inter gap-4'>
-            <h1 className='text-5xl font-black font-urbanist'>Uh oh!</h1>
+        <div className='flex flex-col items-center justify-center w-full h-full font-satoshi gap-4'>
+            <h1 className='text-5xl font-black font-clash'>Uh oh!</h1>
             <article className='text-center'>
                 <p className='text-lg'>There was an error authenticating you.</p>
                 <p className='text-lg'>Here&apos;s the error code we received:</p>

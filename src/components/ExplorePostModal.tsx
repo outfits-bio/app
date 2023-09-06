@@ -1,5 +1,4 @@
 import { useSession } from 'next-auth/react';
-import { Inter, Urbanist } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -8,6 +7,7 @@ import { toast } from 'react-hot-toast';
 import { api, RouterOutputs } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
+import localFont from 'next/font/local';
 
 import { Dialog, Transition } from '@headlessui/react';
 import { Hammer, SealCheck, X } from '@phosphor-icons/react';
@@ -24,16 +24,16 @@ interface ExplorePostModalProps {
     setPostModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-const urbanist = Urbanist({
-    subsets: ['latin-ext'],
+const clash = localFont({
+    src: '../../public/fonts/ClashDisplay-Variable.woff2',
     display: 'swap',
-    variable: '--font-urbanist',
+    variable: '--font-clash',
 });
 
-const inter = Inter({
-    subsets: ['latin'],
+const satoshi = localFont({
+    src: '../../public/fonts/Satoshi-Variable.woff2',
     display: 'swap',
-    variable: '--font-inter',
+    variable: '--font-satoshi',
 });
 
 export const ExplorePostModal = ({ post, setPostModalOpen }: ExplorePostModalProps) => {
@@ -110,7 +110,7 @@ export const ExplorePostModal = ({ post, setPostModalOpen }: ExplorePostModalPro
     if (!post) return null;
 
     return <Transition appear show={true} as={Fragment}>
-        <Dialog as="div" className={`relative z-10 ${urbanist.variable} ${inter.variable} font-urbanist`} onClose={closeModal}>
+        <Dialog as="div" className={`relative z-10 ${clash.variable} ${satoshi.variable} font-clash`} onClose={closeModal}>
             <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-100"
@@ -153,7 +153,7 @@ export const ExplorePostModal = ({ post, setPostModalOpen }: ExplorePostModalPro
                             <div className='flex flex-col justify-end items-center p-4 absolute bottom-0 bg-gradient-to-b from-transparent to-black w-full h-1/4 bg-fixed'>
                                 <div className='text-white flex w-full gap-2 mb-2 pl-0.5'>
                                     {getPostTypeIconSmall(post.type)}
-                                    <h1 className='font-urbanist'>{post.type.toLowerCase().replace(/\b\w/g, l => l.toUpperCase())}</h1>
+                                    <h1 className='font-clash'>{post.type.toLowerCase().replace(/\b\w/g, l => l.toUpperCase())}</h1>
                                 </div>
 
                                 <div className='flex justify-between items-center w-full'>

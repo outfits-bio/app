@@ -27,7 +27,7 @@ const LoginPage = () => {
     <Layout title='Login' showSlash={false} showActions={false} hideSearch={true}>
       <div className='flex flex-col md:flex-row w-screen h-full'>
         <div className='h-full flex w-full md:px-[90px] md:w-auto flex-col justify-center items-center gap-4 md:border-r border-black dark:border-white'>
-          <h1 className='text-3xl sm:text-5xl font-black font-urbanist sm:w-72'>Your virtual wardrobe</h1>
+          <h1 className='text-3xl sm:text-5xl font-black font-clash sm:w-72'>Your virtual wardrobe</h1>
 
           <div className='w-72 gap-4 flex flex-col mb-20'>
             <Button onClick={handleDiscord} iconRight={<DiscordLogo />}>Continue with Discord</Button>

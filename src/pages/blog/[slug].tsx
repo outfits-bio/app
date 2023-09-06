@@ -11,12 +11,12 @@ export const BlogPost = ({ data }: InferGetStaticPropsType<typeof getStaticProps
             <div className='w-full flex justify-center p-8 sm:p-12'>
                 <article className='flex flex-col container gap-8 w-[800px]'>
                     <div className='flex flex-col gap-4'>
-                        <h1 className='font-bold text-5xl font-urbanist'>{title}</h1>
+                        <h1 className='font-bold text-5xl font-clash'>{title}</h1>
                         <p className='text-secondary-text'>{Intl.DateTimeFormat('en-us', {
                             dateStyle: 'full',
                         }).format(new Date(date))}</p>
                     </div>
-                    <ReactMarkdown className='prose lg:prose-lg prose-headings:font-urbanist'>
+                    <ReactMarkdown className='prose lg:prose-lg prose-headings:font-clash'>
                         {content}
                     </ReactMarkdown>
                 </article>

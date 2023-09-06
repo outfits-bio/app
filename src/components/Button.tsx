@@ -6,7 +6,7 @@ import { SpinnerGap } from '@phosphor-icons/react';
 
 import type { VariantProps } from 'class-variance-authority';
 
-const variants = cva('font-semibold font-urbanist self-stretch h-12 py-2 gap-3 flex items-center', {
+const variants = cva('font-semibold font-clash self-stretch h-12 py-2 gap-3 flex items-center', {
     variants: {
         variant: {
             primary: 'dark:bg-white border dark:border-white border-black dark:text-black text-white bg-black hover:bg-opacity-80 dark:hover:bg-opacity-80 disabled:bg-opacity-80 dark:disabled:bg-opacity-80',
@@ -39,43 +39,43 @@ export interface ButtonProps
     iconRight?: React.ReactNode;
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ className, children, isLoading, variant, centerItems, shape, ...props }, ref) => {
-    if (props.iconLeft && !props.iconRight) {
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ className, children, isLoading, variant, centerItems, iconLeft, iconRight, shape, ...props }, ref) => {
+    if (iconLeft && !iconRight) {
         return <button ref={ref} className={cn(variants({ centerItems, className, variant, shape }))} disabled={isLoading} {...props}>
             {!isLoading && <div className='text-2xl'>
-                {props.iconLeft}
+                {iconLeft}
             </div>}
             {isLoading && <SpinnerGap className='animate-spin text-2xl' />}
             {children}
         </button>;
     }
 
-    if (!props.iconLeft && props.iconRight) {
+    if (!iconLeft && iconRight) {
         return <button ref={ref} className={cn(variants({ centerItems, className, variant, shape }))} disabled={isLoading} {...props}>
             {isLoading && <SpinnerGap className='animate-spin text-2xl' />}
             {children}
             <div className='text-2xl'>
-                {props.iconRight}
+                {iconRight}
             </div>
         </button>;
     }
 
-    if (props.iconLeft && props.iconRight) {
+    if (iconLeft && iconRight) {
         return <button ref={ref} className={cn(variants({ centerItems, className, variant, shape }))} disabled={isLoading} {...props}>
             {!isLoading && <div className='text-2xl'>
-                {props.iconLeft}
+                {iconLeft}
             </div>}
             {isLoading && <SpinnerGap className='animate-spin text-2xl' />}
             {children}
             <div className='text-2xl'>
-                {props.iconRight}
+                {iconRight}
             </div>
         </button>;
     }
 
     return <button ref={ref} className={cn(variants({ centerItems, className, variant, shape }))} disabled={isLoading} {...props}>
-        {props.iconLeft && !isLoading && <div className='text-2xl'>
-            {props.iconLeft}
+        {iconLeft && !isLoading && <div className='text-2xl'>
+            {iconLeft}
         </div>}
         {isLoading && <SpinnerGap className='animate-spin text-2xl' />}
         {children}

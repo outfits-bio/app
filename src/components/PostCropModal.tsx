@@ -121,7 +121,7 @@ export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
                                     </div>
 
                                     <div className='flex flex-col gap-2'>
-                                        <h2 className='font-semibold text-2xl font-urbanist'>Details</h2>
+                                        <h2 className='font-semibold text-2xl font-clash'>Details</h2>
 
                                         
                                     </div>

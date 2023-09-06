@@ -31,7 +31,7 @@ export const AppearanceSettingsPage: NextPage = () => {
     return <SettingsLayout>
         {hideAllPresencesModalOpen && <HideAllPresencesModal isOpen={hideAllPresencesModalOpen} setIsOpen={setHideAllPresencesModalOpen} />}
 
-        <div className="w-full h-full p-4 font-urbanist gap-6 flex flex-col">
+        <div className="w-full h-full p-4 font-clash gap-6 flex flex-col">
             <h1 className="text-4xl font-black">Appearance</h1>
 
             <div className="flex flex-col gap-4">

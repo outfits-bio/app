@@ -114,7 +114,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
                         onSubmit={handleSubmit(handleFormSubmit)}
                         className='w-full px-8 sm:px-0 sm:w-[500px] gap-6 flex flex-col sm:mb-20 justify-between sm:justify-normal h-full sm:h-auto'
                     >
-                        <h1 className='hidden sm:block sm:text-5xl font-black font-urbanist'>Show the world who you really are.</h1>
+                        <h1 className='hidden sm:block sm:text-5xl font-black font-clash'>Show the world who you really are.</h1>
 
                         <div className='flex gap-2 w-full flex-col sm:flex-row items-center'>
                             <div className='rounded-full h-64 w-64 sm:h-44 sm:w-44 flex items-center justify-center border border-black' onClick={() => ref.current?.click()}>

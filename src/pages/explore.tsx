@@ -77,7 +77,7 @@ export const ExplorePage = ({ blogPosts }: InferGetStaticPropsType<typeof getSta
         <div className='p-4'>
             {postModalOpen && <ExplorePostModal setPostModalOpen={setPostModalOpen} post={post} />}
 
-            <h1 className='font-urbanist text-5xl font-black mb-6 hidden lg:inline-block'>Seek fashion inspiration from the best!</h1>
+            <h1 className='font-clash text-5xl font-black mb-6 hidden lg:inline-block'>Seek fashion inspiration from the best!</h1>
 
             <div className='overflow-x-scroll flex gap-4 pb-1'>
                 <Button onClick={() => setActivePage('OUTFIT')} variant={activePage === 'OUTFIT' ? 'primary' : 'outline'} iconLeft={getPostTypeIconSmall('OUTFIT')} centerItems>
@@ -159,9 +159,9 @@ export const ExplorePage = ({ blogPosts }: InferGetStaticPropsType<typeof getSta
                 </div>}
             </div>
 
-            <p className='hidden md:inline-block font-urbanist font-semibold text-secondary-text mb-2'>Pro tip: You can scroll by holding Shift + Mouse Scroll!</p>
+            <p className='hidden md:inline-block font-clash font-semibold text-secondary-text mb-2'>Pro tip: You can scroll by holding Shift + Mouse Scroll!</p>
 
-            <h1 className='font-black text-3xl my-2 font-urbanist'>Latest Uploads</h1>
+            <h1 className='font-black text-3xl my-2 font-clash'>Latest Uploads</h1>
 
             <div className='flex mt-4 gap-4 overflow-x-scroll pb-1'>
                 {allTypesIsFetching && !allTypesIsFetchingNextPage && !allTypesIsRefetching ? <>
@@ -205,11 +205,11 @@ export const ExplorePage = ({ blogPosts }: InferGetStaticPropsType<typeof getSta
                 </div>}
             </div>
 
-            <h1 className='font-black text-3xl mb-2 mt-5 font-urbanist'>Blog Posts</h1>
+            <h1 className='font-black text-3xl mb-2 mt-5 font-clash'>Blog Posts</h1>
             <div className='flex mt-4 gap-4 overflow-x-scroll pb-1 w-full'>
                 {blogPosts.map((post) => (
                     <Link href={`/blog/${post.id}`} key={post.id} className='w-72 h-44 min-w-[288px] p-4 flex flex-col items-start justify-end border border-stroke rounded-md hover:shadow-lg transition-all duration-200'>
-                        <h1 className='font-urbanist font-bold text-3xl'>{post.title}</h1>
+                        <h1 className='font-clash font-bold text-3xl'>{post.title}</h1>
                         <p>{Intl.DateTimeFormat('en-us', {
                             dateStyle: 'long',
                         }).format(new Date(post.date))}</p>

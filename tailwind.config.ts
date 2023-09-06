@@ -5,8 +5,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        inter: ["var(--font-inter)"],
-        urbanist: ["var(--font-urbanist)"],
+        satoshi: ["var(--font-satoshi)"],
+        clash: ["var(--font-clash)"],
       },
       colors: {
         body: "var(--body)",
@@ -43,5 +43,5 @@ export default {
     },
   },
   darkMode: "class",
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [require("@tailwindcss/typography")],
 } satisfies Config;

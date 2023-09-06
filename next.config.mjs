@@ -4,7 +4,9 @@
  */
 await import("./src/env.mjs");
 
+import withPlugins from "next-compose-plugins";
 import nextPWA from "next-pwa";
+import nextBudleAnalyzer from "@next/bundle-analyzer";
 
 const withPWA = nextPWA({
   dest: "public",
@@ -13,8 +15,13 @@ const withPWA = nextPWA({
   disable: process.env.NODE_ENV === "development",
 });
 
+const withBundleAnalyzer = nextBudleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+  openAnalyzer: true,
+});
+
 /** @type {import("next").NextConfig} */
-const config = withPWA({
+const config = {
   reactStrictMode: true,
 
   /**
@@ -42,5 +49,6 @@ const config = withPWA({
       transform: "@phosphor-icons/react/{{member}}",
     },
   },
-});
-export default config;
+};
+
+export default withPlugins([[withPWA], [withBundleAnalyzer]], config);

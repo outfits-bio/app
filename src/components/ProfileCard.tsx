@@ -103,7 +103,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
     }
 
     return (
-        <div className="h-full flex flex-col font-inter">
+        <div className="h-full flex flex-col font-satoshi">
             {reportModalOpen && <ReportModal isOpen={reportModalOpen} setIsOpen={setReportModalOpen} type='USER' id={profileData?.id} />}
             {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} admin deleteFn={() => {
                 deleteUser({ id: profileData?.id ?? '' });
@@ -117,7 +117,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                     <Avatar size='jumbo' image={profileData?.image} id={profileData?.id} username={profileData?.username} />
 
                     <div className='flex flex-col gap-1 md:gap-4'>
-                        <h1 className='font-black text-2xl md:text-4xl font-urbanist gap-2 md:gap-3 flex items-center'>
+                        <h1 className='font-black text-2xl md:text-4xl font-clash gap-2 md:gap-3 flex items-center'>
                             <span>{profileData?.username}</span>
                             {profileData?.admin ? <Hammer className='w-6 h-6 md:w-8 md:h-8' weight='bold' /> : profileData?.verified && <SealCheck weight='bold' className='w-6 h-6 md:w-8 md:h-8' />}
                         </h1>

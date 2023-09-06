@@ -3,10 +3,10 @@ import { Layout } from '~/components/Layout';
 export const PrivacyPolicyPage = () => {
     return <Layout title='Privacy Policy' hideSearch={true}>
         <div className='container p-6 md:p-12'>
-            <h1 className='font-black font-urbanist text-4xl sm:text-5xl'>Outfits.bio Privacy Policy</h1>
-            <p className='mt-2 text-sm italic font-urbanist'>Last Updated: 15 August 2023</p>
+            <h1 className='font-black font-clash text-4xl sm:text-5xl'>Outfits.bio Privacy Policy</h1>
+            <p className='mt-2 text-sm italic font-clash'>Last Updated: 15 August 2023</p>
 
-            <h2 className="font-bold font-urbanist mt-6">1. Processed personal data</h2>
+            <h2 className="font-bold font-clash mt-6">1. Processed personal data</h2>
             <br />
             Outfits.bio processes personal data because you make use of our services and/or
             <br />
@@ -20,7 +20,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             ➔ Site activity
             <br />
-            <h2 className="font-bold font-urbanist mt-6">2. Sensitive personal data we process</h2>
+            <h2 className="font-bold font-clash mt-6">2. Sensitive personal data we process</h2>
             <br />
             Outfits.bio does not process the data of children under the age of 13 nor do we intend to. This
             <br />
@@ -42,7 +42,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             being processed, please contact us immediately.
             <br />
-            <h2 className="font-bold font-urbanist mt-6">3. Expiration of personal data storage</h2>
+            <h2 className="font-bold font-clash mt-6">3. Expiration of personal data storage</h2>
             <br />
             Outfits.bio will not store your personal details any longer than is strictly necessary for
             <br />
@@ -58,7 +58,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             ➔ Cookies expiring and clearing after 1 month
             <br />
-            <h2 className="font-bold font-urbanist mt-6">4. Data sharing with third-parties</h2>
+            <h2 className="font-bold font-clash mt-6">4. Data sharing with third-parties</h2>
             <br />
             Outfits.bio may be subject to sharing your personal data with various third parties if it is deemed
             <br />
@@ -76,7 +76,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             responsibility or liability for these policies.
             <br />
-            <h3 className='font-bold font-urbanist mt-2'>4.1 Payment Handling</h3>
+            <h3 className='font-bold font-clash mt-2'>4.1 Payment Handling</h3>
             <br />
             When submitting your payment information to Stripe - the service used to process
             <br />
@@ -88,7 +88,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             such here: https://stripe.com/gb/privacy
             <br />
-            <h2 className="font-bold font-urbanist mt-6">5. Purpose and basis of processing your personal data</h2>
+            <h2 className="font-bold font-clash mt-6">5. Purpose and basis of processing your personal data</h2>
             <br />
             Outfits.bio processes your personal data for the following purposes:
             <br />
@@ -108,7 +108,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             Outfits.bio also processes personal data when legally obliged to do so.
             <br />
-            <h2 className="font-bold font-urbanist mt-6">6. Cookies and similar technologies</h2>
+            <h2 className="font-bold font-clash mt-6">6. Cookies and similar technologies</h2>
             <br />
             Outfits.bio makes use of functional, analytical, and tracking cookies. A cookie is a small piece of
             <br />
@@ -128,7 +128,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             such.
             <br />
-            <h2 className="font-bold font-urbanist mt-6">7. Security of personal data</h2>
+            <h2 className="font-bold font-clash mt-6">7. Security of personal data</h2>
             <br />
             Outfits.bio considers trust and safety as one of its main motives. Thus, we take the protection of
             <br />
@@ -164,7 +164,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             ➔ OAuth 2.0 for third-party authentication
             <br />
-            <h2 className="font-bold font-urbanist mt-6">8. Privacy policy changes</h2>
+            <h2 className="font-bold font-clash mt-6">8. Privacy policy changes</h2>
             <br />
             Any changes or updates made to this Privacy Policy shall be notified to you on-site or, if
             <br />
@@ -176,7 +176,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             current Privacy Policy at that time shall apply to all information held by you.
             <br />
-            <p className='font-urbanist italic text-sm mt-6'>Copyright © Outfits.bio (outfits.bio), all rights reserved</p>
+            <p className='font-clash italic text-sm mt-6'>Copyright © Outfits.bio (outfits.bio), all rights reserved</p>
         </div>
     </Layout>
 }
