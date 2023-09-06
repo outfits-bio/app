@@ -212,7 +212,7 @@ export const ExplorePage = ({ blogPosts }: InferGetStaticPropsType<typeof getSta
                         <h1 className='font-clash font-bold text-3xl'>{post.title}</h1>
                         <p>{Intl.DateTimeFormat('en-us', {
                             dateStyle: 'long',
-                        }).format(new Date(post.date))}</p>
+                        }).format(new Date(post.date ?? Date.now()) ?? new Date(Date.now()))}</p>
                     </Link>
                 ))}
             </div>
