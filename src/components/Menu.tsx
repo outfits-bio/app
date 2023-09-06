@@ -34,7 +34,7 @@ export const NavMenu = () => {
                                 {({ active }) => (
                                     <Link href={'/explore'}
                                         className={`${active ? 'bg-gray-100 dark:bg-opacity-20' : ''
-                                            } group flex w-full items-center justify-between px-4 py-2 font-urbanist font-semibold`}
+                                            } group flex w-full items-center justify-between px-4 py-2 font-clash font-semibold`}
                                     >
                                         <h3>Explore</h3>
 
@@ -46,7 +46,7 @@ export const NavMenu = () => {
                                 {({ active }) => (
                                     <Link href={'https://discord.gg/f4KEs5TVz2'}
                                         className={`${active ? 'bg-gray-100 dark:bg-opacity-20' : ''
-                                            } group flex w-full items-center justify-between px-4 py-2 font-urbanist font-semibold`}
+                                            } group flex w-full items-center justify-between px-4 py-2 font-clash font-semibold`}
                                     >
                                         <h3>Discord</h3>
 
@@ -55,7 +55,7 @@ export const NavMenu = () => {
                                 )}
                             </Menu.Item>
 
-                            <div className='flex w-full items-center justify-center gap-4 font-urbanist font-semibold opacity-50'>
+                            <div className='flex w-full items-center justify-center gap-4 font-clash font-semibold opacity-50'>
                                 <Link href={'/docs/terms-of-service'} className='px-4 py-2'>
                                     Terms
                                 </Link>

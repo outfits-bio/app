@@ -21,16 +21,16 @@ interface Props {
     hideSearch?: boolean;
 }
 
-const urbanist = localFont({
+const clash = localFont({
     src: '../../public/fonts/ClashDisplay-Variable.woff2',
     display: 'swap',
-    variable: '--font-urbanist',
+    variable: '--font-clash',
 });
 
-const inter = localFont({
+const satoshi = localFont({
     src: '../../public/fonts/Satoshi-Variable.woff2',
     display: 'swap',
-    variable: '--font-inter',
+    variable: '--font-satoshi',
 });
 
 export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActions, hideSearch }: Props) => {
@@ -50,7 +50,7 @@ export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActi
     }
 
     return (
-        <div className={`bg-body font-inter flex flex-col min-h-screen antialiased transition-colors duration-300 ${urbanist.variable} ${inter.variable}`}>
+        <div className={`bg-body font-satoshi flex flex-col min-h-screen antialiased transition-colors duration-300 ${clash.variable} ${satoshi.variable}`}>
             <Navbar title={title} session={session} showSlash={showSlash} showActions={showActions} hideSearch={hideSearch} />
             <main className='h-screen pt-20 overflow-x-hidden pb-24 md:pb-0 scroll-smooth'>{children}</main>
             {pathname !== '/login' && pathname !== '/onboarding' && pathname !== '/' &&

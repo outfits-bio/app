@@ -1,4 +1,4 @@
-import { signIn, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -6,7 +6,7 @@ import React, { useEffect } from 'react';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
 
-import { ArrowRight, CoatHanger, DiscordLogo, GoogleLogo } from '@phosphor-icons/react';
+import { ArrowRight, CoatHanger } from '@phosphor-icons/react';
 
 import landing from '../../public/landing.png';
 
@@ -25,9 +25,9 @@ const Home = () => {
     <Layout title='outfits.bio' showSlash={false}>
       <div className='w-full h-screen flex -mt-20 pt-20'>
         <div className='w-full xl:w-1/2 xl:pl-20 flex flex-col justify-center items-center xl:items-start gap-4 text-center xl:text-left'>
-          <h1 className='text-4xl sm:text-5xl font-black font-urbanist'>Your virtual wardrobe</h1>
+          <h1 className='text-4xl sm:text-5xl font-black font-clash'>Your virtual wardrobe</h1>
 
-          <h3 className='font-inter text-gray-600 dark:text-white text-lg sm:text-2xl flex sm:w-[550px] px-12 sm:px-0'>
+          <h3 className='font-satoshi text-gray-600 dark:text-white text-lg sm:text-2xl flex sm:w-[550px] px-12 sm:px-0'>
             A virtual wardrobe where people can add photos of clothes to their profile and share them with a link-in-bio like outfits.bio/jeremy.
           </h3>
 
@@ -60,8 +60,8 @@ const Home = () => {
         </div>
 
         <div className='xl:w-1/2 flex flex-col justify-center items-center gap-4 text-center xl:text-right sm:w-[550px]'>
-          <h1 className='text-4xl sm:text-5xl font-black font-urbanist'>Your fashion link-in-bio</h1>
-          <p className='font-inter text-gray-600 dark:text-white text-lg sm:text-2xl flex'>Upload your pictures and share your personal link in your tiktok or instagram bio!</p>
+          <h1 className='text-4xl sm:text-5xl font-black font-clash'>Your fashion link-in-bio</h1>
+          <p className='font-satoshi text-gray-600 dark:text-white text-lg sm:text-2xl flex'>Upload your pictures and share your personal link in your tiktok or instagram bio!</p>
 
           <Link href='/login' className='w-full'>
             <Button variant='outline' centerItems iconRight={<ArrowRight />}>
@@ -73,8 +73,8 @@ const Home = () => {
 
       <div className='w-full flex xl:flex-row flex-col-reverse px-12 sm:px-20 py-24 justify-between items-center xl:items-start gap-8 text-center xl:text-left'>
         <div className='flex flex-col justify-center items-left gap-4 sm:w-[550px]'>
-          <h1 className='text-4xl sm:text-5xl font-black font-urbanist'>Show or recieve likes!</h1>
-          <p className='font-inter text-gray-600 dark:text-white text-lg sm:text-2xl flex'>Do you like someones wardrobe? Make sure to show them love by liking their profile!</p>
+          <h1 className='text-4xl sm:text-5xl font-black font-clash'>Show or recieve likes!</h1>
+          <p className='font-satoshi text-gray-600 dark:text-white text-lg sm:text-2xl flex'>Do you like someones wardrobe? Make sure to show them love by liking their profile!</p>
 
           <Link href='/explore' className='w-full'>
             <Button variant='outline' centerItems iconRight={<ArrowRight />}>
@@ -90,25 +90,25 @@ const Home = () => {
 
       <div className='flex flex-col md:flex-row gap-12 w-full py-12 px-20 justify-between'>
         <div className='flex flex-col items-left'>
-          <h1 className='text-lg font-black font-urbanist flex items-center gap-2'><CoatHanger className='mt-1' /> outfits.bio</h1>
+          <h1 className='text-lg font-black font-clash flex items-center gap-2'><CoatHanger className='mt-1' /> outfits.bio</h1>
           <p className='text-sm text-gray-500'>Your wardrobe in your bio.</p>
         </div>
 
         <div className='grid gap-8 lg:gap-20 xl:gap-32 grid-cols-1 sm:grid-cols-3'>
           <div className='flex flex-col gap-1'>
-            <h3 className='font-bold font-urbanist'>Explore</h3>
+            <h3 className='font-bold font-clash'>Explore</h3>
             <Link href='/explore' className='text-sm text-gray-500 underline'>Explore</Link>
           </div>
 
           <div className='flex flex-col gap-1'>
-            <h3 className='font-bold font-urbanist'>Socials</h3>
+            <h3 className='font-bold font-clash'>Socials</h3>
             <Link href='https://www.producthunt.com/posts/outfits-bio' className='text-sm text-gray-500 underline'>Product Hunt</Link>
             <Link href='https://discord.gg/f4KEs5TVz2' className='text-sm text-gray-500 underline'>Discord Server</Link>
             <Link href='https://twitter.com/linkyouroutfits' className='text-sm text-gray-500 underline'>Twitter</Link>
           </div>
 
           <div className='flex flex-col gap-1'>
-            <h3 className='font-bold font-urbanist'>Legal</h3>
+            <h3 className='font-bold font-clash'>Legal</h3>
             <Link href='/docs/privacy-policy' className='text-sm text-gray-500 underline'>Privacy Policy</Link>
             <Link href='/docs/terms-of-service' className='text-sm text-gray-500 underline'>Terms of Service</Link>
             <Link href='/docs/brand-guide' className='text-sm text-gray-500 underline'>Brand Guide</Link>

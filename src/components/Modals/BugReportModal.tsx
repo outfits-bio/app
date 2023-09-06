@@ -33,7 +33,7 @@ export const BugReportModal = (props: BaseModalProps) => {
         <div className='flex flex-col gap-2'>
             <h1 className='text-2xl font-black'>Report a bug</h1>
 
-            <p className='text-sm text-gray-500 dark:text-gray-400 font-inter'>If you found a bug, please report it here. We will try to fix it as soon as possible.</p>
+            <p className='text-sm text-gray-500 dark:text-gray-400 font-satoshi'>If you found a bug, please report it here. We will try to fix it as soon as possible.</p>
 
             <form onSubmit={handleSubmit(handleFormSubmit)} className='flex flex-col gap-2'>
                 <div className='flex flex-col gap-2'>

@@ -34,7 +34,7 @@ export const FeedbackModal = (props: BaseModalProps) => {
         <div className='flex flex-col gap-2'>
             <h1 className='text-2xl font-black'>Submit Feedback</h1>
 
-            <p className='text-sm text-gray-500 dark:text-gray-400 font-inter'>We ❤️ user feedback! Please let us know what we need to improve on or if you have any suggestions for us.</p>
+            <p className='text-sm text-gray-500 dark:text-gray-400 font-satoshi'>We ❤️ user feedback! Please let us know what we need to improve on or if you have any suggestions for us.</p>
 
             <form onSubmit={handleSubmit(handleFormSubmit)} className='flex flex-col gap-2'>
                 <div className='flex flex-col gap-2'>

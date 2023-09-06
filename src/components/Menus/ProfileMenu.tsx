@@ -27,7 +27,7 @@ export const ProfileMenu = ({ user, userUrl, username, setReportModalOpen, setAd
 
     return <BaseMenu {...props} button={<Button variant='outline' shape={'square'} iconLeft={<DotsThree />} />} className='right-2 md:right-auto md:left-2 md:bottom-0 top-0 md:top-auto'>
 
-        <div className="px-6 pb-2 space-y-1 select-none font-urbanist font-bold h-12 flex items-center gap-2">
+        <div className="px-6 pb-2 space-y-1 select-none font-clash font-bold h-12 flex items-center gap-2">
             {username}&apos;s profile
         </div>
 

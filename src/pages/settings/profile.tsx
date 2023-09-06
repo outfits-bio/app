@@ -141,7 +141,7 @@ const SettingsPage = () => {
   return (
     <SettingsLayout>
       <div className='w-full p-4 overflow-y-scroll'>
-        <div className="font-urbanist w-full md:w-[450px]">
+        <div className="font-clash w-full md:w-[450px]">
           {cropModalOpen && <CropModal setFileUrl={setFileUrl} fileUrl={fileUrl} isOpen={cropModalOpen} setFile={setFile} setIsOpen={setCropModalOpen} />}
           {isOpen && <DeleteModal deleteFn={deleteProfile} isOpen={isOpen} setIsOpen={setIsOpen} />}
           <h2 className="text-4xl font-black">Profile Details</h2><br></br>

@@ -12,7 +12,7 @@ export const NotificationsPage: NextPage = () => {
         title="notifications"
     >
         <div className='w-screen flex h-full justify-center'>
-            <div className="flex flex-col w-full sm:w-[400px] gap-2 font-urbanist py-2">
+            <div className="flex flex-col w-full sm:w-[400px] gap-2 font-clash py-2">
                 {notifications?.map((notification, index) => <NotificationCard key={index} notification={notification} />) ?? <></>}
             </div>
         </div>

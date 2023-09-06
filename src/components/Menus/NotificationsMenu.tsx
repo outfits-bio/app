@@ -29,7 +29,7 @@ export const NotificationsMenu = ({ unreadCount }: NotificationsMenuProps) => {
     </div>} className="w-[400px] px-4 divide-none">
         {notifications?.length ?? 0 > 0 ?
             notifications?.map((notification, index) => <NotificationCard key={index} notification={notification} />) ?? <></>
-            : <div className='flex flex-col items-center justify-center font-urbanist py-2'>
+            : <div className='flex flex-col items-center justify-center font-clash py-2'>
                 <h3 className='text-center'>No notifications</h3>
             </div>}
     </BaseMenu>;

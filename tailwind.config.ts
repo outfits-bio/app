@@ -5,8 +5,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        inter: ["var(--font-inter)"],
-        urbanist: ["var(--font-urbanist)"],
+        satoshi: ["var(--font-satoshi)"],
+        clash: ["var(--font-clash)"],
       },
       colors: {
         body: "var(--body)",
@@ -15,10 +15,11 @@ export default {
         blur: "var(--blur)",
         fade: "var(--fade)",
         error: "var(--error)",
-        "blue-accent": "var(--blue-accent)",
+        "brown-accent": "var(--brown-accent)",
         "orange-accent": "var(--orange-accent)",
-        "red-accent": "var(--red-accent)",
-        "purple-accent": "var(--purple-accent)",
+        "hot-pink-accent": "var(--hot-pink-accent)",
+        "light-pink-accent": "var(--light-pink-accent)",
+        accent: "var(--accent)",
         hover: "var(--hover)",
       },
       boxShadow: {
@@ -43,5 +44,5 @@ export default {
     },
   },
   darkMode: "class",
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [require("@tailwindcss/typography")],
 } satisfies Config;

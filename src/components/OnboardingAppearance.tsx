@@ -16,7 +16,7 @@ export const OnboardingAppearance = ({ setOnboardingStarted, onboardingStarted, 
 
     if (onboardingStarted === 2) return <div className="w-screen md:w-auto p-4">
         <div className="flex flex-col gap-4">
-            <h2 className="font-black md:text-5xl text-3xl font-urbanist">Customize your personal experience</h2>
+            <h2 className="font-black md:text-5xl text-3xl font-clash">Customize your personal experience</h2>
             <p className="text-secondary-text">Choose a desired theme to suit your preferences.</p>
             <div className="flex gap-4 overflow-x-scroll pb-1 ">
                 <ThemeCard variant='light' active={theme === 'light'} onClick={() => setTheme('light')} />

@@ -114,7 +114,7 @@ export const ShootPage: NextPage = () => {
                             type='submit'
                             className='w-full h-full bg-white dark:bg-black border hover:bg-stroke border-stroke gap-2 flex items-center justify-center font-bold flex-col text-sm rounded-md'>
                             <Plus className='w-8 h-8 text-secondary-text' />
-                            <p className='text-secondary-text font-urbanist'>Upload</p>
+                            <p className='text-secondary-text font-clash'>Upload</p>
                         </button>
                     </div>
                     }
@@ -133,7 +133,7 @@ export const ShootPage: NextPage = () => {
 
                 <div className='relative w-full'>
                     <Listbox value={type} onChange={setType}>
-                        <Listbox.Button className={"relative font-urbanist text-secondary-text font-semibold w-full cursor-default rounded-md py-3 pl-6 pr-10 text-left border border-stroke"}>
+                        <Listbox.Button className={"relative font-clash text-secondary-text font-semibold w-full cursor-default rounded-md py-3 pl-6 pr-10 text-left border border-stroke"}>
                             <span className="block truncate">{getPostTypeName(type)}</span>
                             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-6">
                                 <CaretDown
@@ -148,7 +148,7 @@ export const ShootPage: NextPage = () => {
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                         >
-                            <Listbox.Options className="absolute bottom-0 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-black p-2 gap-2 shadow-lg border border-stroke font-urbanist font-semibold">
+                            <Listbox.Options className="absolute bottom-0 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-black p-2 gap-2 shadow-lg border border-stroke font-clash font-semibold">
                                 <Listbox.Option
                                     key={PostType.OUTFIT}
                                     value={PostType.OUTFIT}

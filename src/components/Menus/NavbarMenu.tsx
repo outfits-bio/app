@@ -27,7 +27,7 @@ export const NavbarMenu = ({ user, setBugReportModalOpen, setFeedbackModalOpen, 
     }
 
     return <BaseMenu {...props} button={<Avatar size={'sm'} image={user.image} id={user.id} username={user.username} className='mt-2' />}>
-        <div className="px-6 pb-2 space-y-1 font-urbanist font-bold h-12 flex items-center gap-2">
+        <div className="px-6 pb-2 space-y-1 font-clash font-bold h-12 flex items-center gap-2">
             <p className='peer cursor-pointer hover:underline' onClick={handleShare}>{user.username}</p>
 
             <div className='h-full peer-hover:flex items-center pb-1 hidden'>

@@ -77,7 +77,7 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
             />
             }
 
-            {(postsExist || userIsProfileOwner) && !loading && <h2 className={postsExist ? "pr-2 text-2xl md:text-4xl mb-5 flex items-center gap-3 font-urbanist" : "pr-2 text-2xl md:text-4xl md:mb-5 items-center gap-3 font-urbanist hidden md:flex"}>
+            {(postsExist || userIsProfileOwner) && !loading && <h2 className={postsExist ? "pr-2 text-2xl md:text-4xl mb-5 flex items-center gap-3 font-clash" : "pr-2 text-2xl md:text-4xl md:mb-5 items-center gap-3 font-clash hidden md:flex"}>
                 {getPostTypeIcon(type)}
                 <span><span className='font-semibold'>{getPostTypeCount(type, profileData)}</span> {getPostTypeName(type)}</span>
 

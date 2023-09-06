@@ -56,7 +56,7 @@ export const ConnectionsSettingsPage: NextPage = () => {
     }
 
     return <SettingsLayout>
-        <div className="p-4 font-urbanist w-full">
+        <div className="p-4 font-clash w-full">
             {spotifyConnectDiscordModalOpen && <SpotifyConnectDiscordModal isOpen={spotifyConnectDiscordModalOpen} setIsOpen={setSpotifyConnectDiscordModalOpen} />}
             {spotifySetupModalOpen && <SpotifySetupModal isOpen={spotifySetupModalOpen} setIsOpen={setSpotifySetupModalOpen} />}
             <h2 className="text-4xl font-black">Connections</h2><br></br>
