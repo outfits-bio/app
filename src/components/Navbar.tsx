@@ -23,6 +23,7 @@ import { NavbarMenu } from './Menus/NavbarMenu';
 import { BugReportModal } from './Modals/BugReportModal';
 import { FeedbackModal } from './Modals/FeedbackModal';
 import { NotificationsMenu } from './Menus/NotificationsMenu';
+import { useTheme } from 'next-themes';
 
 interface Props {
     title: string;
@@ -33,6 +34,8 @@ interface Props {
 }
 
 export const AuthSection = ({ session, isAuth }: { session: Props['session'], isAuth: boolean }) => {
+    const { theme } = useTheme();
+
     const { data, refetch } = api.notifications.getUnreadNotificationsCount.useQuery(undefined);
 
     const [bugReportModalOpen, setBugReportModalOpen] = useState(false);
@@ -50,7 +53,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
 
         <div className='hidden md:flex items-center justify-center gap-4'>
             <Link href='/shoot'>
-                <Button variant='outline-ghost' iconLeft={<Plus />}>Create</Button>
+                <Button variant='outline-ghost' accent={theme !== 'dark' && theme !== 'light'} iconLeft={<Plus />}>Create</Button>
             </Link>
 
             {pathname !== '/explore' && <Link href='/explore'>

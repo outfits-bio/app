@@ -11,6 +11,7 @@ import { Analytics } from '@vercel/analytics/react';
 
 import type { Session } from 'next-auth';
 import type { AppType } from 'next/app';
+
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
@@ -42,7 +43,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
       </Head>
 
       <SessionProvider session={session}>
-        <ThemeProvider enableSystem attribute="class" defaultTheme='light'>
+        <ThemeProvider enableSystem attribute="class" defaultTheme='light' themes={['light', 'dark', 'light-brown', 'light-hot-pink', 'light-orange', 'light-light-pink']}>
           <Toaster />
           <Analytics />
           <Component {...pageProps} />

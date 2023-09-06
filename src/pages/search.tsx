@@ -93,6 +93,14 @@ export const SearchPage: NextPage = ({ username }: InferGetServerSidePropsType<t
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const { username } = ctx.query;
 
+    if (!username || typeof username !== 'string') {
+        return {
+            props: {
+                username: null
+            }
+        }
+    }
+
     return {
         props: {
             username

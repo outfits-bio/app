@@ -172,6 +172,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                     {!isCurrentUser && <>
                         <div className='grow'>
                             <Button
+                                accent
                                 centerItems
                                 onClick={() => {
                                     if (authStatus !== 'authenticated') {
