@@ -179,7 +179,7 @@ export const adminRouter = createTRPCRouter({
         message: "Link not found!",
       });
     }),
-  toggleUserPremium: protectedProcedure
+  toggleUserVerified: protectedProcedure
     .input(deleteUserSchema)
     .mutation(async ({ ctx, input }) => {
       const { id } = input;
@@ -192,7 +192,7 @@ export const adminRouter = createTRPCRouter({
       if (!currentUser?.admin) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
-          message: "You are not authorized to give users premium.",
+          message: "You are not authorized to give users verified.",
         });
       }
 
@@ -200,10 +200,10 @@ export const adminRouter = createTRPCRouter({
         let user = ctx.prisma.user.update({
           where: {
             id,
-            premium: false,
+            verified: false,
           },
           data: {
-            premium: true,
+            verified: true,
           },
           select: {
             id: true,
@@ -213,7 +213,7 @@ export const adminRouter = createTRPCRouter({
         let notification = ctx.prisma.notification.create({
           data: {
             type: NotificationType.OTHER,
-            message: "You have been given premium!",
+            message: "You have been given verified!",
             targetUser: {
               connect: {
                 id,
@@ -232,10 +232,10 @@ export const adminRouter = createTRPCRouter({
         await ctx.prisma.user.update({
           where: {
             id,
-            premium: true,
+            verified: true,
           },
           data: {
-            premium: false,
+            verified: false,
           },
           select: {
             id: true,
