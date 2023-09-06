@@ -12,9 +12,7 @@ export const BlogPost = ({ data }: InferGetStaticPropsType<typeof getStaticProps
                 <article className='flex flex-col container gap-8 w-[800px]'>
                     <div className='flex flex-col gap-4'>
                         <h1 className='font-bold text-5xl font-clash'>{title}</h1>
-                        <p className='text-secondary-text'>{Intl.DateTimeFormat('en-us', {
-                            dateStyle: 'full',
-                        }).format(new Date(date))}</p>
+                        <p className='text-secondary-text'>{date}</p>
                     </div>
                     <ReactMarkdown className='prose lg:prose-lg prose-headings:font-clash'>
                         {content}
