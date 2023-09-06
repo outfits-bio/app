@@ -27,16 +27,16 @@ interface ProfilePostModalProps {
     setPostModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-const clash = Urbanist({
+const urbanist = Urbanist({
     subsets: ['latin-ext'],
     display: 'swap',
-    variable: '--font-clash',
+    variable: '--font-urbanist',
 });
 
-const satoshi = Inter({
+const inter = Inter({
     subsets: ['latin'],
     display: 'swap',
-    variable: '--font-satoshi',
+    variable: '--font-inter',
 });
 
 export const ProfilePostModal = ({ post, user, setPostModalOpen }: ProfilePostModalProps) => {
@@ -100,7 +100,7 @@ export const ProfilePostModal = ({ post, user, setPostModalOpen }: ProfilePostMo
     if (!post || !user) return null;
 
     return <Transition appear show={true} as={Fragment}>
-        <Dialog as="div" className={`relative z-10 ${clash.variable} ${satoshi.variable} font-clash`} onClose={closeModal}>
+        <Dialog as="div" className={`relative z-10 ${urbanist.variable} ${inter.variable} font-urbanist`} onClose={closeModal}>
             <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-100"
@@ -143,7 +143,7 @@ export const ProfilePostModal = ({ post, user, setPostModalOpen }: ProfilePostMo
                             <div className='flex flex-col justify-end items-center p-4 absolute bottom-0 bg-gradient-to-b from-transparent to-black w-full h-1/4 bg-fixed'>
                                 <div className='text-white flex w-full gap-2 mb-2 pl-0.5'>
                                     {getPostTypeIconSmall(post.type)}
-                                    <h1 className='font-clash'>{post.type.toLowerCase().replace(/\b\w/g, l => l.toUpperCase())}</h1>
+                                    <h1 className='font-urbanist'>{post.type.toLowerCase().replace(/\b\w/g, l => l.toUpperCase())}</h1>
                                 </div>
 
                                 <div className='flex justify-between items-center w-full'>
