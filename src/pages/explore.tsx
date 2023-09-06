@@ -210,9 +210,7 @@ export const ExplorePage = ({ blogPosts }: InferGetStaticPropsType<typeof getSta
                 {blogPosts.map((post) => (
                     <Link href={`/blog/${post.id}`} key={post.id} className='w-72 h-44 min-w-[288px] p-4 flex flex-col items-start justify-end border border-stroke rounded-md hover:shadow-lg transition-all duration-200'>
                         <h1 className='font-clash font-bold text-3xl'>{post.title}</h1>
-                        <p>{Intl.DateTimeFormat('en-us', {
-                            dateStyle: 'long',
-                        }).format(new Date(post.date ?? Date.now()) ?? new Date(Date.now()))}</p>
+                        {post.date}
                     </Link>
                 ))}
             </div>
