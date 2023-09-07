@@ -114,7 +114,7 @@ const SettingsPage = () => {
   const { mutate: deleteProfile, isLoading: deleteProfileLoading } = api.user.deleteProfile.useMutation({
     onSuccess: async () => {
       toast.success("Account deleted!");
-      signOut({ callbackUrl: "/" });
+      signOut({ callbackUrl: "/auth/goodbye" });
     },
     onError: (e) => handleErrors({ e, message: "Failed to delete account!", fn: () => setLoading(false) })
   });
