@@ -11,6 +11,7 @@ import {
 } from '@phosphor-icons/react';
 
 import { Navbar } from './Navbar';
+import { Button } from './Button';
 
 interface Props {
     children: React.ReactNode;
@@ -63,8 +64,10 @@ export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActi
                         <MagnifyingGlass />
                     </Link>
 
-                    <Link href={'/shoot'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl'>
-                        <Plus />
+                    <Link href={'/shoot'} className='rounded-md flex flex-col items-center justify-center text-3xl'>
+                        <Button shape={'square'} variant={'outline-ghost'} accent>
+                            <Plus />
+                        </Button>
                     </Link>
 
                     <Link href={'/settings'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl'>
