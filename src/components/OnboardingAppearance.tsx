@@ -3,6 +3,7 @@ import { ThemeCard } from "./ThemeCard"
 import { Button } from "./Button";
 import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { useRouter } from "next/router";
+import { AccentCard } from '~/components/AccentCard';
 
 interface OnboardingStartSectionProps {
     setOnboardingStarted: React.Dispatch<React.SetStateAction<number>>;
@@ -24,6 +25,19 @@ export const OnboardingAppearance = ({ setOnboardingStarted, onboardingStarted, 
                 <ThemeCard variant='system' active={theme === 'system'} onClick={() => setTheme('system')} />
             </div>
         </div>
+
+        {theme !== 'dark' && <div className="flex flex-col gap-4">
+                <h2 className="font-black text-2xl">Accent Colors</h2>
+                <p className="text-secondary-text">To add a little more personalized spice to your experience. </p>
+                <div className="flex gap-4 overflow-x-scroll pb-1">
+                    <AccentCard variant='default' active={theme === 'light'} onClick={() => setTheme('light')} />
+                    <AccentCard variant='brown' active={theme === 'light-brown'} onClick={() => setTheme('light-brown')} />
+                    <AccentCard variant='hot-pink' active={theme === 'light-hot-pink'} onClick={() => setTheme('light-hot-pink')} />
+                    <AccentCard variant='orange' active={theme === 'light-orange'} onClick={() => setTheme('light-orange')} />
+                    <AccentCard variant='light-pink' active={theme === 'light-light-pink'} onClick={() => setTheme('light-light-pink')} />
+                </div>
+            </div>}
+
 
         <div className='flex gap-2 mt-4'>
             <Button variant='outline' iconLeft={<ArrowLeft />} onClick={() => setOnboardingStarted(1)} centerItems>Back</Button>
