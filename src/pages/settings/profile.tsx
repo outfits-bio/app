@@ -23,6 +23,7 @@ import {
   TwitterLogo, YoutubeLogo
 } from '@phosphor-icons/react';
 import { LinkType } from '@prisma/client';
+import { useTheme } from 'next-themes';
 
 const SettingsPage = () => {
   const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
@@ -111,8 +112,10 @@ const SettingsPage = () => {
     onError: (e) => handleErrors({ e, message: "Failed to delete image!", fn: () => setLoading(false) })
   });
 
+  const { theme, setTheme } = useTheme();
   const { mutate: deleteProfile, isLoading: deleteProfileLoading } = api.user.deleteProfile.useMutation({
     onSuccess: async () => {
+      setTheme('light');
       toast.success("Account deleted!");
       signOut({ callbackUrl: "/auth/goodbye" });
     },
