@@ -83,7 +83,7 @@ export const ShootPage: NextPage = () => {
         title="Shoot"
     >
         <div className='w-screen h-full flex justify-center'>
-            <div className="flex flex-col gap-2 w-full p-12 sm:w-[400px] items-center">
+            <div className="flex flex-col gap-2 w-full p-12 sm:w-[400px] items-center md:justify-center">
                 <div className='relative w-[244.4px] h-[400px]'>
                     {fileUrl ? <Cropper
                         image={fileUrl ?? ""}
@@ -133,7 +133,7 @@ export const ShootPage: NextPage = () => {
 
                 <div className='relative w-full'>
                     <Listbox value={type} onChange={setType}>
-                        <Listbox.Button className={"relative font-clash text-secondary-text font-semibold w-full cursor-default rounded-md py-3 pl-6 pr-10 text-left border border-stroke"}>
+                        <Listbox.Button className={"relative font-clash text-secondary-text font-semibold w-full cursor-pointer rounded-md py-3 pl-6 pr-10 text-left border border-stroke"}>
                             <span className="block truncate">{getPostTypeName(type)}</span>
                             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-6">
                                 <CaretDown
@@ -255,13 +255,14 @@ export const ShootPage: NextPage = () => {
                 </div>
 
                 <div className='w-full flex gap-2 items-center'>
-                    <Button centerItems variant={'outline-ghost'} onClick={handleCancel}>
-                        Cancel
+                    {fileUrl && <><Button centerItems variant={'outline-ghost'} onClick={handleCancel}>
+                        Clear
                     </Button>
 
-                    <Button centerItems onClick={handleSubmit} isLoading={isLoading}>
-                        Post
-                    </Button>
+                        <Button centerItems onClick={handleSubmit} isLoading={isLoading}>
+                            Post
+                        </Button>
+                    </>}
                 </div>
             </div>
         </div>

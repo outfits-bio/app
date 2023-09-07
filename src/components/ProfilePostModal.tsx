@@ -100,7 +100,7 @@ export const ProfilePostModal = ({ post, user, setPostModalOpen }: ProfilePostMo
     if (!post || !user) return null;
 
     return <Transition appear show={true} as={Fragment}>
-        <Dialog as="div" className={`relative z-10 ${urbanist.variable} ${inter.variable} font-urbanist`} onClose={closeModal}>
+        <Dialog as="div" className={`relative z-50 ${urbanist.variable} ${inter.variable} font-urbanist`} onClose={closeModal}>
             <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-100"

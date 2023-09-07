@@ -187,7 +187,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                                     <Heart
                                         weight={(profileData?.authUserHasLiked) ? 'fill' : 'regular'}
                                         onAnimationEnd={() => setLikeAnimation(false)}
-                                        className={likeAnimation ? 'animate-ping ' : '' + (profileData?.authUserHasLiked ? 'text-red-700' : 'text-white dark:text-black')}
+                                        className={likeAnimation ? 'animate-ping ' : '' + 'text-white dark:text-black'}
                                     />
                                 }
                                 disabled={loading || isLoading}
@@ -216,6 +216,6 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                     </>}
                 </div>
             </div>
-        </div>
+        </div >
     )
 }

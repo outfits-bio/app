@@ -13,6 +13,7 @@ type RouterOutput = inferRouterOutputs<AppRouter>['notifications'];
 
 interface NotificationCardProps {
     notification: RouterOutput['getNotifications'][number];
+    refetch?: () => void;
 };
 
 const RelativeDate = ({ date }: { date: Date }) => {
@@ -23,7 +24,7 @@ const RelativeDate = ({ date }: { date: Date }) => {
     return <>{timeString}</>
 }
 
-const NotificationCard: FC<NotificationCardProps> = ({ notification }) => {
+const NotificationCard: FC<NotificationCardProps> = ({ notification, refetch }) => {
     const href = notification.link ? `/${notification.link}` : notification.type === 'PROFILE_LIKE' ? `/${notification.user?.username}` : ``;
     const image = notification.user?.image ?? null;
 
@@ -31,6 +32,7 @@ const NotificationCard: FC<NotificationCardProps> = ({ notification }) => {
 
     const { mutate, isLoading } = api.notifications.deleteNotification.useMutation({
         onSuccess: () => {
+            refetch?.();
             ctx.notifications.getNotifications.invalidate();
         },
         onError: (e) => handleErrors({ e, message: 'Failed to delete notification' })
