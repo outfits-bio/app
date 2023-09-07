@@ -255,13 +255,14 @@ export const ShootPage: NextPage = () => {
                 </div>
 
                 <div className='w-full flex gap-2 items-center'>
-                    <Button centerItems variant={'outline-ghost'} onClick={handleCancel}>
-                        Cancel
+                    {fileUrl && <><Button centerItems variant={'outline-ghost'} onClick={handleCancel}>
+                        Clear
                     </Button>
 
-                    <Button centerItems onClick={handleSubmit} isLoading={isLoading}>
-                        Post
-                    </Button>
+                        <Button centerItems onClick={handleSubmit} isLoading={isLoading}>
+                            Post
+                        </Button>
+                    </>}
                 </div>
             </div>
         </div>
