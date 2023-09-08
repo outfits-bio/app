@@ -9,8 +9,13 @@ import { api } from '~/utils/api.util';
 import {
     Camera, Hammer, Heart, MagnifyingGlass, SealCheck, SpinnerGap
 } from '@phosphor-icons/react';
+import { useRouter } from 'next/router';
 
-export const SearchPage: NextPage = ({ username }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+export const SearchPage: NextPage = () => {
+    const { query } = useRouter();
+
+    const username = query.username?.toString();
+
     const [input, setInput] = useState(username ?? '');
 
     const request = debounce(async () => {
@@ -30,8 +35,7 @@ export const SearchPage: NextPage = ({ username }: InferGetServerSidePropsType<t
     }, [username]);
 
     const { data: searchData, isFetching, refetch } = api.user.searchProfiles.useQuery({ username: input }, {
-        enabled: false,
-        refetchOnMount: true,
+        enabled: !!username,
     });
 
     const { data: totalUsers } = api.user.getTotalUsers.useQuery(undefined);
@@ -88,24 +92,6 @@ export const SearchPage: NextPage = ({ username }: InferGetServerSidePropsType<t
         </div>
         <p className='absolute md:bottom-4 bottom-28 left-1/2 -translate-x-1/2 text-sm text-secondary-text font-clash w-full text-center'>{totalUsers} users have signed up for outfits.bio!</p>
     </Layout>
-}
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const { username } = ctx.query;
-
-    if (!username || typeof username !== 'string') {
-        return {
-            props: {
-                username: null
-            }
-        }
-    }
-
-    return {
-        props: {
-            username
-        }
-    }
 }
 
 export default SearchPage;

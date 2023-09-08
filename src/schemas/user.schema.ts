@@ -2,10 +2,16 @@ import { z } from "zod";
 
 import { PostType, ReportType } from "@prisma/client";
 
+export const usernameRegex = /^[A-Za-z0-9!@#$%&*()_+=|<>?{}\[\]~'"-]+$/;
+
 export const userSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).max(100),
-  username: z.string().min(3).max(20),
+  username: z
+    .string()
+    .min(3)
+    .max(20)
+    .regex(usernameRegex, "Invalid characters!"),
   confirmPassword: z.string().min(8).max(100),
 });
 
@@ -22,7 +28,11 @@ export const likeProfileSchema = z.object({
 });
 
 export const editProfileSchema = z.object({
-  username: z.string().max(20).optional(),
+  username: z
+    .string()
+    .max(20)
+    .regex(usernameRegex, "Invalid characters!")
+    .optional(),
   tagline: z.string().max(180).optional(),
 });
 export type EditProfileInput = ReturnType<typeof editProfileSchema.parse>;
