@@ -45,6 +45,11 @@ const config = {
     ],
     unoptimized: true,
   },
+  modularizeImports: {
+    "@phosphor-icons/react": {
+      transform: "@phosphor-icons/react/{{member}}",
+    },
+  },
 };
 
-export default withPlugins([[withPWA], [withBundleAnalyzer]], config);
+export default withPlugins([withBundleAnalyzer, withPWA], config);
