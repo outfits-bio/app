@@ -29,8 +29,7 @@ import { OnboardingAppearance } from '~/components/OnboardingAppearance';
 
 export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) => {
     const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
-    const { push } = useRouter();
-    const { update } = useSession();
+    const { update, data: session } = useSession();
 
     const [loading, setLoading] = useState<boolean>(false);
     const [onboardingStarted, setOnboardingStarted] = useState<number>(0);
@@ -167,7 +166,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
                             <Button isLoading={loading} type='submit' iconRight={<ArrowRight />} centerItems>Continue</Button>
                         </div>
                     </form> :
-                        onboardingStarted === 2 ? <OnboardingAppearance username={username} setOnboardingStarted={setOnboardingStarted} onboardingStarted={onboardingStarted} />
+                        onboardingStarted === 2 ? <OnboardingAppearance username={session?.user.username ?? username} setOnboardingStarted={setOnboardingStarted} onboardingStarted={onboardingStarted} />
                             :
                             <OnboardingStartSection username={username} setOnboardingStarted={setOnboardingStarted} />}
                 </div>

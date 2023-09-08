@@ -35,6 +35,8 @@ export const validateUsername = (username: string) => {
     // General
   );
 
+  const usernameRegex = /^[A-Za-z0-9!@#$%&*()_+=|<>?{}\[\]~'"-]+$/;
+
   if (
     username.startsWith("api/") ||
     username.startsWith("settings/") ||
@@ -42,7 +44,7 @@ export const validateUsername = (username: string) => {
     username.startsWith("docs/") ||
     username.startsWith("auth/") ||
     username.length < 3 ||
-    username.match(/^[A-Za-z0-9!@#$%&*()_+=|<>?{}\\[\\]~-]*$/)?.length === 0 ||
+    !usernameRegex.test(username) ||
     filter.isProfane(username)
   )
     return false;
