@@ -44,18 +44,20 @@ export const SearchPage: NextPage = () => {
         <div className='flex flex-col items-center p-4 w-screen'>
 
             <div className='flex relative items-center font-clash font-medium w-full md:w-5/6 lg:w-3/4 xl:w-1/2'>
-                {isFetching ? <SpinnerGap className='absolute left-4 text-gray-400 dark:text-white w-6 h-6 animate-spin' /> : <MagnifyingGlass className='absolute left-4 text-gray-400 dark:text-white w-6 h-6' />}
                 <input
                     id="link"
                     type="text"
                     placeholder='Search for users'
-                    className="pl-12 py-2 w-full border rounded-md border-stroke dark:text-white dark:bg-black"
+                    className="pl-4 py-2 w-full border rounded-md border-stroke dark:text-white dark:bg-black"
                     onChange={(e) => {
                         setInput(e.target.value)
                         debounceRequest()
                     }}
                     value={input}
                 />
+                <div className='absolute h-full right-14 w-[1px] bg-stroke' />
+
+                {isFetching ? <SpinnerGap className='absolute right-4 text-gray-400 dark:text-white w-6 h-6 animate-spin' /> : <MagnifyingGlass className='absolute right-4 text-gray-400 dark:text-white w-6 h-6' />}
 
                 {input.length > 0 && <div className='absolute top-12 w-full flex flex-col gap-1'>
 

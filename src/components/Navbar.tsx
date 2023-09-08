@@ -115,12 +115,11 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
                 </Link>
 
                 {(isAuth && !hideSearch) && <div className='hidden relative items-center font-clash font-medium xl:flex'>
-                    {isFetching ? <SpinnerGap className='absolute left-4 text-gray-400 w-6 h-6 animate-spin' /> : <MagnifyingGlass className='absolute left-4 text-gray-400 dark:text-white w-6 h-6' />}
                     <input
                         id="link"
                         type="text"
                         placeholder='Search for users'
-                        className="pl-12 py-2 h-12 w-[400px] border rounded-md border-stroke text-secondary-text dark:bg-black"
+                        className="pl-4 py-2 h-12 w-[400px] border rounded-md border-stroke text-secondary-text dark:bg-black focus:outline-none"
                         onChange={(e) => {
                             setInput(e.target.value)
                             debounceRequest()
@@ -132,6 +131,12 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
                         }}
                         value={input}
                     />
+
+                    <div className='w-[1px] h-full absolute right-12 bg-stroke' />
+
+                    <button className='absolute right-0 flex items-center justify-center h-full w-12 hover:bg-hover disabled:hover:bg-transparent rounded-r-md' disabled={!input} onClick={() => input && push(`/search?username=${input}`)}>
+                        {isFetching ? <SpinnerGap className=' text-secondary-text w-6 h-6 animate-spin' /> : <MagnifyingGlass className='text-secondary-text w-6 h-6' />}
+                    </button>
 
                     {input.length > 0 && <div className='absolute top-14 w-full flex flex-col gap-1'>
                         {(searchData?.length ?? 0) > 0 ? searchData?.map((user) => (
