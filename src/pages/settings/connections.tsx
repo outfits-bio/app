@@ -68,16 +68,19 @@ export const ConnectionsSettingsPage: NextPage = () => {
                             <span>Discord Connected</span>
                         </div>
 
-                        <div><Button variant='outline' iconLeft={<Trash />} centerItems
-                            isLoading={unlinkLoading && variables?.id === discordAccount?.id}
-                            onClick={() => unlinkAccount({ id: discordAccount?.id ?? '' })}
-                        />
+                        <div>
+                            <Button variant='outline' iconLeft={<Trash />} centerItems
+                                isLoading={unlinkLoading && variables?.id === discordAccount?.id}
+                                onClick={() => unlinkAccount({ id: discordAccount?.id ?? '' })}
+                            />
                         </div>
                     </div>
                     :
-                    <Button onClick={() => signIn('discord')} iconLeft={<DiscordLogo />} centerItems>
-                        Connect Discord
-                    </Button>
+                    <div>
+                        <Button onClick={() => signIn('discord')} iconLeft={<DiscordLogo />} centerItems>
+                            Connect Discord
+                        </Button>
+                    </div>
                 }
 
                 {googleAccount ?
@@ -87,16 +90,19 @@ export const ConnectionsSettingsPage: NextPage = () => {
                             <span>Google Connected</span>
                         </div>
 
-                        <div><Button variant='outline' iconLeft={<Trash />} centerItems
-                            isLoading={unlinkLoading && variables?.id === googleAccount?.id}
-                            onClick={() => unlinkAccount({ id: googleAccount?.id ?? '' })}
-                        />
+                        <div>
+                            <Button variant='outline' iconLeft={<Trash />} centerItems
+                                isLoading={unlinkLoading && variables?.id === googleAccount?.id}
+                                onClick={() => unlinkAccount({ id: googleAccount?.id ?? '' })}
+                            />
                         </div>
                     </div>
                     :
-                    <Button onClick={() => signIn('google')} iconLeft={<GoogleLogo />} centerItems>
-                        Connect Google
-                    </Button>
+                    <div>
+                        <Button onClick={() => signIn('google')} iconLeft={<GoogleLogo />} centerItems>
+                            Connect Google
+                        </Button>
+                    </div>
                 }
 
                 {<div className='flex items-center py-2 font-bold text-xl justify-between'>
