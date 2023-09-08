@@ -1,10 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import axios from 'axios';
 import { GetServerSidePropsContext, NextPage } from 'next';
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import superjson from 'superjson';
