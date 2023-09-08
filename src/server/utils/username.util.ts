@@ -1,4 +1,5 @@
 import Filter from "bad-words";
+import { usernameRegex } from "~/schemas/user.schema";
 
 export const validateUsername = (username: string) => {
   const filter = new Filter();
@@ -34,8 +35,6 @@ export const validateUsername = (username: string) => {
     "jecta"
     // General
   );
-
-  const usernameRegex = /^[A-Za-z0-9!@#$%&*()_+=|<>?{}\[\]~'"-]+$/;
 
   if (
     username.startsWith("api/") ||
