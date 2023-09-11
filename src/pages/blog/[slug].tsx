@@ -14,7 +14,7 @@ export const BlogPost = ({ data }: InferGetStaticPropsType<typeof getStaticProps
                         <h1 className='font-bold text-5xl font-clash'>{title}</h1>
                         <p className='text-secondary-text'>{date}</p>
                     </div>
-                    <ReactMarkdown className='prose lg:prose-lg prose-headings:font-clash'>
+                    <ReactMarkdown className='prose lg:prose-lg prose-headings:font-clash dark:prose-invert'>
                         {content}
                     </ReactMarkdown>
                 </article>

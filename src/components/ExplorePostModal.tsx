@@ -14,7 +14,7 @@ import { Hammer, SealCheck, X } from '@phosphor-icons/react';
 
 import { DeleteModal } from './DeleteModal';
 import { PostMenu } from './Menus/PostMenu';
-import { getPostTypeIconSmall } from './PostSection/post-section.util';
+import { getPostTypeIconSmall, getPostTypeName } from './PostSection/post-section.util';
 import { ReportModal } from './ReportModal';
 
 export type ExplorePost = RouterOutputs['post']['getLatestPosts']['posts'][0];
@@ -153,7 +153,7 @@ export const ExplorePostModal = ({ post, setPostModalOpen }: ExplorePostModalPro
                             <div className='flex flex-col justify-end items-center p-4 absolute bottom-0 bg-gradient-to-b from-transparent to-black w-full h-1/4 bg-fixed'>
                                 <div className='text-white flex w-full gap-2 mb-2 pl-0.5'>
                                     {getPostTypeIconSmall(post.type)}
-                                    <h1 className='font-clash'>{post.type.toLowerCase().replace(/\b\w/g, l => l.toUpperCase())}</h1>
+                                    <h1 className='font-clash'>{getPostTypeName(post.type)}</h1>
                                 </div>
 
                                 <div className='flex justify-between items-center w-full'>

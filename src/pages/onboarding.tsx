@@ -35,7 +35,11 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
 
     const ref = useRef<HTMLInputElement>(null);
 
-    const { register, handleSubmit, setValue, getValues } = useForm({
+    const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm({
+        defaultValues: {
+            username: "",
+            tagline: "",
+        },
         resolver: zodResolver(editProfileSchema),
     });
 
@@ -45,8 +49,8 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
     const { data } = api.user.getMe.useQuery(undefined, {
         onError: (e) => handleErrors({ e, message: "Failed to fetch you!", fn: () => { } }),
         onSuccess: async (data) => {
-            setValue('tagline', data.tagline);
-            setValue('username', data.username);
+            if (data.tagline) setValue('tagline', data.tagline);
+            if (data.username) setValue('username', data.username);
             setFileUrl(data.image);
         },
         refetchOnMount: false,
@@ -56,7 +60,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
     });
 
     // On success, this updates the session and returns the user to their profile
-    const { mutate } = api.user.editProfile.useMutation({
+    const { mutate, error } = api.user.editProfile.useMutation({
         onSuccess: (data) => {
             update();
             setLoading(false);
@@ -155,6 +159,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
                             </div>
 
                             <div className='flex grow h-full flex-col gap-2 w-full sm:w-auto mt-11 sm:mt-auto'>
+                                {(errors.tagline || errors.username) && <p className='text-error text-sm'>{!!errors.username ? errors.username.message : errors.tagline?.message}</p>}
                                 <input {...register("username")} type="text" className='border border-stroke px-3 py-2 rounded-lg placeholder:text-gray-500 dark:bg-black' placeholder='Your special @username, here' />
                                 <textarea {...register("tagline")} className='border border-stroke px-3 py-2 rounded-lg grow resize-none placeholder:text-gray-500 h-20 dark:bg-black' placeholder='Your tagline, short description, bio, whatnot' />
                             </div>
