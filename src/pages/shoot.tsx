@@ -114,7 +114,7 @@ export const ShootPage: NextPage = () => {
                             type='submit'
                             className='w-full h-full bg-white dark:bg-black border hover:bg-stroke border-stroke gap-2 flex items-center justify-center font-bold flex-col text-sm rounded-md'>
                             <Plus className='w-8 h-8 text-secondary-text' />
-                            <p className='text-secondary-text font-clash'>Upload</p>
+                            <p className='text-secondary-text font-clash'>Upload Or Drop</p>
                         </button>
                     </div>
                     }

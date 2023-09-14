@@ -10,9 +10,9 @@ const variants = cva('font-semibold font-clash self-stretch h-12 py-2 gap-3 flex
     variants: {
         variant: {
             primary: 'bg-accent border-accent border dark:text-black text-white hover:bg-opacity-80 dark:hover:bg-opacity-80 disabled:bg-opacity-80 dark:disabled:bg-opacity-80',
-            outline: 'border dark:border-white border-black disabled:bg-hover bg-transparent hover:bg-hover',
-            ghost: 'border border-transparent hover:bg-hover disabled:bg-hover',
-            'outline-ghost': 'border border-stroke hover:bg-hover disabled:bg-hover',
+            outline: 'border dark:border-white border-black disabled:bg-hover bg-transparent hover:bg-hover transform transition duration-300 ease-in-out',
+            ghost: 'border border-transparent hover:bg-hover disabled:bg-hover transform transition duration-300 ease-in-out',
+            'outline-ghost': 'border border-stroke hover:bg-hover disabled:bg-hover transform transition duration-300 ease-in-out',
         },
         centerItems: {
             true: 'justify-center',
