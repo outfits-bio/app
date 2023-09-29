@@ -22,7 +22,7 @@ import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeft, ArrowRight, Hammer, SealCheck } from '@phosphor-icons/react';
+import { ArrowLeft, ArrowRight, Hammer, SealCheck } from '@phosphor-icons/react/dist/ssr';
 import { createServerSideHelpers } from '@trpc/react-query/server';
 import { OnboardingAppearance } from '~/components/OnboardingAppearance';
 

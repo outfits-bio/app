@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';
 
 import { Menu } from '@headlessui/react';
-import { DotsThree } from '@phosphor-icons/react';
+import { DotsThree } from '@phosphor-icons/react/dist/ssr';
 
 import { Button } from '../Button';
 import { BaseMenu } from './BaseMenu';

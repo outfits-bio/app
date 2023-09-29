@@ -10,7 +10,7 @@ import { handleErrors } from '~/utils/handle-errors.util';
 import { motion } from 'framer-motion';
 
 import { Switch } from '@headlessui/react';
-import { DiscordLogo, GoogleLogo, Question, SpinnerGap, Trash } from '@phosphor-icons/react';
+import { DiscordLogo, GoogleLogo, Question, SpinnerGap, Trash } from '@phosphor-icons/react/dist/ssr';
 
 import type { NextPage } from "next";
 export const ConnectionsSettingsPage: NextPage = () => {

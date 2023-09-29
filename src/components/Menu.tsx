@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Fragment } from 'react';
 
 import { Menu, Transition } from '@headlessui/react';
-import { Compass, DiscordLogo, DotsThree, X } from '@phosphor-icons/react';
+import { Compass, DiscordLogo, DotsThree, X } from '@phosphor-icons/react/dist/ssr';
 
 export const NavMenu = () => {
     return <Menu as="div" className="inline-block text-left md:hidden">

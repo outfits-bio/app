@@ -5,7 +5,7 @@ import { AppRouter } from '~/server/api/root';
 import { Avatar } from './Avatar';
 import { intlFormatDistance } from 'date-fns';
 import { Button } from './Button';
-import { SpinnerGap, X } from '@phosphor-icons/react';
+import { SpinnerGap, X } from '@phosphor-icons/react/dist/ssr';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 

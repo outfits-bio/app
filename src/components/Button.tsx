@@ -2,7 +2,7 @@ import { cva } from 'class-variance-authority';
 import { forwardRef } from 'react';
 import { cn } from '~/utils/cn.util';
 
-import { SpinnerGap } from '@phosphor-icons/react';
+import { SpinnerGap } from '@phosphor-icons/react/dist/ssr';
 
 import type { VariantProps } from 'class-variance-authority';
 

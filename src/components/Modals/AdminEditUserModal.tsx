@@ -13,7 +13,7 @@ import { Button } from '../Button';
 import { BaseModal } from './BaseModal';
 
 import type { BaseModalProps } from './BaseModal';
-import { SpinnerGap, TrashSimple } from '@phosphor-icons/react';
+import { SpinnerGap, TrashSimple } from '@phosphor-icons/react/dist/ssr';
 type RouterOutput = inferRouterOutputs<AppRouter>;
 
 interface AdminEditUserModalProps extends BaseModalProps {

@@ -6,7 +6,7 @@ import { toast } from 'react-hot-toast';
 import { formatAvatar } from '~/utils/image-src-format.util';
 
 import { Menu } from '@headlessui/react';
-import { CopySimple } from '@phosphor-icons/react';
+import { CopySimple } from '@phosphor-icons/react/dist/ssr';
 
 import { Avatar } from '../Avatar';
 import { Button } from '../Button';

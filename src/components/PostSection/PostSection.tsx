@@ -8,7 +8,7 @@ import { useFileUpload } from '~/hooks/file-upload.hook';
 import { api } from '~/utils/api.util';
 import { formatImage } from '~/utils/image-src-format.util';
 
-import { Plus, Trash } from '@phosphor-icons/react';
+import { Plus, Trash } from '@phosphor-icons/react/dist/ssr';
 
 import { Button } from '../Button';
 import { PostCropModal } from '../PostCropModal';

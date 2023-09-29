@@ -8,7 +8,7 @@ import { api } from '~/utils/api.util';
 
 import {
     Camera, Hammer, Heart, MagnifyingGlass, SealCheck, SpinnerGap
-} from '@phosphor-icons/react';
+} from '@phosphor-icons/react/dist/ssr';
 import { useRouter } from 'next/router';
 
 export const SearchPage: NextPage = () => {

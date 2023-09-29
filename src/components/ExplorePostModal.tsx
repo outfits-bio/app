@@ -10,7 +10,7 @@ import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 import localFont from 'next/font/local';
 
 import { Dialog, Transition } from '@headlessui/react';
-import { Hammer, SealCheck, X } from '@phosphor-icons/react';
+import { Hammer, SealCheck, X } from '@phosphor-icons/react/dist/ssr';
 
 import { DeleteModal } from './DeleteModal';
 import { PostMenu } from './Menus/PostMenu';
