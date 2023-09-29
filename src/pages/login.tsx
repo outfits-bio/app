@@ -8,7 +8,7 @@ import { getServerAuthSession } from '~/server/auth';
 import { api } from '~/utils/api.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
-import { DiscordLogo, GoogleLogo, Hammer, SealCheck } from '@phosphor-icons/react/dist/ssr';
+import { DiscordLogo, GoogleLogo, Hammer, SealCheck } from '@phosphor-icons/react';
 
 import { PostSkeleton } from '../components/Skeletons/PostSkeleton';
 

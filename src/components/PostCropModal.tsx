@@ -3,7 +3,7 @@ import Cropper, { Area } from 'react-easy-crop';
 import getCroppedImg from '~/utils/crop-image.util';
 
 import { Dialog, Transition } from '@headlessui/react';
-import { X } from '@phosphor-icons/react/dist/ssr';
+import { X } from '@phosphor-icons/react';
 import { PostType } from '@prisma/client';
 
 import { Button } from './Button';

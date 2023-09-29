@@ -47,7 +47,7 @@ const config = {
   },
   modularizeImports: {
     "@phosphor-icons/react": {
-      transform: "@phosphor-icons/react/dist/ssr/{{member}}",
+      transform: "@phosphor-icons/react/{{member}}",
     },
   },
 };

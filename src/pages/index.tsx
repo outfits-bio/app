@@ -6,7 +6,7 @@ import React, { useEffect } from 'react';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
 
-import { ArrowRight, CoatHanger } from '@phosphor-icons/react/dist/ssr';
+import { ArrowRight, CoatHanger } from '@phosphor-icons/react';
 
 import landing from '../../public/landing.png';
 

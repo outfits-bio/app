@@ -10,7 +10,7 @@ import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
 import { Dialog, Menu, Transition } from '@headlessui/react';
-import { Hammer, SealCheck, X } from '@phosphor-icons/react/dist/ssr';
+import { Hammer, SealCheck, X } from '@phosphor-icons/react';
 
 import { DeleteModal } from './DeleteModal';
 import { PostMenu } from './Menus/PostMenu';

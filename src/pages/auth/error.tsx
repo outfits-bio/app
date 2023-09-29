@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';
 import { Layout } from '~/components/Layout';
 
-import { Copy } from '@phosphor-icons/react/dist/ssr';
+import { Copy } from '@phosphor-icons/react';
 
 export const ErrorPage: NextPage = () => {
     const { query } = useRouter();

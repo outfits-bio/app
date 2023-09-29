@@ -11,7 +11,7 @@ import { handleErrors } from '~/utils/handle-errors.util';
 import {
     Camera, DiscordLogo, GithubLogo, Hammer, Heart, InstagramLogo, LinkSimple, PencilSimple,
     Question, SealCheck, ShareFat, TiktokLogo, TwitterLogo, YoutubeLogo
-} from '@phosphor-icons/react/dist/ssr';
+} from '@phosphor-icons/react';
 import { LinkType } from '@prisma/client';
 import { inferRouterOutputs } from '@trpc/server';
 

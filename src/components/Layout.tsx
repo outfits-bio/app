@@ -8,7 +8,7 @@ import { formatAvatar } from '~/utils/image-src-format.util';
 
 import {
     Gear, HouseSimple, MagnifyingGlass, Plus, UserPlus
-} from '@phosphor-icons/react/dist/ssr';
+} from '@phosphor-icons/react';
 
 import { Navbar } from './Navbar';
 import { Button } from './Button';

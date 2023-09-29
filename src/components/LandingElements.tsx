@@ -1,4 +1,4 @@
-import { Hoodie, Pants, Sneaker, TShirt } from '@phosphor-icons/react/dist/ssr';
+import { Hoodie, Pants, Sneaker, TShirt } from '@phosphor-icons/react';
 
 export const LandingElements = () => {
     return <div className="w-full h-full absolute dark:text-white text-slate-500 text-[130px] p-20 justify-between hidden lg:flex">

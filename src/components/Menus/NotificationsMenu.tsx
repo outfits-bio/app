@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BaseMenu } from "./BaseMenu";
 import { Button } from "../Button";
-import { BellSimple, SpinnerGap } from "@phosphor-icons/react/dist/ssr";
+import { BellSimple, SpinnerGap } from "@phosphor-icons/react";
 import { api } from "~/utils/api.util";
 import NotificationCard from "../Notification";
 import { Menu, Transition } from "@headlessui/react";

@@ -1,5 +1,5 @@
 import { Listbox, Transition } from '@headlessui/react';
-import { CaretDown, Plus } from '@phosphor-icons/react/dist/ssr';
+import { CaretDown, Plus } from '@phosphor-icons/react';
 import { PostType } from '@prisma/client';
 import axios from 'axios';
 import { NextPage } from 'next';

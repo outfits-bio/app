@@ -1,7 +1,7 @@
 import { useTheme } from "next-themes";
 import { ThemeCard } from "./ThemeCard"
 import { Button } from "./Button";
-import { ArrowLeft, ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { useRouter } from "next/router";
 import { AccentCard } from '~/components/AccentCard';
 

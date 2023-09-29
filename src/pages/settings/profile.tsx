@@ -21,7 +21,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   DiscordLogo, GithubLogo, InstagramLogo, LinkSimple, Plus, Subtract, TiktokLogo, Trash,
   TwitterLogo, YoutubeLogo
-} from '@phosphor-icons/react/dist/ssr';
+} from '@phosphor-icons/react';
 import { LinkType } from '@prisma/client';
 import { useTheme } from 'next-themes';
 

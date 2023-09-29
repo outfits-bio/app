@@ -1,5 +1,5 @@
 import { Listbox, Transition } from "@headlessui/react"
-import { Plus, CaretDown } from "@phosphor-icons/react/dist/ssr"
+import { Plus, CaretDown } from "@phosphor-icons/react"
 import { PostType } from "@prisma/client"
 import { type } from "os"
 import { Fragment, useCallback, useEffect, useRef, useState } from "react"

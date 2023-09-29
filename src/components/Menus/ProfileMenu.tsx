@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { Menu } from '@headlessui/react';
-import { DotsThree } from '@phosphor-icons/react/dist/ssr';
+import { DotsThree } from '@phosphor-icons/react';
 
 import { Button } from '../Button';
 import { BaseMenu } from './BaseMenu';

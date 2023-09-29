@@ -15,7 +15,7 @@ import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
 import {
     Hammer, SealCheck
-} from '@phosphor-icons/react/dist/ssr';
+} from '@phosphor-icons/react';
 import { PostType } from '@prisma/client';
 import { getSortedPostsData } from '~/utils/blog.util';
 

@@ -13,7 +13,7 @@ import { Menu, Transition } from '@headlessui/react';
 import {
     Bell, BellSimple, Camera, CoatHanger, Compass, CopySimple, Door, DoorOpen, Gear, Hammer, Heart,
     MagnifyingGlass, Person, Plus, SealCheck, SpinnerGap, User
-} from '@phosphor-icons/react/dist/ssr';
+} from '@phosphor-icons/react';
 
 import { Avatar } from './Avatar';
 import { Button } from './Button';

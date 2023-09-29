@@ -7,7 +7,7 @@ import { handleErrors } from '~/utils/handle-errors.util';
 import {
   Backpack, BaseballCap, CoatHanger, Eyeglasses, Hoodie, Pants, ShirtFolded, Sneaker, TShirt,
   Watch
-} from '@phosphor-icons/react/dist/ssr';
+} from '@phosphor-icons/react';
 import { Post, PostType } from '@prisma/client';
 import { inferRouterOutputs } from '@trpc/server';
 
