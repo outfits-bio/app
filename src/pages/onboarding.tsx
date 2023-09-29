@@ -362,7 +362,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext<{ us
             };
         }
 
-        await helpers.user.getMe.p.refetch();
+        await helpers.user.getMe.prefetch();
     } else {
         return {
             props: {
