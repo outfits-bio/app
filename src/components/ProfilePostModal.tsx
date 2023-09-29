@@ -49,10 +49,10 @@ export const ProfilePostModal = ({ post, user, setPostModalOpen }: ProfilePostMo
     const ctx = api.useContext();
 
     const { mutate } = api.admin.deletePost.useMutation({
-        onSuccess: () => {
+        onSuccess: async () => {
+            await ctx.post.getLatestPosts.refetch();
+            await ctx.post.getPostsAllTypes.refetch();
             toast.success('Post deleted successfully!');
-            ctx.post.getLatestPosts.invalidate();
-            ctx.post.getPostsAllTypes.invalidate();
             closeModal();
         },
         onError: (e) => handleErrors({ e, message: 'An error occurred while deleting this post.' })
@@ -64,10 +64,10 @@ export const ProfilePostModal = ({ post, user, setPostModalOpen }: ProfilePostMo
      * onMutate, onError, and onSettled are custom functions in ./post-section.util.ts that handle optimistic updates
      */
     const { mutate: deletePost } = api.post.deletePost.useMutation({
-        onSuccess: () => {
+        onSuccess: async () => {
+            await ctx.post.getLatestPosts.refetch();
+            await ctx.post.getPostsAllTypes.refetch();
             toast.success('Post deleted successfully!');
-            ctx.post.getLatestPosts.invalidate();
-            ctx.post.getPostsAllTypes.invalidate();
             closeModal();
         },
         onError: (e) => handleErrors({ e, message: 'An error occurred while deleting this post.' })

@@ -73,7 +73,7 @@ const SettingsPage = () => {
   const { mutate: addLink, isLoading: linkLoading, isSuccess: linkSuccess } = api.user.addLink.useMutation({
     onSuccess: () => {
       resetField("url");
-      ctx.user.getMe.invalidate();
+      ctx.user.getMe.refetch();
       toast.success("Link added!");
     },
     onError: (e) => handleErrors({ e, message: "Failed to add link!", fn: () => setLoading(false) })
@@ -81,7 +81,7 @@ const SettingsPage = () => {
 
   const { mutate: removeLink, isLoading: removeLinkLoading, variables: removeLinkVariables } = api.user.removeLink.useMutation({
     onSuccess: () => {
-      ctx.user.getMe.invalidate();
+      ctx.user.getMe.refetch();
       toast.success("Link removed!");
     },
     onError: (e) => handleErrors({ e, message: "Failed to remove link!", fn: () => setLoading(false) })

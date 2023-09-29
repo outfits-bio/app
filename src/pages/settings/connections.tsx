@@ -29,8 +29,8 @@ export const ConnectionsSettingsPage: NextPage = () => {
 
     const { mutate: unlinkAccount, isLoading: unlinkLoading, variables } = api.user.unlinkAccount.useMutation({
         onSuccess: () => {
-            ctx.user.getAccounts.invalidate();
-            ctx.user.getLanyardEnabled.invalidate();
+            ctx.user.getAccounts.refetch();
+            ctx.user.getLanyardEnabled.refetch();
             toast.success('Account unlinked successfully!');
         },
         onError: (e) => handleErrors({ e, message: 'Failed to unlink account' })
@@ -38,7 +38,7 @@ export const ConnectionsSettingsPage: NextPage = () => {
 
     const { mutate: setLanyardEnabled, isLoading: setLanyardEnabledLoading } = api.user.toggleEnableLanyard.useMutation({
         onSuccess: () => {
-            ctx.user.getLanyardEnabled.invalidate();
+            ctx.user.getLanyardEnabled.refetch();
         },
         onError: (e) => handleErrors({ e, message: 'Failed to toggle lanyard' })
     });

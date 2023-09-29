@@ -48,8 +48,8 @@ export const ExplorePostModal = ({ post, setPostModalOpen }: ExplorePostModalPro
     const { mutate } = api.admin.deletePost.useMutation({
         onSuccess: () => {
             toast.success('Post deleted successfully!');
-            ctx.post.getLatestPosts.invalidate();
-            ctx.post.getPostsAllTypes.invalidate();
+            ctx.post.getLatestPosts.refetch();
+            ctx.post.getPostsAllTypes.refetch();
             closeModal();
         },
         onError: (e) => handleErrors({ e, message: 'An error occurred while deleting this post.' })
@@ -63,8 +63,8 @@ export const ExplorePostModal = ({ post, setPostModalOpen }: ExplorePostModalPro
     const { mutate: deletePost } = api.post.deletePost.useMutation({
         onSuccess: () => {
             toast.success('Post deleted successfully!');
-            ctx.post.getLatestPosts.invalidate();
-            ctx.post.getPostsAllTypes.invalidate();
+            ctx.post.getLatestPosts.refetch();
+            ctx.post.getPostsAllTypes.refetch();
             closeModal();
         },
         onError: (e) => handleErrors({ e, message: 'An error occurred while deleting this post.' })

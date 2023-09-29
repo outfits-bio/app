@@ -17,7 +17,7 @@ export const NotificationsMenu = ({ unreadCount }: NotificationsMenuProps) => {
 
     const { data: notifications, refetch, isFetching } = api.notifications.getNotifications.useQuery(undefined, {
         onSuccess: () => {
-            ctx.notifications.getUnreadNotificationsCount.invalidate();
+            ctx.notifications.getUnreadNotificationsCount.refetch();
         },
         enabled: false,
     });

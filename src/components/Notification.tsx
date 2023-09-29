@@ -33,7 +33,7 @@ const NotificationCard: FC<NotificationCardProps> = ({ notification, refetch }) 
     const { mutate, isLoading } = api.notifications.deleteNotification.useMutation({
         onSuccess: () => {
             refetch?.();
-            ctx.notifications.getNotifications.invalidate();
+            ctx.notifications.getNotifications.refetch();
         },
         onError: (e) => handleErrors({ e, message: 'Failed to delete notification' })
     });

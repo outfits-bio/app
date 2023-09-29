@@ -24,6 +24,7 @@ import { BugReportModal } from './Modals/BugReportModal';
 import { FeedbackModal } from './Modals/FeedbackModal';
 import { NotificationsMenu } from './Menus/NotificationsMenu';
 import { useTheme } from 'next-themes';
+import { CreatePostModal } from './Modals/CreatePostModal';
 
 interface Props {
     title: string;
@@ -40,6 +41,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
 
     const [bugReportModalOpen, setBugReportModalOpen] = useState(false);
     const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
+    const [createPostModalOpen, setCreatePostModalOpen] = useState(false);
 
     const hasNotifications = data && data > 0;
 
@@ -50,11 +52,12 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
     return <>
         {bugReportModalOpen && <BugReportModal isOpen={bugReportModalOpen} setIsOpen={setBugReportModalOpen} />}
         {feedbackModalOpen && <FeedbackModal isOpen={feedbackModalOpen} setIsOpen={setFeedbackModalOpen} />}
+        {createPostModalOpen && <CreatePostModal isOpen={createPostModalOpen} setIsOpen={setCreatePostModalOpen} />}
 
         <div className='hidden md:flex items-center justify-center gap-4'>
-            <Link href='/shoot'>
-                <Button variant='outline-ghost' accent={theme !== 'dark' && theme !== 'light'} iconLeft={<Plus />}>Create</Button>
-            </Link>
+            <div>
+                <Button variant='outline-ghost' accent={theme !== 'dark' && theme !== 'light'} iconLeft={<Plus />} onClick={() => setCreatePostModalOpen(true)}>Create</Button>
+            </div>
 
             {pathname !== '/explore' && <Link href='/explore'>
                 <Button variant='outline-ghost' shape={'square'} iconLeft={<Compass />} />

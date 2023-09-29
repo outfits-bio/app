@@ -26,7 +26,7 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
 
     const { mutate, isLoading } = api.admin.editUser.useMutation({
         onSuccess: () => {
-            ctx.user.getProfile.invalidate({ username: props.targetUser.username! });
+            ctx.user.getProfile.refetch({ username: props.targetUser.username! });
             props.setIsOpen(false);
             toast.success('User edited successfully!');
         },
@@ -35,7 +35,7 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
 
     const { mutate: removeImage, isLoading: removeImageLoading } = api.admin.removeUserAvatar.useMutation({
         onSuccess: () => {
-            ctx.user.getProfile.invalidate({ username: props.targetUser.username! });
+            ctx.user.getProfile.refetch({ username: props.targetUser.username! });
             toast.success('Avatar removed successfully!');
         },
         onError: (e) => handleErrors({ e, message: 'Failed to remove avatar' })
@@ -43,7 +43,7 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
 
     const { mutate: removeLink, isLoading: removeLinkLoading, variables } = api.admin.removeUserLink.useMutation({
         onSuccess: () => {
-            ctx.user.getProfile.invalidate({ username: props.targetUser.username! });
+            ctx.user.getProfile.refetch({ username: props.targetUser.username! });
             toast.success('Link removed successfully!');
         },
         onError: (e) => handleErrors({ e, message: 'Failed to remove link' })
@@ -51,7 +51,7 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
 
     const { mutate: giveVerified, isLoading: giveVerifiedLoading } = api.admin.toggleUserVerified.useMutation({
         onSuccess: () => {
-            ctx.user.getProfile.invalidate({ username: props.targetUser.username! });
+            ctx.user.getProfile.refetch({ username: props.targetUser.username! });
             toast.success('Verified changed successfully!');
         },
         onError: (e) => handleErrors({ e, message: 'Failed to change verified' })

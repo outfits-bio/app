@@ -141,7 +141,7 @@ export const onMutate = async (
   updateData: (old: PartialPost[] | undefined) => PartialPost[] | undefined,
   userId?: string
 ): Promise<{ prevData: PartialPost[] | undefined }> => {
-  await ctx.post.getPostsAllTypes.invalidate();
+  await ctx.post.getPostsAllTypes.refetch();
 
   const prevData = ctx.post.getPostsAllTypes.getData();
 
@@ -177,6 +177,6 @@ export const onError = async (
  * @returns void
  */
 export const onSettled = async (ctx: Context, username?: string | null) => {
-  ctx.post.getPostsAllTypes.invalidate();
-  ctx.user.getProfile.invalidate({ username: username ?? "" });
+  ctx.post.getPostsAllTypes.refetch();
+  ctx.user.getProfile.refetch({ username: username ?? "" });
 };

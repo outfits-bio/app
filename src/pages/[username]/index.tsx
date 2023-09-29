@@ -19,7 +19,7 @@ export const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
     const [postModalOpen, setPostModalOpen] = useState<boolean>(false);
     const [post, setPost] = useState<ProfilePost | null>(null);
 
-    const { data: profileData, isLoading } = api.user.getProfile.useQuery({ username }, { onError: (e) => handleErrors({ e, message: "Failed to get user!", fn: () => push(`/${username}/not-found`)}), retry: 0 });
+    const { data: profileData, isLoading } = api.user.getProfile.useQuery({ username }, { onError: (e) => handleErrors({ e, message: "Failed to get user!", fn: () => push(`/${username}/not-found`) }), retry: 0 });
 
     const { data: postsData, isLoading: postsLoading } = api.post.getPostsAllTypes.useQuery({
         id: profileData?.id ?? ''
@@ -76,7 +76,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     }
 
     try {
-        await ssg.user.getProfile.prefetch({ username });
+        await ssg.user.getProfile.p.refetch({ username });
 
         return {
             props: {

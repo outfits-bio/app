@@ -79,7 +79,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
             return previousProfileData;
         },
         onSettled: () => {
-            ctx.user.getProfile.invalidate({ username });
+            ctx.user.getProfile.refetch({ username });
         },
         onError: (e) => handleErrors({
             e, message: "Could not like!", fn: () => {
