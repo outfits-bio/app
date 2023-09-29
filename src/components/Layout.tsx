@@ -55,28 +55,28 @@ export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActi
             <Navbar title={title} session={session} showSlash={showSlash} showActions={showActions} hideSearch={hideSearch} />
             <main className='h-screen pt-20 overflow-x-hidden pb-24 md:pb-0 scroll-smooth'>{children}</main>
             {pathname !== '/login' && pathname !== '/onboarding' && pathname !== '/' &&
-                <div className='py-2 px-6 bg-white dark:bg-black border border-stroke flex justify-between w-screen h-24 fixed bottom-0 md:hidden gap-4'>
-                    <Link href={'/explore'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl'>
+                <div className='py-5 px-6 bg-white dark:bg-black border border-stroke flex justify-between w-screen h-24 fixed bottom-0 md:hidden gap-4'>
+                    <Link href={'/explore'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
                         <HouseSimple />
                     </Link>
 
-                    <Link href={'/search'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl'>
+                    <Link href={'/search'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
                         <MagnifyingGlass />
                     </Link>
 
-                    <Link href={'/shoot'} className='rounded-md flex flex-col items-center justify-center text-3xl'>
+                    <Link href={'/shoot'} className='rounded-md flex flex-col items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
                         <Button shape={'square'} variant={'outline-ghost'} accent>
                             <Plus />
                         </Button>
                     </Link>
 
-                    <Link href={'/settings'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl'>
+                    <Link href={'/settings'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
                         <Gear />
                     </Link>
 
-                    {session.data?.user ? <Link href={`/${session.data?.user.username}`} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl'>
+                    {session.data?.user ? <Link href={`/${session.data?.user.username}`} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
                         <Image className='rounded-full object-contain' src={formatAvatar(session.data?.user.image, session.data?.user.id)} alt={session.data?.user.username ?? ""} width={30} height={30} />
-                    </Link> : <Link href={'/login'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl'>
+                    </Link> : <Link href={'/login'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
                         <UserPlus />
                     </Link>}
                 </div>
