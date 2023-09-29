@@ -2,12 +2,12 @@ import { signIn, useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { Button } from '~/components/Button';
-import { HideAllPresencesModal } from '~/components/Modals/HideAllPresencesModal';
 import { SpotifyConnectDiscordModal } from '~/components/Modals/SpotifyConnectDiscordModal';
 import { SpotifySetupModal } from '~/components/Modals/SpotifySetupModal';
 import { SettingsLayout } from '~/components/SettingsLayout';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
+import { motion } from 'framer-motion';
 
 import { Switch } from '@headlessui/react';
 import { DiscordLogo, GoogleLogo, Question, SpinnerGap, Trash } from '@phosphor-icons/react';
@@ -113,18 +113,24 @@ export const ConnectionsSettingsPage: NextPage = () => {
                     <Switch
                         checked={lanyardEnabledData ?? false}
                         onChange={handleLanyard}
-                        className={`${lanyardEnabledData ?? false ? 'bg-black' : 'bg-hover'}
+                        className={`${lanyardEnabledData ?? false ? 'bg-black justify-end' : 'bg-hover justify-start'}
           relative inline-flex h-8 w-[72px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
                     >
                         <span className="sr-only">Toggle Lanyard</span>
-                        <span
+                        <motion.span
+                            layout
+                            transition={{
+                                type: "spring",
+                                stiffness: 700,
+                                damping: 30
+                            }}
                             aria-hidden="true"
-                            className={`${lanyardEnabledData ?? false ? 'translate-x-10' : 'translate-x-0'}
-            pointer-events-none h-7 w-7 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out flex items-center justify-center`}
+                            className={`
+            pointer-events-none h-7 w-7 rounded-full bg-white shadow-lg ring-0 flex items-center justify-center`}
                         >
                             {setLanyardEnabledLoading && <SpinnerGap className='w-4 h-4 text-secondary-text animate-spin' />}
 
-                        </span>
+                        </motion.span>
                     </Switch>
                 </div>}
             </div>

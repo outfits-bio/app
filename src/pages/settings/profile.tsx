@@ -70,7 +70,7 @@ const SettingsPage = () => {
     onError: (e) => handleErrors({ e, message: "Failed to edit profile!", fn: () => setLoading(false) })
   });
 
-  const { mutate: addLink, isLoading: linkLoading } = api.user.addLink.useMutation({
+  const { mutate: addLink, isLoading: linkLoading, isSuccess: linkSuccess } = api.user.addLink.useMutation({
     onSuccess: () => {
       resetField("url");
       ctx.user.getMe.invalidate();
