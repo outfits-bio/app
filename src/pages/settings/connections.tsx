@@ -10,7 +10,7 @@ import { handleErrors } from '~/utils/handle-errors.util';
 import { motion } from 'framer-motion';
 
 import { Switch } from '@headlessui/react';
-import { DiscordLogo, GoogleLogo, Question, SpinnerGap, Trash } from '@phosphor-icons/react';
+import { PiDiscordLogo, PiGoogleLogo, PiQuestion, PiSpinnerGap, PiTrash } from 'react-icons/pi';
 
 import type { NextPage } from "next";
 export const ConnectionsSettingsPage: NextPage = () => {
@@ -64,12 +64,12 @@ export const ConnectionsSettingsPage: NextPage = () => {
                 {discordAccount ?
                     <div className='flex items-center gap-2'>
                         <div className='py-2 h-12 grow w-full cursor-default flex justify-center items-center select-none rounded-md border border-black dark:border-white'>
-                            <DiscordLogo className='w-6 h-6 mr-2' />
+                            <PiDiscordLogo className='w-6 h-6 mr-2' />
                             <span>Discord Connected</span>
                         </div>
 
                         <div>
-                            <Button variant='outline' iconLeft={<Trash />} centerItems
+                            <Button variant='outline' iconLeft={<PiTrash />} centerItems
                                 isLoading={unlinkLoading && variables?.id === discordAccount?.id}
                                 onClick={() => unlinkAccount({ id: discordAccount?.id ?? '' })}
                             />
@@ -77,7 +77,7 @@ export const ConnectionsSettingsPage: NextPage = () => {
                     </div>
                     :
                     <div>
-                        <Button onClick={() => signIn('discord')} iconLeft={<DiscordLogo />} centerItems>
+                        <Button onClick={() => signIn('discord')} iconLeft={<PiDiscordLogo />} centerItems>
                             Connect Discord
                         </Button>
                     </div>
@@ -86,12 +86,12 @@ export const ConnectionsSettingsPage: NextPage = () => {
                 {googleAccount ?
                     <div className='flex items-center gap-2'>
                         <div className='py-2 h-12 grow w-full cursor-default flex justify-center items-center select-none rounded-md border border-black dark:border-white'>
-                            <GoogleLogo className='w-6 h-6 mr-2' />
+                            <PiGoogleLogo className='w-6 h-6 mr-2' />
                             <span>Google Connected</span>
                         </div>
 
                         <div>
-                            <Button variant='outline' iconLeft={<Trash />} centerItems
+                            <Button variant='outline' iconLeft={<PiTrash />} centerItems
                                 isLoading={unlinkLoading && variables?.id === googleAccount?.id}
                                 onClick={() => unlinkAccount({ id: googleAccount?.id ?? '' })}
                             />
@@ -99,7 +99,7 @@ export const ConnectionsSettingsPage: NextPage = () => {
                     </div>
                     :
                     <div>
-                        <Button onClick={() => signIn('google')} iconLeft={<GoogleLogo />} centerItems>
+                        <Button onClick={() => signIn('google')} iconLeft={<PiGoogleLogo />} centerItems>
                             Connect Google
                         </Button>
                     </div>
@@ -108,7 +108,7 @@ export const ConnectionsSettingsPage: NextPage = () => {
                 {<div className='flex items-center py-2 font-bold text-xl justify-between'>
                     <span className='flex items-center gap-2'>
                         <p>Toggle Spotify Status</p>
-                        <Question onClick={() => setSpotifySetupModalOpen(true)} className='w-4 h-4 cursor-pointer' />
+                        <PiQuestion onClick={() => setSpotifySetupModalOpen(true)} className='w-4 h-4 cursor-pointer' />
                     </span>
                     <Switch
                         checked={lanyardEnabledData ?? false}
@@ -128,7 +128,7 @@ export const ConnectionsSettingsPage: NextPage = () => {
                             className={`
             pointer-events-none h-7 w-7 rounded-full bg-white shadow-lg ring-0 flex items-center justify-center`}
                         >
-                            {setLanyardEnabledLoading && <SpinnerGap className='w-4 h-4 text-secondary-text animate-spin' />}
+                            {setLanyardEnabledLoading && <PiSpinnerGap className='w-4 h-4 text-secondary-text animate-spin' />}
 
                         </motion.span>
                     </Switch>

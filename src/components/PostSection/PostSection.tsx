@@ -8,7 +8,7 @@ import { useFileUpload } from '~/hooks/file-upload.hook';
 import { api } from '~/utils/api.util';
 import { formatImage } from '~/utils/image-src-format.util';
 
-import { Plus, Trash } from '@phosphor-icons/react';
+import { PiPlus, PiTrash } from 'react-icons/pi';
 
 import { Button } from '../Button';
 import { PostCropModal } from '../PostCropModal';
@@ -82,7 +82,7 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
                 <span><span className='font-semibold'>{getPostTypeCount(type, profileData)}</span> {getPostTypeName(type)}</span>
 
                 <div>
-                    {(userIsProfileOwner && !postsExist) && <Button className='hidden md:block' iconLeft={<Plus />} onClick={() => ref.current?.click()} type='submit' variant={'ghost'} shape={'square'}></Button>}
+                    {(userIsProfileOwner && !postsExist) && <Button className='hidden md:block' iconLeft={<PiPlus />} onClick={() => ref.current?.click()} type='submit' variant={'ghost'} shape={'square'}></Button>}
                 </div>
             </h2>}
 
@@ -132,7 +132,7 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
                                 onClick={() => ref.current?.click()}
                                 type='submit'
                                 className='w-[126px] h-[206px] border hover:bg-hover border-secondary-text flex items-center justify-center font-bold flex-col text-sm rounded-md'>
-                                <Plus className='w-12 h-12 text-secondary-text' />
+                                <PiPlus className='w-12 h-12 text-secondary-text' />
                             </button>
                         </>}
                     </div>}

@@ -6,7 +6,7 @@ import { toast } from 'react-hot-toast';
 import { formatAvatar } from '~/utils/image-src-format.util';
 
 import { Menu } from '@headlessui/react';
-import { CopySimple } from '@phosphor-icons/react';
+import { PiCopySimple } from 'react-icons/pi';
 
 import { Avatar } from '../Avatar';
 import { Button } from '../Button';
@@ -31,7 +31,7 @@ export const NavbarMenu = ({ user, setBugReportModalOpen, setFeedbackModalOpen, 
             <p className='peer cursor-pointer hover:underline' onClick={handleShare}>{user.username}</p>
 
             <div className='h-full peer-hover:flex items-center pb-1 hidden'>
-                <CopySimple className='w-4 h-4 text-secondary-text' />
+                <PiCopySimple className='w-4 h-4 text-secondary-text' />
             </div>
         </div>
 

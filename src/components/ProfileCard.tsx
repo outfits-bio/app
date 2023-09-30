@@ -9,9 +9,9 @@ import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 import {
-    Camera, DiscordLogo, GithubLogo, Hammer, Heart, InstagramLogo, LinkSimple, PencilSimple,
-    Question, SealCheck, ShareFat, TiktokLogo, TwitterLogo, YoutubeLogo
-} from '@phosphor-icons/react';
+    PiCameraBold, PiDiscordLogoBold, PiGithubLogoBold, PiHammerBold, PiHeartBold, PiInstagramLogoBold, PiLinkSimpleBold, PiPencilSimple,
+    PiQuestion, PiSealCheckBold, PiShareFat, PiTiktokLogoBold, PiTwitterLogoBold, PiYoutubeLogoBold
+} from 'react-icons/pi';
 import { LinkType } from '@prisma/client';
 import { inferRouterOutputs } from '@trpc/server';
 
@@ -119,19 +119,19 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                     <div className='flex flex-col gap-1 md:gap-4'>
                         <h1 className='font-black text-2xl md:text-4xl font-clash gap-2 md:gap-3 flex items-center'>
                             <span>{profileData?.username}</span>
-                            {profileData?.admin ? <Hammer className='w-6 h-6 md:w-8 md:h-8' weight='bold' /> : profileData?.verified && <SealCheck weight='bold' className='w-6 h-6 md:w-8 md:h-8' />}
+                            {profileData?.admin ? <PiHammerBold className='w-6 h-6 md:w-8 md:h-8' /> : profileData?.verified && <PiSealCheckBold className='w-6 h-6 md:w-8 md:h-8' />}
                         </h1>
 
                         <p className={`grow ${loading && 'skeleton'}`}>{profileData?.tagline}</p>
 
                         <div className='flex gap-4 text-sm md:text-base'>
                             <p className={`flex items-center gap-1`}>
-                                <Camera className='w-5 h-5' weight='bold' />
+                                <PiCameraBold className='w-5 h-5' />
                                 <span className={loading ? 'skeleton' : ''}><span className='font-bold'>{profileData?.imageCount}</span> Shot{profileData?.imageCount !== 1 ? 's' : ''}</span>
                             </p>
 
                             <p className='flex items-center gap-1'>
-                                <Heart className='w-5 h-5' weight='bold' />
+                                <PiHeartBold className='w-5 h-5' />
                                 <span className={loading ? 'skeleton' : ''}><span className='font-bold'>{profileData?.likeCount}</span> Like{profileData?.likeCount !== 1 ? 's' : ''}</span>
                             </p>
                         </div>
@@ -142,13 +142,13 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                     {profileData?.links.map(link =>
                         <Link href={`${link.url}`} key={link.id}>
                             <p className='flex items-center gap-1'>
-                                {link.type === LinkType.TWITTER && <TwitterLogo weight="bold" className='w-5 h-5' />}
-                                {link.type === LinkType.YOUTUBE && <YoutubeLogo weight="bold" className='w-5 h-5' />}
-                                {link.type === LinkType.TIKTOK && <TiktokLogo weight="bold" className='w-5 h-5' />}
-                                {link.type === LinkType.DISCORD && <DiscordLogo weight="bold" className='w-5 h-5' />}
-                                {link.type === LinkType.INSTAGRAM && <InstagramLogo weight="bold" className='w-5 h-5' />}
-                                {link.type === LinkType.GITHUB && <GithubLogo weight="bold" className='w-5 h-5' />}
-                                {link.type === LinkType.WEBSITE && <LinkSimple weight="bold" className='w-5 h-5' />}
+                                {link.type === LinkType.TWITTER && <PiTwitterLogoBold className='w-5 h-5' />}
+                                {link.type === LinkType.YOUTUBE && <PiYoutubeLogoBold className='w-5 h-5' />}
+                                {link.type === LinkType.TIKTOK && <PiTiktokLogoBold className='w-5 h-5' />}
+                                {link.type === LinkType.DISCORD && <PiDiscordLogoBold className='w-5 h-5' />}
+                                {link.type === LinkType.INSTAGRAM && <PiInstagramLogoBold className='w-5 h-5' />}
+                                {link.type === LinkType.GITHUB && <PiGithubLogoBold className='w-5 h-5' />}
+                                {link.type === LinkType.WEBSITE && <PiLinkSimpleBold className='w-5 h-5' />}
                                 <span className='underline'>{link.url.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '')}</span>
                             </p>
                         </Link>)}
@@ -165,7 +165,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                             </p>
                         </Marquee>
                     </>}
-                    {lanyardData === null && isCurrentUser && <p onClick={() => setSpotifySetupModalOpen(true)} className='text-sm text-error flex gap-2 items-center cursor-pointer hover:underline'>More setup required to display Spotify. <Question className='w-4 h-4' /></p>}
+                    {lanyardData === null && isCurrentUser && <p onClick={() => setSpotifySetupModalOpen(true)} className='text-sm text-error flex gap-2 items-center cursor-pointer hover:underline'>More setup required to display Spotify. <PiQuestion className='w-4 h-4' /></p>}
                 </div>}
 
                 <div className='w-full flex items-center justify-between gap-4'>
@@ -184,8 +184,8 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                                     if (profileData?.id) mutate({ id: profileData.id });
                                 }}
                                 iconLeft={
-                                    <Heart
-                                        weight={(profileData?.authUserHasLiked) ? 'fill' : 'regular'}
+                                    <PiHeartBold
+                                         /* weight={(profileData?.authUserHasLiked) ? 'fill' : 'regular'} */ 
                                         onAnimationEnd={() => setLikeAnimation(false)}
                                         className={likeAnimation ? 'animate-ping ' : '' + 'text-white dark:text-black'}
                                     />
@@ -203,13 +203,13 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
 
                     {isCurrentUser && <>
                         <Link href='/settings/profile' className='grow'>
-                            <Button variant='outline' iconLeft={<PencilSimple />} centerItems>
+                            <Button variant='outline' iconLeft={<PiPencilSimple />} centerItems>
                                 Edit
                             </Button>
                         </Link>
 
                         <div className='grow'>
-                            <Button variant='outline' iconLeft={<ShareFat />} centerItems onClick={handleShare}>
+                            <Button variant='outline' iconLeft={<PiShareFat />} centerItems onClick={handleShare}>
                                 Share
                             </Button>
                         </div>

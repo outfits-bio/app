@@ -22,7 +22,7 @@ import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeft, ArrowRight, Hammer, SealCheck } from '@phosphor-icons/react';
+import { PiArrowLeft, PiArrowRight, PiHammer, PiSealCheck } from 'react-icons/pi';
 import { createServerSideHelpers } from '@trpc/react-query/server';
 import { OnboardingAppearance } from '~/components/OnboardingAppearance';
 
@@ -166,8 +166,8 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
                         </div>
 
                         <div className='w-full flex gap-2 mt-4'>
-                            <Button variant='outline' iconLeft={<ArrowLeft />} onClick={() => setOnboardingStarted(0)} centerItems>Back</Button>
-                            <Button isLoading={loading} type='submit' iconRight={<ArrowRight />} centerItems>Continue</Button>
+                            <Button variant='outline' iconLeft={<PiArrowLeft />} onClick={() => setOnboardingStarted(0)} centerItems>Back</Button>
+                            <Button isLoading={loading} type='submit' iconRight={<PiArrowRight />} centerItems>Continue</Button>
                         </div>
                     </form> :
                         onboardingStarted === 2 ? <OnboardingAppearance username={session?.user.username ?? username} setOnboardingStarted={setOnboardingStarted} onboardingStarted={onboardingStarted} />
@@ -242,7 +242,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
 
                                         <h1 className='text-white flex gap-1 items-center text-sm w-full'>
                                             <span className='truncate'>{post.user.username}</span>
-                                            {post.user.admin ? <Hammer className='w-4 h-4' /> : post.user.verified && <SealCheck className='w-4 h-4' />}
+                                            {post.user.admin ? <PiHammer className='w-4 h-4' /> : post.user.verified && <PiSealCheck className='w-4 h-4' />}
                                         </h1>
                                     </div>
                                 </div>
@@ -270,7 +270,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
 
                                         <h1 className='text-white flex gap-1 items-center text-sm w-full'>
                                             <span className='truncate'>{post.user.username}</span>
-                                            {post.user.admin ? <Hammer className='w-4 h-4' /> : post.user.verified && <SealCheck className='w-4 h-4' />}
+                                            {post.user.admin ? <PiHammer className='w-4 h-4' /> : post.user.verified && <PiSealCheck className='w-4 h-4' />}
                                         </h1>
                                     </div>
                                 </div>
@@ -298,7 +298,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
 
                                         <h1 className='text-white flex gap-1 items-center text-sm w-full'>
                                             <span className='truncate'>{post.user.username}</span>
-                                            {post.user.admin ? <Hammer className='w-4 h-4' /> : post.user.verified && <SealCheck className='w-4 h-4' />}
+                                            {post.user.admin ? <PiHammer className='w-4 h-4' /> : post.user.verified && <PiSealCheck className='w-4 h-4' />}
                                         </h1>
                                     </div>
                                 </div>
@@ -326,7 +326,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
 
                                         <h1 className='text-white flex gap-1 items-center text-sm w-full'>
                                             <span className='truncate'>{post.user.username}</span>
-                                            {post.user.admin ? <Hammer className='w-4 h-4' /> : post.user.verified && <SealCheck className='w-4 h-4' />}
+                                            {post.user.admin ? <PiHammer className='w-4 h-4' /> : post.user.verified && <PiSealCheck className='w-4 h-4' />}
                                         </h1>
                                     </div>
                                 </div>

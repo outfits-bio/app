@@ -14,8 +14,8 @@ import { api } from '~/utils/api.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
 import {
-    Hammer, SealCheck
-} from '@phosphor-icons/react';
+    PiHammer, PiSealCheck
+} from 'react-icons/pi';
 import { PostType } from '@prisma/client';
 import { getSortedPostsData } from '~/utils/blog.util';
 
@@ -143,7 +143,7 @@ export const ExplorePage = ({ blogPosts }: InferGetStaticPropsType<typeof getSta
 
                                     <h1 className='text-white flex gap-1 items-center text-sm w-full'>
                                         <span className='truncate'>{post.user.username}</span>
-                                        {post.user.admin ? <Hammer className='w-4 h-4' /> : post.user.verified && <SealCheck className='w-4 h-4' />}
+                                        {post.user.admin ? <PiHammer className='w-4 h-4' /> : post.user.verified && <PiSealCheck className='w-4 h-4' />}
                                     </h1>
                                 </div>
                             </div>
@@ -189,7 +189,7 @@ export const ExplorePage = ({ blogPosts }: InferGetStaticPropsType<typeof getSta
 
                                     <h1 className='text-white flex gap-1 items-center text-sm w-full'>
                                         <span className='truncate'>{post.user.username}</span>
-                                        {post.user.admin ? <Hammer className='w-4 h-4' /> : post.user.verified && <SealCheck className='w-4 h-4' />}
+                                        {post.user.admin ? <PiHammer className='w-4 h-4' /> : post.user.verified && <PiSealCheck className='w-4 h-4' />}
                                     </h1>
                                 </div>
                             </div>

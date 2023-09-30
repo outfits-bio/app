@@ -5,7 +5,7 @@ import { AppRouter } from '~/server/api/root';
 import { Avatar } from './Avatar';
 import { intlFormatDistance } from 'date-fns';
 import { Button } from './Button';
-import { SpinnerGap, X } from '@phosphor-icons/react';
+import { PiSpinnerGap, PiX } from 'react-icons/pi';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
@@ -54,7 +54,7 @@ const NotificationCard: FC<NotificationCardProps> = ({ notification, refetch }) 
         </Link>
 
         <button className='hover:bg-hover border border-stroke flex items-center justify-center h-8 w-8 rounded-full' disabled={isLoading} onClick={() => mutate({ id: notification.id })}>
-            {isLoading ? <SpinnerGap className='w-4 h-4 animate-spin' /> : <X className='w-4 h-4' />}
+            {isLoading ? <PiSpinnerGap className='w-4 h-4 animate-spin' /> : <PiX className='w-4 h-4' />}
         </button>
     </div>
 }

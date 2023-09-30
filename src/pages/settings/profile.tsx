@@ -19,9 +19,9 @@ import { formatAvatar } from '~/utils/image-src-format.util';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  DiscordLogo, GithubLogo, InstagramLogo, LinkSimple, Plus, Subtract, TiktokLogo, Trash,
-  TwitterLogo, YoutubeLogo
-} from '@phosphor-icons/react';
+  PiDiscordLogo, PiGithubLogo, PiInstagramLogo, PiLinkSimple, PiPlus, PiSubtract, PiTiktokLogo, PiTrash,
+  PiTwitterLogo, PiYoutubeLogo
+} from 'react-icons/pi';
 import { LinkType } from '@prisma/client';
 import { useTheme } from 'next-themes';
 
@@ -195,9 +195,9 @@ const SettingsPage = () => {
               </div>
 
               <div className='grow space-y-2'>
-                <Button centerItems iconLeft={<Plus />} type='button' onClick={() => ref.current?.click()}>Upload</Button>
-                <Button variant='outline' centerItems iconLeft={<Subtract />} type='button' onClick={() => setCropModalOpen(true)}>Edit/Crop</Button>
-                <Button variant='outline' centerItems type='button' iconLeft={<Trash />} onClick={() => deleteImage()}>Remove</Button>
+                <Button centerItems iconLeft={<PiPlus />} type='button' onClick={() => ref.current?.click()}>Upload</Button>
+                <Button variant='outline' centerItems iconLeft={<PiSubtract />} type='button' onClick={() => setCropModalOpen(true)}>Edit/Crop</Button>
+                <Button variant='outline' centerItems type='button' iconLeft={<PiTrash />} onClick={() => deleteImage()}>Remove</Button>
               </div>
             </div>
 
@@ -243,17 +243,17 @@ const SettingsPage = () => {
             {userData?.links.map(link =>
               <div className='flex items-center gap-2 w-full' key={link.id}>
                 <p className='gap-1 py-2 h-12 w-full cursor-default overflow-x-hidden flex px-4 items-center select-none rounded-md border border-stroke'>
-                  {link.type === LinkType.TWITTER && <TwitterLogo className='w-5 h-5' />}
-                  {link.type === LinkType.YOUTUBE && <YoutubeLogo className='w-5 h-5' />}
-                  {link.type === LinkType.TIKTOK && <TiktokLogo className='w-5 h-5' />}
-                  {link.type === LinkType.DISCORD && <DiscordLogo className='w-5 h-5' />}
-                  {link.type === LinkType.INSTAGRAM && <InstagramLogo className='w-5 h-5' />}
-                  {link.type === LinkType.GITHUB && <GithubLogo className='w-5 h-5' />}
-                  {link.type === LinkType.WEBSITE && <LinkSimple className='w-5 h-5' />}
+                  {link.type === LinkType.TWITTER && <PiTwitterLogo className='w-5 h-5' />}
+                  {link.type === LinkType.YOUTUBE && <PiYoutubeLogo className='w-5 h-5' />}
+                  {link.type === LinkType.TIKTOK && <PiTiktokLogo className='w-5 h-5' />}
+                  {link.type === LinkType.DISCORD && <PiDiscordLogo className='w-5 h-5' />}
+                  {link.type === LinkType.INSTAGRAM && <PiInstagramLogo className='w-5 h-5' />}
+                  {link.type === LinkType.GITHUB && <PiGithubLogo className='w-5 h-5' />}
+                  {link.type === LinkType.WEBSITE && <PiLinkSimple className='w-5 h-5' />}
                   <span className='underline'>{link.url}</span>
                 </p>
                 <div>
-                  <Button variant='outline' iconLeft={<Trash />}
+                  <Button variant='outline' iconLeft={<PiTrash />}
                     centerItems
                     isLoading={removeLinkLoading && removeLinkVariables?.id === link.id}
                     onClick={() => removeLink({ id: link.id })}
@@ -279,7 +279,7 @@ const SettingsPage = () => {
                     disabled={linkLoading}
                     isLoading={linkLoading}
                     centerItems
-                    iconLeft={<Plus />}
+                    iconLeft={<PiPlus />}
                   />
                 </div>
               </div>
@@ -293,7 +293,7 @@ const SettingsPage = () => {
             variant={'outline'}
             type="button"
             centerItems
-            iconLeft={<Trash />}
+            iconLeft={<PiTrash />}
             onClick={() => setIsOpen(true)}
             isLoading={deleteProfileLoading}
           >

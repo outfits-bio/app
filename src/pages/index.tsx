@@ -6,7 +6,7 @@ import React, { useEffect } from 'react';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
 
-import { ArrowRight, CoatHanger } from '@phosphor-icons/react';
+import { PiArrowRight, PiCoatHanger } from 'react-icons/pi';
 
 import landing from '../../public/landing.png';
 
@@ -41,7 +41,7 @@ const Home = () => {
             </div>
             <div className='grow w-full'>
               <Link href={'#more'}>
-                <Button iconRight={<ArrowRight />} variant='ghost' centerItems>
+                <Button iconRight={<PiArrowRight />} variant='ghost' centerItems>
                   Learn More
                 </Button>
               </Link>
@@ -64,7 +64,7 @@ const Home = () => {
           <p className='font-satoshi text-gray-600 dark:text-white text-lg sm:text-2xl flex'>Upload your pictures and share your personal link in your tiktok or instagram bio!</p>
 
           <Link href='/login' className='w-full'>
-            <Button variant='outline' centerItems iconRight={<ArrowRight />}>
+            <Button variant='outline' centerItems iconRight={<PiArrowRight />}>
               Create a profile!
             </Button>
           </Link>
@@ -77,7 +77,7 @@ const Home = () => {
           <p className='font-satoshi text-gray-600 dark:text-white text-lg sm:text-2xl flex'>Do you like someones wardrobe? Make sure to show them love by liking their profile!</p>
 
           <Link href='/explore' className='w-full'>
-            <Button variant='outline' centerItems iconRight={<ArrowRight />}>
+            <Button variant='outline' centerItems iconRight={<PiArrowRight />}>
               Start exploring!
             </Button>
           </Link>
@@ -90,7 +90,7 @@ const Home = () => {
 
       <div className='flex flex-col md:flex-row gap-12 w-full py-12 px-20 justify-between'>
         <div className='flex flex-col items-left'>
-          <h1 className='text-lg font-black font-clash flex items-center gap-2'><CoatHanger className='mt-1' /> outfits.bio</h1>
+          <h1 className='text-lg font-black font-clash flex items-center gap-2'><PiCoatHanger className='mt-1' /> outfits.bio</h1>
           <p className='text-sm text-gray-500'>Your wardrobe in your bio.</p>
         </div>
 

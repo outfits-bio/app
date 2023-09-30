@@ -11,9 +11,9 @@ import { formatAvatar } from '~/utils/image-src-format.util';
 
 import { Menu, Transition } from '@headlessui/react';
 import {
-    Bell, BellSimple, Camera, CoatHanger, Compass, CopySimple, Door, DoorOpen, Gear, Hammer, Heart,
-    MagnifyingGlass, Person, Plus, SealCheck, SpinnerGap, User
-} from '@phosphor-icons/react';
+    PiBell, PiBellSimple, PiCamera, PiCoatHanger, PiCompass, PiCopySimple, PiDoor, PiDoorOpen, PiGear, PiHammer, PiHeart,
+    PiMagnifyingGlass, PiPerson, PiPlus, PiSealCheck, PiSpinnerGap, PiUser
+} from 'react-icons/pi';
 
 import { Avatar } from './Avatar';
 import { Button } from './Button';
@@ -56,11 +56,11 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
 
         <div className='hidden md:flex items-center justify-center gap-4'>
             <div>
-                <Button variant='outline-ghost' accent={theme !== 'dark' && theme !== 'light'} iconLeft={<Plus />} onClick={() => setCreatePostModalOpen(true)}>Create</Button>
+                <Button variant='outline-ghost' accent={theme !== 'dark' && theme !== 'light'} iconLeft={<PiPlus />} onClick={() => setCreatePostModalOpen(true)}>Create</Button>
             </div>
 
             {pathname !== '/explore' && <Link href='/explore'>
-                <Button variant='outline-ghost' shape={'square'} iconLeft={<Compass />} />
+                <Button variant='outline-ghost' shape={'square'} iconLeft={<PiCompass />} />
             </Link>}
 
             <NotificationsMenu unreadCount={data} />
@@ -68,7 +68,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
             {session.data?.user && <NavbarMenu user={session.data.user} setBugReportModalOpen={setBugReportModalOpen} setFeedbackModalOpen={setFeedbackModalOpen} />}
         </div>
         <Link href='/notifications' className='md:hidden relative'>
-            <Button variant='outline-ghost' shape={'circle'} iconLeft={<BellSimple />} />
+            <Button variant='outline-ghost' shape={'circle'} iconLeft={<PiBellSimple />} />
             {hasNotifications ? <div className="absolute top-0 right-0 w-4 h-4 rounded-full bg-error text-white text-[9px] font-bold flex items-center justify-center">
                 {data}
             </div> : null}
@@ -138,7 +138,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
                     <div className='w-[1px] h-full absolute right-12 bg-stroke' />
 
                     <button className='absolute right-0 flex items-center justify-center h-full w-12 hover:bg-hover disabled:hover:bg-transparent rounded-r-md' disabled={!input} onClick={() => input && push(`/search?username=${input}`)}>
-                        {isFetching ? <SpinnerGap className=' text-secondary-text w-6 h-6 animate-spin' /> : <MagnifyingGlass className='text-secondary-text w-6 h-6' />}
+                        {isFetching ? <PiSpinnerGap className=' text-secondary-text w-6 h-6 animate-spin' /> : <PiMagnifyingGlass className='text-secondary-text w-6 h-6' />}
                     </button>
 
                     {input.length > 0 && <div className='absolute top-14 w-full flex flex-col gap-1'>
@@ -150,17 +150,17 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
                                     <div className='flex flex-col gap-1'>
                                         <h1 className='font-black flex gap-1 items-center'>
                                             <span>{user.username}</span>
-                                            {user.admin ? <Hammer className='w-4 h-4' /> : user.verified && <SealCheck className='w-4 h-4' />}
+                                            {user.admin ? <PiHammer className='w-4 h-4' /> : user.verified && <PiSealCheck className='w-4 h-4' />}
                                         </h1>
                                         <p className='text-xs'>{user.tagline}</p>
 
                                         <div className='flex gap-2 items-center text-xs'>
                                             <span className='flex gap-1 items-center'>
-                                                <Camera className='w-3 h-3' />
+                                                <PiCamera className='w-3 h-3' />
                                                 <span>{user.imageCount} Shots</span>
                                             </span>
                                             <span className='flex gap-1 items-center'>
-                                                <Heart className='w-3 h-3' />
+                                                <PiHeart className='w-3 h-3' />
                                                 <span>{user.likeCount} Likes</span>
                                             </span>
                                         </div>

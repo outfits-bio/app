@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Fragment } from 'react';
 
 import { Menu, Transition } from '@headlessui/react';
-import { Compass, DiscordLogo, DotsThree, X } from '@phosphor-icons/react';
+import { PiCompass, PiDiscordLogo, PiDotsThree, PiX } from 'react-icons/pi';
 
 export const NavMenu = () => {
     return <Menu as="div" className="inline-block text-left md:hidden">
@@ -12,7 +12,7 @@ export const NavMenu = () => {
 
                 <div>
                     <Menu.Button className="inline-flex w-full justify-center bg-opacity-20 px-2 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                        {open ? <X className='h-9 w-9' /> : <DotsThree className='h-9 w-9' />}
+                        {open ? <PiX className='h-9 w-9' /> : <PiDotsThree className='h-9 w-9' />}
                     </Menu.Button>
                 </div>
 
@@ -38,7 +38,7 @@ export const NavMenu = () => {
                                     >
                                         <h3>Explore</h3>
 
-                                        <Compass className='w-6 h-6' />
+                                        <PiCompass className='w-6 h-6' />
                                     </Link>
                                 )}
                             </Menu.Item>
@@ -50,7 +50,7 @@ export const NavMenu = () => {
                                     >
                                         <h3>Discord</h3>
 
-                                        <DiscordLogo className='w-6 h-6' />
+                                        <PiDiscordLogo className='w-6 h-6' />
                                     </Link>
                                 )}
                             </Menu.Item>

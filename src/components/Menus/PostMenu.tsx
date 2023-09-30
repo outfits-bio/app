@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';
 
 import { Menu } from '@headlessui/react';
-import { DotsThree } from '@phosphor-icons/react';
+import { PiDotsThree } from 'react-icons/pi';
 
 import { Button } from '../Button';
 import { BaseMenu } from './BaseMenu';
@@ -33,7 +33,7 @@ export const PostMenu = ({ user, setReportModalOpen, handleDeleteUserPost, handl
         toast.success('Copied post link to clipboard!');
     }
 
-    return <BaseMenu {...props} button={<DotsThree className='w-5 h-5 text-white' />} className='right-0 bottom-0 w-44 origin-top-right'>
+    return <BaseMenu {...props} button={<PiDotsThree className='w-5 h-5 text-white' />} className='right-0 bottom-0 w-44 origin-top-right'>
 
         <div className="space-y-1">
             <Menu.Item>

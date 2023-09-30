@@ -2,7 +2,7 @@ import { cva } from 'class-variance-authority';
 import { forwardRef } from 'react';
 import { cn } from '~/utils/cn.util';
 
-import { SpinnerGap } from '@phosphor-icons/react';
+import { PiSpinnerGap } from 'react-icons/pi';
 
 import type { VariantProps } from 'class-variance-authority';
 
@@ -55,14 +55,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ className, c
             {!isLoading && <div className='text-2xl'>
                 {iconLeft}
             </div>}
-            {isLoading && <SpinnerGap className='animate-spin text-2xl' />}
+            {isLoading && <PiSpinnerGap className='animate-spin text-2xl' />}
             {children}
         </button>;
     }
 
     if (!iconLeft && iconRight) {
         return <button ref={ref} className={cn(variants({ centerItems, className, variant, shape, accent }))} disabled={isLoading} {...props}>
-            {isLoading && <SpinnerGap className='animate-spin text-2xl' />}
+            {isLoading && <PiSpinnerGap className='animate-spin text-2xl' />}
             {children}
             <div className='text-2xl'>
                 {iconRight}
@@ -75,7 +75,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ className, c
             {!isLoading && <div className='text-2xl'>
                 {iconLeft}
             </div>}
-            {isLoading && <SpinnerGap className='animate-spin text-2xl' />}
+            {isLoading && <PiSpinnerGap className='animate-spin text-2xl' />}
             {children}
             <div className='text-2xl'>
                 {iconRight}
@@ -87,7 +87,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ className, c
         {iconLeft && !isLoading && <div className='text-2xl'>
             {iconLeft}
         </div>}
-        {isLoading && <SpinnerGap className='animate-spin text-2xl' />}
+        {isLoading && <PiSpinnerGap className='animate-spin text-2xl' />}
         {children}
     </button>;
 });

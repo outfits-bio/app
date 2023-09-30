@@ -8,7 +8,7 @@ import { getServerAuthSession } from '~/server/auth';
 import { api } from '~/utils/api.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
-import { DiscordLogo, GoogleLogo, Hammer, SealCheck } from '@phosphor-icons/react';
+import { PiDiscordLogo, GoogleLogo, PiHammer, PiSealCheck } from 'react-icons/pi';
 
 import { PostSkeleton } from '../components/Skeletons/PostSkeleton';
 
@@ -30,7 +30,7 @@ const LoginPage = () => {
           <h1 className='text-3xl sm:text-5xl font-black font-clash sm:w-72 text-center'>Your virtual wardrobe</h1>
 
           <div className='w-72 gap-4 flex flex-col mb-20'>
-            <Button onClick={handleDiscord} iconRight={<DiscordLogo />}>Continue with Discord</Button>
+            <Button onClick={handleDiscord} iconRight={<PiDiscordLogo />}>Continue with Discord</Button>
             <Button onClick={handleGoogle} iconRight={<GoogleLogo />}>Continue with Google</Button>
           </div>
           <p className='bottom-0 fixed p-10 text-sm text-center w-96'>By signing up, you agree to our <span><Link href={'/docs/terms-of-service'} className='font-bold underline'>Terms of Service</Link></span> and <span><Link href={'/docs/privacy-policy'} className='font-bold underline'>Privacy Policy</Link></span>.</p>
@@ -103,7 +103,7 @@ const LoginPage = () => {
 
                     <h1 className='text-white flex gap-1 items-center text-sm w-full'>
                       <span className='truncate'>{post.user.username}</span>
-                      {post.user.admin ? <Hammer className='w-4 h-4' /> : post.user.verified && <SealCheck className='w-4 h-4' />}
+                      {post.user.admin ? <PiHammer className='w-4 h-4' /> : post.user.verified && <PiSealCheck className='w-4 h-4' />}
                     </h1>
                   </div>
                 </div>
@@ -131,7 +131,7 @@ const LoginPage = () => {
 
                     <h1 className='text-white flex gap-1 items-center text-sm w-full'>
                       <span className='truncate'>{post.user.username}</span>
-                      {post.user.admin ? <Hammer className='w-4 h-4' /> : post.user.verified && <SealCheck className='w-4 h-4' />}
+                      {post.user.admin ? <PiHammer className='w-4 h-4' /> : post.user.verified && <PiSealCheck className='w-4 h-4' />}
                     </h1>
                   </div>
                 </div>
@@ -159,7 +159,7 @@ const LoginPage = () => {
 
                     <h1 className='text-white flex gap-1 items-center text-sm w-full'>
                       <span className='truncate'>{post.user.username}</span>
-                      {post.user.admin ? <Hammer className='w-4 h-4' /> : post.user.verified && <SealCheck className='w-4 h-4' />}
+                      {post.user.admin ? <PiHammer className='w-4 h-4' /> : post.user.verified && <PiSealCheck className='w-4 h-4' />}
                     </h1>
                   </div>
                 </div>
@@ -187,7 +187,7 @@ const LoginPage = () => {
 
                     <h1 className='text-white flex gap-1 items-center text-sm w-full'>
                       <span className='truncate'>{post.user.username}</span>
-                      {post.user.admin ? <Hammer className='w-4 h-4' /> : post.user.verified && <SealCheck className='w-4 h-4' />}
+                      {post.user.admin ? <PiHammer className='w-4 h-4' /> : post.user.verified && <PiSealCheck className='w-4 h-4' />}
                     </h1>
                   </div>
                 </div>
