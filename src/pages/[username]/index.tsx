@@ -76,7 +76,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     }
 
     try {
-        await ssg.user.getProfile.p.refetch({ username });
+        await ssg.user.getProfile.prefetch({ username });
 
         return {
             props: {
