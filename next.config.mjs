@@ -45,6 +45,7 @@ const config = {
     ],
     unoptimized: true,
   },
+    optimizePackageImports: ['@phosphor-icons/react'],
   modularizeImports: {
     // "@phosphor-icons/react": {
     //   transform: "@phosphor-icons/react/{{member}}",
