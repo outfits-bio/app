@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';
 import { Layout } from '~/components/Layout';
 
-import { Copy } from '@phosphor-icons/react';
+import { PiCopy } from 'react-icons/pi';
 
 export const ErrorPage: NextPage = () => {
     const { query } = useRouter();
@@ -22,7 +22,7 @@ export const ErrorPage: NextPage = () => {
                 <p className='text-lg'>There was an error authenticating you.</p>
                 <p className='text-lg'>Here&apos;s the error code we received:</p>
                 <p className='text-lg text-red-500 hover:underline cursor-pointer flex gap-1 items-center justify-center group pr-5 hover:pr-0 pl-4' onClick={handleShare}>{error}
-                    <Copy className='hidden group-hover:flex w-4 h-4' />
+                    <PiCopy className='hidden group-hover:flex w-4 h-4' />
                 </p>
             </article>
         </div>

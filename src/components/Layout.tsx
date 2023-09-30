@@ -7,8 +7,8 @@ import { useEffect } from 'react';
 import { formatAvatar } from '~/utils/image-src-format.util';
 
 import {
-    Gear, HouseSimple, MagnifyingGlass, Plus, UserPlus
-} from '@phosphor-icons/react';
+    PiGear, PiHouseSimple, PiMagnifyingGlass, PiPlus, PiUserPlus
+} from 'react-icons/pi';
 
 import { Navbar } from './Navbar';
 import { Button } from './Button';
@@ -57,27 +57,27 @@ export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActi
             {pathname !== '/login' && pathname !== '/onboarding' && pathname !== '/' &&
                 <div className='py-5 px-6 bg-white dark:bg-black border border-stroke flex justify-between w-screen h-24 fixed bottom-0 md:hidden gap-4'>
                     <Link href={'/explore'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
-                        <HouseSimple />
+                        <PiHouseSimple />
                     </Link>
 
                     <Link href={'/search'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
-                        <MagnifyingGlass />
+                        <PiMagnifyingGlass />
                     </Link>
 
                     <Link href={'/shoot'} className='rounded-md flex flex-col items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
                         <Button shape={'square'} variant={'outline-ghost'} accent>
-                            <Plus />
+                            <PiPlus />
                         </Button>
                     </Link>
 
                     <Link href={'/settings'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
-                        <Gear />
+                        <PiGear />
                     </Link>
 
                     {session.data?.user ? <Link href={`/${session.data?.user.username}`} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
                         <Image className='rounded-full object-contain' src={formatAvatar(session.data?.user.image, session.data?.user.id)} alt={session.data?.user.username ?? ""} width={30} height={30} />
                     </Link> : <Link href={'/login'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
-                        <UserPlus />
+                        <PiUserPlus />
                     </Link>}
                 </div>
             }

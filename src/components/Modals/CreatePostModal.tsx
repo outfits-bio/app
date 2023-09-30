@@ -1,5 +1,5 @@
 import { Listbox, Transition } from "@headlessui/react"
-import { Plus, CaretDown } from "@phosphor-icons/react"
+import { PiPlus, PiCaretDown } from "react-icons/pi"
 import { PostType } from "@prisma/client"
 import { type } from "os"
 import { Fragment, useCallback, useEffect, useRef, useState } from "react"
@@ -119,7 +119,7 @@ export const CreatePostModal = (props: BaseModalProps) => {
                         onClick={() => ref.current?.click()}
                         type='submit'
                         className='w-full h-full bg-white dark:bg-black border hover:bg-stroke border-stroke gap-2 flex items-center justify-center font-bold flex-col text-sm rounded-md'>
-                        <Plus className='w-8 h-8 text-secondary-text' />
+                        <PiPlus className='w-8 h-8 text-secondary-text' />
                         <p className='text-secondary-text font-clash'>Upload Or Drop</p>
                     </button>
                 </div>
@@ -142,7 +142,7 @@ export const CreatePostModal = (props: BaseModalProps) => {
                     <Listbox.Button className={"relative font-clash text-secondary-text font-semibold w-full cursor-pointer rounded-md py-3 pl-6 pr-10 text-left border border-stroke"}>
                         <span className="block truncate">{getPostTypeName(type)}</span>
                         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-6">
-                            <CaretDown
+                            <PiCaretDown
                                 className="h-5 w-5 text-gray-400"
                                 aria-hidden="true"
                             />

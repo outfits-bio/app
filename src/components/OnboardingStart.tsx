@@ -1,6 +1,6 @@
 import { signOut } from 'next-auth/react';
 
-import { ArrowRight } from '@phosphor-icons/react';
+import { PiArrowRight } from 'react-icons/pi';
 
 import { Button } from './Button';
 
@@ -21,7 +21,7 @@ export const OnboardingStartSection = ({ setOnboardingStarted, username }: Onboa
         </div>
 
         <div className='w-full px-8 sm:px-0 sm:w-[500px] gap-4 flex flex-col mb-20'>
-            <Button iconRight={<ArrowRight />} centerItems onClick={() => setOnboardingStarted(1)}>Get Started</Button>
+            <Button iconRight={<PiArrowRight />} centerItems onClick={() => setOnboardingStarted(1)}>Get Started</Button>
             <Button variant='ghost' centerItems onClick={handleLogout}><p className='text-sm text-gray-500 font-satoshi'>Nevermind, log me out</p></Button>
         </div>
     </>

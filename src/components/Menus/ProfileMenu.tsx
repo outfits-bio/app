@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { Menu } from '@headlessui/react';
-import { DotsThree } from '@phosphor-icons/react';
+import { PiDotsThree } from 'react-icons/pi';
 
 import { Button } from '../Button';
 import { BaseMenu } from './BaseMenu';
@@ -25,7 +25,7 @@ export const ProfileMenu = ({ user, userUrl, username, setReportModalOpen, setAd
         toast.success('Copied profile link to clipboard!');
     }
 
-    return <BaseMenu {...props} button={<Button variant='outline' shape={'square'} iconLeft={<DotsThree />} />} className='right-2 md:right-auto md:left-2 md:bottom-0 top-0 md:top-auto'>
+    return <BaseMenu {...props} button={<Button variant='outline' shape={'square'} iconLeft={<PiDotsThree />} />} className='right-2 md:right-auto md:left-2 md:bottom-0 top-0 md:top-auto'>
 
         <div className="px-6 pb-2 space-y-1 select-none font-clash font-bold h-12 flex items-center gap-2">
             {username}&apos;s profile

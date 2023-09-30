@@ -7,8 +7,8 @@ import { Layout } from '~/components/Layout';
 import { api } from '~/utils/api.util';
 
 import {
-    Camera, Hammer, Heart, MagnifyingGlass, SealCheck, SpinnerGap
-} from '@phosphor-icons/react';
+    PiCamera, PiHammer, PiHeart, PiMagnifyingGlass, PiSealCheck, PiSpinnerGap
+} from 'react-icons/pi';
 import { useRouter } from 'next/router';
 
 export const SearchPage: NextPage = () => {
@@ -57,7 +57,7 @@ export const SearchPage: NextPage = () => {
                 />
                 <div className='absolute h-full right-14 w-[1px] bg-stroke' />
 
-                {isFetching ? <SpinnerGap className='absolute right-4 text-gray-400 dark:text-white w-6 h-6 animate-spin' /> : <MagnifyingGlass className='absolute right-4 text-gray-400 dark:text-white w-6 h-6' />}
+                {isFetching ? <PiSpinnerGap className='absolute right-4 text-gray-400 dark:text-white w-6 h-6 animate-spin' /> : <PiMagnifyingGlass className='absolute right-4 text-gray-400 dark:text-white w-6 h-6' />}
 
                 {input.length > 0 && <div className='absolute top-12 w-full flex flex-col gap-1'>
 
@@ -69,17 +69,17 @@ export const SearchPage: NextPage = () => {
                                 <div className='flex flex-col gap-1'>
                                     <h1 className='font-black flex gap-1 items-center'>
                                         <span>{user.username}</span>
-                                        {user.admin ? <Hammer className='w-4 h-4' /> : user.verified && <SealCheck className='w-4 h-4' />}
+                                        {user.admin ? <PiHammer className='w-4 h-4' /> : user.verified && <PiSealCheck className='w-4 h-4' />}
                                     </h1>
                                     <p className='text-xs'>{user.tagline}</p>
 
                                     <div className='flex gap-2 items-center text-xs'>
                                         <span className='flex gap-1 items-center'>
-                                            <Camera className='w-3 h-3' />
+                                            <PiCamera className='w-3 h-3' />
                                             <span>{user.imageCount} Shots</span>
                                         </span>
                                         <span className='flex gap-1 items-center'>
-                                            <Heart className='w-3 h-3' />
+                                            <PiHeart className='w-3 h-3' />
                                             <span>{user.likeCount} Likes</span>
                                         </span>
                                     </div>

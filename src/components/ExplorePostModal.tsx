@@ -10,7 +10,7 @@ import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 import localFont from 'next/font/local';
 
 import { Dialog, Transition } from '@headlessui/react';
-import { Hammer, SealCheck, X } from '@phosphor-icons/react';
+import { PiHammer, PiSealCheck, PiX } from 'react-icons/pi';
 
 import { DeleteModal } from './DeleteModal';
 import { PostMenu } from './Menus/PostMenu';
@@ -147,7 +147,7 @@ export const ExplorePostModal = ({ post, setPostModalOpen }: ExplorePostModalPro
                         <Dialog.Panel className={`relative transform overflow-hidden rounded-xl bg-white text-left align-middle shadow-xl transition-all w-[400px] h-[654px]`}>
                             <Image src={formatImage(post.image, post.user.id)} alt={post.type ?? ''} fill className='rounded-xl border-black border object-cover' />
                             <button className='absolute left-4 top-4 text-white' onClick={closeModal}>
-                                <X className='w-5 h-4' />
+                                <PiX className='w-5 h-4' />
                             </button>
 
                             <div className='flex flex-col justify-end items-center p-4 absolute bottom-0 bg-gradient-to-b from-transparent to-black w-full h-1/4 bg-fixed'>
@@ -162,7 +162,7 @@ export const ExplorePostModal = ({ post, setPostModalOpen }: ExplorePostModalPro
 
                                         <h1 className='text-white flex gap-1 items-center text-sm w-full'>
                                             <span className='truncate'>{post.user.username}</span>
-                                            {post.user.admin ? <Hammer className='w-4 h-4' /> : post.user.verified && <SealCheck className='w-4 h-4' />}
+                                            {post.user.admin ? <PiHammer className='w-4 h-4' /> : post.user.verified && <PiSealCheck className='w-4 h-4' />}
                                         </h1>
                                     </Link>
 

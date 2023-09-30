@@ -1,5 +1,5 @@
 import { Listbox, Transition } from '@headlessui/react';
-import { CaretDown, Plus } from '@phosphor-icons/react';
+import { PiCaretDown, PiPlus, PiTagChevron, PiX } from 'react-icons/pi';
 import { PostType } from '@prisma/client';
 import axios from 'axios';
 import { NextPage } from 'next';
@@ -9,7 +9,7 @@ import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import Cropper, { Area } from 'react-easy-crop';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
-import { getPostTypeName } from '~/components/PostSection/post-section.util';
+import { getPostTypeName, onError, onMutate, onSettled } from '~/components/PostSection/post-section.util';
 import { useFileUpload } from '~/hooks/file-upload.hook';
 import { api } from '~/utils/api.util';
 import getCroppedImg from '~/utils/crop-image.util';
@@ -113,7 +113,7 @@ export const ShootPage: NextPage = () => {
                             onClick={() => ref.current?.click()}
                             type='submit'
                             className='w-full h-full bg-white dark:bg-black border hover:bg-stroke border-stroke gap-2 flex items-center justify-center font-bold flex-col text-sm rounded-md'>
-                            <Plus className='w-8 h-8 text-secondary-text' />
+                            <PiPlus className='w-8 h-8 text-secondary-text' />
                             <p className='text-secondary-text font-clash'>Upload Or Drop</p>
                         </button>
                     </div>
@@ -136,7 +136,7 @@ export const ShootPage: NextPage = () => {
                         <Listbox.Button className={"relative font-clash text-secondary-text font-semibold w-full cursor-pointer rounded-md py-3 pl-6 pr-10 text-left border border-stroke"}>
                             <span className="block truncate">{getPostTypeName(type)}</span>
                             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-6">
-                                <CaretDown
+                                <PiCaretDown
                                     className="h-5 w-5 text-gray-400"
                                     aria-hidden="true"
                                 />

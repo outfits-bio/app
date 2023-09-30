@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BaseMenu } from "./BaseMenu";
 import { Button } from "../Button";
-import { BellSimple, SpinnerGap } from "@phosphor-icons/react";
+import { PiBellSimple, PiSpinnerGap } from "react-icons/pi";
 import { api } from "~/utils/api.util";
 import NotificationCard from "../Notification";
 import { Menu, Transition } from "@headlessui/react";
@@ -28,7 +28,7 @@ export const NotificationsMenu = ({ unreadCount }: NotificationsMenuProps) => {
         <div>
             <Menu.Button onClick={() => refetch()}>
                 <div className="relative">
-                    <Button variant='outline-ghost' shape={'circle'} iconLeft={<BellSimple />} />
+                    <Button variant='outline-ghost' shape={'circle'} iconLeft={<PiBellSimple />} />
                     {hasNotifications ? <div className="absolute top-0 right-0 w-4 h-4 rounded-full bg-error text-white text-[9px] font-bold flex items-center justify-center">
                         {unreadCount}
                     </div> : null}
