@@ -1,5 +1,5 @@
 import { Listbox, Transition } from '@headlessui/react';
-import { CaretDown, Plus, TagChevron, X } from '@phosphor-icons/react';
+import { CaretDown, Plus } from '@phosphor-icons/react';
 import { PostType } from '@prisma/client';
 import axios from 'axios';
 import { NextPage } from 'next';
@@ -9,7 +9,7 @@ import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import Cropper, { Area } from 'react-easy-crop';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
-import { getPostTypeName, onError, onMutate, onSettled } from '~/components/PostSection/post-section.util';
+import { getPostTypeName } from '~/components/PostSection/post-section.util';
 import { useFileUpload } from '~/hooks/file-upload.hook';
 import { api } from '~/utils/api.util';
 import getCroppedImg from '~/utils/crop-image.util';
