@@ -9,14 +9,6 @@
     "lint": "next lint",
     "start": "next start"
   },
-  "exports": {
-    ".": {
-      "import": "./dist/index.es.js"
-    },
-    "./*": {
-      "import": "./dist/icons/*.es.js"
-    }
-  },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.391.0",
     "@aws-sdk/s3-request-presigner": "^3.391.0",
