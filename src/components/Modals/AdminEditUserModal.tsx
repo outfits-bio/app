@@ -13,7 +13,7 @@ import { Button } from '../Button';
 import { BaseModal } from './BaseModal';
 
 import type { BaseModalProps } from './BaseModal';
-import { PiSpinnerGap, PiPiTrashSimple } from 'react-icons/pi';
+import { PiSpinnerGap, PiTrashSimple } from 'react-icons/pi';
 type RouterOutput = inferRouterOutputs<AppRouter>;
 
 interface AdminEditUserModalProps extends BaseModalProps {
@@ -87,7 +87,7 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
                         {props.targetUser.links?.map((link) =>
                             <button type='button' key={link.id} className='text-sm flex items-center font-semibold py-2 border-stroke rounded-md border w-full text-left px-4 hover:bg-hover' onClick={() => removeLink({ id: link.userId, linkId: link.id })}>
                                 {link.url}
-                                {(removeLinkLoading && variables?.linkId === link.id) ? <PiSpinnerGap className='animate-spin ml-auto' /> : <PiPiTrashSimple className='ml-auto' />}
+                                {(removeLinkLoading && variables?.linkId === link.id) ? <PiSpinnerGap className='animate-spin ml-auto' /> : <PiTrashSimple className='ml-auto' />}
                             </button>
                         )}
                     </ul>
