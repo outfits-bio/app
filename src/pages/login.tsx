@@ -8,7 +8,7 @@ import { getServerAuthSession } from '~/server/auth';
 import { api } from '~/utils/api.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
-import { PiDiscordLogo, GoogleLogo, PiHammer, PiSealCheck } from 'react-icons/pi';
+import { PiDiscordLogo, PiGoogleLogo, PiHammer, PiSealCheck } from 'react-icons/pi';
 
 import { PostSkeleton } from '../components/Skeletons/PostSkeleton';
 
@@ -31,7 +31,7 @@ const LoginPage = () => {
 
           <div className='w-72 gap-4 flex flex-col mb-20'>
             <Button onClick={handleDiscord} iconRight={<PiDiscordLogo />}>Continue with Discord</Button>
-            <Button onClick={handleGoogle} iconRight={<GoogleLogo />}>Continue with Google</Button>
+            <Button onClick={handleGoogle} iconRight={<PiGoogleLogo />}>Continue with Google</Button>
           </div>
           <p className='bottom-0 fixed p-10 text-sm text-center w-96'>By signing up, you agree to our <span><Link href={'/docs/terms-of-service'} className='font-bold underline'>Terms of Service</Link></span> and <span><Link href={'/docs/privacy-policy'} className='font-bold underline'>Privacy Policy</Link></span>.</p>
         </div>
