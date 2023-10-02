@@ -13,7 +13,7 @@ import { Button } from '../Button';
 import { BaseModal } from './BaseModal';
 
 import type { BaseModalProps } from './BaseModal';
-import { SpinnerGap, TrashSimple } from '@phosphor-icons/react';
+import { PiSpinnerGap, PiTrashSimple } from 'react-icons/pi';
 type RouterOutput = inferRouterOutputs<AppRouter>;
 
 interface AdminEditUserModalProps extends BaseModalProps {
@@ -26,7 +26,7 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
 
     const { mutate, isLoading } = api.admin.editUser.useMutation({
         onSuccess: () => {
-            ctx.user.getProfile.invalidate({ username: props.targetUser.username! });
+            ctx.user.getProfile.refetch({ username: props.targetUser.username! });
             props.setIsOpen(false);
             toast.success('User edited successfully!');
         },
@@ -35,7 +35,7 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
 
     const { mutate: removeImage, isLoading: removeImageLoading } = api.admin.removeUserAvatar.useMutation({
         onSuccess: () => {
-            ctx.user.getProfile.invalidate({ username: props.targetUser.username! });
+            ctx.user.getProfile.refetch({ username: props.targetUser.username! });
             toast.success('Avatar removed successfully!');
         },
         onError: (e) => handleErrors({ e, message: 'Failed to remove avatar' })
@@ -43,7 +43,7 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
 
     const { mutate: removeLink, isLoading: removeLinkLoading, variables } = api.admin.removeUserLink.useMutation({
         onSuccess: () => {
-            ctx.user.getProfile.invalidate({ username: props.targetUser.username! });
+            ctx.user.getProfile.refetch({ username: props.targetUser.username! });
             toast.success('Link removed successfully!');
         },
         onError: (e) => handleErrors({ e, message: 'Failed to remove link' })
@@ -51,7 +51,7 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
 
     const { mutate: giveVerified, isLoading: giveVerifiedLoading } = api.admin.toggleUserVerified.useMutation({
         onSuccess: () => {
-            ctx.user.getProfile.invalidate({ username: props.targetUser.username! });
+            ctx.user.getProfile.refetch({ username: props.targetUser.username! });
             toast.success('Verified changed successfully!');
         },
         onError: (e) => handleErrors({ e, message: 'Failed to change verified' })
@@ -87,7 +87,7 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
                         {props.targetUser.links?.map((link) =>
                             <button type='button' key={link.id} className='text-sm flex items-center font-semibold py-2 border-stroke rounded-md border w-full text-left px-4 hover:bg-hover' onClick={() => removeLink({ id: link.userId, linkId: link.id })}>
                                 {link.url}
-                                {(removeLinkLoading && variables?.linkId === link.id) ? <SpinnerGap className='animate-spin ml-auto' /> : <TrashSimple className='ml-auto' />}
+                                {(removeLinkLoading && variables?.linkId === link.id) ? <PiSpinnerGap className='animate-spin ml-auto' /> : <PiTrashSimple className='ml-auto' />}
                             </button>
                         )}
                     </ul>

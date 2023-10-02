@@ -5,9 +5,9 @@ import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 import {
-  Backpack, BaseballCap, CoatHanger, Eyeglasses, Hoodie, Pants, ShirtFolded, Sneaker, TShirt,
-  Watch
-} from '@phosphor-icons/react';
+  PiBackpackBold, PiBaseballCapBold, PiCoatHangerBold, PiEyeglassesBold, PiHoodieBold, PiPantsBold, PiShirtFoldedBold, PiSneakerBold, PiTShirtBold,
+  PiWatchBold
+} from 'react-icons/pi';
 import { Post, PostType } from '@prisma/client';
 import { inferRouterOutputs } from '@trpc/server';
 
@@ -86,46 +86,46 @@ export const getPostTypeCount = (
 export const getPostTypeIcon = (type: PostType): React.ReactNode => {
   switch (type) {
     case PostType.OUTFIT:
-      return <CoatHanger weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
+      return <PiCoatHangerBold className='md:w-12 md:h-12 w-8 h-8' />
     case PostType.HOODIE:
-      return <ShirtFolded weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
+      return <PiShirtFoldedBold className='md:w-12 md:h-12 w-8 h-8' />
     case PostType.SHIRT:
-      return <TShirt weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
+      return <PiTShirtBold className='md:w-12 md:h-12 w-8 h-8' />
     case PostType.PANTS:
-      return <Pants weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
+      return <PiPantsBold className='md:w-12 md:h-12 w-8 h-8' />
     case PostType.SHOES:
-      return <Sneaker weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
+      return <PiSneakerBold className='md:w-12 md:h-12 w-8 h-8' />
     case PostType.WATCH:
-      return <Backpack weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
+      return <PiBackpackBold className='md:w-12 md:h-12 w-8 h-8' />
     case PostType.GLASSES:
-      return <Eyeglasses weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
+      return <PiEyeglassesBold className='md:w-12 md:h-12 w-8 h-8' />
     case PostType.HEADWEAR:
-      return <BaseballCap weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
+      return <PiBaseballCapBold className='md:w-12 md:h-12 w-8 h-8' />
     case PostType.JEWELRY:
-      return <Watch weight='bold' className='md:w-12 md:h-12 w-8 h-8' />
+      return <PiTShirtBold className='md:w-12 md:h-12 w-8 h-8' />
   }
 };
 
 export const getPostTypeIconSmall = (type: PostType): React.ReactNode => {
   switch (type) {
     case PostType.OUTFIT:
-      return <CoatHanger weight='bold' className='w-6 h-6' />
+      return <PiCoatHangerBold className='w-6 h-6' />
     case PostType.HOODIE:
-      return <Hoodie weight='bold' className='w-6 h-6' />
+      return <PiHoodieBold className='w-6 h-6' />
     case PostType.SHIRT:
-      return <TShirt weight='bold' className='w-6 h-6' />
+      return <PiTShirtBold className='w-6 h-6' />
     case PostType.PANTS:
-      return <Pants weight='bold' className='w-6 h-6' />
+      return <PiPantsBold className='w-6 h-6' />
     case PostType.SHOES:
-      return <Sneaker weight='bold' className='w-6 h-6' />
+      return <PiSneakerBold className='w-6 h-6' />
     case PostType.WATCH:
-      return <Watch weight='bold' className='w-6 h-6' />
+      return <PiTShirtBold className='w-6 h-6' />
     case PostType.GLASSES:
-      return <Eyeglasses weight='bold' className='w-6 h-6' />
+      return <PiEyeglassesBold className='w-6 h-6' />
     case PostType.HEADWEAR:
-      return <BaseballCap weight='bold' className='w-6 h-6' />
+      return <PiBaseballCapBold className='w-6 h-6' />
     case PostType.JEWELRY:
-      return <Watch weight='bold' className='w-6 h-6' />
+      return <PiTShirtBold className='w-6 h-6' />
   }
 }
 
@@ -141,7 +141,7 @@ export const onMutate = async (
   updateData: (old: PartialPost[] | undefined) => PartialPost[] | undefined,
   userId?: string
 ): Promise<{ prevData: PartialPost[] | undefined }> => {
-  await ctx.post.getPostsAllTypes.invalidate();
+  await ctx.post.getPostsAllTypes.refetch();
 
   const prevData = ctx.post.getPostsAllTypes.getData();
 
@@ -177,6 +177,6 @@ export const onError = async (
  * @returns void
  */
 export const onSettled = async (ctx: Context, username?: string | null) => {
-  ctx.post.getPostsAllTypes.invalidate();
-  ctx.user.getProfile.invalidate({ username: username ?? "" });
+  ctx.post.getPostsAllTypes.refetch();
+  ctx.user.getProfile.refetch({ username: username ?? "" });
 };

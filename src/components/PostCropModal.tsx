@@ -3,7 +3,7 @@ import Cropper, { Area } from 'react-easy-crop';
 import getCroppedImg from '~/utils/crop-image.util';
 
 import { Dialog, Transition } from '@headlessui/react';
-import { X } from '@phosphor-icons/react';
+import { PiX } from 'react-icons/pi';
 import { PostType } from '@prisma/client';
 
 import { Button } from './Button';
@@ -75,7 +75,7 @@ export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
                                     <div className='flex justify-end w-full mb-2'>
                                         <div>
                                             <Button variant='ghost' centerItems>
-                                                <X className='h-6 w-6' />
+                                                <PiX className='h-6 w-6' />
                                             </Button>
                                         </div>
                                     </div>
@@ -116,7 +116,7 @@ export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
                                 {/* <div className='flex flex-col w-[320px] h-full gap-4 pl-4'>
                                     <div className='flex w-full items-center justify-end'>
                                         <button>
-                                            <X className='h-6 w-6' />
+                                            <PiX className='h-6 w-6' />
                                         </button>
                                     </div>
 

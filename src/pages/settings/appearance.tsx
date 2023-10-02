@@ -6,9 +6,10 @@ import { SettingsLayout } from '~/components/SettingsLayout';
 import { ThemeCard } from '~/components/ThemeCard';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
+import { motion } from 'framer-motion';
 
 import { Switch } from '@headlessui/react';
-import { Question, SpinnerGap } from '@phosphor-icons/react';
+import { PiQuestion, PiSpinnerGap } from 'react-icons/pi';
 
 import type { NextPage } from "next";
 import { AccentCard } from '~/components/AccentCard';
@@ -59,7 +60,7 @@ export const AppearanceSettingsPage: NextPage = () => {
                 <div className='flex items-center py-2 font-bold text-xl justify-between'>
                     <span className='flex items-center gap-2'>
                         <p>Hide All Presences</p>
-                        <Question onClick={() => setHideAllPresencesModalOpen(true)} className='w-4 h-4 cursor-pointer' />
+                        <PiQuestion onClick={() => setHideAllPresencesModalOpen(true)} className='w-4 h-4 cursor-pointer' />
                     </span>
                     <Switch
                         checked={data?.user.hideLanyard ?? false}
@@ -68,14 +69,19 @@ export const AppearanceSettingsPage: NextPage = () => {
           relative inline-flex h-8 w-[72px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
                     >
                         <span className="sr-only">Toggle Lanyard</span>
-                        <span
+                        <motion.span
+                            layout transition={{
+                                type: "spring",
+                                stiffness: 700,
+                                damping: 30
+                            }}
                             aria-hidden="true"
                             className={`${data?.user.hideLanyard ?? false ? 'translate-x-10' : 'translate-x-0'}
             pointer-events-none h-7 w-7 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out flex items-center justify-center`}
                         >
-                            {setToggleHideLanyardLoading && <SpinnerGap className='w-4 h-4 text-secondary-text animate-spin' />}
+                            {setToggleHideLanyardLoading && <PiSpinnerGap className='w-4 h-4 text-secondary-text animate-spin' />}
 
-                        </span>
+                        </motion.span>
                     </Switch>
                 </div>
             </div>

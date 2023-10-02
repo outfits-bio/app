@@ -2,15 +2,15 @@ import { signIn, useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { Button } from '~/components/Button';
-import { HideAllPresencesModal } from '~/components/Modals/HideAllPresencesModal';
 import { SpotifyConnectDiscordModal } from '~/components/Modals/SpotifyConnectDiscordModal';
 import { SpotifySetupModal } from '~/components/Modals/SpotifySetupModal';
 import { SettingsLayout } from '~/components/SettingsLayout';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
+import { motion } from 'framer-motion';
 
 import { Switch } from '@headlessui/react';
-import { DiscordLogo, GoogleLogo, Question, SpinnerGap, Trash } from '@phosphor-icons/react';
+import { PiDiscordLogo, PiGoogleLogo, PiQuestion, PiSpinnerGap, PiTrash } from 'react-icons/pi';
 
 import type { NextPage } from "next";
 export const ConnectionsSettingsPage: NextPage = () => {
@@ -29,8 +29,8 @@ export const ConnectionsSettingsPage: NextPage = () => {
 
     const { mutate: unlinkAccount, isLoading: unlinkLoading, variables } = api.user.unlinkAccount.useMutation({
         onSuccess: () => {
-            ctx.user.getAccounts.invalidate();
-            ctx.user.getLanyardEnabled.invalidate();
+            ctx.user.getAccounts.refetch();
+            ctx.user.getLanyardEnabled.refetch();
             toast.success('Account unlinked successfully!');
         },
         onError: (e) => handleErrors({ e, message: 'Failed to unlink account' })
@@ -38,7 +38,7 @@ export const ConnectionsSettingsPage: NextPage = () => {
 
     const { mutate: setLanyardEnabled, isLoading: setLanyardEnabledLoading } = api.user.toggleEnableLanyard.useMutation({
         onSuccess: () => {
-            ctx.user.getLanyardEnabled.invalidate();
+            ctx.user.getLanyardEnabled.refetch();
         },
         onError: (e) => handleErrors({ e, message: 'Failed to toggle lanyard' })
     });
@@ -64,12 +64,12 @@ export const ConnectionsSettingsPage: NextPage = () => {
                 {discordAccount ?
                     <div className='flex items-center gap-2'>
                         <div className='py-2 h-12 grow w-full cursor-default flex justify-center items-center select-none rounded-md border border-black dark:border-white'>
-                            <DiscordLogo className='w-6 h-6 mr-2' />
+                            <PiDiscordLogo className='w-6 h-6 mr-2' />
                             <span>Discord Connected</span>
                         </div>
 
                         <div>
-                            <Button variant='outline' iconLeft={<Trash />} centerItems
+                            <Button variant='outline' iconLeft={<PiTrash />} centerItems
                                 isLoading={unlinkLoading && variables?.id === discordAccount?.id}
                                 onClick={() => unlinkAccount({ id: discordAccount?.id ?? '' })}
                             />
@@ -77,7 +77,7 @@ export const ConnectionsSettingsPage: NextPage = () => {
                     </div>
                     :
                     <div>
-                        <Button onClick={() => signIn('discord')} iconLeft={<DiscordLogo />} centerItems>
+                        <Button onClick={() => signIn('discord')} iconLeft={<PiDiscordLogo />} centerItems>
                             Connect Discord
                         </Button>
                     </div>
@@ -86,12 +86,12 @@ export const ConnectionsSettingsPage: NextPage = () => {
                 {googleAccount ?
                     <div className='flex items-center gap-2'>
                         <div className='py-2 h-12 grow w-full cursor-default flex justify-center items-center select-none rounded-md border border-black dark:border-white'>
-                            <GoogleLogo className='w-6 h-6 mr-2' />
+                            <PiGoogleLogo className='w-6 h-6 mr-2' />
                             <span>Google Connected</span>
                         </div>
 
                         <div>
-                            <Button variant='outline' iconLeft={<Trash />} centerItems
+                            <Button variant='outline' iconLeft={<PiTrash />} centerItems
                                 isLoading={unlinkLoading && variables?.id === googleAccount?.id}
                                 onClick={() => unlinkAccount({ id: googleAccount?.id ?? '' })}
                             />
@@ -99,7 +99,7 @@ export const ConnectionsSettingsPage: NextPage = () => {
                     </div>
                     :
                     <div>
-                        <Button onClick={() => signIn('google')} iconLeft={<GoogleLogo />} centerItems>
+                        <Button onClick={() => signIn('google')} iconLeft={<PiGoogleLogo />} centerItems>
                             Connect Google
                         </Button>
                     </div>
@@ -108,23 +108,29 @@ export const ConnectionsSettingsPage: NextPage = () => {
                 {<div className='flex items-center py-2 font-bold text-xl justify-between'>
                     <span className='flex items-center gap-2'>
                         <p>Toggle Spotify Status</p>
-                        <Question onClick={() => setSpotifySetupModalOpen(true)} className='w-4 h-4 cursor-pointer' />
+                        <PiQuestion onClick={() => setSpotifySetupModalOpen(true)} className='w-4 h-4 cursor-pointer' />
                     </span>
                     <Switch
                         checked={lanyardEnabledData ?? false}
                         onChange={handleLanyard}
-                        className={`${lanyardEnabledData ?? false ? 'bg-black' : 'bg-hover'}
+                        className={`${lanyardEnabledData ?? false ? 'bg-black justify-end' : 'bg-hover justify-start'}
           relative inline-flex h-8 w-[72px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
                     >
                         <span className="sr-only">Toggle Lanyard</span>
-                        <span
+                        <motion.span
+                            layout
+                            transition={{
+                                type: "spring",
+                                stiffness: 700,
+                                damping: 30
+                            }}
                             aria-hidden="true"
-                            className={`${lanyardEnabledData ?? false ? 'translate-x-10' : 'translate-x-0'}
-            pointer-events-none h-7 w-7 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out flex items-center justify-center`}
+                            className={`
+            pointer-events-none h-7 w-7 rounded-full bg-white shadow-lg ring-0 flex items-center justify-center`}
                         >
-                            {setLanyardEnabledLoading && <SpinnerGap className='w-4 h-4 text-secondary-text animate-spin' />}
+                            {setLanyardEnabledLoading && <PiSpinnerGap className='w-4 h-4 text-secondary-text animate-spin' />}
 
-                        </span>
+                        </motion.span>
                     </Switch>
                 </div>}
             </div>

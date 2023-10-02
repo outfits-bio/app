@@ -1,7 +1,7 @@
 import { useTheme } from "next-themes";
 import { ThemeCard } from "./ThemeCard"
 import { Button } from "./Button";
-import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
+import { PiArrowLeft, PiArrowRight } from "react-icons/pi";
 import { useRouter } from "next/router";
 import { AccentCard } from '~/components/AccentCard';
 
@@ -40,8 +40,8 @@ export const OnboardingAppearance = ({ setOnboardingStarted, onboardingStarted, 
 
 
         <div className='flex gap-2 mt-4'>
-            <Button variant='outline' iconLeft={<ArrowLeft />} onClick={() => setOnboardingStarted(1)} centerItems>Back</Button>
-            <Button type='submit' iconRight={<ArrowRight />} centerItems onClick={() => push(`/${username}`)}>Continue</Button>
+            <Button variant='outline' iconLeft={<PiArrowLeft />} onClick={() => setOnboardingStarted(1)} centerItems>Back</Button>
+            <Button type='submit' iconRight={<PiArrowRight />} centerItems onClick={() => push(`/${username}`)}>Continue</Button>
         </div>
     </div>
 }

@@ -7,8 +7,8 @@ import { useEffect } from 'react';
 import { formatAvatar } from '~/utils/image-src-format.util';
 
 import {
-    Gear, HouseSimple, MagnifyingGlass, Plus, UserPlus
-} from '@phosphor-icons/react';
+    PiGear, PiHouseSimple, PiMagnifyingGlass, PiPlus, PiUserPlus
+} from 'react-icons/pi';
 
 import { Navbar } from './Navbar';
 import { Button } from './Button';
@@ -55,29 +55,29 @@ export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActi
             <Navbar title={title} session={session} showSlash={showSlash} showActions={showActions} hideSearch={hideSearch} />
             <main className='h-screen pt-20 overflow-x-hidden pb-24 md:pb-0 scroll-smooth'>{children}</main>
             {pathname !== '/login' && pathname !== '/onboarding' && pathname !== '/' &&
-                <div className='py-2 px-6 bg-white dark:bg-black border border-stroke flex justify-between w-screen h-24 fixed bottom-0 md:hidden gap-4'>
-                    <Link href={'/explore'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl'>
-                        <HouseSimple />
+                <div className='py-5 px-6 bg-white dark:bg-black border border-stroke flex justify-between w-screen h-24 fixed bottom-0 md:hidden gap-4'>
+                    <Link href={'/explore'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
+                        <PiHouseSimple />
                     </Link>
 
-                    <Link href={'/search'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl'>
-                        <MagnifyingGlass />
+                    <Link href={'/search'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
+                        <PiMagnifyingGlass />
                     </Link>
 
-                    <Link href={'/shoot'} className='rounded-md flex flex-col items-center justify-center text-3xl'>
+                    <Link href={'/shoot'} className='rounded-md flex flex-col items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
                         <Button shape={'square'} variant={'outline-ghost'} accent>
-                            <Plus />
+                            <PiPlus />
                         </Button>
                     </Link>
 
-                    <Link href={'/settings'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl'>
-                        <Gear />
+                    <Link href={'/settings'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
+                        <PiGear />
                     </Link>
 
-                    {session.data?.user ? <Link href={`/${session.data?.user.username}`} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl'>
+                    {session.data?.user ? <Link href={`/${session.data?.user.username}`} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
                         <Image className='rounded-full object-contain' src={formatAvatar(session.data?.user.image, session.data?.user.id)} alt={session.data?.user.username ?? ""} width={30} height={30} />
-                    </Link> : <Link href={'/login'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl'>
-                        <UserPlus />
+                    </Link> : <Link href={'/login'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
+                        <PiUserPlus />
                     </Link>}
                 </div>
             }
