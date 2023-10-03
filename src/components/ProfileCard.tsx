@@ -119,7 +119,16 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                     <div className='flex flex-col gap-1 md:gap-4'>
                         <h1 className='font-black text-2xl md:text-4xl font-clash gap-2 md:gap-3 flex items-center'>
                             <span>{profileData?.username}</span>
-                            {profileData?.admin ? <PiHammerBold className='w-6 h-6 md:w-8 md:h-8' /> : profileData?.verified && <PiSealCheckBold className='w-6 h-6 md:w-8 md:h-8' />}
+                            <div className='group relative w-max'>
+                                {profileData?.admin ? <PiHammerBold className='w-6 h-6 md:w-8 md:h-8' /> : profileData?.verified && <PiSealCheckBold className='w-6 h-6 md:w-8 md:h-8' />}
+                                <span className='opacity-0 transition-opacity group-hover:opacity-100 pointer-events-none absolute w-0 h-0 -top-2 left-1/3 border-l-[5px] border-l-transparent border-t-[7.5px] border-t-black dark:border-t-white border-r-[5px] border-r-transparent' />
+                                <span
+                                    className="shadow-lg pointer-events-none absolute bg-black dark:bg-white -top-[42px] -left-full w-max rounded-md p-2 opacity-0 transition-opacity group-hover:opacity-100"
+                                >
+
+                                    <p className='text-sm font-medium text-white dark:text-black'>{profileData?.admin ? 'Administrator' : profileData?.verified && 'Verified'}</p>
+                                </span>
+                            </div>
                         </h1>
 
                         <p className={`grow ${loading && 'skeleton'}`}>{profileData?.tagline}</p>
@@ -185,7 +194,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                                 }}
                                 iconLeft={
                                     <PiHeartBold
-                                         /* weight={(profileData?.authUserHasLiked) ? 'fill' : 'regular'} */ 
+                                        /* weight={(profileData?.authUserHasLiked) ? 'fill' : 'regular'} */
                                         onAnimationEnd={() => setLikeAnimation(false)}
                                         className={likeAnimation ? 'animate-ping ' : '' + 'text-white dark:text-black'}
                                     />
