@@ -9,7 +9,7 @@ import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 import {
-    PiCameraBold, PiDiscordLogoBold, PiGithubLogoBold, PiHammerBold, PiHeartBold, PiInstagramLogoBold, PiLinkSimpleBold, PiPencilSimple,
+    PiCameraBold, PiDiscordLogoBold, PiGithubLogoBold, PiHammerBold, PiHeartBold, PiHeartFill, PiInstagramLogoBold, PiLinkSimpleBold, PiPencilSimple,
     PiQuestion, PiSealCheckBold, PiShareFat, PiTiktokLogoBold, PiTwitterLogoBold, PiYoutubeLogoBold
 } from 'react-icons/pi';
 import { LinkType } from '@prisma/client';
@@ -193,12 +193,19 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                                     if (profileData?.id) mutate({ id: profileData.id });
                                 }}
                                 iconLeft={
-                                    <PiHeartBold
-                                        /* weight={(profileData?.authUserHasLiked) ? 'fill' : 'regular'} */
-                                        onAnimationEnd={() => setLikeAnimation(false)}
-                                        className={likeAnimation ? 'animate-ping ' : '' + 'text-white dark:text-black'}
-                                    />
-                                }
+                                    
+                                    (profileData?.authUserHasLiked) ? (
+                                        <PiHeartFill
+                                          onAnimationEnd={() => setLikeAnimation(false)}
+                                          className={likeAnimation ? 'animate-ping text-white dark:text-black' : ''}
+                                        />
+                                      ) : (
+                                        <PiHeartBold
+                                          onAnimationEnd={() => setLikeAnimation(false)}
+                                          className={likeAnimation ? 'animate-ping text-white dark:text-black' : ''}
+                                        />
+                                      )}
+
                                 disabled={loading || isLoading}
                             >
                                 Like{(profileData?.authUserHasLiked) ? 'd' : ''}
