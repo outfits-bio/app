@@ -57,11 +57,11 @@ export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActi
             {pathname !== '/login' && pathname !== '/onboarding' && pathname !== '/' &&
                 <div className='py-5 px-6 bg-white dark:bg-black border border-stroke flex justify-between w-screen h-24 fixed bottom-0 md:hidden gap-4'>
                     <Link href={'/explore'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
-                    {pathname === "/explore" ? <PiHouseFill /> : <PiHouse />}
+                        {pathname === "/explore" ? <PiHouseFill /> : <PiHouse />}
                     </Link>
 
                     <Link href={'/search'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
-                    {pathname === "/search" ? <PiMagnifyingGlassFill /> : <PiMagnifyingGlass />}
+                        {pathname === "/search" ? <PiMagnifyingGlassFill /> : <PiMagnifyingGlass />}
                     </Link>
 
                     <Link href={'/shoot'} className='rounded-md flex flex-col items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
@@ -71,7 +71,7 @@ export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActi
                     </Link>
 
                     <Link href={'/settings'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
-                    {pathname.startsWith("/settings") ? <PiGearFill /> : <PiGear />}
+                        {pathname.startsWith("/settings") ? <PiGearFill /> : <PiGear />}
                     </Link>
 
                     {session.data?.user ? <Link href={`/${session.data?.user.username}`} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>

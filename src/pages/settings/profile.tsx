@@ -290,16 +290,16 @@ const SettingsPage = () => {
 
           <p className="mb-1">Delete Account</p>
           <Button
-  variant={'outline'}
-  type="button"
-  centerItems
-  iconLeft={<PiTrash />} // Use text-red-500 for the icon color
-  onClick={() => setIsOpen(true)}
-  isLoading={deleteProfileLoading}
-  className="bg-red-600 hover:bg-red-700 text-white" // Apply hover styles
->
-  Delete
-</Button>
+            variant={'outline'}
+            type="button"
+            centerItems
+            iconLeft={<PiTrash />} // Use text-red-500 for the icon color
+            onClick={() => setIsOpen(true)}
+            isLoading={deleteProfileLoading}
+            className="bg-red-600 hover:bg-red-700 text-white" // Apply hover styles
+          >
+            Delete
+          </Button>
 
         </div>
       </div>
