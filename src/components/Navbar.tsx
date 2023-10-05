@@ -11,7 +11,7 @@ import { formatAvatar } from '~/utils/image-src-format.util';
 
 import { Menu, Transition } from '@headlessui/react';
 import {
-    PiBell, PiBellSimple, PiCamera, PiCoatHanger, PiCompass, PiCopySimple, PiDoor, PiDoorOpen, PiGear, PiHammer, PiHeart,
+    PiBell, PiBellSimple, PiBellSimpleFill, PiCamera, PiCoatHanger, PiCompass, PiCopySimple, PiDoor, PiDoorOpen, PiGear, PiHammer, PiHeart,
     PiMagnifyingGlass, PiPerson, PiPlus, PiSealCheck, PiSpinnerGap, PiUser
 } from 'react-icons/pi';
 
@@ -47,7 +47,10 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
 
     const { pathname } = useRouter();
 
+    const iconComponent = pathname === "/notifications" ? <PiBellSimpleFill /> : <PiBellSimple />;
+
     if (!isAuth) return null;
+
 
     return <>
         {bugReportModalOpen && <BugReportModal isOpen={bugReportModalOpen} setIsOpen={setBugReportModalOpen} />}
@@ -68,7 +71,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
             {session.data?.user && <NavbarMenu user={session.data.user} setBugReportModalOpen={setBugReportModalOpen} setFeedbackModalOpen={setFeedbackModalOpen} />}
         </div>
         <Link href='/notifications' className='md:hidden relative'>
-            <Button variant='outline-ghost' shape={'circle'} iconLeft={<PiBellSimple />} />
+            <Button variant='outline-ghost' shape={'circle'} iconLeft={iconComponent} />
             {hasNotifications ? <div className="absolute top-0 right-0 w-4 h-4 rounded-full bg-error text-white text-[9px] font-bold flex items-center justify-center">
                 {data}
             </div> : null}
