@@ -293,10 +293,10 @@ const SettingsPage = () => {
             variant={'outline'}
             type="button"
             centerItems
-            iconLeft={<PiTrash />} // Use text-red-500 for the icon color
+            iconLeft={<PiTrash />} 
             onClick={() => setIsOpen(true)}
             isLoading={deleteProfileLoading}
-            className="bg-red-600 hover:bg-red-700 text-white" // Apply hover styles
+            className="bg-red-600 hover:bg-red-700 text-white" 
           >
             Delete
           </Button>
