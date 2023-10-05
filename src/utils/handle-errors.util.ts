@@ -26,7 +26,11 @@ export const handleErrors = ({ e, message, fn }: HandleErrorsProps) => {
   const errors = formatErrors(e);
 
   if (errors) {
-    errors.forEach((error) => toast.error(error));
+    errors.forEach((error) => {
+      if (error !== "User not found") {
+        toast.error(error);
+      }
+    });
 
     fn && void fn();
     return;
