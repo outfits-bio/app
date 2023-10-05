@@ -1,5 +1,5 @@
 import debounce from 'lodash.debounce';
-import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next';
+import { NextPage } from 'next';
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 import { Avatar } from '~/components/Avatar';

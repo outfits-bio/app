@@ -9,13 +9,13 @@ import { api, RouterOutputs } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
-import { Dialog, Menu, Transition } from '@headlessui/react';
+import { Dialog, Transition } from '@headlessui/react';
 import { PiHammer, PiSealCheck, PiX } from 'react-icons/pi';
 
 import { DeleteModal } from './DeleteModal';
 import { PostMenu } from './Menus/PostMenu';
 import {
-    getPostTypeIconSmall, getPostTypeName, onError, onMutate, onSettled
+    getPostTypeIconSmall, getPostTypeName
 } from './PostSection/post-section.util';
 import { ReportModal } from './ReportModal';
 

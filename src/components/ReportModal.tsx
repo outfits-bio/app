@@ -1,10 +1,8 @@
 import { Dispatch, Fragment, SetStateAction, useCallback, useState } from 'react';
-import Cropper, { Area } from 'react-easy-crop';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { CreateReportInput, createReportSchema } from '~/schemas/user.schema';
 import { api } from '~/utils/api.util';
-import getCroppedImg from '~/utils/crop-image.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 import { Dialog, Transition } from '@headlessui/react';

@@ -133,13 +133,19 @@ export const userRouter = createTRPCRouter({
         },
         select: {
           links: true,
+          verified: true,
         },
       });
-
-      if (user?.links.length === 6) {
+      
+      if (user?.verified && user?.links.length === 6) {
         throw new TRPCError({
           code: "BAD_REQUEST",
           message: "You can only have 6 links",
+        });
+      } else if (!user?.verified && user?.links.length === 3) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "You can only have 3 links",
         });
       }
 
