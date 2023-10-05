@@ -1,9 +1,7 @@
 import { signOut } from 'next-auth/react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
-import { formatAvatar } from '~/utils/image-src-format.util';
 
 import { Menu } from '@headlessui/react';
 import { PiCopySimple } from 'react-icons/pi';

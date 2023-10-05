@@ -1,18 +1,14 @@
 import debounce from 'lodash.debounce';
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
-import { toast } from 'react-hot-toast';
+import { useCallback, useEffect, useState } from 'react';
 import { api } from '~/utils/api.util';
-import { formatAvatar } from '~/utils/image-src-format.util';
 
-import { Menu, Transition } from '@headlessui/react';
 import {
-    PiBell, PiBellSimple, PiBellSimpleFill, PiCamera, PiCoatHanger, PiCompass, PiCopySimple, PiDoor, PiDoorOpen, PiGear, PiHammer, PiHeart,
-    PiMagnifyingGlass, PiPerson, PiPlus, PiSealCheck, PiSpinnerGap, PiUser
+    PiBellSimple, PiBellSimpleFill, PiCamera, PiCompass, PiHammer, PiHeart,
+    PiMagnifyingGlass, PiPlus, PiSealCheck, PiSpinnerGap
 } from 'react-icons/pi';
 
 import { Avatar } from './Avatar';

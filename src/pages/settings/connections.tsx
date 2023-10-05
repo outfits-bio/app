@@ -1,4 +1,4 @@
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { Button } from '~/components/Button';

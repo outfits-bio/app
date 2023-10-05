@@ -4,7 +4,6 @@ import type { FC } from 'react';
 import { AppRouter } from '~/server/api/root';
 import { Avatar } from './Avatar';
 import { intlFormatDistance } from 'date-fns';
-import { Button } from './Button';
 import { PiSpinnerGap, PiX } from 'react-icons/pi';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';

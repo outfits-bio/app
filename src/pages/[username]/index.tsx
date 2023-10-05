@@ -1,7 +1,7 @@
 import { GetStaticProps, NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Layout } from '~/components/Layout';
 import { PostSection } from '~/components/PostSection';
 import { ProfileCard } from '~/components/ProfileCard';

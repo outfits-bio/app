@@ -2,17 +2,15 @@ import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { useFileUpload } from '~/hooks/file-upload.hook';
 import { api } from '~/utils/api.util';
 import { formatImage } from '~/utils/image-src-format.util';
 
-import { PiPlus, PiTrash } from 'react-icons/pi';
+import { PiPlus } from 'react-icons/pi';
 
 import { Button } from '../Button';
 import { PostCropModal } from '../PostCropModal';
-import { ProfilePost, ProfilePostModal } from '../ProfilePostModal';
 import { Spinner } from '../Spinner';
 import {
     getPostTypeCount, getPostTypeIcon, getPostTypeName, onError, onMutate, onSettled,
