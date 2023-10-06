@@ -103,7 +103,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
     }
 
     return (
-        <div className="h-full flex flex-col font-satoshi">
+        <div className="h-full flex flex-col font-satoshi md:bg-white md:border-r border-stroke pl-4 py-4 md:pr-4 md:pl-12">
             {reportModalOpen && <ReportModal isOpen={reportModalOpen} setIsOpen={setReportModalOpen} type='USER' id={profileData?.id} />}
             {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} admin deleteFn={() => {
                 deleteUser({ id: profileData?.id ?? '' });
@@ -193,18 +193,18 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                                     if (profileData?.id) mutate({ id: profileData.id });
                                 }}
                                 iconLeft={
-                                    
+
                                     (profileData?.authUserHasLiked) ? (
                                         <PiHeartFill
-                                          onAnimationEnd={() => setLikeAnimation(false)}
-                                          className={likeAnimation ? 'animate-ping text-white dark:text-black' : ''}
+                                            onAnimationEnd={() => setLikeAnimation(false)}
+                                            className={likeAnimation ? 'animate-ping text-white dark:text-black' : ''}
                                         />
-                                      ) : (
+                                    ) : (
                                         <PiHeartBold
-                                          onAnimationEnd={() => setLikeAnimation(false)}
-                                          className={likeAnimation ? 'animate-ping text-white dark:text-black' : ''}
+                                            onAnimationEnd={() => setLikeAnimation(false)}
+                                            className={likeAnimation ? 'animate-ping text-white dark:text-black' : ''}
                                         />
-                                      )}
+                                    )}
 
                                 disabled={loading || isLoading}
                             >
