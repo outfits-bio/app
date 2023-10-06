@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
 
-import { PiBackpackBold, PiBaseballCapBold, PiCoatHanger, PiCoatHangerBold, PiDotsThreeBold, PiEyeglassesBold, PiHeartBold, PiHeartFill, PiLinkSimple, PiPantsBold, PiShirtFoldedBold, PiShoppingBagOpenBold, PiSneakerBold, PiTShirtBold, PiWatchBold } from 'react-icons/pi';
+import { PiBackpackBold, PiBaseballCapBold, PiCoatHanger, PiCoatHangerBold, PiDotsThreeBold, PiEyeglassesBold, PiHeartBold, PiHeartFill, PiLinkSimple, PiLinkSimpleBold, PiPantsBold, PiShirtFoldedBold, PiShoppingBagOpenBold, PiSneakerBold, PiTShirtBold, PiWatchBold } from 'react-icons/pi';
 
 import Marquee from 'react-fast-marquee';
 import { PostSkeleton } from '~/components/Skeletons/PostSkeleton';
@@ -106,7 +106,7 @@ const Home = () => {
 
             <span className='inline text-sm'>
               <PiHeartBold className='text-lg mb-1 inline mr-1' />
-              <span className='inline font-bold'>9 </span>
+              <span className='inline font-bold'>{hasLiked ? '10 ' : '9 '}</span>
               <span className='inline'>Likes</span>
             </span>
 
@@ -192,20 +192,38 @@ const Home = () => {
             </div>
           </div>
 
-          <div className='flex flex-col gap-4 md:justify-center'>
-            <span className='flex items-center text-secondary-text text-clash font-semibold'>
-              <PiLinkSimple className='text-lg inline mr-1' />
-              <p>outfits.bio/username</p>
-            </span>
-
-            <span className='flex items-center text-secondary-text text-clash font-semibold'>
-              <PiLinkSimple className='text-lg inline mr-1' />
-              <p>outfits.bio/username</p>
-            </span>
-
-            <span className='flex items-center text-secondary-text text-clash font-semibold'>
-              <PiLinkSimple className='text-lg inline mr-1' />
-              <p>outfits.bio/username</p>
+          <div className='relative flex md:justify-end overflow-y-hidden m-auto h-8 max-h-8 w-full md:w-72 text-2xl shrink-0 md:basis-72'>
+            <span className='absolute overflow-y-hidden'>
+              <Link href={'/jeremy'} className='animate-spin-words block h-full cursor-pointer hover:underline text-secondary-text text-clash font-semibold'>
+                <span className='flex items-center'>
+                  <PiLinkSimpleBold className='text-2xl inline mr-1' />
+                  <p className='inline'>outfits.bio/jeremy</p>
+                </span>
+              </Link>
+              <Link href={'/brice'} className='animate-spin-words block h-full cursor-pointer hover:underline text-secondary-text text-clash font-semibold'>
+                <span className='flex items-center'>
+                  <PiLinkSimpleBold className='text-2xl inline mr-1' />
+                  <p className='inline'>outfits.bio/brice</p>
+                </span>
+              </Link>
+              <Link href={'/hollxo'} className='animate-spin-words block h-full cursor-pointer hover:underline text-secondary-text text-clash font-semibold'>
+                <span className='flex items-center'>
+                  <PiLinkSimpleBold className='text-2xl inline mr-1' />
+                  <p className='inline'>outfits.bio/hollxo</p>
+                </span>
+              </Link>
+              <Link href={'/asciidude'} className='animate-spin-words block h-full cursor-pointer hover:underline text-secondary-text text-clash font-semibold'>
+                <span className='flex items-center'>
+                  <PiLinkSimpleBold className='text-2xl inline mr-1' />
+                  <p className='inline'>outfits.bio/asciidude</p>
+                </span>
+              </Link>
+              <Link href={'/jeremy'} className='animate-spin-words block h-full cursor-pointer hover:underline text-secondary-text text-clash font-semibold'>
+                <span className='flex items-center'>
+                  <PiLinkSimpleBold className='text-2xl inline mr-1' />
+                  <p className='inline'>outfits.bio/jeremy</p>
+                </span>
+              </Link>
             </span>
           </div>
         </div>
