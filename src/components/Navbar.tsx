@@ -3,12 +3,12 @@ import { useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import { api } from '~/utils/api.util';
 
 import {
     PiBellSimple, PiBellSimpleFill, PiCamera, PiCompass, PiHammer, PiHeart,
-    PiMagnifyingGlass, PiPlus, PiSealCheck, PiSpinnerGap
+    PiMagnifyingGlass, PiMagnifyingGlassBold, PiPlus, PiSealCheck, PiSpinnerGap
 } from 'react-icons/pi';
 
 import { Avatar } from './Avatar';
@@ -21,6 +21,7 @@ import { FeedbackModal } from './Modals/FeedbackModal';
 import { NotificationsMenu } from './Menus/NotificationsMenu';
 import { useTheme } from 'next-themes';
 import { CreatePostModal } from './Modals/CreatePostModal';
+import { Popover, Transition } from '@headlessui/react';
 
 interface Props {
     title: string;
@@ -118,6 +119,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
 
                 {(isAuth && !hideSearch) && <div className='hidden relative items-center font-clash font-medium xl:flex'>
                     <input
+                        autoComplete='off'
                         id="link"
                         type="text"
                         placeholder='Search for users'
@@ -140,36 +142,44 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
                         {isFetching ? <PiSpinnerGap className=' text-secondary-text w-6 h-6 animate-spin' /> : <PiMagnifyingGlass className='text-secondary-text w-6 h-6' />}
                     </button>
 
-                    {input.length > 0 && <div className='absolute top-14 w-full flex flex-col gap-1'>
-                        {(searchData?.length ?? 0) > 0 ? searchData?.map((user) => (
-                            <Link href={`/${user.username}`} key={user.id}>
-                                <div className='bg-white dark:bg-black border border-stroke p-4 rounded-md hover:bg-body dark:hover:bg-body cursor-pointer flex gap-2'>
-                                    <Avatar image={user.image} id={user.id} username={user.username} />
+                    <div className='absolute top-14 w-full'>
+                        <Popover className={'relative'}>
+                            {({ close }) => (
+                                <>
+                                    <Transition
+                                        show={input.length > 0}
+                                        as={Fragment}
+                                        enter="transition ease-out duration-200"
+                                        enterFrom="opacity-0 translate-y-1"
+                                        enterTo="opacity-100 translate-y-0"
+                                        leave="transition ease-in duration-150"
+                                        leaveFrom="opacity-100 translate-y-0"
+                                        leaveTo="opacity-0 translate-y-1"
+                                    >
+                                        <Popover.Panel>
+                                            <div className="relative border border-stroke rounded-md p-4 bg-white w-full flex flex-col gap-2 shadow-lg">
+                                                <Link href={`/search?username=${input}`} className='flex items-center rounded-md p-2 bg-stroke border border-stroke text-secondary-text w-full text-left'>
+                                                    <PiMagnifyingGlassBold className='text-xl mr-2' />
+                                                    <p>Search for &quot;{input}&quot;</p>
+                                                </Link>
 
-                                    <div className='flex flex-col gap-1'>
-                                        <h1 className='font-black flex gap-1 items-center'>
-                                            <span>{user.username}</span>
-                                            {user.admin ? <PiHammer className='w-4 h-4' /> : user.verified && <PiSealCheck className='w-4 h-4' />}
-                                        </h1>
-                                        <p className='text-xs'>{user.tagline}</p>
-
-                                        <div className='flex gap-2 items-center text-xs'>
-                                            <span className='flex gap-1 items-center'>
-                                                <PiCamera className='w-3 h-3' />
-                                                <span>{user.imageCount} Shots</span>
-                                            </span>
-                                            <span className='flex gap-1 items-center'>
-                                                <PiHeart className='w-3 h-3' />
-                                                <span>{user.likeCount} Likes</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Link>
-                        )) : <div className='bg-white dark:bg-black border border-stroke p-4 rounded-md'>No results</div>}
+                                                {searchData && searchData.map((user) => (
+                                                    <Link href={`/${user.username}`} key={user.id} className='flex items-center rounded-md p-2 hover:bg-hover w-full text-left border border-stroke'>
+                                                        <Avatar image={user.image} size={'xs'} className='mr-2' />
+                                                        <p>{user.username}</p>
+                                                        {user.admin ? <PiHammer className='ml-1 text-primary' /> : user.verified ? <PiSealCheck className='ml-1 text-primary' /> : null}
+                                                    </Link>
+                                                ))
+                                                }
+                                            </div>
+                                        </Popover.Panel>
+                                    </Transition>
+                                </>
+                            )}
+                        </Popover>
                     </div>
-                    }
-                </div>}
+                </div>
+                }
 
                 {showActions && status !== 'loading' && <>
                     {isAuth ? <AuthSection isAuth={!!isAuth} session={session} /> : <NavMenu />}
@@ -191,6 +201,6 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
                     </div>}
                 </>}
             </div>
-        </div>
+        </div >
     )
 }
