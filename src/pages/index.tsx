@@ -80,9 +80,9 @@ const Home = () => {
         <Image src={landing} alt='Landing Image' className='w-11/12 md:w-2/3 shadow-2xl object-contain' />
       </section>
 
-      <div id='more' className='mb-12' />
+      <div id='more' className='h-12 bg-white dark:bg-black' />
 
-      <section className='flex flex-col items-center gap-12 w-full border-b border-stroke py-12 px-4 sm:px-12 lg:px-24'>
+      <section className='flex flex-col items-center gap-12 w-full border-b border-stroke py-12 px-4 sm:px-12 lg:px-24 bg-white dark:bg-black'>
         <h1 className='text-4xl md:text-5xl font-bold font-clash text-center'>Your wardrobe, <span className='text-orange-accent'>electrified</span></h1>
 
         <div className='border border-stroke rounded-xl w-full py-12 flex flex-col px-4 md:px-12 gap-12 md:flex-row md:justify-between xl:w-3/4'>
