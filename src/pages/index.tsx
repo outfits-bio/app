@@ -13,6 +13,7 @@ import { PostSkeleton } from '~/components/Skeletons/PostSkeleton';
 import landing from '../../public/landing.png';
 import { api } from '~/utils/api.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
+import { Logo } from '~/components/Logo';
 
 const Home = () => {
   const { status, data } = useSession();
@@ -305,28 +306,30 @@ const Home = () => {
       <section className='flex justify-center items-center w-screen py-12'>
         <div className='flex flex-col w-full md:flex-row md:justify-between gap-12 xl:w-3/4 px-12'>
           <div className='flex flex-col items-left'>
-            <h1 className='text-lg font-black font-clash flex items-center gap-2'><PiCoatHanger className='mt-1' /> outfits.bio</h1>
-            <p className='text-sm text-gray-500'>Your wardrobe in your bio.</p>
+            <h1 className='text-3xl font-black font-clash flex items-center gap-2 mb-2'><Logo /> outfits.bio</h1>
+            <p className='text-[11px] text-secondary-text'>You make the look, we&apos;ll make the link!</p>
+            <p className='text-[11px] text-secondary-text'>Copyright © 2023, All Rights Reserved.</p>
           </div>
 
           <div className='grid gap-8 lg:gap-20 xl:gap-32 grid-cols-1 sm:grid-cols-3'>
-            <div className='flex flex-col gap-1'>
-              <h3 className='font-bold font-clash'>Explore</h3>
-              <Link href='/explore' className='text-sm text-gray-500 underline'>Explore</Link>
+            <div className='flex flex-col gap-1 text-secondary-text'>
+              <h3 className='font-bold text-gray-500'>Explore</h3>
+              <Link href='/explore' className='text-sm'>Discover</Link>
+              <Link href='/explore' className='text-sm'>Blog</Link>
             </div>
 
-            <div className='flex flex-col gap-1'>
-              <h3 className='font-bold font-clash'>Socials</h3>
-              <Link href='https://www.producthunt.com/posts/outfits-bio' className='text-sm text-gray-500 underline'>Product Hunt</Link>
-              <Link href='https://discord.gg/f4KEs5TVz2' className='text-sm text-gray-500 underline'>Discord Server</Link>
-              <Link href='https://twitter.com/linkyouroutfits' className='text-sm text-gray-500 underline'>Twitter</Link>
+            <div className='flex flex-col gap-1 text-secondary-text'>
+              <h3 className='font-bold text-gray-500'>Socials</h3>
+              <Link href='https://twitter.com/linkyouroutfits' className='text-sm'>X (formerly Twitter)</Link>
+              <Link href='https://discord.gg/f4KEs5TVz2' className='text-sm'>Discord</Link>
+              <Link href='https://www.producthunt.com/posts/outfits-bio' className='text-sm'>Product Hunt</Link>
             </div>
 
-            <div className='flex flex-col gap-1'>
-              <h3 className='font-bold font-clash'>Legal</h3>
-              <Link href='/docs/privacy-policy' className='text-sm text-gray-500 underline'>Privacy Policy</Link>
-              <Link href='/docs/terms-of-service' className='text-sm text-gray-500 underline'>Terms of Service</Link>
-              <Link href='/docs/brand-guide' className='text-sm text-gray-500 underline'>Brand Guide</Link>
+            <div className='flex flex-col gap-1 text-secondary-text'>
+              <h3 className='font-bold text-gray-500'>Legal</h3>
+              <Link href='/docs/privacy-policy' className='text-sm'>Privacy Policy</Link>
+              <Link href='/docs/terms-of-service' className='text-sm'>Terms of Service</Link>
+              <Link href='/docs/brand-guide' className='text-sm'>Brand Guide</Link>
             </div>
           </div>
         </div>
