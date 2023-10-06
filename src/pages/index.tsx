@@ -77,7 +77,7 @@ const Home = () => {
           </div>
         </div>
 
-        <Image src={landing} alt='Landing Image' className='w-11/12 md:w-2/3 shadow-2xl object-contain' />
+        <Image src={landing} alt='Landing Image' className='w-11/12 md:w-2/3 shadow-2xl object-contain hover:shadow-orange-accent hover:-translate-y-16 transition-all duration-300' />
       </section>
 
       <div id='more' className='h-12 bg-white dark:bg-black' />
