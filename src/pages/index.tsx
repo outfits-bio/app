@@ -2,15 +2,15 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
 
-import { PiArrowRight, PiBackpackBold, PiBagBold, PiBaseballCapBold, PiCoatHanger, PiCoatHangerBold, PiDotsThreeBold, PiEyeglassesBold, PiHeartBold, PiHeartFill, PiLinkBold, PiLinkSimple, PiLinkSimpleBold, PiPantsBold, PiShirtFoldedBold, PiShoppingBagOpenBold, PiSneakerBold, PiTShirtBold, PiWatchBold } from 'react-icons/pi';
+import { PiBackpackBold, PiBaseballCapBold, PiCoatHanger, PiCoatHangerBold, PiDotsThreeBold, PiEyeglassesBold, PiHeartBold, PiHeartFill, PiLinkSimple, PiPantsBold, PiShirtFoldedBold, PiShoppingBagOpenBold, PiSneakerBold, PiTShirtBold, PiWatchBold } from 'react-icons/pi';
 
-import landing from '../../public/landing.png';
 import Marquee from 'react-fast-marquee';
 import { PostSkeleton } from '~/components/Skeletons/PostSkeleton';
+import landing from '../../public/landing.png';
 
 const Home = () => {
   const { status, data } = useSession();
@@ -86,7 +86,7 @@ const Home = () => {
         <h1 className='text-4xl md:text-5xl font-bold font-clash text-center'>Your wardrobe, <span className='text-orange-accent'>electrified</span></h1>
 
         <div className='border border-stroke rounded-xl w-full py-12 flex flex-col px-4 md:px-12 gap-12 md:flex-row md:justify-between xl:w-3/4'>
-          <div className='w-96 md:w-[500px]'>
+          <div className='sm:w-96 md:w-[500px]'>
             <h2 className='font-bold text-3xl md:text-4xl font-clash mb-4'>Socialize through fashion</h2>
             <p className='mb-4'>Besides sharing your wardrobe you can also follow other people or like individual items to get recommended similar people or clothes you like.  </p>
             <div className='flex'>
@@ -153,7 +153,7 @@ const Home = () => {
         </div>
 
         <div className='border border-stroke rounded-xl w-full flex flex-col gap-12 md:flex-row md:justify-between xl:w-3/4'>
-          <div className='px-4 md:px-12 pt-12 w-96 md:w-[500px]'>
+          <div className='px-4 md:px-12 pt-12 sm:w-96 md:w-[500px]'>
             <h2 className='font-bold text-3xl md:text-4xl font-clash mb-4'>Discover trendy style</h2>
             <p className='mb-4'>Our discover page offers various styles powered by our users who are actively posting their OOTDs shaping a variety of outfits and clothes on our platform</p>
             <div className='flex gap-2'>
@@ -182,7 +182,7 @@ const Home = () => {
         </div>
 
         <div className='border border-stroke rounded-xl w-full py-12 flex flex-col px-4 md:px-12 gap-12 md:flex-row md:justify-between xl:w-3/4'>
-          <div className='w-96 md:w-[500px]'>
+          <div className='sm:w-96 md:w-[500px]'>
             <h2 className='font-bold text-3xl md:text-4xl font-clash mb-4'>Creator-friendly</h2>
             <p className='mb-4'>We offer free outfits.bio/”username” links for everyone who signs up which makes it very easy to plug your wardrobe in a link-in-bio format.</p>
             <div className='flex'>
