@@ -49,7 +49,7 @@ export const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
             <div className='flex flex-col md:flex-row w-screen h-full gap-4 pr-4 md:gap-20 lg:gap-36  overflow-y-scroll md:overflow-y-auto'>
                 <ProfileCard loading={isLoading} authStatus={status} currentUser={data?.user ?? null} profileData={profileData} username={username} isCurrentUser={isCurrentUser} />
 
-                <div className='md:overflow-y-scroll w-full py-4'>
+                <div className='md:overflow-y-scroll w-full pl-4 md:pl-0 py-4'>
                     <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.OUTFIT} />
                     <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.HOODIE} />
                     <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.SHIRT} />
