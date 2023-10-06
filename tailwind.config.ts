@@ -27,7 +27,7 @@ export default {
       },
       animation: {
         ping: "ping 200ms ease-in-out",
-        "spin-words": "spin-words 6s infinite",
+        "spin-words": "spin-words 10s infinite",
       },
       keyframes: {
         "spin-words": {
