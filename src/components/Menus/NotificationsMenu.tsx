@@ -15,11 +15,18 @@ export const NotificationsMenu = ({ unreadCount }: NotificationsMenuProps) => {
 
     const ctx = api.useContext();
 
-    const { data: notifications, refetch, isFetching } = api.notifications.getNotifications.useQuery(undefined, {
+    const { data: notifications, refetch } = api.notifications.getNotifications.useQuery(undefined, {
         onSuccess: () => {
             ctx.notifications.getUnreadNotificationsCount.refetch();
         },
         enabled: false,
+    });
+
+    const { mutate: deleteAllNotifications, isLoading: deleteAllNotificationsLoading } = api.notifications.deleteAllNotifications.useMutation({
+        onSuccess: async () => {
+            refetch();
+            await ctx.notifications.getUnreadNotificationsCount.refetch();
+        },
     });
 
     const hasNotifications = unreadCount && unreadCount > 0;
@@ -45,11 +52,15 @@ export const NotificationsMenu = ({ unreadCount }: NotificationsMenuProps) => {
             leaveTo="transform opacity-0 scale-95"
         >
             <Menu.Items className="absolute right-1 rounded-md divide-y divide-stroke mt-1 origin-top-right border border-stroke bg-white dark:bg-black shadow-dropdown p-4 w-[400px] px-4 divide-none">
-                {notifications?.length ?? 0 > 0 ?
+                {(notifications?.length ?? 0 > 0) ?
                     notifications?.map((notification, index) => <NotificationCard refetch={refetch} key={index} notification={notification} />) ?? <></>
                     : <div className='flex flex-col items-center justify-center font-clash py-2'>
                         <h3 className='text-center'>No notifications</h3>
-                    </div>}
+                    </div>
+                }
+                {!!notifications?.length && <Button variant={'outline-ghost'} centerItems className="text-secondary-text text-sm h-10" onClick={() => deleteAllNotifications()} isLoading={deleteAllNotificationsLoading}>
+                    Dismiss all Notifications
+                </Button>}
             </Menu.Items>
         </Transition>
     </Menu >

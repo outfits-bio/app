@@ -70,6 +70,15 @@ export const notificationsRouter = createTRPCRouter({
 
       return true;
     }),
+  deleteAllNotifications: protectedProcedure.mutation(async ({ ctx }) => {
+    const notifications = await ctx.prisma.notification.deleteMany({
+      where: {
+        targetUserId: ctx.session.user.id,
+      },
+    });
+
+    return true;
+  }),
   getUnreadNotificationsCount: protectedProcedure.query(async ({ ctx }) => {
     const count = await ctx.prisma.notification.count({
       where: {

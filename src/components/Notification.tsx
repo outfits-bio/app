@@ -39,7 +39,7 @@ const NotificationCard: FC<NotificationCardProps> = ({ notification, refetch }) 
 
     return <div className='w-full rounded-md px-4 py-2 flex items-center justify-between hover:bg-white dark:hover:bg-black'>
         <Link href={href} className='flex items-center gap-3'>
-            <Avatar size={'xs'} image={image} username={notification.user?.username} id={notification.user?.id} />
+            <Avatar className='shrink-0' size={'xs'} image={image} username={notification.user?.username} id={notification.user?.id} />
             <span className='font-medium'>
                 {notification.type === 'PROFILE_LIKE' && <>
                     <span className="font-bold">{notification.user?.username}</span>
@@ -52,7 +52,7 @@ const NotificationCard: FC<NotificationCardProps> = ({ notification, refetch }) 
             </span>
         </Link>
 
-        <button className='hover:bg-hover border border-stroke flex items-center justify-center h-8 w-8 rounded-full' disabled={isLoading} onClick={() => mutate({ id: notification.id })}>
+        <button className='shrink-0 hover:bg-hover border border-stroke flex items-center justify-center h-8 w-8 rounded-full' disabled={isLoading} onClick={() => mutate({ id: notification.id })}>
             {isLoading ? <PiSpinnerGap className='w-4 h-4 animate-spin' /> : <PiX className='w-4 h-4' />}
         </button>
     </div>
