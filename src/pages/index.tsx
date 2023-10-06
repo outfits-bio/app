@@ -43,7 +43,7 @@ const Home = () => {
           <PiBaseballCapBold className='text-6xl transition-colors duration-300 text-stroke hover:text-secondary-text absolute top-8 right-1/2 rotate-[30deg]' />
 
           <div className='flex flex-col gap-4 text-center'>
-            <h1 className='font-clash text-4xl md:text-5xl font-bold orange-selection'>Your virtual <span className='md:underline-skew md:decoration-orange-accent underline-offset-4 orange-selection'>wardrobe</span></h1>
+            <h1 className='font-clash text-4xl md:text-5xl font-bold orange-selection'>Your virtual <span className='underline-skew orange-selection'>wardrobe</span></h1>
             <article className='text-secondary-text w-[335px] md:w-[400px] orange-selection overflow-hidden relative text-center flex flex-col m-auto'>
               <p className='inline'>Your wardrobe in the cloud, share and inspire your followers through a simple link for in your</p>
               <span className='flex relative justify-center -ml-32'>

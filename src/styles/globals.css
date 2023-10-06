@@ -96,6 +96,12 @@
   transform: skewY(1.591deg);
 }
 
+@media (max-width: 768px) {
+  .underline-skew:after {
+    top: 40px;
+  }
+}
+
 .orange-selection::selection {
   background-color: #ffcfb1;
 }
