@@ -208,4 +208,36 @@ export const postRouter = createTRPCRouter({
 
     return posts;
   }),
+  getTwoRandomPosts: publicProcedure.query(async ({ ctx }) => {
+    const count = await ctx.prisma.post.count();
+
+    const skip = Math.max(0, Math.floor(Math.random() * count) - 2);
+    const orderDirection = Math.random() > 0.5 ? "asc" : "desc";
+
+    const posts = await ctx.prisma.post.findMany({
+      where: {},
+      select: {
+        id: true,
+        image: true,
+        type: true,
+        featured: true,
+        user: {
+          select: {
+            image: true,
+            verified: true,
+            username: true,
+            id: true,
+            admin: true,
+          },
+        },
+      },
+      take: 2,
+      skip,
+      orderBy: {
+        createdAt: orderDirection,
+      },
+    });
+
+    return posts;
+  }),
 });

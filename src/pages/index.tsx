@@ -6,11 +6,13 @@ import { useEffect, useState } from 'react';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
 
-import { PiBackpackBold, PiBaseballCapBold, PiCoatHanger, PiCoatHangerBold, PiDotsThreeBold, PiEyeglassesBold, PiHeartBold, PiHeartFill, PiLinkSimple, PiLinkSimpleBold, PiPantsBold, PiShirtFoldedBold, PiShoppingBagOpenBold, PiSneakerBold, PiTShirtBold, PiWatchBold } from 'react-icons/pi';
+import { PiBackpackBold, PiBaseballCapBold, PiCoatHanger, PiCoatHangerBold, PiDotsThreeBold, PiEyeglassesBold, PiHammer, PiHeartBold, PiHeartFill, PiLinkSimple, PiLinkSimpleBold, PiPantsBold, PiSealCheck, PiShirtFoldedBold, PiShoppingBagOpenBold, PiSneakerBold, PiTShirtBold, PiWatchBold } from 'react-icons/pi';
 
 import Marquee from 'react-fast-marquee';
 import { PostSkeleton } from '~/components/Skeletons/PostSkeleton';
 import landing from '../../public/landing.png';
+import { api } from '~/utils/api.util';
+import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
 const Home = () => {
   const { status, data } = useSession();
@@ -19,6 +21,10 @@ const Home = () => {
   const [likeAnimation, setLikeAnimation] = useState(false);
   const [hasLiked, setHasLiked] = useState(false);
   const [color, setColor] = useState('orange-accent');
+
+  const { data: posts, isLoading: postsLoading } = api.post.getTwoRandomPosts.useQuery(undefined, {
+    refetchInterval: 15000,
+  });
 
   useEffect(() => {
     if (status === 'authenticated') {
@@ -77,7 +83,7 @@ const Home = () => {
           </div>
         </div>
 
-        <Image src={landing} alt='Landing Image' className='w-11/12 md:w-2/3 shadow-2xl object-contain hover:shadow-orange-accent hover:-translate-y-16 transition-all duration-300' />
+        <Image src={landing} alt='Landing Image' className='w-11/12 md:w-2/3 shadow-2xl object-contain hover:-translate-y-16 transition-all duration-300' />
       </section>
 
       <div id='more' className='h-12 bg-white dark:bg-black' />
@@ -174,8 +180,34 @@ const Home = () => {
           <div>
             <div className='shrink-0 grow overflow-hidden flex-col lg:flex'>
               <div className='flex gap-8 mb-0'>
-                <PostSkeleton className='rotate-12 mt-4' />
-                <PostSkeleton className='rotate-12 mt-16' />
+                {postsLoading ? <>
+                  <PostSkeleton className='rotate-12 mt-4' />
+                  <PostSkeleton className='rotate-12 mt-16' />
+                </> : posts?.map((post, i) => (
+                  <Link style={{ marginTop: i === 0 ? '16px' : '64px' }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative`}>
+                    <Image
+                      // 176px is the same as w-44, the width of the container
+                      sizes="176px"
+                      src={formatImage(post.image, post.user.id)}
+                      className="object-cover"
+                      fill
+                      alt={post.type}
+                      priority
+                    />
+
+                    <div className='flex flex-col justify-end items-center p-2 absolute inset-0 bg-gradient-to-b from-transparent to-black w-full h-full bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100'>
+                      <div className='flex gap-2 w-full'>
+                        <Image className='rounded-full object-contain' src={formatAvatar(post.user.image, post.user.id)} alt={post.user.username ?? ""} width={30} height={30} />
+
+                        <h1 className='text-white flex gap-1 items-center text-sm w-full'>
+                          <span className='truncate'>{post.user.username}</span>
+                          {post.user.admin ? <PiHammer className='w-4 h-4' /> : post.user.verified && <PiSealCheck className='w-4 h-4' />}
+                        </h1>
+                      </div>
+                    </div>
+
+                  </Link>
+                ))}
               </div>
             </div>
           </div>
