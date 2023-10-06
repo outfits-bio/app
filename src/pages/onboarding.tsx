@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */ 
+/* eslint-disable @next/next/no-img-element */
 import axios from 'axios';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import { useSession } from 'next-auth/react';
@@ -225,7 +225,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
 
                     <div className='flex gap-8 -mt-72'>
                         {posts && posts.slice(0, 7).map((post, i) =>
-                            <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative`}>
+                            <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative`}>
                                 <Image
                                     // 176px is the same as w-44, the width of the container
                                     sizes="176px"
@@ -253,7 +253,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
 
                     <div className='flex gap-8 -mt-60'>
                         {posts && posts.slice(8, 15).map((post, i) =>
-                            <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
+                            <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
                                 <Image
                                     // 176px is the same as w-44, the width of the container
                                     sizes="176px"
@@ -281,7 +281,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
 
                     <div className='flex gap-8 -mt-60'>
                         {posts && posts.slice(16, 23).map((post, i) =>
-                            <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
+                            <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
                                 <Image
                                     // 176px is the same as w-44, the width of the container
                                     sizes="176px"
@@ -309,7 +309,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
 
                     <div className='flex gap-8 -mt-60'>
                         {posts && posts.slice(24, 31).map((post, i) =>
-                            <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
+                            <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
                                 <Image
                                     // 176px is the same as w-44, the width of the container
                                     sizes="176px"

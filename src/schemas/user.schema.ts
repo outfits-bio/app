@@ -54,7 +54,8 @@ export const paginatedSchema = z.object({
 
 export const getPostsSchema = z
   .object({
-    type: z.nativeEnum(PostType).optional(),
+    types: z.array(z.nativeEnum(PostType)).optional(),
+    category: z.enum(["latest", "popular"]).optional(),
   })
   .merge(paginatedSchema);
 export type GetPostsInput = ReturnType<typeof getPostsSchema.parse>;

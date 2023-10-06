@@ -32,11 +32,11 @@ export const NavMenu = () => {
                         <div className="px-4 py-4 space-y-2">
                             <Menu.Item>
                                 {({ active }) => (
-                                    <Link href={'/explore'}
+                                    <Link href={'/discover'}
                                         className={`${active ? 'bg-gray-100 dark:bg-opacity-20' : ''
                                             } group flex w-full items-center justify-between px-4 py-2 font-clash font-semibold`}
                                     >
-                                        <h3>Explore</h3>
+                                        <h3>Discover</h3>
 
                                         <PiCompass className='w-6 h-6' />
                                     </Link>

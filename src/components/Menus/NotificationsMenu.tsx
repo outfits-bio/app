@@ -1,11 +1,9 @@
-import Link from "next/link";
-import { BaseMenu } from "./BaseMenu";
-import { Button } from "../Button";
-import { PiBellSimple, PiSpinnerGap } from "react-icons/pi";
-import { api } from "~/utils/api.util";
-import NotificationCard from "../Notification";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import { PiBellSimple } from "react-icons/pi";
+import { api } from "~/utils/api.util";
+import { Button } from "../Button";
+import NotificationCard from "../Notification";
 
 interface NotificationsMenuProps {
     unreadCount?: number;

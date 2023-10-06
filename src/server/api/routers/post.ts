@@ -141,11 +141,13 @@ export const postRouter = createTRPCRouter({
   getLatestPosts: publicProcedure
     .input(getPostsSchema)
     .query(async ({ ctx, input }) => {
-      const { cursor, skip, type } = input;
+      const { cursor, skip, types, category } = input;
 
       const posts = await ctx.prisma.post.findMany({
         where: {
-          type,
+          type: {
+            in: types,
+          },
         },
         select: {
           id: true,
@@ -159,10 +161,11 @@ export const postRouter = createTRPCRouter({
               username: true,
               id: true,
               admin: true,
+              tagline: true,
             },
           },
         },
-        take: 21,
+        take: 6,
         skip: skip,
         cursor: cursor ? { id: cursor } : undefined,
         orderBy: {
@@ -172,7 +175,7 @@ export const postRouter = createTRPCRouter({
 
       let nextCursor: typeof cursor | undefined = undefined;
 
-      if (posts.length > 20) {
+      if (posts.length > 5) {
         const nextItem = posts.pop(); // return the last item from the array
         nextCursor = nextItem?.id;
       }

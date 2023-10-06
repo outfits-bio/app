@@ -59,7 +59,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
                 <Button variant='outline-ghost' accent={theme !== 'dark' && theme !== 'light'} iconLeft={<PiPlus />} onClick={() => setCreatePostModalOpen(true)}>Create</Button>
             </div>
 
-            {pathname !== '/explore' && <Link href='/explore'>
+            {pathname !== '/discover' && <Link href='/discover'>
                 <Button variant='outline-ghost' shape={'square'} iconLeft={<PiCompass />} />
             </Link>}
 
@@ -112,7 +112,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
 
             <div className='flex items-center px-6 sm:px-12 h-full justify-between gap-2'>
                 {input.length > 0 && <div className='absolute w-screen h-screen inset-0' onClick={() => setInput('')}></div>}
-                <Link href={isAuth ? '/explore' : '/'} className='flex items-center gap-2'>
+                <Link href={isAuth ? '/discover' : '/'} className='flex items-center gap-2'>
                     <Logo size={'lg'} />
                     {showSlash ? <h1 className='text-2xl font-black font-clash'>{title.toLowerCase()}</h1> : <h1 className='text-2xl font-black font-clash'>outfits.bio</h1>}
                 </Link>
@@ -184,8 +184,8 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
                 {showActions && status !== 'loading' && <>
                     {isAuth ? <AuthSection isAuth={!!isAuth} session={session} /> : <NavMenu />}
                     {isAuth ? null : <div className='items-center gap-4 hidden md:flex'>
-                        {pathname !== '/explore' && <Link href='/explore'>
-                            <Button variant='outline-ghost'>Explore</Button>
+                        {pathname !== '/discover' && <Link href='/discover'>
+                            <Button variant='outline-ghost'>Discover</Button>
                         </Link>}
 
                         <Link href='https://discord.gg/f4KEs5TVz2'>

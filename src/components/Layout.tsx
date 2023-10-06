@@ -56,8 +56,8 @@ export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActi
             <main className='h-screen pt-20 overflow-x-hidden pb-24 md:pb-0 scroll-smooth'>{children}</main>
             {pathname !== '/login' && pathname !== '/onboarding' && pathname !== '/' &&
                 <div className='py-5 px-6 bg-white dark:bg-black border border-stroke flex justify-between w-screen h-24 fixed bottom-0 md:hidden gap-4'>
-                    <Link href={'/explore'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
-                        {pathname === "/explore" ? <PiHouseFill /> : <PiHouse />}
+                    <Link href={'/discover'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
+                        {pathname === "/discover" ? <PiHouseFill /> : <PiHouse />}
                     </Link>
 
                     <Link href={'/search'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>

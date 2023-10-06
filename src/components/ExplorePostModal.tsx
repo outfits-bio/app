@@ -126,7 +126,7 @@ export const ExplorePostModal = ({ post, setPostModalOpen }: ExplorePostModalPro
             {reportModalOpen && <ReportModal isOpen={reportModalOpen} setIsOpen={setReportModalOpen} type='POST' id={query.postId?.toString()} />}
             {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} post admin deleteFn={() => {
                 mutate({ id: query.postId?.toString() ?? '' });
-                push('/explore');
+                push('/discover');
             }} />}
             {confirmDeleteUserModalOpen && <DeleteModal isOpen={confirmDeleteUserModalOpen} setIsOpen={setConfirmDeleteUserModalOpen} post deleteFn={() => {
                 deletePost({ id: query.postId?.toString() ?? '' });

@@ -165,7 +165,7 @@ const Home = () => {
             <p className='mb-4'>Our discover page offers various styles powered by our users who are actively posting their OOTDs shaping a variety of outfits and clothes on our platform</p>
             <div className='flex gap-2'>
               <div className='flex'>
-                <Link href={'/explore'}>
+                <Link href={'/discover'}>
                   <Button>Discover</Button>
                 </Link>
               </div>
@@ -185,7 +185,7 @@ const Home = () => {
                   <PostSkeleton className='rotate-12 mt-4' />
                   <PostSkeleton className='rotate-12 mt-16' />
                 </> : posts?.map((post, i) => (
-                  <Link style={{ marginTop: i === 0 ? '16px' : '64px' }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative`}>
+                  <Link style={{ marginTop: i === 0 ? '16px' : '64px' }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative`}>
                     <Image
                       // 176px is the same as w-44, the width of the container
                       sizes="176px"
@@ -314,8 +314,8 @@ const Home = () => {
           <div className='grid gap-8 lg:gap-20 xl:gap-32 grid-cols-1 sm:grid-cols-3'>
             <div className='flex flex-col gap-1 text-secondary-text'>
               <h3 className='font-bold text-gray-500'>Explore</h3>
-              <Link href='/explore' className='text-sm'>Discover</Link>
-              <Link href='/explore' className='text-sm'>Blog</Link>
+              <Link href='/discover' className='text-sm'>Discover</Link>
+              <Link href='/discover' className='text-sm'>Blog</Link>
             </div>
 
             <div className='flex flex-col gap-1 text-secondary-text'>

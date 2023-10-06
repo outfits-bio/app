@@ -13,23 +13,23 @@ export const UserNotFoundPage: NextPage = () => {
             <h1 className='text-center text-5xl font-black font-clash'>{username}</h1>
             <article className='text-center'>
                 <p className='text-lg'>This could be your handle.</p>
-                </article>
+            </article>
             <div className='relative w-[500]'>
-            <div className='flex gap-2 items-center'>
-            <Link href='/explore'>
-                    <Button centerItems variant={'outline-ghost'}>
-                        Explore
-                    </Button>
+                <div className='flex gap-2 items-center'>
+                    <Link href='/discover'>
+                        <Button centerItems variant={'outline-ghost'}>
+                            Discover
+                        </Button>
                     </Link>
 
                     <Link href='/login'>
                         <Button centerItems>
                             Claim Handle
                         </Button>
-                        </Link>
-                    </div>
+                    </Link>
                 </div>
             </div>
+        </div>
     </Layout>
 }
 
