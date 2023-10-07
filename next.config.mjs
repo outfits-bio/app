@@ -43,7 +43,7 @@ const config = {
       "ui-avatars.com",
       "upload.wikimedia.org",
     ],
-    minimumCacheTTL: 0,
+    unoptimized: true,
   },
 };
 
