@@ -1,15 +1,15 @@
 import debounce from 'lodash.debounce';
 import { NextPage } from 'next';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
+import {
+    PiCamera, PiHammer, PiHeart, PiMagnifyingGlass, PiSealCheck, PiSpinnerGap
+} from 'react-icons/pi';
 import { Avatar } from '~/components/Avatar';
 import { Layout } from '~/components/Layout';
 import { api } from '~/utils/api.util';
 
-import {
-    PiCamera, PiHammer, PiHeart, PiMagnifyingGlass, PiSealCheck, PiSpinnerGap
-} from 'react-icons/pi';
-import { useRouter } from 'next/router';
 
 export const SearchPage: NextPage = () => {
     const { query } = useRouter();

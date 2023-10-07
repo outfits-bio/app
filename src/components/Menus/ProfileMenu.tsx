@@ -1,13 +1,13 @@
+import { Menu } from '@headlessui/react';
+import type { User } from 'next-auth';
 import { Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
 
-import { Menu } from '@headlessui/react';
 import { PiDotsThree } from 'react-icons/pi';
 
-import { Button } from '../Button';
 import { BaseMenu } from './BaseMenu';
+import { Button } from '../Button';
 
-import type { User } from 'next-auth';
 
 interface ProfileMenuProps {
     user: User;

@@ -1,13 +1,13 @@
+import { NotificationType } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
+import axios from "axios";
 import {
-  SpotifyStatus,
   getProfileSchema,
   likeProfileSchema,
   searchProfileSchema,
+  SpotifyStatus,
 } from "~/schemas/user.schema";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
-import { TRPCError } from "@trpc/server";
-import { NotificationType } from "@prisma/client";
-import axios from "axios";
 
 export const profileRouter = createTRPCRouter({
   profileExists: publicProcedure
@@ -86,7 +86,7 @@ export const profileRouter = createTRPCRouter({
       let likeData: { id: string };
 
       try {
-        let like = ctx.prisma.user.update({
+        const like = ctx.prisma.user.update({
           where: {
             id,
             likedBy: {
@@ -110,7 +110,7 @@ export const profileRouter = createTRPCRouter({
           },
         });
 
-        let notification = ctx.prisma.notification.create({
+        const notification = ctx.prisma.notification.create({
           data: {
             type: NotificationType.PROFILE_LIKE,
             targetUser: {

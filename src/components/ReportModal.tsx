@@ -1,13 +1,13 @@
-import { Dispatch, Fragment, SetStateAction, useCallback, useState } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ReportType } from '@prisma/client';
+import { Dispatch, Fragment, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { CreateReportInput, createReportSchema } from '~/schemas/user.schema';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
-import { Dialog, Transition } from '@headlessui/react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { ReportType } from '@prisma/client';
 
 import { Button } from './Button';
 
@@ -64,7 +64,7 @@ export const ReportModal = ({ isOpen, setIsOpen, type, id }: ReportModalProps) =
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-96 gap-2 flex flex-col transform overflow-hidden rounded-md dark:text-white bg-white dark:bg-black border border-black dark:border-white p-4 text-left align-middle shadow-xl transition-all">
+                            <Dialog.Panel className="w-96 gap-2 flex flex-col overflow-hidden rounded-md dark:text-white bg-white dark:bg-black border border-black dark:border-white p-4 text-left align-middle shadow-xl transition-all">
                                 <h1 className='text-2xl font-semibold'>Report {type === "USER" ? 'User' : 'Post'}</h1>
 
                                 <form onSubmit={handleSubmit(handleReportSubmit)}>

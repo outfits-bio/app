@@ -1,19 +1,21 @@
-import { useSession } from 'next-auth/react';
+import { LinkType } from '@prisma/client';
+import { inferRouterOutputs } from '@trpc/server';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import type { User } from 'next-auth';
+import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import Marquee from 'react-fast-marquee';
 import { toast } from 'react-hot-toast';
-import { api } from '~/utils/api.util';
-import { handleErrors } from '~/utils/handle-errors.util';
-
 import {
     PiCameraBold, PiDiscordLogoBold, PiGithubLogoBold, PiHammerBold, PiHeartBold, PiHeartFill, PiInstagramLogoBold, PiLinkSimpleBold, PiPencilSimple,
     PiQuestion, PiSealCheckBold, PiShareFat, PiTiktokLogoBold, PiTwitterLogoBold, PiYoutubeLogoBold
 } from 'react-icons/pi';
-import { LinkType } from '@prisma/client';
-import { inferRouterOutputs } from '@trpc/server';
+import type { AppRouter } from '~/server/api/root';
+import { api } from '~/utils/api.util';
+import { handleErrors } from '~/utils/handle-errors.util';
+
 
 import { Avatar } from './Avatar';
 import { Button } from './Button';
@@ -23,8 +25,6 @@ import { AdminEditUserModal } from './Modals/AdminEditUserModal';
 import { SpotifySetupModal } from './Modals/SpotifySetupModal';
 import { ReportModal } from './ReportModal';
 
-import type { AppRouter } from '~/server/api/root';
-import type { User } from 'next-auth';
 type RouterOutput = inferRouterOutputs<AppRouter>;
 
 interface Props {
@@ -121,7 +121,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                             <span>{profileData?.username}</span>
                             <div className='group relative w-max'>
                                 {profileData?.admin ? <PiHammerBold className='w-6 h-6 md:w-8 md:h-8' /> : profileData?.verified && <PiSealCheckBold className='w-6 h-6 md:w-8 md:h-8' />}
-                                <span className='opacity-0 transition-opacity group-hover:opacity-100 pointer-events-none absolute w-0 h-0 -top-2 left-1/3 border-l-[5px] border-l-transparent border-t-[7.5px] border-t-black dark:border-t-white border-r-[5px] border-r-transparent' />
+                                <span className='opacity-0 transition-opacity group-hover:opacity-100 pointer-events-none absolute w-0 h-0 -top-2 left-1/3 border-x-[5px] border-x-transparent border-t-[7.5px] border-t-black dark:border-t-white' />
                                 <span
                                     className="shadow-lg pointer-events-none absolute bg-black dark:bg-white -top-[42px] -left-full w-max rounded-md p-2 opacity-0 transition-opacity group-hover:opacity-100"
                                 >

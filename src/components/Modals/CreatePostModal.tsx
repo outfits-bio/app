@@ -1,21 +1,20 @@
 import { Listbox, Transition } from "@headlessui/react"
-import { PiPlus, PiCaretDown } from "react-icons/pi"
 import { PostType } from "@prisma/client"
-import { type } from "os"
+import axios from "axios"
+import { useRouter } from "next/router"
+import { useSession } from "next-auth/react"
 import { Fragment, useCallback, useEffect, useRef, useState } from "react"
 import Cropper, { Area } from "react-easy-crop"
-import { Button } from "../Button"
-import { getPostTypeName } from "../PostSection/post-section.util"
-import { BaseModal } from "./BaseModal"
-import axios from "axios"
-import { useSession } from "next-auth/react"
-import { useRouter } from "next/router"
+import { PiCaretDown, PiPlus } from "react-icons/pi"
 import { useFileUpload } from "~/hooks/file-upload.hook"
 import { api } from "~/utils/api.util"
 import getCroppedImg from "~/utils/crop-image.util"
 import { handleErrors } from "~/utils/handle-errors.util"
+import { BaseModal } from "./BaseModal"
 
 import type { BaseModalProps } from './BaseModal';
+import { Button } from "../Button"
+import { getPostTypeName } from "../PostSection/post-section.util"
 
 export const CreatePostModal = (props: BaseModalProps) => {
     const { data: session } = useSession();

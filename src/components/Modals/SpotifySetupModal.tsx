@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import { Button } from '../Button';
 import { BaseModal, BaseModalProps } from './BaseModal';
+import { Button } from '../Button';
 
 export const SpotifySetupModal = (props: BaseModalProps) => {
     return <BaseModal {...props}>

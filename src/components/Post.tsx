@@ -1,21 +1,21 @@
+import { inferRouterOutputs } from "@trpc/server"
+import Image from "next/image"
 import Link from "next/link"
-import { PiHammer, PiSealCheck, PiShareFatBold, PiDotsThreeBold } from "react-icons/pi"
+import { useRouter } from "next/router"
+import { User } from "next-auth"
+import { useState } from "react"
+import toast from "react-hot-toast"
+import { PiDotsThreeBold, PiHammer, PiSealCheck, PiShareFatBold } from "react-icons/pi"
+import { AppRouter } from "~/server/api/root"
+import { api } from "~/utils/api.util"
+import { handleErrors } from "~/utils/handle-errors.util"
 import { formatImage } from "~/utils/image-src-format.util"
 import { Avatar } from "./Avatar"
 import { Button } from "./Button"
+import { DeleteModal } from "./DeleteModal"
 import { PostMenu } from "./Menus/PostMenu"
 import { getPostTypeName } from "./PostSection/post-section.util"
-import { inferRouterOutputs } from "@trpc/server"
-import { AppRouter } from "~/server/api/root"
-import Image from "next/image"
-import { User } from "next-auth"
-import { useState } from "react"
-import { useRouter } from "next/router"
-import toast from "react-hot-toast"
-import { api } from "~/utils/api.util"
-import { handleErrors } from "~/utils/handle-errors.util"
 import { ReportModal } from "./ReportModal"
-import { DeleteModal } from "./DeleteModal"
 
 type RouterOutput = inferRouterOutputs<AppRouter>['post'];
 
@@ -60,7 +60,7 @@ export const Post = ({ post, user }: PostProps) => {
         onError: (e) => handleErrors({ e, message: 'An error occurred while deleting this post.' })
     });
 
-    const { query, asPath, push } = useRouter();
+    const { asPath, push } = useRouter();
 
     const handleDeletePost = () => {
         setConfirmDeleteModalOpen(true);

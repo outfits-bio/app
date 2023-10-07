@@ -6,7 +6,7 @@ import { api } from '~/utils/api.util';
 
 
 export const NotificationsPage: NextPage = () => {
-    const { data: notifications, isLoading } = api.notifications.getNotifications.useQuery();
+    const { data: notifications } = api.notifications.getNotifications.useQuery();
 
     return <Layout
         title="notifications"

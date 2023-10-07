@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import axios from "axios";
 import { env } from "~/env.mjs";
 import {
@@ -7,7 +8,6 @@ import {
 } from "~/schemas/user.schema";
 import { formatImage } from "~/utils/image-src-format.util";
 
-import { TRPCError } from "@trpc/server";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 

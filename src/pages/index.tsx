@@ -1,19 +1,19 @@
-import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import Marquee from 'react-fast-marquee';
+import { PiBackpackBold, PiBaseballCapBold, PiCoatHangerBold, PiDotsThreeBold, PiEyeglassesBold, PiHammer, PiHeartBold, PiHeartFill, PiLinkSimpleBold, PiPantsBold, PiSealCheck, PiShirtFoldedBold, PiShoppingBagOpenBold, PiSneakerBold, PiTShirtBold, PiWatchBold } from 'react-icons/pi';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
 
-import { PiBackpackBold, PiBaseballCapBold, PiCoatHanger, PiCoatHangerBold, PiDotsThreeBold, PiEyeglassesBold, PiHammer, PiHeartBold, PiHeartFill, PiLinkSimple, PiLinkSimpleBold, PiPantsBold, PiSealCheck, PiShirtFoldedBold, PiShoppingBagOpenBold, PiSneakerBold, PiTShirtBold, PiWatchBold } from 'react-icons/pi';
 
-import Marquee from 'react-fast-marquee';
+import { Logo } from '~/components/Logo';
 import { PostSkeleton } from '~/components/Skeletons/PostSkeleton';
-import landing from '../../public/landing.png';
 import { api } from '~/utils/api.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
-import { Logo } from '~/components/Logo';
+import landing from '../../public/landing.png';
 
 const Home = () => {
   const { status, data } = useSession();
@@ -305,7 +305,7 @@ const Home = () => {
 
       <section className='flex justify-center items-center w-screen py-12'>
         <div className='flex flex-col w-full md:flex-row md:justify-between gap-12 xl:w-3/4 px-12'>
-          <div className='flex flex-col items-left'>
+          <div className='flex flex-col'>
             <h1 className='text-3xl font-black font-clash flex items-center gap-2 mb-2'><Logo /> outfits.bio</h1>
             <p className='text-[11px] text-secondary-text'>You make the look, we&apos;ll make the link!</p>
             <p className='text-[11px] text-secondary-text'>Copyright © 2023, All Rights Reserved.</p>

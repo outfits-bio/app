@@ -1,16 +1,16 @@
-import { useSession } from 'next-auth/react';
+import { Dialog, Transition } from '@headlessui/react';
 import { Inter, Urbanist } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 import React, { Dispatch, Fragment, SetStateAction, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { PiHammer, PiSealCheck, PiX } from 'react-icons/pi';
 import { api, RouterOutputs } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
-import { Dialog, Transition } from '@headlessui/react';
-import { PiHammer, PiSealCheck, PiX } from 'react-icons/pi';
 
 import { DeleteModal } from './DeleteModal';
 import { PostMenu } from './Menus/PostMenu';
@@ -39,7 +39,7 @@ const inter = Inter({
     variable: '--font-inter',
 });
 
-export const ProfilePostModal = ({ post, user, setPostModalOpen }: ProfilePostModalProps) => {
+export const ProfilePostModal = ({ post, user }: ProfilePostModalProps) => {
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false);
     const [confirmDeleteUserModalOpen, setConfirmDeleteUserModalOpen] = useState(false);
@@ -134,7 +134,7 @@ export const ProfilePostModal = ({ post, user, setPostModalOpen }: ProfilePostMo
                         leaveFrom="opacity-100 scale-100"
                         leaveTo="opacity-0 scale-95"
                     >
-                        <Dialog.Panel className={`relative transform overflow-hidden rounded-xl bg-white text-left align-middle shadow-xl transition-all w-[400px] h-[654px]`}>
+                        <Dialog.Panel className={`relative overflow-hidden rounded-xl bg-white text-left align-middle shadow-xl transition-all w-[400px] h-[654px]`}>
                             <Image src={formatImage(post.image, user?.id)} alt={post.type ?? ''} fill className='rounded-xl border-black border object-cover' />
                             <button className='absolute left-4 top-4 text-white' onClick={closeModal}>
                                 <PiX className='w-5 h-4' />

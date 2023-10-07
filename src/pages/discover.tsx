@@ -1,6 +1,6 @@
 import { PostType } from "@prisma/client";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PiClockBold, PiFireBold } from "react-icons/pi";
 import { ExplorePost, ExplorePostModal } from "~/components/ExplorePostModal";
@@ -31,7 +31,7 @@ export const DiscoverPage = () => {
         getNextPageParam: (lastPage) => lastPage.nextCursor,
     });
 
-    const handleChangePostType = (type: PostType) => {
+    const _handleChangePostType = (type: PostType) => {
         if (activePostTypes.includes(type)) {
             setActivePostTypes(activePostTypes.filter(t => t !== type));
         } else {

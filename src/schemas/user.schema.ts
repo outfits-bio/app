@@ -1,8 +1,7 @@
+import { PostType, ReportType } from "@prisma/client";
 import { z } from "zod";
 
-import { PostType, ReportType } from "@prisma/client";
-
-export const usernameRegex = /^[A-Za-z0-9!@#$%&*()_+=|<>?{}\[\]~'"-]+$/;
+export const usernameRegex = /^[A-Za-z0-9!@#$%&*()_+=|<>?{}[\]~'"-]+$/;
 
 export const userSchema = z.object({
   email: z.string().email(),
@@ -81,7 +80,7 @@ export type CreateBugReportInput = ReturnType<
 
 export interface SpotifyStatus {
   track_id: string;
-  timestamps: any;
+  timestamps: unknown;
   song: string;
   artist: string;
   album_art_url: string;

@@ -1,15 +1,15 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { CreateBugReportInput, createBugReportSchema } from '~/schemas/user.schema';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
-import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button } from '../Button';
 import { BaseModal } from './BaseModal';
-
 import type { BaseModalProps } from './BaseModal';
+import { Button } from '../Button';
+
 
 export const FeedbackModal = (props: BaseModalProps) => {
 

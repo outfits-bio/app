@@ -1,21 +1,21 @@
 import axios from 'axios';
-import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { useEffect, useRef, useState } from 'react';
+import { PiPlus } from 'react-icons/pi';
 import { useFileUpload } from '~/hooks/file-upload.hook';
 import { api } from '~/utils/api.util';
 import { formatImage } from '~/utils/image-src-format.util';
 
-import { PiPlus } from 'react-icons/pi';
 
-import { Button } from '../Button';
-import { PostCropModal } from '../PostCropModal';
-import { Spinner } from '../Spinner';
 import {
     getPostTypeCount, getPostTypeIcon, getPostTypeName, onError, onMutate, onSettled,
     PostSectionProps
 } from './post-section.util';
+import { Button } from '../Button';
+import { PostCropModal } from '../PostCropModal';
+import { Spinner } from '../Spinner';
 
 export const PostSection = ({ profileData, postsData, type, loading }: PostSectionProps) => {
 
@@ -26,7 +26,7 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
     const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
 
     const [isCropped, setIsCropped] = useState<boolean>(false);
-    const [deleteButton, setDeleteButton] = useState<string | null>(null);
+    const [, setDeleteButton] = useState<string | null>(null);
 
     const ref = useRef<HTMLInputElement>(null);
 
@@ -47,6 +47,7 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
      * onMutate, onError, and onSettled are custom functions in ./post-section.util.ts that handle optimistic updates
      */
     const { mutate, isLoading } = api.post.createPost.useMutation({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onMutate: (newPost) => onMutate(ctx, (old) => [newPost, ...old as any], profileData?.id),
         onError: (err, context) => onError(ctx, err, context, "Failed to create post!", profileData?.id),
         onSettled: () => onSettled(ctx, profileData?.username),

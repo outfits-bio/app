@@ -1,16 +1,16 @@
-import { signOut } from 'next-auth/react';
+import { Menu } from '@headlessui/react';
 import Link from 'next/link';
+import type { User } from 'next-auth';
+import { signOut } from 'next-auth/react';
 import { Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
 
-import { Menu } from '@headlessui/react';
 import { PiCopySimple } from 'react-icons/pi';
 
+import { BaseMenu } from './BaseMenu';
 import { Avatar } from '../Avatar';
 import { Button } from '../Button';
-import { BaseMenu } from './BaseMenu';
 
-import type { User } from 'next-auth';
 interface NavbarMenuProps {
     user: User;
     setBugReportModalOpen: Dispatch<SetStateAction<boolean>>;

@@ -1,13 +1,12 @@
-import { withSentryConfig } from "@sentry/nextjs";
 /**
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
  * for Docker builds.
  */
-await import("./src/env.mjs");
-
+import nextBudleAnalyzer from "@next/bundle-analyzer";
 import withPlugins from "next-compose-plugins";
 import nextPWA from "next-pwa";
-import nextBudleAnalyzer from "@next/bundle-analyzer";
+
+await import("./src/env.mjs");
 
 const withPWA = nextPWA({
   dest: "public",
@@ -43,7 +42,7 @@ const config = {
       "ui-avatars.com",
       "upload.wikimedia.org",
     ],
-    unoptimized: true,
+    minimumCacheTTL: 0,
   },
 };
 

@@ -1,9 +1,9 @@
-import { useTheme } from "next-themes";
-import { ThemeCard } from "./ThemeCard"
-import { Button } from "./Button";
-import { PiArrowLeft, PiArrowRight } from "react-icons/pi";
 import { useRouter } from "next/router";
+import { useTheme } from "next-themes";
+import { PiArrowLeft, PiArrowRight } from "react-icons/pi";
 import { AccentCard } from '~/components/AccentCard';
+import { Button } from "./Button";
+import { ThemeCard } from "./ThemeCard"
 
 interface OnboardingStartSectionProps {
     setOnboardingStarted: React.Dispatch<React.SetStateAction<number>>;

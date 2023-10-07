@@ -49,8 +49,8 @@ export const NotificationsMenu = ({ unreadCount }: NotificationsMenuProps) => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
         >
-            <Menu.Items className="absolute right-1 rounded-md divide-y divide-stroke mt-1 origin-top-right border border-stroke bg-white dark:bg-black shadow-dropdown p-4 w-[400px] px-4 divide-none">
-                {(notifications?.length ?? 0 > 0) ?
+            <Menu.Items className="absolute right-1 rounded-md divide-y divide-stroke mt-1 origin-top-right border border-stroke bg-white dark:bg-black shadow-dropdown p-4 w-[400px] divide-none">
+                {((notifications?.length ?? 0) > 0) ?
                     notifications?.map((notification, index) => <NotificationCard refetch={refetch} key={index} notification={notification} />) ?? <></>
                     : <div className='flex flex-col items-center justify-center font-clash py-2'>
                         <h3 className='text-center'>No notifications</h3>

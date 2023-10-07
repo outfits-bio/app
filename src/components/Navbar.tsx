@@ -1,27 +1,28 @@
+import { Popover, Transition } from '@headlessui/react';
 import debounce from 'lodash.debounce';
-import { useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
+import { useTheme } from 'next-themes';
 import { Fragment, useCallback, useEffect, useState } from 'react';
-import { api } from '~/utils/api.util';
 
 import {
-    PiBellSimple, PiBellSimpleFill, PiCamera, PiCompass, PiHammer, PiHeart,
+    PiBellSimple, PiBellSimpleFill,
+    PiCompass, PiHammer,
     PiMagnifyingGlass, PiMagnifyingGlassBold, PiPlus, PiSealCheck, PiSpinnerGap
 } from 'react-icons/pi';
+import { api } from '~/utils/api.util';
 
 import { Avatar } from './Avatar';
 import { Button } from './Button';
 import { Logo } from './Logo';
 import { NavMenu } from './Menu';
 import { NavbarMenu } from './Menus/NavbarMenu';
-import { BugReportModal } from './Modals/BugReportModal';
-import { FeedbackModal } from './Modals/FeedbackModal';
 import { NotificationsMenu } from './Menus/NotificationsMenu';
-import { useTheme } from 'next-themes';
+import { BugReportModal } from './Modals/BugReportModal';
 import { CreatePostModal } from './Modals/CreatePostModal';
-import { Popover, Transition } from '@headlessui/react';
+import { FeedbackModal } from './Modals/FeedbackModal';
 
 interface Props {
     title: string;
@@ -34,7 +35,7 @@ interface Props {
 export const AuthSection = ({ session, isAuth }: { session: Props['session'], isAuth: boolean }) => {
     const { theme } = useTheme();
 
-    const { data, refetch } = api.notifications.getUnreadNotificationsCount.useQuery(undefined);
+    const { data } = api.notifications.getUnreadNotificationsCount.useQuery(undefined);
 
     const [bugReportModalOpen, setBugReportModalOpen] = useState(false);
     const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
@@ -144,7 +145,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
 
                     <div className='absolute top-14 w-full'>
                         <Popover className={'relative'}>
-                            {({ close }) => (
+                            {() => (
                                 <>
                                     <Transition
                                         show={input.length > 0}

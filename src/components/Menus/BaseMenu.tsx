@@ -1,8 +1,8 @@
+import { Menu, Transition } from '@headlessui/react';
 import { cva, VariantProps } from 'class-variance-authority';
-import { Dispatch, forwardRef, Fragment, SetStateAction } from 'react';
+import { forwardRef, Fragment } from 'react';
 import { cn } from '~/utils/cn.util';
 
-import { Menu, Transition } from '@headlessui/react';
 
 const variants = cva('absolute right-1 rounded-md divide-y divide-stroke mt-1 w-56 origin-top-right border border-stroke bg-white dark:bg-black shadow-dropdown p-4');
 

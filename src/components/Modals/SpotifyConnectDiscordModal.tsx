@@ -1,8 +1,8 @@
-import { signIn } from 'next-auth/react';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 
-import { Button } from '../Button';
 import { BaseModal, BaseModalProps } from './BaseModal';
+import { Button } from '../Button';
 
 export const SpotifyConnectDiscordModal = (props: BaseModalProps) => {
     return <BaseModal {...props}>

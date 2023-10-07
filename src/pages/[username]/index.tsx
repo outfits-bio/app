@@ -1,6 +1,7 @@
+import { PostType } from '@prisma/client';
 import { GetStaticProps, NextPage } from 'next';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { Layout } from '~/components/Layout';
 import { PostSection } from '~/components/PostSection';
@@ -10,7 +11,6 @@ import { generateSSGHelper } from '~/server/utils/ssg.util';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
-import { PostType } from '@prisma/client';
 
 export const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
     const { push, query } = useRouter();

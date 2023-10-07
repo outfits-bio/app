@@ -1,9 +1,9 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';
+import { PiCopy } from 'react-icons/pi';
 import { Layout } from '~/components/Layout';
 
-import { PiCopy } from 'react-icons/pi';
 
 export const ErrorPage: NextPage = () => {
     const { query } = useRouter();

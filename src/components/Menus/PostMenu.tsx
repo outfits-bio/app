@@ -1,12 +1,12 @@
 
 import { Menu } from '@headlessui/react';
-import { PiDotsThree } from 'react-icons/pi';
-
-import { Button } from '../Button';
-import { BaseMenu } from './BaseMenu';
-
 import type { User } from 'next-auth';
 import type { Dispatch, SetStateAction } from 'react';
+import { PiDotsThree } from 'react-icons/pi';
+
+import { BaseMenu } from './BaseMenu';
+import { Button } from '../Button';
+
 interface PostMenuProps {
     user: User;
     setReportModalOpen: Dispatch<SetStateAction<boolean>>;

@@ -1,3 +1,5 @@
+import { PostType } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { getPostsSchema } from "~/schemas/user.schema";
 import {
@@ -6,8 +8,6 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 
-import { PostType } from "@prisma/client";
-import { TRPCError } from "@trpc/server";
 import { deleteImage, generatePresignedUrl } from "~/server/utils/image.util";
 
 export const postTypeSchema = z.object({
@@ -141,7 +141,7 @@ export const postRouter = createTRPCRouter({
   getLatestPosts: publicProcedure
     .input(getPostsSchema)
     .query(async ({ ctx, input }) => {
-      const { cursor, skip, types, category } = input;
+      const { cursor, skip, types, category: _category } = input;
 
       const posts = await ctx.prisma.post.findMany({
         where: {

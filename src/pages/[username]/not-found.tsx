@@ -1,8 +1,8 @@
 import { NextPage } from 'next';
-import { Layout } from '~/components/Layout';
-import { Button } from '~/components/Button';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { Button } from '~/components/Button';
+import { Layout } from '~/components/Layout';
 
 export const UserNotFoundPage: NextPage = () => {
     const { query } = useRouter();
