@@ -3,6 +3,7 @@
  * for Docker builds.
  */
 import nextBudleAnalyzer from "@next/bundle-analyzer";
+import million from "million/compiler";
 import withPlugins from "next-compose-plugins";
 import nextPWA from "next-pwa";
 
@@ -46,4 +47,7 @@ const config = {
   },
 };
 
-export default withPlugins([withBundleAnalyzer, withPWA], config);
+export default million.next(
+  withPlugins([withBundleAnalyzer, withPWA], config),
+  { auto: true, mute: true }
+);
