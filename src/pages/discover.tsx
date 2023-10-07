@@ -73,10 +73,9 @@ export const DiscoverPage = () => {
         [isFetchingNextPage, isFetching, hasNextPage, fetchNextPage]
     );
 
-
     return <Layout title="Discover">
         {postModalOpen && <ExplorePostModal setPostModalOpen={setPostModalOpen} post={postFromUrl} />}
-        <div className="w-screen h-screen -mt-20 pt-20 flex">
+        <div className="w-screen h-screen -mt-20 pt-20 flex pb-24 md:pb-0 -mb-24">
             <section className="w-80 bg-white border-r border-stroke hidden md:flex flex-col justify-between p-4">
                 <div className="flex flex-col gap-2 w-full">
                     <Button
@@ -174,10 +173,10 @@ export const DiscoverPage = () => {
                 </div>
 
                 {/* Posts */}
-                <div className="flex flex-col items-center gap-3 overflow-y-scroll">
+                <div className="flex flex-col items-center gap-3 overflow-y-scroll hide-scrollbar snap-mandatory snap-y scroll-smooth">
                     {posts && posts.map((post, index) => {
                         return <div ref={posts.length === index + 1 ? lastElementRef : null} key={post.id}>
-                            {index > 0 && <div className="w-full h-0.5 bg-stroke" />}
+                            {index > 0 && <div className="w-full h-0.5 bg-stroke md:block hidden" />}
 
                             <Post post={post} user={session?.user} />
                         </div>
