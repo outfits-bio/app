@@ -85,7 +85,7 @@ export const Post = ({ post, user }: PostProps) => {
 
     const truncatedTagline = post.user.tagline && (post.user.tagline.length > 20 ? `${post.user.tagline.slice(0, 20)}...` : post.user.tagline);
 
-    return <div className="border-2 border-stroke rounded-lg w-[350px] py-4 flex flex-col items-center gap-4 mt-3">
+    return <div className="border-2 border-stroke rounded-lg w-[350px] py-4 flex flex-col items-center gap-2 md:gap-4 md:mt-3">
         {reportModalOpen && <ReportModal isOpen={reportModalOpen} setIsOpen={setReportModalOpen} type='POST' id={post.id} />}
         {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} post admin deleteFn={() => {
             mutate({ id: post.id });
@@ -98,6 +98,7 @@ export const Post = ({ post, user }: PostProps) => {
         <Link href={`/${post.user.username}`} className="flex gap-2 items-center w-full px-4 font-clash">
             <Avatar
                 image={post.user.image}
+                id={post.user.id}
                 username={post.user.username}
                 size={'sm'}
             />
@@ -108,7 +109,7 @@ export const Post = ({ post, user }: PostProps) => {
             </div>
         </Link>
 
-        <Link href={`/discover?postId=${post.id}`} className="relative w-[320px] h-[524px] rounded-md overflow-hidden border border-stroke">
+        <Link href={`/discover?postId=${post.id}`} className="relative w-[305px] h-[500px] md:w-[320px] md:h-[524px] rounded-md overflow-hidden border border-stroke">
             <Image
                 src={formatImage(post.image, post.user.id)}
                 className="object-cover"

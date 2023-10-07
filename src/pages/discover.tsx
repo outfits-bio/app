@@ -158,10 +158,10 @@ export const DiscoverPage = () => {
                 </Button>
             </section>
 
-            <section className="grow flex flex-col gap-4 items-center pt-4">
+            <section className="grow flex flex-col gap-4 items-center pt-2 md:pt-4">
 
                 {/* Post Type */}
-                <div className="w-[350px] flex border-b-2 border-stroke pb-2">
+                <div className="w-[350px] flex border-b-2 border-stroke pb-0.5 md:pb-2">
                     <button onClick={() => setActiveCategory('popular')} className={`${activeCategory === 'popular' ? 'text-inherit' : 'text-secondary-text'} w-1/2 py-2 font-medium font-clash flex gap-2 items-center justify-center hover:bg-stroke transition-colors duration-150 rounded-md`}>
                         <PiFireBold className="text-2xl" />
                         <p>Popular</p>
