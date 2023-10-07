@@ -76,7 +76,7 @@ export const DiscoverPage = () => {
     return <Layout title="Discover">
         {postModalOpen && <ExplorePostModal setPostModalOpen={setPostModalOpen} post={postFromUrl} />}
         <div className="w-screen h-screen -mt-20 pt-20 flex pb-24 md:pb-0 -mb-24">
-            <section className="w-80 bg-white border-r border-stroke hidden md:flex flex-col justify-between p-4">
+            <section className="w-80 bg-white dark:bg-black border-r border-stroke hidden md:flex flex-col justify-between p-4">
                 <div className="flex flex-col gap-2 w-full">
                     <Button
                         onClick={() => handleChangePostType(PostType.OUTFIT)}

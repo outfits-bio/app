@@ -103,7 +103,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
     }
 
     return (
-        <div className="md:h-full flex flex-col font-satoshi md:bg-white md:border-r border-stroke pl-4 py-4 md:px-12">
+        <div className="md:h-full flex flex-col font-satoshi md:bg-white md:dark:bg-black md:border-r border-stroke pl-4 py-4 md:px-12">
             {reportModalOpen && <ReportModal isOpen={reportModalOpen} setIsOpen={setReportModalOpen} type='USER' id={profileData?.id} />}
             {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} admin deleteFn={() => {
                 deleteUser({ id: profileData?.id ?? '' });
