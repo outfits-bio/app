@@ -166,7 +166,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
 
                                                 {searchData && searchData.map((user) => (
                                                     <Link href={`/${user.username}`} key={user.id} className='flex items-center rounded-md p-2 hover:bg-hover w-full text-left border border-stroke'>
-                                                        <Avatar image={user.image} size={'xs'} className='mr-2' />
+                                                        <Avatar image={user.image} id={user.id} username={user.username} size={'xs'} className='mr-2' />
                                                         <p>{user.username}</p>
                                                         {user.admin ? <PiHammer className='ml-1 text-primary' /> : user.verified ? <PiSealCheck className='ml-1 text-primary' /> : null}
                                                     </Link>
