@@ -85,7 +85,7 @@ export const Post = ({ post, user }: PostProps) => {
 
     const truncatedTagline = post.user.tagline && (post.user.tagline.length > 20 ? `${post.user.tagline.slice(0, 20)}...` : post.user.tagline);
 
-    return <div className="snap-start border-2 border-stroke rounded-lg w-[350px] py-4 flex flex-col items-center gap-2 md:gap-4 md:mt-3">
+    return <div className="snap-start border-2 border-stroke rounded-lg 2xs-h:w-[250px] xs-h:w-[300px] sm-h:w-[320px] w-[350px] max-h-full py-4 flex flex-col items-center gap-2 md:gap-4 md:mt-3">
         {reportModalOpen && <ReportModal isOpen={reportModalOpen} setIsOpen={setReportModalOpen} type='POST' id={post.id} />}
         {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} post admin deleteFn={() => {
             mutate({ id: post.id });
@@ -105,11 +105,12 @@ export const Post = ({ post, user }: PostProps) => {
 
             <div className="flex flex-col justify-center">
                 <p className="font-medium flex items-center gap-1">{post.user.username} {post.user.admin ? <PiHammer className='w-4 h-4' /> : post.user.verified && <PiSealCheck className='w-4 h-4' />}</p>
-                <p className="text-sm font-medium text-secondary-text">{truncatedTagline && `${truncatedTagline} - `}{getPostTypeName(post.type).toLowerCase()}</p>
+                <p className="text-sm font-medium text-secondary-text 2xs-h:hidden inline">{truncatedTagline && `${truncatedTagline} - `}{getPostTypeName(post.type).toLowerCase()}</p>
+                <p className="text-sm font-medium text-secondary-text 2xs-h:inline hidden">{getPostTypeName(post.type).toLowerCase()}</p>
             </div>
         </Link>
 
-        <Link href={`/discover?postId=${post.id}`} className="relative w-[305px] h-[500px] md:w-[320px] md:h-[524px] rounded-md overflow-hidden border border-stroke">
+        <Link href={`/discover?postId=${post.id}`} className="relative w-[305px] 3xs-h:w-[199px] 3xs-h:h-[325px] 2xs-h:w-[214px] 2xs-h:h-[350px] xs-h:w-[244px] xs-h:h-[400px] sm-h:w-[275px] sm-h:h-[450px] h-[500px] md:w-[320px] md:h-[524px] rounded-md overflow-hidden border border-stroke">
             <Image
                 src={formatImage(post.image, post.user.id)}
                 className="object-cover"

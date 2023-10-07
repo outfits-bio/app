@@ -8,6 +8,12 @@ export default {
         satoshi: ["var(--font-satoshi)"],
         clash: ["var(--font-clash)"],
       },
+      screens: {
+        "sm-h": { raw: "(max-height: 860px)" },
+        "xs-h": { raw: "(max-height: 850px)" },
+        "2xs-h": { raw: "(max-height: 800px)" },
+        "3xs-h": { raw: "(max-height: 750px)" },
+      },
       colors: {
         body: "var(--body)",
         stroke: "var(--stroke)",
