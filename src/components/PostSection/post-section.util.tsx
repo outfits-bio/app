@@ -145,7 +145,7 @@ export const onMutate = async (
 
   const prevData = ctx.post.getPostsAllTypes.getData();
 
-  ctx.post.getPostsAllTypes.setData({ id: userId ?? "" }, updateData);
+  ctx.post.getPostsAllTypes.setData({ id: userId ?? "" }, updateData as any);
 
   return { prevData };
 };

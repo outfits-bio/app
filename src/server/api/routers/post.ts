@@ -363,14 +363,12 @@ export const postRouter = createTRPCRouter({
         },
       });
 
-      return {
-        posts: posts.map((post) => {
-          return {
-            ...post,
-            authUserHasLiked: post.likes.length > 0,
-          };
-        }),
-      };
+      return posts.map((post) => {
+        return {
+          ...post,
+          authUserHasLiked: post.likes.length > 0,
+        };
+      });
     }),
 
   getLatestPosts: publicProcedure
