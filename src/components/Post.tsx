@@ -5,7 +5,7 @@ import { useRouter } from "next/router"
 import { User } from "next-auth"
 import { useState } from "react"
 import toast from "react-hot-toast"
-import { PiDotsThreeBold, PiHammer, PiSealCheck, PiShareFatBold } from "react-icons/pi"
+import { PiDotsThreeBold, PiHammer, PiHeartBold, PiHeartFill, PiSealCheck, PiShareFatBold } from "react-icons/pi"
 import { AppRouter } from "~/server/api/root"
 import { api } from "~/utils/api.util"
 import { handleErrors } from "~/utils/handle-errors.util"
@@ -28,6 +28,7 @@ export const Post = ({ post, user }: PostProps) => {
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false);
     const [confirmDeleteUserModalOpen, setConfirmDeleteUserModalOpen] = useState(false);
+    const [likeAnimation, setLikeAnimation] = useState(false);
 
     const ctx = api.useContext();
 
@@ -69,6 +70,14 @@ export const Post = ({ post, user }: PostProps) => {
     const handleDeleteUserPost = () => {
         setConfirmDeleteUserModalOpen(true);
     }
+
+    const { mutate: toggleLikePost, isLoading: toggleLikePostLoading } = api.post.toggleLikePost.useMutation({
+        onSuccess: () => {
+            ctx.post.getLatestPosts.refetch();
+            ctx.post.getPostsAllTypes.refetch({ id: post.user.id });
+        },
+        onError: (e) => handleErrors({ e, message: 'An error occurred while liking this post.' })
+    });
 
     const handleShare = (postId: string) => {
         const origin =
@@ -123,6 +132,31 @@ export const Post = ({ post, user }: PostProps) => {
         <div className="flex px-4 justify-between items-center w-full">
             <div className="flex gap-2">
                 <Button variant="outline-ghost" centerItems shape={'circle'} iconLeft={<PiShareFatBold />} onClick={() => handleShare(post.id)} />
+
+                <Button
+                    variant="outline-ghost"
+                    centerItems
+                    shape={'circle'}
+                    onClick={() => {
+                        setLikeAnimation(true);
+                        toggleLikePost({ id: post.id });
+                    }}
+                    iconLeft={
+
+                        (post.authUserHasLiked) ? (
+                            <PiHeartFill
+                                onAnimationEnd={() => setLikeAnimation(false)}
+                                className={likeAnimation ? 'animate-ping fill-black dark:fill-white' : ''}
+                            />
+                        ) : (
+                            <PiHeartBold
+                                onAnimationEnd={() => setLikeAnimation(false)}
+                                className={likeAnimation ? 'animate-ping fill-black dark:fill-white' : ''}
+                            />
+                        )}
+
+                    disabled={toggleLikePostLoading}
+                />
             </div>
 
 

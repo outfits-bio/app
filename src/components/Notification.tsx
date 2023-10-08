@@ -24,7 +24,26 @@ const RelativeDate = ({ date }: { date: Date }) => {
 }
 
 const NotificationCard: FC<NotificationCardProps> = ({ notification, refetch }) => {
-    const href = notification.link ? `/${notification.link}` : notification.type === 'PROFILE_LIKE' ? `/${notification.user?.username}` : ``;
+    let href: string;
+
+    switch (notification.type) {
+        case 'PROFILE_LIKE':
+            href = `/${notification.user?.username}`;
+            break;
+        case 'POST_LIKE':
+            href = `/${notification.user?.username}`;
+            break;
+        case 'POST_REACTION':
+            href = `/${notification.user?.username}`;
+            break;
+        case 'OTHER':
+            href = `/${notification.link}`;
+            break;
+        default:
+            href = '';
+            break;
+    }
+
     const image = notification.user?.image ?? null;
 
     const ctx = api.useContext();
@@ -44,6 +63,14 @@ const NotificationCard: FC<NotificationCardProps> = ({ notification, refetch }) 
                 {notification.type === 'PROFILE_LIKE' && <>
                     <span className="font-bold">{notification.user?.username}</span>
                     <span> liked your profile </span>
+                </>}
+                {notification.type === 'POST_LIKE' && <>
+                    <span className="font-bold">{notification.user?.username}</span>
+                    <span> liked your post </span>
+                </>}
+                {notification.type === 'POST_REACTION' && <>
+                    <span className="font-bold">{notification.user?.username}</span>
+                    <span> reacted to your post with {notification.message}</span>
                 </>}
                 {notification.type === 'OTHER' && <>
                     <span> {notification.message} </span>

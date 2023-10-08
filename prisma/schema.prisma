@@ -73,10 +73,16 @@ model User {
     links               Link[]
 
     posts               Post[]
+    likedPosts          Post[]    @relation("PostLikes")
+    postReactions       Reaction[]
+    wishlistedPosts           Post[]    @relation("Wishlists")
+
     likedBy             User[]    @relation("Likes")
     liked               User[]    @relation("Likes")
+
     createdReports      Report[]
     reports             Report[]  @relation("ReportedUser")
+    
     notifications       Notification[] @relation("Notifications")
     sentNotifications   Notification[] @relation("SentNotifications")
 
@@ -108,6 +114,10 @@ model Post {
 
     reports     Report[] @relation("ReportedPost")
     notifications Notification[] @relation("Notifications")
+    likes      User[]    @relation("PostLikes")
+    likeCount  Int       @default(0)
+    wishlists  User[]    @relation("Wishlists")
+    reactions  Reaction[]
 
     @@index([userId])
 }
@@ -151,8 +161,24 @@ model Notification {
     @@index([userId])
 }
 
+model Reaction {
+    id          String   @id @default(cuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    userId      String
+    user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    postId      String
+    post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+    content     String
+
+    @@index([userId])
+    @@index([postId])
+}
+
 enum NotificationType {
     PROFILE_LIKE
+    POST_LIKE
+    POST_REACTION
     OTHER
 }
 

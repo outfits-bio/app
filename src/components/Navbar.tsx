@@ -158,7 +158,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
                                         leaveTo="opacity-0 translate-y-1"
                                     >
                                         <Popover.Panel>
-                                            <div className="relative border border-stroke rounded-md p-4 bg-white w-full flex flex-col gap-2 shadow-lg">
+                                            <div className="relative border border-stroke rounded-md p-4 bg-white dark:bg-black w-full flex flex-col gap-2 shadow-lg">
                                                 <Link href={`/search?username=${input}`} className='flex items-center rounded-md p-2 bg-stroke border border-stroke text-secondary-text w-full text-left'>
                                                     <PiMagnifyingGlassBold className='text-xl mr-2' />
                                                     <p>Search for &quot;{input}&quot;</p>
