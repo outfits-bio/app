@@ -374,7 +374,7 @@ export const postRouter = createTRPCRouter({
   getLatestPosts: publicProcedure
     .input(getPostsSchema)
     .query(async ({ ctx, input }) => {
-      const { cursor, skip, types, category: _category } = input;
+      const { cursor, skip, types, category } = input;
 
       const posts = await ctx.prisma.post.findMany({
         where: {
@@ -412,6 +412,7 @@ export const postRouter = createTRPCRouter({
         cursor: cursor ? { id: cursor } : undefined,
         orderBy: {
           createdAt: "desc",
+          likeCount: category === "popular" ? "desc" : undefined,
         },
       });
 
