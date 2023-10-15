@@ -132,7 +132,7 @@ export const ExplorePostModal = ({ post }: ExplorePostModalProps) => {
                         leaveTo="opacity-0 scale-95"
                     >
                         <Dialog.Panel className={`relative overflow-hidden rounded-xl bg-white text-left align-middle shadow-xl transition-all w-[400px] h-[654px]`}>
-                            <Image src={formatImage(post.image, post.user.id)} alt={post.type ?? ''} fill className='rounded-xl border-black border object-cover' />
+                            <Image src={formatImage(post.image, post.user.id)} alt={post.type ?? ''} fill className='rounded-xl border border-stroke object-cover' />
                             <button className='absolute left-4 top-4 text-white' onClick={closeModal}>
                                 <PiX className='w-5 h-4' />
                             </button>

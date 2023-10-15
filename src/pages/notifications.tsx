@@ -15,7 +15,12 @@ export const NotificationsPage: NextPage = () => {
             <div className="flex flex-col w-full sm:w-[400px] gap-2 font-clash py-2">
                 {notifications?.map((notification, index) => <NotificationCard key={index} notification={notification} />) ?? <></>}
                 <div className='flex flex-col items-center justify-center font-clash py-2'>
-                    <h3 className='text-center'>No more notifications</h3>
+                {((notifications?.length ?? 0) > 0) ?
+                    notifications?.map((notification, index) => <NotificationCard refetch={refetch} key={index} notification={notification} />) ?? <></>
+                    : <div className='flex flex-col items-center justify-center font-clash py-2'>
+                        <h3 className='text-center'>That's it, you don't have any notifications</h3>
+                    </div>
+                }
                 </div>
             </div>
         </div>

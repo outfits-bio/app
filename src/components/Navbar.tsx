@@ -9,7 +9,7 @@ import { Fragment, useCallback, useEffect, useState } from 'react';
 
 import {
     PiBellSimple, PiBellSimpleFill,
-    PiCompass, PiHammer,
+    PiCompass, PiHammer, PiDiscordLogo,
     PiMagnifyingGlass, PiMagnifyingGlassBold, PiPlus, PiSealCheck, PiSpinnerGap
 } from 'react-icons/pi';
 import { api } from '~/utils/api.util';
@@ -190,7 +190,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
                         </Link>}
 
                         <Link href='https://discord.gg/f4KEs5TVz2'>
-                            <Button variant='outline-ghost'>Discord</Button>
+                            <Button variant='outline-ghost' iconLeft={<PiDiscordLogo />}></Button>
                         </Link>
 
                         <Link href='/login'>

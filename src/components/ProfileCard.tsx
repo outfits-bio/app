@@ -136,12 +136,12 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                         <div className='flex gap-4 text-sm md:text-base'>
                             <p className={`flex items-center gap-1`}>
                                 <PiCameraBold className='w-5 h-5' />
-                                <span className={loading ? 'skeleton' : ''}><span className='font-bold'>{profileData?.imageCount}</span> Shot{profileData?.imageCount !== 1 ? 's' : ''}</span>
+                                <span className={loading ? 'skeleton' : ''}><span className='font-bold'>{profileData?.imageCount}</span> Post{profileData?.imageCount !== 1 ? 's' : ''}</span>
                             </p>
 
                             <p className='flex items-center gap-1'>
                                 <PiHeartBold className='w-5 h-5' />
-                                <span className={loading ? 'skeleton' : ''}><span className='font-bold'>{profileData?.likeCount}</span> Like{profileData?.likeCount !== 1 ? 's' : ''}</span>
+                                <span className={loading ? 'skeleton' : ''}><span className='font-bold'>{profileData?.likeCount}</span> Follower{profileData?.likeCount !== 1 ? 's' : ''}</span>
                             </p>
                         </div>
                     </div>
@@ -208,7 +208,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
 
                                 disabled={loading || isLoading}
                             >
-                                Like{(profileData?.authUserHasLiked) ? 'd' : ''}
+                                Follow{(profileData?.authUserHasLiked) ? 'ed' : ''}
                             </Button>
                         </div>
 

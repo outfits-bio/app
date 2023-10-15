@@ -98,7 +98,7 @@ const Home = () => {
             <p className='mb-4'>Besides sharing your wardrobe you can also follow other people or like individual items to get recommended similar people or clothes you like.  </p>
             <div className='flex'>
               <Link href={'/login'}>
-                <Button variant={'outline-ghost'}>Get Started</Button>
+                <Button variant={'outline-ghost'}>Create your profile</Button>
               </Link>
             </div>
           </div>
@@ -119,10 +119,10 @@ const Home = () => {
 
             <div className='w-5/6 flex gap-2'>
               <div className='relative w-6 h-6 shrink-0'>
-                <Image src={'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg'} alt={''} fill className='rounded-md' />
+                <Image src={'https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg'} alt={''} fill className='rounded-md' />
               </div>
               <Marquee pauseOnHover autoFill speed={40} className='cursor-pointer select-none'>
-                <p className='text-sm mx-4'>Listening to <span className='font-bold'>song name</span> by <span className='font-bold'>artist name</span></p>
+                <p className='text-sm mx-4'>Listening to <span className='font-bold'>Can't Tell Me Nothing</span> by <span className='font-bold'>Kanye West</span></p>
               </Marquee>
             </div>
 

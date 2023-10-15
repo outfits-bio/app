@@ -56,11 +56,11 @@ export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActi
             <main className='h-screen pt-20 overflow-x-hidden pb-24 md:pb-0 scroll-smooth'>{children}</main>
             {pathname !== '/login' && pathname !== '/onboarding' && pathname !== '/' &&
                 <div className='py-5 px-6 bg-white dark:bg-black border border-stroke flex justify-between w-screen h-24 fixed bottom-0 md:hidden gap-4 z-50'>
-                    <Link href={'/discover'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
+                    <Link href={'/discover'} className='grow rounded-md flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
                         {pathname === "/discover" ? <PiHouseFill /> : <PiHouse />}
                     </Link>
 
-                    <Link href={'/search'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
+                    <Link href={'/search'} className='grow rounded-md flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
                         {pathname === "/search" ? <PiMagnifyingGlassFill /> : <PiMagnifyingGlass />}
                     </Link>
 
@@ -70,13 +70,13 @@ export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActi
                         </Button>
                     </Link>
 
-                    <Link href={'/settings'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
+                    <Link href={'/settings'} className='grow rounded-md flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
                         {pathname.startsWith("/settings") ? <PiGearFill /> : <PiGear />}
                     </Link>
 
-                    {session.data?.user ? <Link href={`/${session.data?.user.username}`} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
+                    {session.data?.user ? <Link href={`/${session.data?.user.username}`} className='grow rounded-md flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
                         <Image className='rounded-full object-contain' src={formatAvatar(session.data?.user.image, session.data?.user.id)} alt={session.data?.user.username ?? ""} width={30} height={30} />
-                    </Link> : <Link href={'/login'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
+                    </Link> : <Link href={'/login'} className='grow rounded-md flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
                         <PiUserPlus />
                     </Link>}
                 </div>
