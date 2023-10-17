@@ -1,4 +1,4 @@
-import { NotificationType, PostType } from "@prisma/client";
+import { NotificationType, PostType, Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import {
@@ -226,7 +226,7 @@ export const postRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       const { id, emoji } = input;
 
-      const reaction = ctx.prisma.reaction.create({
+      const reaction = await ctx.prisma.reaction.create({
         data: {
           content: emoji,
           post: {
@@ -242,28 +242,35 @@ export const postRouter = createTRPCRouter({
         },
         select: {
           id: true,
+          post: {
+            select: {
+              userId: true,
+            },
+          },
         },
       });
 
-      const notification = ctx.prisma.notification.create({
+      const notification = await ctx.prisma.notification.create({
         data: {
           type: NotificationType.POST_REACTION,
           targetUser: {
             connect: {
-              id,
+              id: reaction.post.userId,
             },
           },
+          message: emoji,
           user: {
             connect: {
               id: ctx.session.user.id,
             },
           },
         },
+        select: {
+          id: true,
+        },
       });
 
-      const [res] = await ctx.prisma.$transaction([reaction, notification]);
-
-      return res;
+      return !!notification.id;
     }),
 
   removeReaction: protectedProcedure
@@ -376,6 +383,14 @@ export const postRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const { cursor, skip, types, category } = input;
 
+      const orderBy: Prisma.PostFindManyArgs["orderBy"] = {};
+
+      if (category === "popular") {
+        orderBy.likeCount = "desc";
+      } else {
+        orderBy.createdAt = "desc";
+      }
+
       const posts = await ctx.prisma.post.findMany({
         where: {
           type: {
@@ -398,6 +413,13 @@ export const postRouter = createTRPCRouter({
               tagline: true,
             },
           },
+          _count: {
+            select: {
+              reactions: true,
+              likes: true,
+              wishlists: true,
+            },
+          },
           likes: {
             where: {
               id: ctx.session?.user.id,
@@ -406,14 +428,20 @@ export const postRouter = createTRPCRouter({
               id: true,
             },
           },
+          reactions: {
+            where: {
+              userId: ctx.session?.user.id,
+            },
+            select: {
+              id: true,
+              content: true,
+            },
+          },
         },
         take: 6,
         skip: skip,
         cursor: cursor ? { id: cursor } : undefined,
-        orderBy: {
-          createdAt: "desc",
-          likeCount: category === "popular" ? "desc" : undefined,
-        },
+        orderBy,
       });
 
       let nextCursor: typeof cursor | undefined = undefined;

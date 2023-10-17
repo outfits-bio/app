@@ -122,7 +122,7 @@ const Home = () => {
                 <Image src={'https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg'} alt={''} fill className='rounded-md' />
               </div>
               <Marquee pauseOnHover autoFill speed={40} className='cursor-pointer select-none'>
-                <p className='text-sm mx-4'>Listening to <span className='font-bold'>Can't Tell Me Nothing</span> by <span className='font-bold'>Kanye West</span></p>
+                <p className='text-sm mx-4'>Listening to <span className='font-bold'>Can&apos;t Tell Me Nothing</span> by <span className='font-bold'>Kanye West</span></p>
               </Marquee>
             </div>
 

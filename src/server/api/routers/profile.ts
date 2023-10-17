@@ -161,7 +161,7 @@ export const profileRouter = createTRPCRouter({
   searchProfiles: publicProcedure
     .input(searchProfileSchema)
     .query(async ({ input, ctx }) => {
-      const { username } = input;
+      const { username, cursor, skip } = input;
 
       if (username.length === 0) return;
 
@@ -181,10 +181,19 @@ export const profileRouter = createTRPCRouter({
           verified: true,
           admin: true,
         },
-        take: 5,
+        take: 11,
+        skip,
+        cursor: cursor ? { id: cursor } : undefined,
       });
 
-      return users;
+      let nextCursor: typeof cursor | undefined = undefined;
+
+      if (users.length > 10) {
+        const nextItem = users.pop(); // return the last item from the array
+        nextCursor = nextItem?.id;
+      }
+
+      return { users, nextCursor };
     }),
 
   getTotalUsers: publicProcedure.query(async ({ ctx }) => {

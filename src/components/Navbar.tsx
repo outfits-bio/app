@@ -9,7 +9,7 @@ import { Fragment, useCallback, useEffect, useState } from 'react';
 
 import {
     PiBellSimple, PiBellSimpleFill,
-    PiCompass, PiHammer, PiDiscordLogo,
+    PiCompass, PiDiscordLogo, PiHammer,
     PiMagnifyingGlass, PiMagnifyingGlassBold, PiPlus, PiSealCheck, PiSpinnerGap
 } from 'react-icons/pi';
 import { api } from '~/utils/api.util';
@@ -164,7 +164,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
                                                     <p>Search for &quot;{input}&quot;</p>
                                                 </Link>
 
-                                                {searchData && searchData.map((user) => (
+                                                {searchData?.users && searchData.users?.map((user) => (
                                                     <Link href={`/${user.username}`} key={user.id} className='flex items-center rounded-md p-2 hover:bg-hover w-full text-left border border-stroke'>
                                                         <Avatar image={user.image} id={user.id} username={user.username} size={'xs'} className='mr-2' />
                                                         <p>{user.username}</p>

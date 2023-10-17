@@ -3,6 +3,11 @@ import { z } from "zod";
 
 export const usernameRegex = /^[A-Za-z0-9!@#$%&*()_+=|<>?{}[\]~'"-]+$/;
 
+export const paginatedSchema = z.object({
+  cursor: z.string().nullish(),
+  skip: z.number().int().min(0).optional(),
+});
+
 export const userSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).max(100),
@@ -18,9 +23,11 @@ export const getProfileSchema = z.object({
   username: z.string().min(3).max(20),
 });
 
-export const searchProfileSchema = z.object({
-  username: z.string().max(20),
-});
+export const searchProfileSchema = z
+  .object({
+    username: z.string().max(20),
+  })
+  .merge(paginatedSchema);
 
 export const likeProfileSchema = z.object({
   id: z.string().cuid(),
@@ -45,11 +52,6 @@ export const removeLinkSchema = z.object({
   id: z.string().cuid(),
 });
 export type RemoveLinkInput = ReturnType<typeof removeLinkSchema.parse>;
-
-export const paginatedSchema = z.object({
-  cursor: z.string().nullish(),
-  skip: z.number().int().min(0).optional(),
-});
 
 export const getPostsSchema = z
   .object({

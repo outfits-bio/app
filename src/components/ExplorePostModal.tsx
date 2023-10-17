@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import React, { Dispatch, Fragment, SetStateAction, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { PiHammer, PiSealCheck, PiX } from 'react-icons/pi';
+import { PiHammer, PiHeartBold, PiHeartFill, PiSealCheck, PiX } from 'react-icons/pi';
 import { api, RouterOutputs } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
@@ -40,6 +40,7 @@ export const ExplorePostModal = ({ post }: ExplorePostModalProps) => {
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false);
     const [confirmDeleteUserModalOpen, setConfirmDeleteUserModalOpen] = useState(false);
+    const [likeAnimation, setLikeAnimation] = useState(false);
 
     const { data } = useSession();
     const { asPath, push, query } = useRouter();
@@ -68,6 +69,14 @@ export const ExplorePostModal = ({ post }: ExplorePostModalProps) => {
             closeModal();
         },
         onError: (e) => handleErrors({ e, message: 'An error occurred while deleting this post.' })
+    });
+
+    const { mutate: toggleLikePost } = api.post.toggleLikePost.useMutation({
+        onSuccess: () => {
+            ctx.post.getLatestPosts.refetch();
+            ctx.post.getPostsAllTypes.refetch({ id: post?.user.id ?? '' });
+        },
+        onError: (e) => handleErrors({ e, message: 'An error occurred while liking this post.' })
     });
 
     const userIsProfileOwner = data?.user.id === post?.user.id;
@@ -153,13 +162,34 @@ export const ExplorePostModal = ({ post }: ExplorePostModalProps) => {
                                         </h1>
                                     </Link>
 
-                                    {data?.user && <PostMenu
-                                        handleDeleteUserPost={handleDeleteUserPost}
-                                        handleDeletePost={handleDeletePost}
-                                        setReportModalOpen={setReportModalOpen}
-                                        user={data.user}
-                                        userIsProfileOwner={userIsProfileOwner}
-                                    />}
+                                    <div className='flex items-center gap-4'>
+                                        {data?.user && <button onClick={() => {
+                                            setLikeAnimation(true);
+                                            toggleLikePost({ id: post.id });
+                                        }} className='text-xl text-white'>
+                                            {
+                                                (post.authUserHasLiked) ? (
+                                                    <PiHeartFill
+                                                        onAnimationEnd={() => setLikeAnimation(false)}
+                                                        className={likeAnimation ? 'animate-ping fill-white' : ''}
+                                                    />
+                                                ) : (
+                                                    <PiHeartBold
+                                                        onAnimationEnd={() => setLikeAnimation(false)}
+                                                        className={likeAnimation ? 'animate-ping fill-white' : ''}
+                                                    />
+                                                )
+                                            }
+                                        </button>}
+
+                                        {data?.user && <PostMenu
+                                            handleDeleteUserPost={handleDeleteUserPost}
+                                            handleDeletePost={handleDeletePost}
+                                            setReportModalOpen={setReportModalOpen}
+                                            user={data.user}
+                                            userIsProfileOwner={userIsProfileOwner}
+                                        />}
+                                    </div>
                                 </div>
                             </div>
                         </Dialog.Panel>

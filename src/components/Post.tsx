@@ -1,11 +1,13 @@
+import { Popover, Transition } from "@headlessui/react"
 import { inferRouterOutputs } from "@trpc/server"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { User } from "next-auth"
-import { useState } from "react"
+import { Fragment, useState } from "react"
 import toast from "react-hot-toast"
-import { PiDotsThreeBold, PiHammer, PiHeartBold, PiHeartFill, PiSealCheck, PiShareFatBold } from "react-icons/pi"
+import { PiBookmarkSimpleBold, PiChatCircleBold, PiDotsThreeBold, PiHammer, PiHeartBold, PiHeartFill, PiSealCheck, PiShareFatBold } from "react-icons/pi"
+import { AddReactionInput } from "~/schemas/post.schema"
 import { AppRouter } from "~/server/api/root"
 import { api } from "~/utils/api.util"
 import { handleErrors } from "~/utils/handle-errors.util"
@@ -79,6 +81,22 @@ export const Post = ({ post, user }: PostProps) => {
         onError: (e) => handleErrors({ e, message: 'An error occurred while liking this post.' })
     });
 
+    const { mutate: addReaction, isLoading: addReactionloading, variables } = api.post.addReaction.useMutation({
+        onSuccess: () => {
+            ctx.post.getLatestPosts.refetch();
+            ctx.post.getPostsAllTypes.refetch({ id: post.user.id });
+        },
+        onError: (e) => handleErrors({ e, message: 'An error occurred while reacting to this post.' })
+    });
+
+    const { mutate: removeReaction } = api.post.removeReaction.useMutation({
+        onSuccess: () => {
+            ctx.post.getLatestPosts.refetch();
+            ctx.post.getPostsAllTypes.refetch({ id: post.user.id });
+        },
+        onError: (e) => handleErrors({ e, message: 'An error occurred while removing your reaction to this post.' })
+    });
+
     const handleShare = (postId: string) => {
         const origin =
             typeof window !== 'undefined' && window.location.origin
@@ -90,6 +108,24 @@ export const Post = ({ post, user }: PostProps) => {
         navigator.clipboard.writeText(url);
 
         toast.success('Copied post link to clipboard!');
+    }
+
+    const handleToggleReact = (content: AddReactionInput['emoji']) => {
+        const reaction = post.reactions.find(r => r.content === content);
+
+        if (reaction) {
+            removeReaction({ id: reaction.id });
+        } else {
+            addReaction({ id: post.id, emoji: content });
+        }
+    }
+
+    const reactionLoading = (content: AddReactionInput['emoji']) => {
+        if (addReactionloading && variables?.emoji === content) {
+            return true;
+        }
+
+        return false;
     }
 
     const truncatedTagline = post.user.tagline && (post.user.tagline.length > 20 ? `${post.user.tagline.slice(0, 20)}...` : post.user.tagline);
@@ -129,10 +165,18 @@ export const Post = ({ post, user }: PostProps) => {
             />
         </Link>
 
+        <p className="text-sm font-clash text-secondary-text font-medium self-start pl-4 flex gap-1">
+            {post._count.likes > 0 && <span className="flex gap-1"><span className="font-bold">{post._count.likes}</span> {post._count.likes === 1 ? ' like' : ' likes'}
+                {post._count.reactions || post._count.wishlists ? ', ' : ''}
+            </span>}
+            {post._count.reactions > 0 && <span className="flex gap-1"><span className="font-bold">{post._count.reactions}</span> {post._count.reactions === 1 ? ' reaction' : ' reactions'}
+                {post._count.wishlists ? ', ' : ''}
+            </span>}
+            {post._count.wishlists > 0 && <span className="flex gap-1"><span className="font-bold">{post._count.wishlists}</span> {post._count.wishlists === 1 ? ' wishlist' : ' wishlists'}</span>}
+        </p>
+
         <div className="flex px-4 justify-between items-center w-full">
             <div className="flex gap-2">
-                <Button variant="outline-ghost" centerItems shape={'circle'} iconLeft={<PiShareFatBold />} onClick={() => handleShare(post.id)} />
-
                 <Button
                     variant="outline-ghost"
                     centerItems
@@ -157,6 +201,36 @@ export const Post = ({ post, user }: PostProps) => {
 
                     disabled={toggleLikePostLoading}
                 />
+
+                <Popover className="relative">
+                    <Popover.Button>
+                        <Button variant={'outline-ghost'} centerItems shape={'circle'} iconLeft={<PiChatCircleBold />} />
+                    </Popover.Button>
+                    <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-200"
+                        enterFrom="opacity-0 translate-y-1"
+                        enterTo="opacity-100 translate-y-0"
+                        leave="transition ease-in duration-150"
+                        leaveFrom="opacity-100 translate-y-0"
+                        leaveTo="opacity-0 translate-y-1"
+                    >
+                        <Popover.Panel className="absolute left-1/2 z-10 bottom-14 w-[120px] -translate-x-1/2 transform px-4 sm:px-0">
+                            <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                                <div className="relative flex justify-between items-center gap-1 bg-white p-2 text-2xl">
+                                    <Button variant={post.reactions.find(p => p.content === '🔥') ? 'primary' : 'outline-ghost'} isLoading={reactionLoading('🔥')} centerItems shape={'circle'} onClick={() => handleToggleReact('🔥')}>
+                                        {reactionLoading('🔥') ? '' : '🔥'}
+                                    </Button>
+                                    <Button variant={post.reactions.find(p => p.content === '❤️') ? 'primary' : 'outline-ghost'} isLoading={reactionLoading('❤️')} centerItems shape={'circle'} onClick={() => handleToggleReact('❤️')}>
+                                        {reactionLoading('❤️') ? '' : '❤️'}
+                                    </Button>
+                                </div>
+                            </div>
+                        </Popover.Panel>
+                    </Transition>
+                </Popover>
+                <Button variant={'outline-ghost'} centerItems shape={'circle'} iconLeft={<PiBookmarkSimpleBold />} />
+                <Button variant="outline-ghost" centerItems shape={'circle'} iconLeft={<PiShareFatBold />} onClick={() => handleShare(post.id)} />
             </div>
 
 

@@ -161,7 +161,7 @@ export const userRouter = createTRPCRouter({
 
       if (protocolTrimmedUrl.startsWith("discord.gg")) {
         data.type = "DISCORD";
-      } else if (protocolTrimmedUrl.startsWith("twitter.com")) {
+      } else if (protocolTrimmedUrl.startsWith("twitter.com") || protocolTrimmedUrl.startsWith("x.com")) {
         data.type = "TWITTER";
       } else if (protocolTrimmedUrl.startsWith("instagram.com")) {
         data.type = "INSTAGRAM";

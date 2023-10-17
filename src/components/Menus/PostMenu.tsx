@@ -18,7 +18,7 @@ interface PostMenuProps {
 
 export const PostMenu = ({ user, setReportModalOpen, handleDeleteUserPost, handleDeletePost, userIsProfileOwner, button, ...props }: PostMenuProps) => {
 
-    return <BaseMenu {...props} button={button ?? <PiDotsThree className='w-5 h-5 text-white' />} className='right-0 bottom-0 w-44 origin-top-right'>
+    return <BaseMenu {...props} button={button ?? <PiDotsThree className='w-5 h-5 text-white mt-1.5' />} className='right-0 bottom-0 w-44 origin-top-right'>
 
         <div className="space-y-1">
             {user && <Menu.Item>
