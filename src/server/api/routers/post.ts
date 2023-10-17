@@ -8,7 +8,7 @@ import {
   removeReactionSchema,
   toggleLikePostSchema,
 } from "~/schemas/post.schema";
-import { getPostsSchema } from "~/schemas/user.schema";
+import { getPostsSchema, paginatedSchema } from "~/schemas/user.schema";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -376,6 +376,86 @@ export const postRouter = createTRPCRouter({
           authUserHasLiked: post.likes.length > 0,
         };
       });
+    }),
+
+  getWishlist: protectedProcedure
+    .input(paginatedSchema)
+    .query(async ({ ctx, input }) => {
+      const { cursor, skip } = input;
+
+      const posts = await ctx.prisma.post.findMany({
+        where: {
+          wishlists: {
+            some: {
+              id: ctx.session.user.id,
+            },
+          },
+        },
+        select: {
+          id: true,
+          image: true,
+          type: true,
+          featured: true,
+          likeCount: true,
+          user: {
+            select: {
+              image: true,
+              verified: true,
+              username: true,
+              id: true,
+              admin: true,
+              tagline: true,
+            },
+          },
+          _count: {
+            select: {
+              reactions: true,
+              likes: true,
+              wishlists: true,
+            },
+          },
+          likes: {
+            where: {
+              id: ctx.session?.user.id,
+            },
+            select: {
+              id: true,
+            },
+          },
+          reactions: {
+            where: {
+              userId: ctx.session?.user.id,
+            },
+            select: {
+              id: true,
+              content: true,
+            },
+          },
+        },
+        take: 6,
+        skip: skip,
+        cursor: cursor ? { id: cursor } : undefined,
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+
+      let nextCursor: typeof cursor | undefined = undefined;
+
+      if (posts.length > 5) {
+        const nextItem = posts.pop(); // return the last item from the array
+        nextCursor = nextItem?.id;
+      }
+
+      return {
+        posts: posts.map((post) => {
+          return {
+            ...post,
+            authUserHasLiked: post.likes.length > 0,
+          };
+        }),
+        nextCursor,
+      };
     }),
 
   getLatestPosts: publicProcedure

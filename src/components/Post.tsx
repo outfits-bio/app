@@ -234,14 +234,16 @@ export const Post = ({ post, user }: PostProps) => {
             </div>
 
 
-            {user && <PostMenu
-                handleDeleteUserPost={handleDeleteUserPost}
-                handleDeletePost={handleDeletePost}
-                setReportModalOpen={setReportModalOpen}
-                user={user}
-                userIsProfileOwner={user.id === post?.user.id}
-                button={<Button variant="ghost" centerItems shape={'circle'} iconLeft={<PiDotsThreeBold />} />}
-            />}
+            <div className="block sm-h:hidden">
+                {user && <PostMenu
+                    handleDeleteUserPost={handleDeleteUserPost}
+                    handleDeletePost={handleDeletePost}
+                    setReportModalOpen={setReportModalOpen}
+                    user={user}
+                    userIsProfileOwner={user.id === post?.user.id}
+                    button={<Button variant="ghost" centerItems shape={'circle'} iconLeft={<PiDotsThreeBold />} />}
+                />}
+            </div>
         </div>
     </div>
 }

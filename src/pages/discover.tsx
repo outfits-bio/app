@@ -1,8 +1,9 @@
 import { PostType } from "@prisma/client";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { PiBackpackBold, PiBaseballCapBold, PiClockBold, PiCoatHangerBold, PiEyeglassesBold, PiFireBold, PiFolderNotchBold, PiPantsBold, PiShirtFoldedBold, PiSneakerBold, PiTShirtBold, PiWatchBold } from "react-icons/pi";
+import { PiBackpackBold, PiBaseballCapBold, PiBookmarkSimpleBold, PiClockBold, PiCoatHangerBold, PiEyeglassesBold, PiFireBold, PiFolderNotchBold, PiPantsBold, PiShirtFoldedBold, PiSneakerBold, PiTShirtBold, PiWatchBold } from "react-icons/pi";
 import { Button } from "~/components/Button";
 import { ExplorePost, ExplorePostModal } from "~/components/ExplorePostModal";
 import { Layout } from "~/components/Layout";
@@ -152,9 +153,16 @@ export const DiscoverPage = () => {
                     </Button>
                 </div>
 
-                <Button variant={'ghost'} iconLeft={<PiFolderNotchBold />} className="justify-start">
-                    Blog
-                </Button>
+                <div>
+                    <Button variant={'ghost'} iconLeft={<PiFolderNotchBold />} className="justify-start">
+                        Blog
+                    </Button>
+                    <Link href={'/bookmarks'}>
+                        <Button variant={'ghost'} iconLeft={<PiBookmarkSimpleBold />} className="justify-start">
+                            Bookmarks
+                        </Button>
+                    </Link>
+                </div>
             </section>
 
             <section className="grow flex flex-col gap-4 items-center pt-2 md:pt-4">
