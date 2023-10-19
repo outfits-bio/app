@@ -142,7 +142,7 @@ export const Post = ({ post, user }: PostProps) => {
         const wishlist = post.wishlists.find(w => w.id === user?.id);
 
         if (wishlist) {
-            removeFromWishlist({ id: wishlist.id });
+            removeFromWishlist({ id: post.id });
         } else {
             addToWishlist({ id: post.id });
         }
