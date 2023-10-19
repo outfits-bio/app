@@ -101,14 +101,16 @@ export const Post = ({ post, user }: PostProps) => {
         onSuccess: () => {
             ctx.post.getLatestPosts.refetch();
             ctx.post.getPostsAllTypes.refetch({ id: post.user.id });
+            ctx.post.getWishlist.refetch();
         },
         onError: (e) => handleErrors({ e, message: 'An error occurred while adding this post to your wishlist.' })
     });
 
-    const { mutate: removeFromWishlist } = api.post.removeFromWishlist.useMutation({
+    const { mutate: removeFromWishlist, isLoading: removeFromWishlistLoading } = api.post.removeFromWishlist.useMutation({
         onSuccess: () => {
             ctx.post.getLatestPosts.refetch();
             ctx.post.getPostsAllTypes.refetch({ id: post.user.id });
+            ctx.post.getWishlist.refetch();
         },
         onError: (e) => handleErrors({ e, message: 'An error occurred while removing this post from your wishlist.' })
     });
@@ -259,9 +261,9 @@ export const Post = ({ post, user }: PostProps) => {
                     variant={'outline-ghost'}
                     centerItems
                     shape={'circle'}
-                    iconLeft={!addToWishlistloading && (post.wishlists.find(w => w.id === user?.id) ? <PiBookmarkSimpleBold /> : <PiBookmarkSimpleFill />)}
+                    iconLeft={(!addToWishlistloading && !removeFromWishlistLoading) && (post.wishlists.find(w => w.id === user?.id) ? <PiBookmarkSimpleBold /> : <PiBookmarkSimpleFill />)}
                     onClick={handleToggleWishlist}
-                    isLoading={addToWishlistloading}
+                    isLoading={addToWishlistloading || removeFromWishlistLoading}
                 />
                 <Button variant="outline-ghost" centerItems shape={'circle'} iconLeft={<PiShareFatBold />} onClick={() => handleShare(post.id)} />
             </div>
