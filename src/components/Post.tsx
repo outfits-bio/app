@@ -261,7 +261,7 @@ export const Post = ({ post, user }: PostProps) => {
                     variant={'outline-ghost'}
                     centerItems
                     shape={'circle'}
-                    iconLeft={(!addToWishlistloading && !removeFromWishlistLoading) && (post.wishlists.find(w => w.id === user?.id) ? <PiBookmarkSimpleBold /> : <PiBookmarkSimpleFill />)}
+                    iconLeft={(!addToWishlistloading && !removeFromWishlistLoading) && (post.wishlists.find(w => w.id === user?.id) ? <PiBookmarkSimpleFill /> : <PiBookmarkSimpleBold />)}
                     onClick={handleToggleWishlist}
                     isLoading={addToWishlistloading || removeFromWishlistLoading}
                 />
