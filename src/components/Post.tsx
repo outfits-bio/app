@@ -97,6 +97,22 @@ export const Post = ({ post, user }: PostProps) => {
         onError: (e) => handleErrors({ e, message: 'An error occurred while removing your reaction to this post.' })
     });
 
+    const { mutate: addToWishlist, isLoading: addToWishlistloading } = api.post.addToWishlist.useMutation({
+        onSuccess: () => {
+            ctx.post.getLatestPosts.refetch();
+            ctx.post.getPostsAllTypes.refetch({ id: post.user.id });
+        },
+        onError: (e) => handleErrors({ e, message: 'An error occurred while adding this post to your wishlist.' })
+    });
+
+    const { mutate: removeFromWishlist } = api.post.removeFromWishlist.useMutation({
+        onSuccess: () => {
+            ctx.post.getLatestPosts.refetch();
+            ctx.post.getPostsAllTypes.refetch({ id: post.user.id });
+        },
+        onError: (e) => handleErrors({ e, message: 'An error occurred while removing this post from your wishlist.' })
+    });
+
     const handleShare = (postId: string) => {
         const origin =
             typeof window !== 'undefined' && window.location.origin
@@ -117,6 +133,16 @@ export const Post = ({ post, user }: PostProps) => {
             removeReaction({ id: reaction.id });
         } else {
             addReaction({ id: post.id, emoji: content });
+        }
+    }
+
+    const handleToggleWishlist = () => {
+        const wishlist = post.wishlists.find(w => w.id === user?.id);
+
+        if (wishlist) {
+            removeFromWishlist({ id: wishlist.id });
+        } else {
+            addToWishlist({ id: post.id });
         }
     }
 
@@ -229,7 +255,14 @@ export const Post = ({ post, user }: PostProps) => {
                         </Popover.Panel>
                     </Transition>
                 </Popover>
-                <Button variant={'outline-ghost'} centerItems shape={'circle'} iconLeft={<PiBookmarkSimpleBold />} />
+                <Button
+                    variant={post.wishlists.find(w => w.id === user?.id) ? 'primary' : 'outline-ghost'}
+                    centerItems
+                    shape={'circle'}
+                    iconLeft={!addToWishlistloading && <PiBookmarkSimpleBold />}
+                    onClick={handleToggleWishlist}
+                    isLoading={addToWishlistloading}
+                />
                 <Button variant="outline-ghost" centerItems shape={'circle'} iconLeft={<PiShareFatBold />} onClick={() => handleShare(post.id)} />
             </div>
 

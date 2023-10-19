@@ -422,6 +422,14 @@ export const postRouter = createTRPCRouter({
               id: true,
             },
           },
+          wishlists: {
+            where: {
+              id: ctx.session?.user.id,
+            },
+            select: {
+              id: true,
+            },
+          },
           reactions: {
             where: {
               userId: ctx.session?.user.id,
@@ -501,6 +509,14 @@ export const postRouter = createTRPCRouter({
             },
           },
           likes: {
+            where: {
+              id: ctx.session?.user.id,
+            },
+            select: {
+              id: true,
+            },
+          },
+          wishlists: {
             where: {
               id: ctx.session?.user.id,
             },
