@@ -6,7 +6,7 @@ import { useRouter } from "next/router"
 import { User } from "next-auth"
 import { Fragment, useState } from "react"
 import toast from "react-hot-toast"
-import { PiBookmarkSimpleBold, PiChatCircleBold, PiDotsThreeBold, PiHammer, PiHeartBold, PiHeartFill, PiSealCheck, PiShareFatBold } from "react-icons/pi"
+import { PiBookmarkSimpleBold, PiBookmarkSimpleFill, PiChatCircleBold, PiDotsThreeBold, PiHammer, PiHeartBold, PiHeartFill, PiSealCheck, PiShareFatBold } from "react-icons/pi"
 import { AddReactionInput } from "~/schemas/post.schema"
 import { AppRouter } from "~/server/api/root"
 import { api } from "~/utils/api.util"
@@ -256,10 +256,10 @@ export const Post = ({ post, user }: PostProps) => {
                     </Transition>
                 </Popover>
                 <Button
-                    variant={post.wishlists.find(w => w.id === user?.id) ? 'primary' : 'outline-ghost'}
+                    variant={'outline-ghost'}
                     centerItems
                     shape={'circle'}
-                    iconLeft={!addToWishlistloading && <PiBookmarkSimpleBold />}
+                    iconLeft={!addToWishlistloading && (post.wishlists.find(w => w.id === user?.id) ? <PiBookmarkSimpleBold /> : <PiBookmarkSimpleFill />)}
                     onClick={handleToggleWishlist}
                     isLoading={addToWishlistloading}
                 />
