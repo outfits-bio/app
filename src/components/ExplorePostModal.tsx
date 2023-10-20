@@ -1,16 +1,16 @@
-import { useSession } from 'next-auth/react';
+import { Dialog, Transition } from '@headlessui/react';
+import localFont from 'next/font/local';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 import React, { Dispatch, Fragment, SetStateAction, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { PiHammer, PiHeartBold, PiHeartFill, PiSealCheck, PiX } from 'react-icons/pi';
 import { api, RouterOutputs } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
-import localFont from 'next/font/local';
 
-import { Dialog, Transition } from '@headlessui/react';
-import { PiHammer, PiSealCheck, PiX } from 'react-icons/pi';
 
 import { DeleteModal } from './DeleteModal';
 import { PostMenu } from './Menus/PostMenu';
@@ -36,10 +36,11 @@ const satoshi = localFont({
     variable: '--font-satoshi',
 });
 
-export const ExplorePostModal = ({ post, setPostModalOpen }: ExplorePostModalProps) => {
+export const ExplorePostModal = ({ post }: ExplorePostModalProps) => {
     const [reportModalOpen, setReportModalOpen] = useState(false);
     const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false);
     const [confirmDeleteUserModalOpen, setConfirmDeleteUserModalOpen] = useState(false);
+    const [likeAnimation, setLikeAnimation] = useState(false);
 
     const { data } = useSession();
     const { asPath, push, query } = useRouter();
@@ -70,6 +71,14 @@ export const ExplorePostModal = ({ post, setPostModalOpen }: ExplorePostModalPro
         onError: (e) => handleErrors({ e, message: 'An error occurred while deleting this post.' })
     });
 
+    const { mutate: toggleLikePost } = api.post.toggleLikePost.useMutation({
+        onSuccess: () => {
+            ctx.post.getLatestPosts.refetch();
+            ctx.post.getPostsAllTypes.refetch({ id: post?.user.id ?? '' });
+        },
+        onError: (e) => handleErrors({ e, message: 'An error occurred while liking this post.' })
+    });
+
     const userIsProfileOwner = data?.user.id === post?.user.id;
 
     const handleDeletePost = () => {
@@ -94,19 +103,6 @@ export const ExplorePostModal = ({ post, setPostModalOpen }: ExplorePostModalPro
         push(asPath.split('?')[0] ?? '/');
     }
 
-    const handleShare = () => {
-        const origin =
-            typeof window !== 'undefined' && window.location.origin
-                ? window.location.origin
-                : '';
-
-        const url = `${origin}${asPath}`;
-
-        navigator.clipboard.writeText(url);
-
-        toast.success('Copied post link to clipboard!');
-    }
-
     if (!post) return null;
 
     return <Transition appear show={true} as={Fragment}>
@@ -126,7 +122,7 @@ export const ExplorePostModal = ({ post, setPostModalOpen }: ExplorePostModalPro
             {reportModalOpen && <ReportModal isOpen={reportModalOpen} setIsOpen={setReportModalOpen} type='POST' id={query.postId?.toString()} />}
             {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} post admin deleteFn={() => {
                 mutate({ id: query.postId?.toString() ?? '' });
-                push('/explore');
+                push('/discover');
             }} />}
             {confirmDeleteUserModalOpen && <DeleteModal isOpen={confirmDeleteUserModalOpen} setIsOpen={setConfirmDeleteUserModalOpen} post deleteFn={() => {
                 deletePost({ id: query.postId?.toString() ?? '' });
@@ -144,8 +140,8 @@ export const ExplorePostModal = ({ post, setPostModalOpen }: ExplorePostModalPro
                         leaveFrom="opacity-100 scale-100"
                         leaveTo="opacity-0 scale-95"
                     >
-                        <Dialog.Panel className={`relative transform overflow-hidden rounded-xl bg-white text-left align-middle shadow-xl transition-all w-[400px] h-[654px]`}>
-                            <Image src={formatImage(post.image, post.user.id)} alt={post.type ?? ''} fill className='rounded-xl border-black border object-cover' />
+                        <Dialog.Panel className={`relative overflow-hidden rounded-xl bg-white text-left align-middle shadow-xl transition-all w-[400px] h-[654px]`}>
+                            <Image src={formatImage(post.image, post.user.id)} alt={post.type ?? ''} fill className='rounded-xl border border-stroke object-cover' />
                             <button className='absolute left-4 top-4 text-white' onClick={closeModal}>
                                 <PiX className='w-5 h-4' />
                             </button>
@@ -166,13 +162,34 @@ export const ExplorePostModal = ({ post, setPostModalOpen }: ExplorePostModalPro
                                         </h1>
                                     </Link>
 
-                                    {data?.user && <PostMenu
-                                        handleDeleteUserPost={handleDeleteUserPost}
-                                        handleDeletePost={handleDeletePost}
-                                        setReportModalOpen={setReportModalOpen}
-                                        user={data.user}
-                                        userIsProfileOwner={userIsProfileOwner}
-                                    />}
+                                    <div className='flex items-center gap-4'>
+                                        {data?.user && <button onClick={() => {
+                                            setLikeAnimation(true);
+                                            toggleLikePost({ id: post.id });
+                                        }} className='text-xl text-white'>
+                                            {
+                                                (post.authUserHasLiked) ? (
+                                                    <PiHeartFill
+                                                        onAnimationEnd={() => setLikeAnimation(false)}
+                                                        className={likeAnimation ? 'animate-ping fill-white' : ''}
+                                                    />
+                                                ) : (
+                                                    <PiHeartBold
+                                                        onAnimationEnd={() => setLikeAnimation(false)}
+                                                        className={likeAnimation ? 'animate-ping fill-white' : ''}
+                                                    />
+                                                )
+                                            }
+                                        </button>}
+
+                                        {data?.user && <PostMenu
+                                            handleDeleteUserPost={handleDeleteUserPost}
+                                            handleDeletePost={handleDeletePost}
+                                            setReportModalOpen={setReportModalOpen}
+                                            user={data.user}
+                                            userIsProfileOwner={userIsProfileOwner}
+                                        />}
+                                    </div>
                                 </div>
                             </div>
                         </Dialog.Panel>

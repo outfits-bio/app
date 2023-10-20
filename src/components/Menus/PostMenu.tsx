@@ -1,46 +1,26 @@
-import { useRouter } from 'next/router';
-import { toast } from 'react-hot-toast';
 
 import { Menu } from '@headlessui/react';
-import { PiDotsThree } from 'react-icons/pi';
-
-import { Button } from '../Button';
-import { BaseMenu } from './BaseMenu';
-
 import type { User } from 'next-auth';
 import type { Dispatch, SetStateAction } from 'react';
+import { PiDotsThree } from 'react-icons/pi';
+
+import { BaseMenu } from './BaseMenu';
+import { Button } from '../Button';
+
 interface PostMenuProps {
     user: User;
     setReportModalOpen: Dispatch<SetStateAction<boolean>>;
     handleDeleteUserPost: () => void;
     handleDeletePost: () => void;
     userIsProfileOwner: boolean;
+    button?: JSX.Element;
 }
 
-export const PostMenu = ({ user, setReportModalOpen, handleDeleteUserPost, handleDeletePost, userIsProfileOwner, ...props }: PostMenuProps) => {
-    const { asPath } = useRouter();
+export const PostMenu = ({ user, setReportModalOpen, handleDeleteUserPost, handleDeletePost, userIsProfileOwner, button, ...props }: PostMenuProps) => {
 
-    const handleShare = () => {
-        const origin =
-            typeof window !== 'undefined' && window.location.origin
-                ? window.location.origin
-                : '';
-
-        const url = `${origin}${asPath}`;
-
-        navigator.clipboard.writeText(url);
-
-        toast.success('Copied post link to clipboard!');
-    }
-
-    return <BaseMenu {...props} button={<PiDotsThree className='w-5 h-5 text-white' />} className='right-0 bottom-0 w-44 origin-top-right'>
+    return <BaseMenu {...props} button={button ?? <PiDotsThree className='w-5 h-5 text-white mt-1.5' />} className='right-0 bottom-0 w-44 origin-top-right'>
 
         <div className="space-y-1">
-            <Menu.Item>
-                <Button variant='ghost' onClick={handleShare}>
-                    <p>Share</p>
-                </Button>
-            </Menu.Item>
             {user && <Menu.Item>
                 <Button variant={'ghost'} onClick={() => setReportModalOpen(true)}>
                     <p>Report</p>

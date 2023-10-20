@@ -1,10 +1,10 @@
+import { Dialog, Transition } from '@headlessui/react';
+import { PostType } from '@prisma/client';
 import { Dispatch, Fragment, SetStateAction, useCallback, useState } from 'react';
 import Cropper, { Area } from 'react-easy-crop';
+import { PiX } from 'react-icons/pi';
 import getCroppedImg from '~/utils/crop-image.util';
 
-import { Dialog, Transition } from '@headlessui/react';
-import { PiX } from 'react-icons/pi';
-import { PostType } from '@prisma/client';
 
 import { Button } from './Button';
 
@@ -18,7 +18,7 @@ interface Props {
     type: PostType;
 }
 
-export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl, setIsCropped, type }: Props) => {
+export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl, setIsCropped }: Props) => {
     const [crop, setCrop] = useState({ x: 0, y: 0 })
     const [rotation, setRotation] = useState(0)
     const [zoom, setZoom] = useState(1)
@@ -70,7 +70,7 @@ export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="flex transform overflow-hidden rounded-md dark:text-white bg-white dark:bg-black border border-black dark:border-white p-4 text-left align-middle shadow-xl transition-all">
+                            <Dialog.Panel className="flex overflow-hidden rounded-md dark:text-white bg-white dark:bg-black border border-black dark:border-white p-4 text-left align-middle shadow-xl transition-all">
                                 <div>
                                     <div className='flex justify-end w-full mb-2'>
                                         <div>

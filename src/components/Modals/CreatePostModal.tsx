@@ -1,23 +1,26 @@
 import { Listbox, Transition } from "@headlessui/react"
-import { PiPlus, PiCaretDown } from "react-icons/pi"
 import { PostType } from "@prisma/client"
-import { type } from "os"
+import axios from "axios"
+import { useRouter } from "next/router"
+import { useSession } from "next-auth/react"
 import { Fragment, useCallback, useEffect, useRef, useState } from "react"
 import Cropper, { Area } from "react-easy-crop"
-import { Button } from "../Button"
-import { getPostTypeName } from "../PostSection/post-section.util"
-import { BaseModal } from "./BaseModal"
-import axios from "axios"
-import { useSession } from "next-auth/react"
-import { useRouter } from "next/router"
+import { PiCaretDown, PiPlus } from "react-icons/pi"
 import { useFileUpload } from "~/hooks/file-upload.hook"
 import { api } from "~/utils/api.util"
 import getCroppedImg from "~/utils/crop-image.util"
 import { handleErrors } from "~/utils/handle-errors.util"
+import { BaseModal } from "./BaseModal"
 
 import type { BaseModalProps } from './BaseModal';
+import { Button } from "../Button"
+import { getPostTypeName } from "../PostSection/post-section.util"
 
-export const CreatePostModal = (props: BaseModalProps) => {
+interface CreatePostModalProps extends BaseModalProps {
+    firstPost?: boolean;
+}
+
+export const CreatePostModal = (props: CreatePostModalProps) => {
     const { data: session } = useSession();
     const { push } = useRouter();
     const ctx = api.useContext();
@@ -70,6 +73,12 @@ export const CreatePostModal = (props: BaseModalProps) => {
         setFileUrl(null);
     }, [setFile, setFileUrl]);
 
+    const handleFirstPostSkip = useCallback(() => {
+        handleCancel();
+        push(`/${session?.user.username}`);
+        props.setIsOpen(false);
+    }, [handleCancel, push, session?.user.username, props]);
+
     const handleSubmit = useCallback(async () => {
         try {
             const croppedImage = await getCroppedImg(fileUrl ?? "", croppedAreaPixelsState);
@@ -88,7 +97,7 @@ export const CreatePostModal = (props: BaseModalProps) => {
     return <BaseModal {...props}>
         <div className="flex flex-col gap-2 w-full px-12 sm:w-[400px] items-center md:justify-center">
 
-            <h1 className="font-black text-3xl mb-4">Create a Post</h1>
+            <h1 className="font-black text-3xl mb-4 text-center">{props.firstPost ? 'Create your first Post' : 'Create a Post'}</h1>
 
             <div className='relative w-[244.4px] h-[400px]'>
                 {fileUrl ? <Cropper
@@ -261,14 +270,17 @@ export const CreatePostModal = (props: BaseModalProps) => {
             </div>
 
             <div className='w-full flex gap-2 items-center'>
-                {fileUrl && <><Button centerItems variant={'outline-ghost'} onClick={handleCancel}>
-                    Clear
-                </Button>
-
-                    <Button centerItems onClick={handleSubmit} isLoading={isLoading}>
-                        Post
+                {props.firstPost ?
+                    <Button centerItems variant={'outline-ghost'} onClick={handleFirstPostSkip}>
+                        Skip
+                    </Button> : <Button centerItems variant={'outline-ghost'} onClick={handleCancel}>
+                        Clear
                     </Button>
-                </>}
+                }
+
+                <Button centerItems onClick={handleSubmit} disabled={!fileUrl} isLoading={isLoading}>
+                    Post
+                </Button>
             </div>
         </div>
     </BaseModal>

@@ -1,18 +1,18 @@
+import { Switch } from '@headlessui/react';
+import { motion } from 'framer-motion';
+import type { NextPage } from "next";
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { PiDiscordLogo, PiGoogleLogo, PiQuestion, PiSpinnerGap, PiTrash } from 'react-icons/pi';
 import { Button } from '~/components/Button';
 import { SpotifyConnectDiscordModal } from '~/components/Modals/SpotifyConnectDiscordModal';
 import { SpotifySetupModal } from '~/components/Modals/SpotifySetupModal';
 import { SettingsLayout } from '~/components/SettingsLayout';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
-import { motion } from 'framer-motion';
 
-import { Switch } from '@headlessui/react';
-import { PiDiscordLogo, PiGoogleLogo, PiQuestion, PiSpinnerGap, PiTrash } from 'react-icons/pi';
 
-import type { NextPage } from "next";
 export const ConnectionsSettingsPage: NextPage = () => {
     const [spotifySetupModalOpen, setSpotifySetupModalOpen] = useState(false);
     const [spotifyConnectDiscordModalOpen, setSpotifyConnectDiscordModalOpen] = useState(false);

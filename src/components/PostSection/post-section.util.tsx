@@ -1,15 +1,15 @@
-import { type } from 'os';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Post, PostType } from '@prisma/client';
+import { inferRouterOutputs } from '@trpc/server';
 import React from 'react';
+import {
+  PiBackpackBold, PiBaseballCapBold, PiCoatHangerBold, PiEyeglassesBold, PiHoodieBold, PiPantsBold, PiShirtFoldedBold, PiSneakerBold, PiTShirtBold
+} from 'react-icons/pi';
 import { AppRouter } from '~/server/api/root';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
-import {
-  PiBackpackBold, PiBaseballCapBold, PiCoatHangerBold, PiEyeglassesBold, PiHoodieBold, PiPantsBold, PiShirtFoldedBold, PiSneakerBold, PiTShirtBold,
-  PiWatchBold
-} from 'react-icons/pi';
-import { Post, PostType } from '@prisma/client';
-import { inferRouterOutputs } from '@trpc/server';
 
 type RouterOutput = inferRouterOutputs<AppRouter>;
 // TODO: Find a better way to grab a type from the second param of ctx.post.getPostsAllTypes.setData
@@ -145,7 +145,7 @@ export const onMutate = async (
 
   const prevData = ctx.post.getPostsAllTypes.getData();
 
-  ctx.post.getPostsAllTypes.setData({ id: userId ?? "" }, updateData);
+  ctx.post.getPostsAllTypes.setData({ id: userId ?? "" }, updateData as any);
 
   return { prevData };
 };

@@ -1,16 +1,16 @@
 import { cva } from 'class-variance-authority';
+import type { VariantProps } from 'class-variance-authority';
 import Image from 'next/image';
 import { forwardRef } from 'react';
 import { cn } from '~/utils/cn.util';
 import { formatAvatar } from '~/utils/image-src-format.util';
 
-import type { VariantProps } from 'class-variance-authority';
 
 const variants = cva('relative border border-stroke rounded-full', {
     variants: {
         size: {
-            xs: 'w-[32px] h-[32px]',
-            sm: 'w-[46px] h-[46px]',
+            xs: 'w-[32px] h-[32px] grow-0 shrink-0 md:basis-auto',
+            sm: 'w-[46px] h-[46px] grow-0 shrink-0 md:basis-auto',
             md: 'basis-16 w-16 h-16 grow-0 shrink-0 md:basis-auto',
             jumbo: 'w-32 h-32 basis-32 grow-0 shrink-0 md:basis-auto md:w-[300px] md:h-[300px]'
         }

@@ -3,7 +3,7 @@
   "background_color": "#F9F9F9",
   "display": "fullscreen",
   "scope": "https://outfits.bio/",
-  "start_url": "https://outfits.bio/explore",
+  "start_url": "https://outfits.bio/discover",
   "name": "outfits.bio",
   "short_name": "outfits.bio",
   "description": "Your wardrobe in the cloud, share and inspire your followers",

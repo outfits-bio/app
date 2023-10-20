@@ -1,15 +1,19 @@
-/* eslint-disable @next/next/no-img-element */ 
+/* eslint-disable @next/next/no-img-element */
+import { zodResolver } from '@hookform/resolvers/zod';
+import { createServerSideHelpers } from '@trpc/react-query/server';
 import axios from 'axios';
 import { GetServerSidePropsContext, NextPage } from 'next';
-import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { PiArrowLeft, PiArrowRight, PiHammer, PiSealCheck } from 'react-icons/pi';
 import superjson from 'superjson';
 import { Button } from '~/components/Button';
 import { CropModal } from '~/components/CropModal';
 import { Layout } from '~/components/Layout';
+import { OnboardingAppearance } from '~/components/OnboardingAppearance';
 import { OnboardingStartSection } from '~/components/OnboardingStart';
 import { PostSkeleton } from '~/components/Skeletons/PostSkeleton';
 import { useFileUpload } from '~/hooks/file-upload.hook';
@@ -21,10 +25,6 @@ import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { PiArrowLeft, PiArrowRight, PiHammer, PiSealCheck } from 'react-icons/pi';
-import { createServerSideHelpers } from '@trpc/react-query/server';
-import { OnboardingAppearance } from '~/components/OnboardingAppearance';
 
 export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) => {
     const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
@@ -47,7 +47,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
 
     // This fetches the user's data and sets the username and username fields to the user's current username and username
     const { data } = api.user.getMe.useQuery(undefined, {
-        onError: (e) => handleErrors({ e, message: "Failed to fetch you!", fn: () => { } }),
+        onError: (e) => handleErrors({ e, message: "Failed to fetch you!" }),
         onSuccess: async (data) => {
             if (data.tagline) setValue('tagline', data.tagline);
             if (data.username) setValue('username', data.username);
@@ -60,8 +60,8 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
     });
 
     // On success, this updates the session and returns the user to their profile
-    const { mutate, error } = api.user.editProfile.useMutation({
-        onSuccess: (data) => {
+    const { mutate } = api.user.editProfile.useMutation({
+        onSuccess: () => {
             update();
             setLoading(false);
             setOnboardingStarted(2);
@@ -122,7 +122,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
                             <div className='rounded-full h-64 w-64 sm:h-44 sm:w-44 flex items-center justify-center border border-black' onClick={() => ref.current?.click()}>
                                 {dragActive &&
                                     <div
-                                        className='absolute w-full h-full t-0 r-0 b-0 l-0'
+                                        className='absolute w-full h-full inset-0'
                                         onDragEnter={handleDrag}
                                         onDragLeave={handleDrag}
                                         onDragOver={handleDrag}
@@ -225,7 +225,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
 
                     <div className='flex gap-8 -mt-72'>
                         {posts && posts.slice(0, 7).map((post, i) =>
-                            <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative`}>
+                            <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative`}>
                                 <Image
                                     // 176px is the same as w-44, the width of the container
                                     sizes="176px"
@@ -253,7 +253,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
 
                     <div className='flex gap-8 -mt-60'>
                         {posts && posts.slice(8, 15).map((post, i) =>
-                            <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
+                            <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
                                 <Image
                                     // 176px is the same as w-44, the width of the container
                                     sizes="176px"
@@ -281,7 +281,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
 
                     <div className='flex gap-8 -mt-60'>
                         {posts && posts.slice(16, 23).map((post, i) =>
-                            <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
+                            <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
                                 <Image
                                     // 176px is the same as w-44, the width of the container
                                     sizes="176px"
@@ -309,7 +309,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
 
                     <div className='flex gap-8 -mt-60'>
                         {posts && posts.slice(24, 31).map((post, i) =>
-                            <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
+                            <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
                                 <Image
                                     // 176px is the same as w-44, the width of the container
                                     sizes="176px"

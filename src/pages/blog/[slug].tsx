@@ -1,5 +1,5 @@
-import ReactMarkdown from 'react-markdown'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import ReactMarkdown from 'react-markdown'
 import { Layout } from "~/components/Layout";
 import { getPost, getSortedPostsData } from "~/utils/blog.util";
 

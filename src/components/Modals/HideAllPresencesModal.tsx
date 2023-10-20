@@ -1,8 +1,7 @@
-import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 
-import { Button } from '../Button';
 import { BaseModal, BaseModalProps } from './BaseModal';
+import { Button } from '../Button';
 
 export const HideAllPresencesModal = (props: BaseModalProps) => {
     return <BaseModal {...props}>

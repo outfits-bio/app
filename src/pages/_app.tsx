@@ -1,16 +1,16 @@
 import '~/styles/globals.css';
 
-import { SessionProvider } from 'next-auth/react';
-import { metadata } from 'next-seo.config';
-import { ThemeProvider } from 'next-themes';
+import { Analytics } from '@vercel/analytics/react';
+import type { AppType } from 'next/app';
 import Head from 'next/head';
+import type { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
+import { ThemeProvider } from 'next-themes';
 import { Toaster } from 'react-hot-toast';
+import { metadata } from 'next-seo.config';
 import { api } from '~/utils/api.util';
 
-import { Analytics } from '@vercel/analytics/react';
 
-import type { Session } from 'next-auth';
-import type { AppType } from 'next/app';
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,

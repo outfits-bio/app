@@ -1,8 +1,8 @@
+import { Dialog, Transition } from '@headlessui/react';
 import { Dispatch, Fragment, SetStateAction, useCallback, useState } from 'react';
 import Cropper, { Area } from 'react-easy-crop';
 import getCroppedImg from '~/utils/crop-image.util';
 
-import { Dialog, Transition } from '@headlessui/react';
 
 import { Button } from './Button';
 
@@ -64,7 +64,7 @@ export const CropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl }: P
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-md dark:text-white bg-white dark:bg-slate-950 p-6 text-left align-middle shadow-xl transition-all">
+                            <Dialog.Panel className="w-full max-w-md overflow-hidden rounded-md dark:text-white bg-white dark:bg-slate-950 p-6 text-left align-middle shadow-xl transition-all">
                                 <Dialog.Title className={'text-lg font-bold mb-2'}>Crop Image</Dialog.Title>
 
                                 <div className='relative w-full h-80'>

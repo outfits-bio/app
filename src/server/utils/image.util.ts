@@ -19,7 +19,7 @@ export const generatePresignedUrl = async (
     endpoint: env.AWS_ENDPOINT,
   });
 
-  let imageId = id ?? `${userId}-${Date.now()}`;
+  const imageId = id ?? `${userId}-${Date.now()}`;
 
   let res: string;
 

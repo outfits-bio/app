@@ -1,13 +1,13 @@
+import { NotificationType } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
+import axios from "axios";
 import {
-  SpotifyStatus,
   getProfileSchema,
   likeProfileSchema,
   searchProfileSchema,
+  SpotifyStatus,
 } from "~/schemas/user.schema";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
-import { TRPCError } from "@trpc/server";
-import { NotificationType } from "@prisma/client";
-import axios from "axios";
 
 export const profileRouter = createTRPCRouter({
   profileExists: publicProcedure
@@ -86,7 +86,7 @@ export const profileRouter = createTRPCRouter({
       let likeData: { id: string };
 
       try {
-        let like = ctx.prisma.user.update({
+        const like = ctx.prisma.user.update({
           where: {
             id,
             likedBy: {
@@ -110,7 +110,7 @@ export const profileRouter = createTRPCRouter({
           },
         });
 
-        let notification = ctx.prisma.notification.create({
+        const notification = ctx.prisma.notification.create({
           data: {
             type: NotificationType.PROFILE_LIKE,
             targetUser: {
@@ -161,7 +161,7 @@ export const profileRouter = createTRPCRouter({
   searchProfiles: publicProcedure
     .input(searchProfileSchema)
     .query(async ({ input, ctx }) => {
-      const { username } = input;
+      const { username, cursor, skip } = input;
 
       if (username.length === 0) return;
 
@@ -181,10 +181,19 @@ export const profileRouter = createTRPCRouter({
           verified: true,
           admin: true,
         },
-        take: 5,
+        take: 11,
+        skip,
+        cursor: cursor ? { id: cursor } : undefined,
       });
 
-      return users;
+      let nextCursor: typeof cursor | undefined = undefined;
+
+      if (users.length > 10) {
+        const nextItem = users.pop(); // return the last item from the array
+        nextCursor = nextItem?.id;
+      }
+
+      return { users, nextCursor };
     }),
 
   getTotalUsers: publicProcedure.query(async ({ ctx }) => {

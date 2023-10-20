@@ -1,19 +1,18 @@
-import { useForm } from 'react-hook-form';
-import { toast } from 'react-hot-toast';
-import { EditUserInput, editUserSchema } from '~/schemas/admin.schema';
-import { CreateBugReportInput, createBugReportSchema } from '~/schemas/user.schema';
-import { AppRouter } from '~/server/api/root';
-import { api, RouterOutputs } from '~/utils/api.util';
-import { handleErrors } from '~/utils/handle-errors.util';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { inferRouterOutputs } from '@trpc/server';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
+import { PiSpinnerGap, PiTrashSimple } from 'react-icons/pi';
+import { EditUserInput, editUserSchema } from '~/schemas/admin.schema';
+import { AppRouter } from '~/server/api/root';
+import { api } from '~/utils/api.util';
+import { handleErrors } from '~/utils/handle-errors.util';
 
-import { Button } from '../Button';
-import { BaseModal } from './BaseModal';
 
 import type { BaseModalProps } from './BaseModal';
-import { PiSpinnerGap, PiTrashSimple } from 'react-icons/pi';
+import { BaseModal } from './BaseModal';
+import { Button } from '../Button';
+
 type RouterOutput = inferRouterOutputs<AppRouter>;
 
 interface AdminEditUserModalProps extends BaseModalProps {
@@ -26,7 +25,7 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
 
     const { mutate, isLoading } = api.admin.editUser.useMutation({
         onSuccess: () => {
-            ctx.user.getProfile.refetch({ username: props.targetUser.username! });
+            ctx.user.getProfile.refetch({ username: props.targetUser.username ?? '' });
             props.setIsOpen(false);
             toast.success('User edited successfully!');
         },
@@ -35,7 +34,7 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
 
     const { mutate: removeImage, isLoading: removeImageLoading } = api.admin.removeUserAvatar.useMutation({
         onSuccess: () => {
-            ctx.user.getProfile.refetch({ username: props.targetUser.username! });
+            ctx.user.getProfile.refetch({ username: props.targetUser.username ?? '' });
             toast.success('Avatar removed successfully!');
         },
         onError: (e) => handleErrors({ e, message: 'Failed to remove avatar' })
@@ -43,7 +42,7 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
 
     const { mutate: removeLink, isLoading: removeLinkLoading, variables } = api.admin.removeUserLink.useMutation({
         onSuccess: () => {
-            ctx.user.getProfile.refetch({ username: props.targetUser.username! });
+            ctx.user.getProfile.refetch({ username: props.targetUser.username ?? '' });
             toast.success('Link removed successfully!');
         },
         onError: (e) => handleErrors({ e, message: 'Failed to remove link' })
@@ -51,7 +50,7 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
 
     const { mutate: giveVerified, isLoading: giveVerifiedLoading } = api.admin.toggleUserVerified.useMutation({
         onSuccess: () => {
-            ctx.user.getProfile.refetch({ username: props.targetUser.username! });
+            ctx.user.getProfile.refetch({ username: props.targetUser.username ?? '' });
             toast.success('Verified changed successfully!');
         },
         onError: (e) => handleErrors({ e, message: 'Failed to change verified' })

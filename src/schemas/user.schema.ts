@@ -1,8 +1,12 @@
+import { PostType, ReportType } from "@prisma/client";
 import { z } from "zod";
 
-import { PostType, ReportType } from "@prisma/client";
+export const usernameRegex = /^[A-Za-z0-9!@#$%&*()_+=|<>?{}[\]~'"-]+$/;
 
-export const usernameRegex = /^[A-Za-z0-9!@#$%&*()_+=|<>?{}\[\]~'"-]+$/;
+export const paginatedSchema = z.object({
+  cursor: z.string().nullish(),
+  skip: z.number().int().min(0).optional(),
+});
 
 export const userSchema = z.object({
   email: z.string().email(),
@@ -19,9 +23,11 @@ export const getProfileSchema = z.object({
   username: z.string().min(3).max(20),
 });
 
-export const searchProfileSchema = z.object({
-  username: z.string().max(20),
-});
+export const searchProfileSchema = z
+  .object({
+    username: z.string().max(20),
+  })
+  .merge(paginatedSchema);
 
 export const likeProfileSchema = z.object({
   id: z.string().cuid(),
@@ -47,14 +53,10 @@ export const removeLinkSchema = z.object({
 });
 export type RemoveLinkInput = ReturnType<typeof removeLinkSchema.parse>;
 
-export const paginatedSchema = z.object({
-  cursor: z.string().nullish(),
-  skip: z.number().int().min(0).optional(),
-});
-
 export const getPostsSchema = z
   .object({
-    type: z.nativeEnum(PostType).optional(),
+    types: z.array(z.nativeEnum(PostType)).optional(),
+    category: z.enum(["latest", "popular"]).optional(),
   })
   .merge(paginatedSchema);
 export type GetPostsInput = ReturnType<typeof getPostsSchema.parse>;
@@ -80,7 +82,7 @@ export type CreateBugReportInput = ReturnType<
 
 export interface SpotifyStatus {
   track_id: string;
-  timestamps: any;
+  timestamps: unknown;
   song: string;
   artist: string;
   album_art_url: string;

@@ -39,7 +39,7 @@ export interface AccentCardProps
     active: boolean;
 }
 
-export const AccentCard = forwardRef<HTMLButtonElement, AccentCardProps>(({ className, children, variant, active, ...props }, ref) => {
+export const AccentCard = forwardRef<HTMLButtonElement, AccentCardProps>(({ variant, active, ...props }, ref) => {
     return <button ref={ref} className={active ? 'border-stroke border p-4 flex flex-col gap-3 rounded-md bg-white dark:bg-black' : 'border-stroke border p-4 flex flex-col gap-3 rounded-md bg-body'} {...props}>
         <div className={cn(variants({ variant }), 'w-14 h-14 rounded-full')} />
         {variantToName(variant)}

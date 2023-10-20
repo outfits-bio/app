@@ -1,11 +1,11 @@
+import { Dialog, Transition } from '@headlessui/react';
 import { cva } from 'class-variance-authority';
+import type { VariantProps } from "class-variance-authority";
 import localFont from 'next/font/local';
 import { Dispatch, forwardRef, Fragment, SetStateAction } from 'react';
 import { cn } from '~/utils/cn.util';
 
-import { Dialog, Transition, TransitionChildProps } from '@headlessui/react';
 
-import type { VariantProps } from "class-variance-authority";
 
 const clash = localFont({
     src: '../../../public/fonts/ClashDisplay-Variable.woff2',
@@ -40,7 +40,7 @@ export interface BaseModalProps
     setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const BaseModal = forwardRef<HTMLDivElement, BaseModalProps>(({ className, children, size, isOpen, setIsOpen, ...props }, ref) => {
+export const BaseModal = forwardRef<HTMLDivElement, BaseModalProps>(({ className, children, isOpen, setIsOpen, ...props }, ref) => {
     return <Transition appear show={isOpen} as={Fragment} {...props}>
         <Dialog as="div" className={`relative z-50 ${clash.variable} ${satoshi.variable} font-clash`} open={isOpen} onClose={() => setIsOpen(false)}>
             <Transition.Child

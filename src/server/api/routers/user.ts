@@ -1,3 +1,5 @@
+import { Prisma } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
 import {
   addLinkSchema,
   editProfileSchema,
@@ -6,8 +8,6 @@ import {
 } from "~/schemas/user.schema";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
-import { Prisma } from "@prisma/client";
-import { TRPCError } from "@trpc/server";
 import { deleteImage, generatePresignedUrl } from "~/server/utils/image.util";
 import { filterBadWords, validateUsername } from "~/server/utils/username.util";
 
@@ -161,7 +161,7 @@ export const userRouter = createTRPCRouter({
 
       if (protocolTrimmedUrl.startsWith("discord.gg")) {
         data.type = "DISCORD";
-      } else if (protocolTrimmedUrl.startsWith("twitter.com")) {
+      } else if (protocolTrimmedUrl.startsWith("twitter.com") || protocolTrimmedUrl.startsWith("x.com")) {
         data.type = "TWITTER";
       } else if (protocolTrimmedUrl.startsWith("instagram.com")) {
         data.type = "INSTAGRAM";

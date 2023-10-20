@@ -1,6 +1,6 @@
-import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { signOut } from 'next-auth/react';
 import { useState } from 'react';
 
 import { Button } from './Button';
@@ -26,26 +26,26 @@ export const SettingsLayout = ({ children }: SettingsLayoutProps) => {
             <div className='hidden md:flex flex-col h-full w-[300px] border-r border-stroke bg-white dark:bg-black p-4 gap-2 divide-y divide-stroke'>
                 <div className='gap-2 flex flex-col'>
                     <Link href='/settings/profile'>
-                        <Button variant='ghost' disabled={pathname === '/settings/profile'} className='justify-start transform transition duration-300 ease-in-out'>Profile</Button>
+                        <Button variant='ghost' disabled={pathname === '/settings/profile'} className='justify-start transition duration-300 ease-in-out'>Profile</Button>
                     </Link>
 
                     <Link href='/settings/connections'>
-                        <Button variant='ghost' disabled={pathname === '/settings/connections'} className='justify-start transform transition duration-300 ease-in-out'>Connections</Button>
+                        <Button variant='ghost' disabled={pathname === '/settings/connections'} className='justify-start transition duration-300 ease-in-out'>Connections</Button>
                     </Link>
 
                     <Link href='/settings/appearance'>
-                        <Button variant='ghost' disabled={pathname === '/settings/appearance'} className='justify-start transform transition duration-300 ease-in-out'>Appearance</Button>
+                        <Button variant='ghost' disabled={pathname === '/settings/appearance'} className='justify-start transition duration-300 ease-in-out'>Appearance</Button>
                     </Link>
                 </div>
 
                 <div className='gap-2 flex flex-col pt-2'>
-                    <Button variant='ghost' className='justify-start transform transition duration-300 ease-in-out' onClick={() => setBugReportModalOpen(true)}>Report Bug</Button>
+                    <Button variant='ghost' className='justify-start transition duration-300 ease-in-out' onClick={() => setBugReportModalOpen(true)}>Report Bug</Button>
 
-                    <Button variant='ghost' className='justify-start transform transition duration-300 ease-in-out' onClick={() => setFeedbackModalOpen(true)}>Send Feedback</Button>
+                    <Button variant='ghost' className='justify-start transition duration-300 ease-in-out' onClick={() => setFeedbackModalOpen(true)}>Send Feedback</Button>
                 </div>
 
                 <div className='flex flex-col gap-2 pt-2'>
-                    <Button variant={'ghost'} className='justify-start transform transition duration-300 ease-in-out' onClick={() => signOut({ callbackUrl: '/' })}>Logout</Button>
+                    <Button variant={'ghost'} className='justify-start transition duration-300 ease-in-out' onClick={() => signOut({ callbackUrl: '/' })}>Logout</Button>
                 </div>
             </div>
             {children}

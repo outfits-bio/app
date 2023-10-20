@@ -1,6 +1,5 @@
-import { deleteNotificationSchema } from "~/schemas/notification.schema";
-
 import { TRPCError } from "@trpc/server";
+import { deleteNotificationSchema } from "~/schemas/notification.schema";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
@@ -70,6 +69,15 @@ export const notificationsRouter = createTRPCRouter({
 
       return true;
     }),
+  deleteAllNotifications: protectedProcedure.mutation(async ({ ctx }) => {
+    await ctx.prisma.notification.deleteMany({
+      where: {
+        targetUserId: ctx.session.user.id,
+      },
+    });
+
+    return true;
+  }),
   getUnreadNotificationsCount: protectedProcedure.query(async ({ ctx }) => {
     const count = await ctx.prisma.notification.count({
       where: {

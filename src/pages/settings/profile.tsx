@@ -1,10 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
+import { zodResolver } from '@hookform/resolvers/zod';
+import { LinkType } from '@prisma/client';
 import axios from 'axios';
-import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import { signOut, useSession } from 'next-auth/react';
+import { useTheme } from 'next-themes';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
+import {
+  PiDiscordLogo, PiGithubLogo, PiInstagramLogo, PiLinkSimple, PiPlus, PiSubtract, PiTiktokLogo, PiTrash,
+  PiTwitterLogo, PiYoutubeLogo
+} from 'react-icons/pi';
 import { Button } from '~/components/Button';
 import { CropModal } from '~/components/CropModal';
 import { DeleteModal } from '~/components/DeleteModal';
@@ -17,13 +24,6 @@ import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar } from '~/utils/image-src-format.util';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  PiDiscordLogo, PiGithubLogo, PiInstagramLogo, PiLinkSimple, PiPlus, PiSubtract, PiTiktokLogo, PiTrash,
-  PiTwitterLogo, PiYoutubeLogo
-} from 'react-icons/pi';
-import { LinkType } from '@prisma/client';
-import { useTheme } from 'next-themes';
 
 const SettingsPage = () => {
   const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
@@ -70,7 +70,7 @@ const SettingsPage = () => {
     onError: (e) => handleErrors({ e, message: "Failed to edit profile!", fn: () => setLoading(false) })
   });
 
-  const { mutate: addLink, isLoading: linkLoading, isSuccess: linkSuccess } = api.user.addLink.useMutation({
+  const { mutate: addLink, isLoading: linkLoading } = api.user.addLink.useMutation({
     onSuccess: () => {
       resetField("url");
       ctx.user.getMe.refetch();
@@ -112,7 +112,7 @@ const SettingsPage = () => {
     onError: (e) => handleErrors({ e, message: "Failed to delete image!", fn: () => setLoading(false) })
   });
 
-  const { theme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
   const { mutate: deleteProfile, isLoading: deleteProfileLoading } = api.user.deleteProfile.useMutation({
     onSuccess: async () => {
       setTheme('light');
@@ -157,7 +157,7 @@ const SettingsPage = () => {
                 <div className='rounded-full h-44 w-44 flex items-center justify-center border border-black' onClick={() => ref.current?.click()}>
                   {dragActive &&
                     <div
-                      className='absolute w-full h-full t-0 r-0 b-0 l-0'
+                      className='absolute w-full h-full inset-0'
                       onDragEnter={handleDrag}
                       onDragLeave={handleDrag}
                       onDragOver={handleDrag}
@@ -293,10 +293,10 @@ const SettingsPage = () => {
             variant={'outline'}
             type="button"
             centerItems
-            iconLeft={<PiTrash />} 
+            iconLeft={<PiTrash />}
             onClick={() => setIsOpen(true)}
             isLoading={deleteProfileLoading}
-            className="bg-red-600 hover:bg-red-700 text-white" 
+            className="bg-red-600 hover:bg-red-700 text-white"
           >
             Delete
           </Button>

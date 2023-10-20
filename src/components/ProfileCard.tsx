@@ -1,19 +1,21 @@
-import { useSession } from 'next-auth/react';
+import { LinkType } from '@prisma/client';
+import { inferRouterOutputs } from '@trpc/server';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import type { User } from 'next-auth';
+import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import Marquee from 'react-fast-marquee';
 import { toast } from 'react-hot-toast';
-import { api } from '~/utils/api.util';
-import { handleErrors } from '~/utils/handle-errors.util';
-
 import {
     PiCameraBold, PiDiscordLogoBold, PiGithubLogoBold, PiHammerBold, PiHeartBold, PiHeartFill, PiInstagramLogoBold, PiLinkSimpleBold, PiPencilSimple,
     PiQuestion, PiSealCheckBold, PiShareFat, PiTiktokLogoBold, PiTwitterLogoBold, PiYoutubeLogoBold
 } from 'react-icons/pi';
-import { LinkType } from '@prisma/client';
-import { inferRouterOutputs } from '@trpc/server';
+import type { AppRouter } from '~/server/api/root';
+import { api } from '~/utils/api.util';
+import { handleErrors } from '~/utils/handle-errors.util';
+
 
 import { Avatar } from './Avatar';
 import { Button } from './Button';
@@ -23,8 +25,6 @@ import { AdminEditUserModal } from './Modals/AdminEditUserModal';
 import { SpotifySetupModal } from './Modals/SpotifySetupModal';
 import { ReportModal } from './ReportModal';
 
-import type { AppRouter } from '~/server/api/root';
-import type { User } from 'next-auth';
 type RouterOutput = inferRouterOutputs<AppRouter>;
 
 interface Props {
@@ -103,11 +103,11 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
     }
 
     return (
-        <div className="h-full flex flex-col font-satoshi">
+        <div className="md:h-full flex flex-col font-satoshi md:bg-white md:dark:bg-black md:border-r border-stroke pl-4 py-4 md:px-12">
             {reportModalOpen && <ReportModal isOpen={reportModalOpen} setIsOpen={setReportModalOpen} type='USER' id={profileData?.id} />}
             {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} admin deleteFn={() => {
                 deleteUser({ id: profileData?.id ?? '' });
-                push('/explore');
+                push('/discover');
             }} />}
             {spotifySetupModalOpen && <SpotifySetupModal isOpen={spotifySetupModalOpen} setIsOpen={setSpotifySetupModalOpen} />}
             {(adminEditUserModalOpen && profileData) && <AdminEditUserModal targetUser={profileData} isOpen={adminEditUserModalOpen} setIsOpen={setAdminEditUserModalOpen} />}
@@ -121,7 +121,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                             <span>{profileData?.username}</span>
                             <div className='group relative w-max'>
                                 {profileData?.admin ? <PiHammerBold className='w-6 h-6 md:w-8 md:h-8' /> : profileData?.verified && <PiSealCheckBold className='w-6 h-6 md:w-8 md:h-8' />}
-                                <span className='opacity-0 transition-opacity group-hover:opacity-100 pointer-events-none absolute w-0 h-0 -top-2 left-1/3 border-l-[5px] border-l-transparent border-t-[7.5px] border-t-black dark:border-t-white border-r-[5px] border-r-transparent' />
+                                <span className='opacity-0 transition-opacity group-hover:opacity-100 pointer-events-none absolute w-0 h-0 -top-2 left-1/3 border-x-[5px] border-x-transparent border-t-[7.5px] border-t-black dark:border-t-white' />
                                 <span
                                     className="shadow-lg pointer-events-none absolute bg-black dark:bg-white -top-[42px] -left-full w-max rounded-md p-2 opacity-0 transition-opacity group-hover:opacity-100"
                                 >
@@ -136,12 +136,12 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                         <div className='flex gap-4 text-sm md:text-base'>
                             <p className={`flex items-center gap-1`}>
                                 <PiCameraBold className='w-5 h-5' />
-                                <span className={loading ? 'skeleton' : ''}><span className='font-bold'>{profileData?.imageCount}</span> Shot{profileData?.imageCount !== 1 ? 's' : ''}</span>
+                                <span className={loading ? 'skeleton' : ''}><span className='font-bold'>{profileData?.imageCount}</span> Post{profileData?.imageCount !== 1 ? 's' : ''}</span>
                             </p>
 
                             <p className='flex items-center gap-1'>
                                 <PiHeartBold className='w-5 h-5' />
-                                <span className={loading ? 'skeleton' : ''}><span className='font-bold'>{profileData?.likeCount}</span> Like{profileData?.likeCount !== 1 ? 's' : ''}</span>
+                                <span className={loading ? 'skeleton' : ''}><span className='font-bold'>{profileData?.likeCount}</span> Follower{profileData?.likeCount !== 1 ? 's' : ''}</span>
                             </p>
                         </div>
                     </div>
@@ -193,22 +193,22 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                                     if (profileData?.id) mutate({ id: profileData.id });
                                 }}
                                 iconLeft={
-                                    
+
                                     (profileData?.authUserHasLiked) ? (
                                         <PiHeartFill
-                                          onAnimationEnd={() => setLikeAnimation(false)}
-                                          className={likeAnimation ? 'animate-ping text-white dark:text-black' : ''}
+                                            onAnimationEnd={() => setLikeAnimation(false)}
+                                            className={likeAnimation ? 'animate-ping text-white dark:text-black' : ''}
                                         />
-                                      ) : (
+                                    ) : (
                                         <PiHeartBold
-                                          onAnimationEnd={() => setLikeAnimation(false)}
-                                          className={likeAnimation ? 'animate-ping text-white dark:text-black' : ''}
+                                            onAnimationEnd={() => setLikeAnimation(false)}
+                                            className={likeAnimation ? 'animate-ping text-white dark:text-black' : ''}
                                         />
-                                      )}
+                                    )}
 
                                 disabled={loading || isLoading}
                             >
-                                Like{(profileData?.authUserHasLiked) ? 'd' : ''}
+                                Follow{(profileData?.authUserHasLiked) ? 'ed' : ''}
                             </Button>
                         </div>
 

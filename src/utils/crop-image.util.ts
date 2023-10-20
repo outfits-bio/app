@@ -1,3 +1,5 @@
+import { Area } from "react-easy-crop";
+
 export const createImage = (url: string): Promise<HTMLImageElement> =>
   new Promise((resolve, reject) => {
     const image = new Image();
@@ -30,7 +32,7 @@ export function rotateSize(width: number, height: number, rotation: number) {
  */
 export default async function getCroppedImg(
   imageSrc: string,
-  pixelCrop: any,
+  pixelCrop: Area | null,
   rotation = 0,
   flip = { horizontal: false, vertical: false }
 ): Promise<{ fileUrl: string; file: Blob } | null> {
@@ -39,6 +41,10 @@ export default async function getCroppedImg(
   const ctx = canvas.getContext("2d");
 
   if (!ctx) {
+    return null;
+  }
+
+  if (!pixelCrop) {
     return null;
   }
 
@@ -84,7 +90,7 @@ export default async function getCroppedImg(
   // return canvas.toDataURL('image/jpeg');
 
   // As a blob
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     canvas.toBlob((file) => {
       if (!file) return null;
 

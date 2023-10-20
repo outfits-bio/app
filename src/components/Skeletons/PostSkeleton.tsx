@@ -1,8 +1,8 @@
 import { cva } from 'class-variance-authority';
+import type { VariantProps } from 'class-variance-authority';
 import { forwardRef } from 'react';
 import { cn } from '~/utils/cn.util';
 
-import type { VariantProps } from 'class-variance-authority';
 const variants = cva('border border-stroke rounded-md relative bg-hover animate-pulse', {
     variants: {
         size: {

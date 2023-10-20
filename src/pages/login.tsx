@@ -1,14 +1,14 @@
 import { GetServerSideProps } from 'next';
-import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
+import { PiDiscordLogo, PiGoogleLogo, PiHammer, PiSealCheck } from 'react-icons/pi';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
 import { getServerAuthSession } from '~/server/auth';
 import { api } from '~/utils/api.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
-import { PiDiscordLogo, PiGoogleLogo, PiHammer, PiSealCheck } from 'react-icons/pi';
 
 import { PostSkeleton } from '../components/Skeletons/PostSkeleton';
 
@@ -86,7 +86,7 @@ const LoginPage = () => {
 
           <div className='flex gap-8 -mt-72'>
             {posts && posts.slice(0, 7).map((post, i) =>
-              <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative`}>
+              <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative`}>
                 <Image
                   // 176px is the same as w-44, the width of the container
                   sizes="176px"
@@ -114,7 +114,7 @@ const LoginPage = () => {
 
           <div className='flex gap-8 -mt-60'>
             {posts && posts.slice(8, 15).map((post, i) =>
-              <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
+              <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
                 <Image
                   // 176px is the same as w-44, the width of the container
                   sizes="176px"
@@ -142,7 +142,7 @@ const LoginPage = () => {
 
           <div className='flex gap-8 -mt-60'>
             {posts && posts.slice(16, 23).map((post, i) =>
-              <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
+              <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
                 <Image
                   // 176px is the same as w-44, the width of the container
                   sizes="176px"
@@ -170,7 +170,7 @@ const LoginPage = () => {
 
           <div className='flex gap-8 -mt-60'>
             {posts && posts.slice(24, 31).map((post, i) =>
-              <Link style={{ marginTop: `${48 * i}px` }} href={`/explore/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
+              <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
                 <Image
                   // 176px is the same as w-44, the width of the container
                   sizes="176px"

@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
-import { Layout } from '~/components/Layout';
-import { Button } from '~/components/Button';
 import Link from 'next/link';
+import { Button } from '~/components/Button';
+import { Layout } from '~/components/Layout';
 
 export const GoodbyePage: NextPage = () => {
 

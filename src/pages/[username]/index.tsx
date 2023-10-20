@@ -1,6 +1,7 @@
+import { PostType } from '@prisma/client';
 import { GetStaticProps, NextPage } from 'next';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { Layout } from '~/components/Layout';
 import { PostSection } from '~/components/PostSection';
@@ -10,7 +11,6 @@ import { generateSSGHelper } from '~/server/utils/ssg.util';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
-import { PostType } from '@prisma/client';
 
 export const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
     const { push, query } = useRouter();
@@ -46,10 +46,10 @@ export const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
     return (
         <Layout title={pageTitle}>
             {postModalOpen && <ProfilePostModal setPostModalOpen={setPostModalOpen} post={post} user={profileData ?? null} />}
-            <div className='flex flex-col md:flex-row w-screen h-full gap-4 p-4 md:gap-20 lg:gap-36 md:pl-12 overflow-y-scroll md:overflow-y-auto'>
+            <div className='flex flex-col md:flex-row w-screen h-full gap-4 pr-4 md:gap-20 lg:gap-36  overflow-y-scroll md:overflow-y-auto'>
                 <ProfileCard loading={isLoading} authStatus={status} currentUser={data?.user ?? null} profileData={profileData} username={username} isCurrentUser={isCurrentUser} />
 
-                <div className='md:overflow-y-scroll w-full'>
+                <div className='md:overflow-y-scroll w-full pl-4 md:pl-0 py-4'>
                     <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.OUTFIT} />
                     <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.HOODIE} />
                     <PostSection loading={postsLoading} profileData={profileData} postsData={postsData} type={PostType.SHIRT} />

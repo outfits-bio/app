@@ -1,14 +1,14 @@
+import { NotificationType } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
 import {
   deleteUserLinkSchema,
   deleteUserSchema,
   editUserSchema,
 } from "~/schemas/admin.schema";
 
-import { TRPCError } from "@trpc/server";
 
-import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { deleteImage } from "~/server/utils/image.util";
-import { NotificationType } from "@prisma/client";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const adminRouter = createTRPCRouter({
   deleteUser: protectedProcedure
@@ -197,7 +197,7 @@ export const adminRouter = createTRPCRouter({
       }
 
       try {
-        let user = ctx.prisma.user.update({
+        const user = ctx.prisma.user.update({
           where: {
             id,
             verified: false,
@@ -210,7 +210,7 @@ export const adminRouter = createTRPCRouter({
           },
         });
 
-        let notification = ctx.prisma.notification.create({
+        const notification = ctx.prisma.notification.create({
           data: {
             type: NotificationType.OTHER,
             message: "You have been given verified!",

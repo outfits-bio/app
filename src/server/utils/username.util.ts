@@ -13,7 +13,7 @@ export const validateUsername = (username: string) => {
     "onboarding",
     "profile",
     "[username]",
-    "explore",
+    "discover",
     "notifications",
     "shoot",
     "shots",

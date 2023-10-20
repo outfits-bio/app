@@ -1,18 +1,18 @@
+import { Switch } from '@headlessui/react';
+import { motion } from 'framer-motion';
+import type { NextPage } from "next";
 import { useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import { useState } from 'react';
+import { PiQuestion, PiSpinnerGap } from 'react-icons/pi';
+import { AccentCard } from '~/components/AccentCard';
 import { HideAllPresencesModal } from '~/components/Modals/HideAllPresencesModal';
 import { SettingsLayout } from '~/components/SettingsLayout';
 import { ThemeCard } from '~/components/ThemeCard';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
-import { motion } from 'framer-motion';
 
-import { Switch } from '@headlessui/react';
-import { PiQuestion, PiSpinnerGap } from 'react-icons/pi';
 
-import type { NextPage } from "next";
-import { AccentCard } from '~/components/AccentCard';
 export const AppearanceSettingsPage: NextPage = () => {
     const { data, update } = useSession();
     const { theme, setTheme } = useTheme();
@@ -77,7 +77,7 @@ export const AppearanceSettingsPage: NextPage = () => {
                             }}
                             aria-hidden="true"
                             className={`${data?.user.hideLanyard ?? false ? 'translate-x-10' : 'translate-x-0'}
-            pointer-events-none h-7 w-7 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out flex items-center justify-center`}
+            pointer-events-none h-7 w-7 rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out flex items-center justify-center`}
                         >
                             {setToggleHideLanyardLoading && <PiSpinnerGap className='w-4 h-4 text-secondary-text animate-spin' />}
 

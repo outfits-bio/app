@@ -1,17 +1,17 @@
-import { useSession } from 'next-auth/react';
 import localFont from 'next/font/local';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
-import { formatAvatar } from '~/utils/image-src-format.util';
 
 import {
     PiGear, PiGearFill, PiHouse, PiHouseFill, PiMagnifyingGlass, PiMagnifyingGlassFill, PiPlus, PiUserPlus
 } from 'react-icons/pi';
+import { formatAvatar } from '~/utils/image-src-format.util';
 
-import { Navbar } from './Navbar';
 import { Button } from './Button';
+import { Navbar } from './Navbar';
 
 interface Props {
     children: React.ReactNode;
@@ -20,6 +20,7 @@ interface Props {
     redirectIfNotAuth?: boolean;
     showActions?: boolean;
     hideSearch?: boolean;
+    beta?: boolean;
 }
 
 const clash = localFont({
@@ -34,7 +35,7 @@ const satoshi = localFont({
     variable: '--font-satoshi',
 });
 
-export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActions, hideSearch }: Props) => {
+export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActions, hideSearch, beta }: Props) => {
     const { push, pathname } = useRouter();
 
     const session = useSession();
@@ -52,31 +53,31 @@ export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActi
 
     return (
         <div className={`bg-body font-satoshi flex flex-col min-h-screen antialiased transition-colors duration-300 ${clash.variable} ${satoshi.variable}`}>
-            <Navbar title={title} session={session} showSlash={showSlash} showActions={showActions} hideSearch={hideSearch} />
+            <Navbar title={title} session={session} showSlash={showSlash} showActions={showActions} hideSearch={hideSearch} beta={beta} />
             <main className='h-screen pt-20 overflow-x-hidden pb-24 md:pb-0 scroll-smooth'>{children}</main>
             {pathname !== '/login' && pathname !== '/onboarding' && pathname !== '/' &&
-                <div className='py-5 px-6 bg-white dark:bg-black border border-stroke flex justify-between w-screen h-24 fixed bottom-0 md:hidden gap-4'>
-                    <Link href={'/explore'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
-                        {pathname === "/explore" ? <PiHouseFill /> : <PiHouse />}
+                <div className='py-5 px-6 bg-white dark:bg-black border border-stroke flex justify-between w-screen h-24 fixed bottom-0 md:hidden gap-4 z-50'>
+                    <Link href={'/discover'} className='grow rounded-md flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
+                        {pathname === "/discover" ? <PiHouseFill /> : <PiHouse />}
                     </Link>
 
-                    <Link href={'/search'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
+                    <Link href={'/search'} className='grow rounded-md flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
                         {pathname === "/search" ? <PiMagnifyingGlassFill /> : <PiMagnifyingGlass />}
                     </Link>
 
-                    <Link href={'/shoot'} className='rounded-md flex flex-col items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
+                    <Link href={'/shoot'} className='rounded-md flex flex-col items-center justify-center text-3xl transition duration-300 ease-in-out'>
                         <Button shape={'square'} variant={'outline-ghost'} accent>
                             <PiPlus />
                         </Button>
                     </Link>
 
-                    <Link href={'/settings'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
+                    <Link href={'/settings'} className='grow rounded-md flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
                         {pathname.startsWith("/settings") ? <PiGearFill /> : <PiGear />}
                     </Link>
 
-                    {session.data?.user ? <Link href={`/${session.data?.user.username}`} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
+                    {session.data?.user ? <Link href={`/${session.data?.user.username}`} className='grow rounded-md flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
                         <Image className='rounded-full object-contain' src={formatAvatar(session.data?.user.image, session.data?.user.id)} alt={session.data?.user.username ?? ""} width={30} height={30} />
-                    </Link> : <Link href={'/login'} className='grow hover:bg-hover rounded-md flex items-center justify-center text-3xl transform transition duration-300 ease-in-out'>
+                    </Link> : <Link href={'/login'} className='grow rounded-md flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
                         <PiUserPlus />
                     </Link>}
                 </div>

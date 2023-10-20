@@ -1,15 +1,15 @@
 import { Listbox, Transition } from '@headlessui/react';
-import { PiCaretDown, PiPlus, PiTagChevron, PiX } from 'react-icons/pi';
 import { PostType } from '@prisma/client';
 import axios from 'axios';
 import { NextPage } from 'next';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import Cropper, { Area } from 'react-easy-crop';
+import { PiCaretDown, PiPlus } from 'react-icons/pi';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
-import { getPostTypeName, onError, onMutate, onSettled } from '~/components/PostSection/post-section.util';
+import { getPostTypeName } from '~/components/PostSection/post-section.util';
 import { useFileUpload } from '~/hooks/file-upload.hook';
 import { api } from '~/utils/api.util';
 import getCroppedImg from '~/utils/crop-image.util';
@@ -102,7 +102,7 @@ export const ShootPage: NextPage = () => {
                         <input ref={ref} type="file" className='hidden' accept='image/*' onChange={handleChange} />
                         {dragActive &&
                             <div
-                                className='absolute w-full h-full t-0 r-0 b-0 l-0'
+                                className='absolute w-full h-full inset-0'
                                 onDragEnter={handleDrag}
                                 onDragLeave={handleDrag}
                                 onDragOver={handleDrag}

@@ -1,13 +1,13 @@
-import { withSentryConfig } from "@sentry/nextjs";
 /**
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
  * for Docker builds.
  */
-await import("./src/env.mjs");
-
+import nextBudleAnalyzer from "@next/bundle-analyzer";
+import million from "million/compiler";
 import withPlugins from "next-compose-plugins";
 import nextPWA from "next-pwa";
-import nextBudleAnalyzer from "@next/bundle-analyzer";
+
+await import("./src/env.mjs");
 
 const withPWA = nextPWA({
   dest: "public",
@@ -20,6 +20,8 @@ const withBundleAnalyzer = nextBudleAnalyzer({
   enabled: process.env.ANALYZE === "true",
   openAnalyzer: true,
 });
+
+const withMillion = million.next({ auto: true, mute: true });
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -47,4 +49,4 @@ const config = {
   },
 };
 
-export default withPlugins([withBundleAnalyzer, withPWA], config);
+export default withPlugins([withBundleAnalyzer, withPWA, withMillion], config);
