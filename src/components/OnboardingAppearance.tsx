@@ -1,8 +1,9 @@
-import { useRouter } from "next/router";
 import { useTheme } from "next-themes";
+import { useState } from "react";
 import { PiArrowLeft, PiArrowRight } from "react-icons/pi";
 import { AccentCard } from '~/components/AccentCard';
 import { Button } from "./Button";
+import { CreatePostModal } from "./Modals/CreatePostModal";
 import { ThemeCard } from "./ThemeCard"
 
 interface OnboardingStartSectionProps {
@@ -11,11 +12,13 @@ interface OnboardingStartSectionProps {
     username?: string;
 }
 
-export const OnboardingAppearance = ({ setOnboardingStarted, onboardingStarted, username }: OnboardingStartSectionProps) => {
-    const { push } = useRouter();
+export const OnboardingAppearance = ({ setOnboardingStarted, onboardingStarted }: OnboardingStartSectionProps) => {
+    const [createFirstPostModalOpen, setCreateFirstPostModalOpen] = useState(false);
+
     const { theme, setTheme } = useTheme();
 
     if (onboardingStarted === 2) return <div className="w-screen md:w-auto p-4">
+        {createFirstPostModalOpen && <CreatePostModal isOpen={createFirstPostModalOpen} setIsOpen={setCreateFirstPostModalOpen} firstPost />}
         <div className="flex flex-col gap-4">
             <h2 className="font-black md:text-5xl text-3xl font-clash">Customize your personal experience</h2>
             <p className="text-secondary-text">Choose a desired theme to suit your preferences.</p>
@@ -41,7 +44,7 @@ export const OnboardingAppearance = ({ setOnboardingStarted, onboardingStarted, 
 
         <div className='flex gap-2 mt-4'>
             <Button variant='outline' iconLeft={<PiArrowLeft />} onClick={() => setOnboardingStarted(1)} centerItems>Back</Button>
-            <Button type='submit' iconRight={<PiArrowRight />} centerItems onClick={() => push(`/${username}`)}>Continue</Button>
+            <Button type='submit' iconRight={<PiArrowRight />} centerItems onClick={() => setCreateFirstPostModalOpen(true)}>Continue</Button>
         </div>
     </div>
 }
