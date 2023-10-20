@@ -120,7 +120,7 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
                 {input.length > 0 && <div className='absolute w-screen h-screen inset-0' onClick={() => setInput('')}></div>}
                 <Link href={isAuth ? '/discover' : '/'} className='flex items-center gap-2'>
                     <Logo size={'lg'} />
-                    {showSlash ? <h1 className='text-2xl font-black font-clash flex gap-2 items-center'>{title.toLowerCase()} {beta && <span onClick={() => setBetaFeatureNoticeModalOpen(true)} className='cursor-pointer hover:underline text-base font-semibold text-secondary-text flex items-center gap-1'>
+                    {showSlash ? <h1 className='text-2xl font-black font-clash flex gap-4 items-center'>{title.toLowerCase()} {beta && <span onClick={() => setBetaFeatureNoticeModalOpen(true)} className='cursor-pointer hover:underline text-base font-semibold text-secondary-text flex items-center gap-1'>
                         beta
                         <PiQuestion className="w-4 h-4 text-secondary-text" />
                     </span>}</h1> : <h1 className='text-2xl font-black font-clash'>outfits.bio</h1>}
