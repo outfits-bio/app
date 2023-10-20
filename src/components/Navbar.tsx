@@ -10,7 +10,7 @@ import { Fragment, useCallback, useEffect, useState } from 'react';
 import {
     PiBellSimple, PiBellSimpleFill,
     PiCompass, PiDiscordLogo, PiHammer,
-    PiMagnifyingGlass, PiMagnifyingGlassBold, PiPlus, PiSealCheck, PiSpinnerGap
+    PiMagnifyingGlass, PiMagnifyingGlassBold, PiPlus, PiQuestion, PiSealCheck, PiSpinnerGap
 } from 'react-icons/pi';
 import { api } from '~/utils/api.util';
 
@@ -20,6 +20,7 @@ import { Logo } from './Logo';
 import { NavMenu } from './Menu';
 import { NavbarMenu } from './Menus/NavbarMenu';
 import { NotificationsMenu } from './Menus/NotificationsMenu';
+import { BetaFeatureNoticeModal } from './Modals/BetaFeatureNoticeModal';
 import { BugReportModal } from './Modals/BugReportModal';
 import { CreatePostModal } from './Modals/CreatePostModal';
 import { FeedbackModal } from './Modals/FeedbackModal';
@@ -30,6 +31,7 @@ interface Props {
     showSlash?: boolean;
     showActions?: boolean;
     hideSearch?: boolean;
+    beta?: boolean;
 }
 
 export const AuthSection = ({ session, isAuth }: { session: Props['session'], isAuth: boolean }) => {
@@ -77,10 +79,11 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
     </>
 }
 
-export const Navbar = ({ title, session, showSlash = true, showActions = true, hideSearch = false }: Props) => {
+export const Navbar = ({ title, session, showSlash = true, showActions = true, hideSearch = false, beta = false }: Props) => {
     const { asPath, pathname, push } = useRouter();
 
     const [input, setInput] = useState('');
+    const [betaFeatureNoticeModalOpen, setBetaFeatureNoticeModalOpen] = useState(false);
 
     const { data, status } = session;
 
@@ -111,11 +114,16 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
                 <title>{pageTitle}</title>
             </Head>
 
+            {betaFeatureNoticeModalOpen && <BetaFeatureNoticeModal isOpen={betaFeatureNoticeModalOpen} setIsOpen={setBetaFeatureNoticeModalOpen} />}
+
             <div className='flex items-center px-6 sm:px-12 h-full justify-between gap-2'>
                 {input.length > 0 && <div className='absolute w-screen h-screen inset-0' onClick={() => setInput('')}></div>}
                 <Link href={isAuth ? '/discover' : '/'} className='flex items-center gap-2'>
                     <Logo size={'lg'} />
-                    {showSlash ? <h1 className='text-2xl font-black font-clash'>{title.toLowerCase()}</h1> : <h1 className='text-2xl font-black font-clash'>outfits.bio</h1>}
+                    {showSlash ? <h1 className='text-2xl font-black font-clash flex gap-2 items-center'>{title.toLowerCase()} {beta && <span onClick={() => setBetaFeatureNoticeModalOpen(true)} className='cursor-pointer hover:underline text-base font-semibold text-secondary-text flex items-center gap-1'>
+                        beta
+                        <PiQuestion className="w-4 h-4 text-secondary-text" />
+                    </span>}</h1> : <h1 className='text-2xl font-black font-clash'>outfits.bio</h1>}
                 </Link>
 
                 {(isAuth && !hideSearch) && <div className='hidden relative items-center font-clash font-medium xl:flex'>
