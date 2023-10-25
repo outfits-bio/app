@@ -1,9 +1,11 @@
+import { GetServerSideProps } from 'next';
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ExplorePost, ExplorePostModal } from "~/components/ExplorePostModal";
 import { Layout } from "~/components/Layout";
 import { Post } from "~/components/Post";
+import { getServerAuthSession } from '~/server/auth';
 import { api } from "~/utils/api.util";
 
 export const DiscoverPage = () => {
@@ -73,6 +75,23 @@ export const DiscoverPage = () => {
             </section>
         </div>
     </Layout>
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const session = await getServerAuthSession(ctx);
+  
+    if (!session?.user) {
+      return {
+        redirect: {
+          destination: `/login`,
+          permanent: false,
+        },
+      };
+    }
+  
+    return {
+      props: {},
+    };
 }
 
 export default DiscoverPage;
