@@ -46,7 +46,7 @@ const Mobile = () => {
                     variant={"outline-ghost"}
                     className="orange-selection"
                   >
-                    Fund Development
+                    Donate devs
                   </Button>
                 </Link>
               </div>
@@ -63,7 +63,7 @@ const Mobile = () => {
         <Image
           src={landing}
           alt="Landing Image"
-          className="w-11/12 object-contain transition-all duration-300 hover:-translate-y-40 md:w-2/3"
+          className="w-11/12 md:w-2/3 object-contain hover:-translate-y-16 transition-all duration-300"
         />
       </section>
 
