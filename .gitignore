@@ -143,3 +143,4 @@ dist
 **/public/worker-*.js.map
 # Sentry Auth Token
 .sentryclirc
+.DS_Store

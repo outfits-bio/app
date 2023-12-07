@@ -45,8 +45,8 @@ export const AppearanceSettingsPage: NextPage = () => {
                 </div>
             </div>
 
-            {theme !== 'dark' && <div className="flex flex-col gap-4">
-                <h2 className="font-black text-2xl">Accent Colors (Light Mode Only)</h2>
+            {theme !== 'dark' && theme !== 'system' && <div className="flex flex-col gap-4">
+                <h2 className="font-black text-2xl">Accent Colors</h2>
                 <div className="flex gap-4 overflow-x-scroll pb-1">
                     <AccentCard variant='default' active={theme === 'light'} onClick={() => setTheme('light')} />
                     <AccentCard variant='brown' active={theme === 'light-brown'} onClick={() => setTheme('light-brown')} />

@@ -69,7 +69,7 @@ export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="flex overflow-hidden rounded-md dark:text-white bg-white dark:bg-black border border-black dark:border-white p-4 text-left align-middle shadow-xl transition-all">
+                            <Dialog.Panel className="flex overflow-hidden rounded-md dark:text-white bg-white dark:bg-black border dark:border-white p-4 text-left align-middle shadow-xl transition-all">
                                 <div>
                                     <div className='flex justify-end w-full mb-2'>
                                         <div>

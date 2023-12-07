@@ -154,7 +154,7 @@ const SettingsPage = () => {
             </label>
             <div className="mb-4 flex w-full gap-4">
               <div>
-                <div className='rounded-full h-44 w-44 flex items-center justify-center border border-black' onClick={() => ref.current?.click()}>
+                <div className='rounded-full h-44 w-44 flex items-center justify-center border border' onClick={() => ref.current?.click()}>
                   {dragActive &&
                     <div
                       className='absolute w-full h-full inset-0'
@@ -296,7 +296,7 @@ const SettingsPage = () => {
             iconLeft={<PiTrash />}
             onClick={() => setIsOpen(true)}
             isLoading={deleteProfileLoading}
-            className="bg-red-600 hover:bg-red-700 text-white"
+            className="bg-error hover:bg-red-500 text-white"
           >
             Delete
           </Button>

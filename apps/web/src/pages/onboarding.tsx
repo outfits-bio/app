@@ -119,7 +119,7 @@ export const OnboardingPage: NextPage<{ username?: string }> = ({ username }) =>
                         <h1 className='hidden sm:block sm:text-5xl font-black font-clash'>Show the world who you really are.</h1>
 
                         <div className='flex gap-2 w-full flex-col sm:flex-row items-center'>
-                            <div className='rounded-full h-64 w-64 sm:h-44 sm:w-44 flex items-center justify-center border border-black' onClick={() => ref.current?.click()}>
+                            <div className='rounded-full h-64 w-64 sm:h-44 sm:w-44 flex items-center justify-center border border' onClick={() => ref.current?.click()}>
                                 {dragActive &&
                                     <div
                                         className='absolute w-full h-full inset-0'

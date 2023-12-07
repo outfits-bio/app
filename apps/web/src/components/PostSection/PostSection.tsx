@@ -95,7 +95,7 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
                                 onMouseEnter={() => setDeleteButton(post.id)}
                                 onMouseLeave={() => setDeleteButton(null)}
                                 key={post.id ?? `loading_${i}`}
-                                className="w-[126px] h-[206px] border border-secondary-text rounded-md relative overflow-hidden">
+                                className="w-[126px] h-[206px] border border rounded-md relative overflow-hidden">
 
                                 {isLoading && i === 0 ?
                                     <div className='bg-hover w-full h-full flex items-center justify-center'>
@@ -131,7 +131,7 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
                             <button
                                 onClick={() => ref.current?.click()}
                                 type='submit'
-                                className='w-[126px] h-[206px] border hover:bg-hover border-secondary-text flex items-center justify-center font-bold flex-col text-sm rounded-md'>
+                                className='w-[126px] h-[206px] border hover:bg-hover border flex items-center justify-center font-bold flex-col text-sm rounded-md'>
                                 <PiPlus className='w-12 h-12 text-secondary-text' />
                             </button>
                         </>}
