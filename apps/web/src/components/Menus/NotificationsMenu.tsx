@@ -35,7 +35,7 @@ export const NotificationsMenu = ({ unreadCount }: NotificationsMenuProps) => {
     };
 
     return (
-        <Menu as="div" className="relative inline-block text-left z-50 overflow-y">
+        <Menu as="div" className="relative inline-block text-left z-50">
             <div>
                 <Menu.Button onClick={() => refetch()}>
                     <div className="relative">
