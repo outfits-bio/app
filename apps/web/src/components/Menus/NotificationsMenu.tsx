@@ -57,7 +57,7 @@ export const NotificationsMenu = ({ unreadCount }: NotificationsMenuProps) => {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
             >
-                <Menu.Items className="absolute right-1 rounded-md divide-y divide-stroke mt-1 origin-top-right border border-stroke bg-white dark:bg-black shadow-dropdown p-4 w-[400px] divide-none overflow-y-auto">
+                <Menu.Items className="absolute right-1 rounded-md divide-y divide-stroke mt-1 origin-top-right border border-stroke bg-white dark:bg-black shadow-dropdown p-4 w-[400px] divide-none overflow-y">
                     {((notifications?.length ?? 0) > 0) ? (
                         <>
                             {notifications?.slice(0, visibleNotifications).map((notification, index) => (
