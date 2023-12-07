@@ -8,10 +8,11 @@ import { useEffect } from 'react';
 import {
     PiGear, PiGearFill, PiHouse, PiHouseFill, PiMagnifyingGlass, PiMagnifyingGlassFill, PiPlus, PiUserPlus
 } from 'react-icons/pi';
-import { formatAvatar } from '~/utils/image-src-format.util';
 
 import { Button } from './Button';
 import { Navbar } from './Navbar';
+
+import { formatAvatar } from '~/utils/image-src-format.util';
 
 interface Props {
     children: React.ReactNode;

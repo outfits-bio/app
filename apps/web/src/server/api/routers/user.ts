@@ -1,5 +1,5 @@
-import { Prisma } from "database";
 import { TRPCError } from "@trpc/server";
+import { Prisma } from "database";
 import {
   addLinkSchema,
   editProfileSchema,

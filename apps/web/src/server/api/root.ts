@@ -1,4 +1,3 @@
-import { createTRPCRouter, mergeRouters } from "~/server/api/trpc";
 
 import { adminRouter } from "./routers/admin";
 import { notificationsRouter } from "./routers/notifications";
@@ -6,6 +5,7 @@ import { postRouter } from "./routers/post";
 import { profileRouter } from "./routers/profile";
 import { reportRouter } from "./routers/report";
 import { userRouter } from "./routers/user";
+import { createTRPCRouter, mergeRouters } from "~/server/api/trpc";
 
 /**
  * This is the primary router for your server.

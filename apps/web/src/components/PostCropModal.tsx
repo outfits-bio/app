@@ -3,10 +3,9 @@ import { PostType } from 'database';
 import { Dispatch, Fragment, SetStateAction, useCallback, useState } from 'react';
 import Cropper, { Area } from 'react-easy-crop';
 import { PiX } from 'react-icons/pi';
+import { Button } from './Button';
 import getCroppedImg from '~/utils/crop-image.util';
 
-
-import { Button } from './Button';
 
 interface Props {
     isOpen: boolean;

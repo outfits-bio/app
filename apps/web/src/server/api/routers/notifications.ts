@@ -1,7 +1,6 @@
 import { TRPCError } from "@trpc/server";
-import { deleteNotificationSchema } from "~/schemas/notification.schema";
-
 import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { deleteNotificationSchema } from "~/schemas/notification.schema";
 
 export const notificationsRouter = createTRPCRouter({
   getNotifications: protectedProcedure.query(async ({ ctx }) => {

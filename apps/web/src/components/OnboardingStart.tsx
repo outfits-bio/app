@@ -1,7 +1,5 @@
 import { signOut } from 'next-auth/react';
-
 import { PiArrowRight } from 'react-icons/pi';
-
 import { Button } from './Button';
 
 interface OnboardingStartSectionProps {

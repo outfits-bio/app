@@ -1,5 +1,6 @@
-import { NotificationType } from "database";
 import { TRPCError } from "@trpc/server";
+import { NotificationType } from "database";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 import {
   deleteUserLinkSchema,
   deleteUserSchema,
@@ -7,7 +8,6 @@ import {
 } from "~/schemas/admin.schema";
 
 import { deleteImage } from "~/server/utils/image.util";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const adminRouter = createTRPCRouter({
   deleteUser: protectedProcedure

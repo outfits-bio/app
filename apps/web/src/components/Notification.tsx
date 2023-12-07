@@ -3,10 +3,10 @@ import { intlFormatDistance } from 'date-fns';
 import Link from 'next/link';
 import type { FC } from 'react';
 import { PiSpinnerGap, PiX } from 'react-icons/pi';
+import { Avatar } from './Avatar';
 import { AppRouter } from '~/server/api/root';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
-import { Avatar } from './Avatar';
 
 type RouterOutput = inferRouterOutputs<AppRouter>['notifications'];
 

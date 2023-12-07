@@ -3,15 +3,16 @@ import { inferRouterOutputs } from '@trpc/server';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { PiSpinnerGap, PiTrashSimple } from 'react-icons/pi';
+import type { BaseModalProps } from './BaseModal';
+import { BaseModal } from './BaseModal';
+import { Button } from '../Button';
+
 import { EditUserInput, editUserSchema } from '~/schemas/admin.schema';
 import { AppRouter } from '~/server/api/root';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 
-import type { BaseModalProps } from './BaseModal';
-import { BaseModal } from './BaseModal';
-import { Button } from '../Button';
 
 type RouterOutput = inferRouterOutputs<AppRouter>;
 

@@ -12,7 +12,6 @@ import {
     PiCompass, PiDiscordLogo, PiHammer,
     PiMagnifyingGlass, PiMagnifyingGlassBold, PiPlus, PiQuestion, PiSealCheck, PiSpinnerGap
 } from 'react-icons/pi';
-import { api } from '~/utils/api.util';
 
 import { Avatar } from './Avatar';
 import { Button } from './Button';
@@ -24,6 +23,8 @@ import { BetaFeatureNoticeModal } from './Modals/BetaFeatureNoticeModal';
 import { BugReportModal } from './Modals/BugReportModal';
 import { CreatePostModal } from './Modals/CreatePostModal';
 import { FeedbackModal } from './Modals/FeedbackModal';
+
+import { api } from '~/utils/api.util';
 
 interface Props {
     title: string;

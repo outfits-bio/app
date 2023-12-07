@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LinkType } from 'database';
 import axios from 'axios';
+import { LinkType } from 'database';
 import { useRouter } from 'next/router';
 import { signOut, useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';

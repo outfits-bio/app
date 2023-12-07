@@ -1,10 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Dispatch, Fragment, SetStateAction, useCallback, useState } from 'react';
 import Cropper, { Area } from 'react-easy-crop';
-import getCroppedImg from '~/utils/crop-image.util';
-
-
 import { Button } from './Button';
+import getCroppedImg from '~/utils/crop-image.util';
 
 interface Props {
     isOpen: boolean;

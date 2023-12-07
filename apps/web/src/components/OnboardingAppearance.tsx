@@ -1,10 +1,10 @@
 import { useTheme } from "next-themes";
 import { useState } from "react";
 import { PiArrowLeft, PiArrowRight } from "react-icons/pi";
-import { AccentCard } from '~/components/AccentCard';
 import { Button } from "./Button";
 import { CreatePostModal } from "./Modals/CreatePostModal";
 import { ThemeCard } from "./ThemeCard"
+import { AccentCard } from '~/components/AccentCard';
 
 interface OnboardingStartSectionProps {
     setOnboardingStarted: React.Dispatch<React.SetStateAction<number>>;

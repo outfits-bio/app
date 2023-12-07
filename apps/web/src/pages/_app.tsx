@@ -5,9 +5,9 @@ import type { AppType } from 'next/app';
 import Head from 'next/head';
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
+import { metadata } from 'next-seo.config';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from 'react-hot-toast';
-import { metadata } from 'next-seo.config';
 import { api } from '~/utils/api.util';
 
 

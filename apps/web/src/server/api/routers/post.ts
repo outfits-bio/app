@@ -1,5 +1,5 @@
-import { NotificationType, PostType, Prisma } from "database";
 import { TRPCError } from "@trpc/server";
+import { NotificationType, PostType, Prisma } from "database";
 import { z } from "zod";
 import {
   addPostToWishlistSchema,

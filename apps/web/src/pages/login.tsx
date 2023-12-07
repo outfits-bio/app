@@ -3,14 +3,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { PiDiscordLogo, PiGoogleLogo, PiHammer, PiSealCheck } from 'react-icons/pi';
+import { PostSkeleton } from '../components/Skeletons/PostSkeleton';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
 import { getServerAuthSession } from '~/server/auth';
 import { api } from '~/utils/api.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
-
-
-import { PostSkeleton } from '../components/Skeletons/PostSkeleton';
 
 const LoginPage = () => {
   const handleGoogle = async () => {

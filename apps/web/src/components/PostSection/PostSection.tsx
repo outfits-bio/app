@@ -4,10 +4,6 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useEffect, useRef, useState } from 'react';
 import { PiPlus } from 'react-icons/pi';
-import { useFileUpload } from '~/hooks/file-upload.hook';
-import { api } from '~/utils/api.util';
-import { formatImage } from '~/utils/image-src-format.util';
-
 
 import {
     getPostTypeCount, getPostTypeIcon, getPostTypeName, onError, onMutate, onSettled,
@@ -16,6 +12,11 @@ import {
 import { Button } from '../Button';
 import { PostCropModal } from '../PostCropModal';
 import { Spinner } from '../Spinner';
+
+import { useFileUpload } from '~/hooks/file-upload.hook';
+import { api } from '~/utils/api.util';
+import { formatImage } from '~/utils/image-src-format.util';
+
 
 export const PostSection = ({ profileData, postsData, type, loading }: PostSectionProps) => {
 
