@@ -10,7 +10,7 @@ import { Fragment, useCallback, useEffect, useState } from 'react';
 import {
     PiBellSimple, PiBellSimpleFill,
     PiCompass, PiDiscordLogo, PiHammer,
-    PiMagnifyingGlass, PiMagnifyingGlassBold, PiPlus, PiQuestion, PiSealCheck, PiSpinnerGap
+    PiMagnifyingGlass, PiMagnifyingGlassBold, PiPlus, PiSealCheck, PiSpinnerGap
 } from 'react-icons/pi';
 
 import { Avatar } from './Avatar';
@@ -32,7 +32,6 @@ interface Props {
     showSlash?: boolean;
     showActions?: boolean;
     hideSearch?: boolean;
-    beta?: boolean;
 }
 
 export const AuthSection = ({ session, isAuth }: { session: Props['session'], isAuth: boolean }) => {
@@ -80,7 +79,7 @@ export const AuthSection = ({ session, isAuth }: { session: Props['session'], is
     </>
 }
 
-export const Navbar = ({ title, session, showSlash = true, showActions = true, hideSearch = false, beta = false }: Props) => {
+export const Navbar = ({ title, session, showSlash = true, showActions = true, hideSearch = false }: Props) => {
     const { asPath, pathname, push } = useRouter();
 
     const [input, setInput] = useState('');
