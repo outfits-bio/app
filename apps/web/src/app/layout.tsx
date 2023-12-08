@@ -1,7 +1,7 @@
 import '~/styles/globals.css';
 
 import { Analytics } from '@vercel/analytics/react';
-import type { AppType } from 'next/app';
+import type { AppProps } from 'next/app';
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { meta } from 'next-seo.config';
@@ -37,18 +37,15 @@ export const metadata = {
   },
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default api.withTRPC(function RootLayout({ Component, pageProps }: AppProps & { session: Session | null }) {
+  const { session, ...restPageProps } = pageProps;
   return (
     <SessionProvider session={session}>
       <ThemeProvider enableSystem attribute="class" defaultTheme='light' themes={['light', 'dark', 'light-brown', 'light-hot-pink', 'light-orange', 'light-light-pink']}>
         <Toaster />
         <Analytics />
-        <Component {...pageProps} />
+        <Component {...restPageProps} />
       </ThemeProvider>
     </SessionProvider>
   )
-}
+});
