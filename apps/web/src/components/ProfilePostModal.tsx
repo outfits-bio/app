@@ -1,3 +1,5 @@
+"use client";
+
 import { Dialog, Transition } from '@headlessui/react';
 import { Inter, Urbanist } from 'next/font/google';
 import Image from 'next/image';

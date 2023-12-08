@@ -1,4 +1,4 @@
-export const metadata = {
+export const meta = {
   title: "outfits.bio",
   description:
     "outfits is a virtual wardrobe where you can seamlessly share and explore outfits with your friends and viewers!",

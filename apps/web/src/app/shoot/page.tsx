@@ -1,3 +1,5 @@
+"use client";
+
 import { Listbox, Transition } from '@headlessui/react';
 import axios from 'axios';
 import { PostType } from 'database';

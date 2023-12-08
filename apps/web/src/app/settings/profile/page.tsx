@@ -1,4 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
+"use client";
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { LinkType } from 'database';

@@ -1,7 +1,9 @@
+"use client";
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
+import { SessionProvider, useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import Marquee from 'react-fast-marquee';
 import { PiBackpackBold, PiBaseballCapBold, PiCoatHangerBold, PiDotsThreeBold, PiEyeglassesBold, PiHammer, PiHeartBold, PiHeartFill, PiLinkSimpleBold, PiPantsBold, PiSealCheck, PiShirtFoldedBold, PiShoppingBagOpenBold, PiSneakerBold, PiTShirtBold, PiWatchBold } from 'react-icons/pi';
@@ -14,6 +16,7 @@ import { Logo } from '~/components/Logo';
 import { PostSkeleton } from '~/components/Skeletons/PostSkeleton';
 import { api } from '~/utils/api.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
+import { Session } from 'inspector';
 
 const Home = () => {
   const { status, data } = useSession();

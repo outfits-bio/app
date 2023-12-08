@@ -1,3 +1,5 @@
+"use client";
+
 import { PostType } from 'database';
 import { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';

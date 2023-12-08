@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { PiDiscordLogo, PiGoogleLogo, PiHammer, PiSealCheck } from 'react-icons/pi';
-import { PostSkeleton } from '../components/Skeletons/PostSkeleton';
+import { PostSkeleton } from '../../components/Skeletons/PostSkeleton';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
 import { getServerAuthSession } from '~/server/auth';

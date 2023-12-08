@@ -1,3 +1,5 @@
+"use client";
+
 import debounce from 'lodash.debounce';
 import { NextPage } from 'next';
 import Link from 'next/link';

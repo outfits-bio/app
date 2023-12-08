@@ -1,3 +1,5 @@
+"use client";
+
 import { Popover, Transition } from "@headlessui/react"
 import { inferRouterOutputs } from "@trpc/server"
 import Image from "next/image"

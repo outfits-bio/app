@@ -1,3 +1,5 @@
+"use client";
+
 import { ChangeEvent, DragEvent, useState } from 'react';
 
 export const useFileUpload = () => {

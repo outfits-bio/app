@@ -1,3 +1,5 @@
+"use client";
+
 import { Dialog, Transition } from '@headlessui/react';
 import { PostType } from 'database';
 import { Dispatch, Fragment, SetStateAction, useCallback, useState } from 'react';

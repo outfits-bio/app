@@ -1,3 +1,5 @@
+"use client";
+
 import { Dialog, Transition } from '@headlessui/react';
 import { Dispatch, Fragment, SetStateAction, useCallback, useState } from 'react';
 import Cropper, { Area } from 'react-easy-crop';

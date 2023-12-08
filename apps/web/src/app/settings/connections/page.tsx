@@ -1,3 +1,5 @@
+"use client";
+
 import { Switch } from '@headlessui/react';
 import { motion } from 'framer-motion';
 import type { NextPage } from "next";

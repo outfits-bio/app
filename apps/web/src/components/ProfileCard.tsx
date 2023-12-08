@@ -1,3 +1,5 @@
+"use client";
+
 import { inferRouterOutputs } from '@trpc/server';
 import { LinkType } from 'database';
 import Image from 'next/image';

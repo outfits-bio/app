@@ -1,3 +1,5 @@
+"use client";
+
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { PiBellSimple } from "react-icons/pi";

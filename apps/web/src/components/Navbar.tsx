@@ -1,3 +1,5 @@
+"use client";
+
 import { Popover, Transition } from '@headlessui/react';
 import debounce from 'lodash.debounce';
 import Head from 'next/head';

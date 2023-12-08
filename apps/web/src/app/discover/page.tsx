@@ -1,3 +1,5 @@
+"use client";
+
 import { PostType } from "database";
 import Link from "next/link";
 import { useRouter } from "next/router";
