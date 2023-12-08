@@ -178,7 +178,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                 </div>}
 
                 <div className='w-full flex items-center justify-between gap-4'>
-                    {!isCurrentUser && <>
+                    {!isCurrentUser && !profileData?.username?.toLowerCase().includes(currentUser?.username?.toLowerCase() ?? '') && <>
                         <div className='grow'>
                             <Button
                                 accent
@@ -217,7 +217,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                         </div>
                     </>}
 
-                    {isCurrentUser && <>
+                    {(isCurrentUser || (currentUser && profileData && currentUser.username.toLowerCase() === (profileData?.username || '').toLowerCase())) && <>
                         <Link href='/settings/profile' className='grow'>
                             <Button variant='outline' iconLeft={<PiPencilSimple />} centerItems>
                                 Edit
