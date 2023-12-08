@@ -82,7 +82,13 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
                 <span><span className='font-semibold'>{getPostTypeCount(type, profileData)}</span> {getPostTypeName(type)}</span>
 
                 <div>
-                    {(userIsProfileOwner && !postsExist) && <Button className='hidden md:block' iconLeft={<PiPlus />} onClick={() => ref.current?.click()} type='submit' variant={'ghost'} shape={'square'}></Button>}
+                    {(userIsProfileOwner && !postsExist) &&
+                        <Button className='hidden md:block' onClick={() => ref.current?.click()} type='submit' variant={'ghost'} shape={'square'}>
+                            <div className='flex items-center justify-center'>
+                                <PiPlus className='text-2xl' />
+                            </div>
+                        </Button>
+                    }
                 </div>
             </h2>}
 
