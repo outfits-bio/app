@@ -232,7 +232,7 @@ export const Post = ({ post, user }: PostProps) => {
 
                 <Popover className="relative">
                     <Popover.Button>
-                        <Button variant={'outline-ghost'} centerItems shape={'circle'} iconLeft={<PiChatCircleBold />} />
+                        <Button className="focus:outline-none" variant={'outline-ghost'} centerItems shape={'circle'} iconLeft={<PiChatCircleBold />} />
                     </Popover.Button>
                     <Transition
                         as={Fragment}
