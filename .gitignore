@@ -1,3 +1,5 @@
+.turbo
+
 # Logs
 logs
 *.log
@@ -141,3 +143,4 @@ dist
 **/public/worker-*.js.map
 # Sentry Auth Token
 .sentryclirc
+.DS_Store
