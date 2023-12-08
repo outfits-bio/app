@@ -2,6 +2,7 @@ import '~/styles/globals.css';
 
 import { Analytics } from '@vercel/analytics/react';
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { meta } from 'next-seo.config';
@@ -40,12 +41,21 @@ export const metadata = {
 export default api.withTRPC(function RootLayout({ Component, pageProps }: AppProps & { session: Session | null }) {
   const { session, ...restPageProps } = pageProps;
   return (
-    <SessionProvider session={session}>
-      <ThemeProvider enableSystem attribute="class" defaultTheme='light' themes={['light', 'dark', 'light-brown', 'light-hot-pink', 'light-orange', 'light-light-pink']}>
-        <Toaster />
-        <Analytics />
-        <Component {...restPageProps} />
-      </ThemeProvider>
-    </SessionProvider>
+    <>
+      <Head>
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="favicon.ico" sizes="32px" />
+        <link rel="apple-touch-icon" href="/icon.png"></link>
+      </Head>
+      <SessionProvider session={session}>
+        <ThemeProvider enableSystem attribute="class" defaultTheme='light' themes={['light', 'dark', 'light-brown', 'light-hot-pink', 'light-orange', 'light-light-pink']}>
+          <Toaster />
+          <Analytics />
+          <Component {...restPageProps} />
+        </ThemeProvider>
+      </SessionProvider>
+    </>
   )
 });
