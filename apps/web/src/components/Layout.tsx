@@ -21,7 +21,6 @@ interface Props {
     redirectIfNotAuth?: boolean;
     showActions?: boolean;
     hideSearch?: boolean;
-    beta?: boolean;
 }
 
 const clash = localFont({
@@ -36,7 +35,7 @@ const satoshi = localFont({
     variable: '--font-satoshi',
 });
 
-export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActions, hideSearch, beta }: Props) => {
+export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActions, hideSearch }: Props) => {
     const { push, pathname } = useRouter();
 
     const session = useSession();
@@ -54,7 +53,7 @@ export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActi
 
     return (
         <div className={`bg-body font-satoshi flex flex-col min-h-screen antialiased transition-colors duration-300 ${clash.variable} ${satoshi.variable}`}>
-            <Navbar title={title} session={session} showSlash={showSlash} showActions={showActions} hideSearch={hideSearch} beta={beta} />
+            <Navbar title={title} session={session} showSlash={showSlash} showActions={showActions} hideSearch={hideSearch} />
             <main className='h-screen pt-20 overflow-x-hidden pb-24 md:pb-0 scroll-smooth'>{children}</main>
             {pathname !== '/login' && pathname !== '/onboarding' && pathname !== '/' &&
                 <div className='py-5 px-6 bg-white dark:bg-black border border-stroke flex justify-between w-screen h-24 fixed bottom-0 md:hidden gap-4 z-50'>
