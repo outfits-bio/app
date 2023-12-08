@@ -13,6 +13,7 @@ import { generateSSGHelper } from '~/server/utils/ssg.util';
 import { api } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 
+
 export const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
     const { push, query } = useRouter();
     const { data, status } = useSession();
@@ -66,8 +67,6 @@ export const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
     );
 };
 
-export default ProfilePage;
-
 export const getStaticProps: GetStaticProps = async (context) => {
     const ssg = generateSSGHelper();
 
@@ -99,3 +98,5 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export const getStaticPaths = () => {
     return { paths: [], fallback: "blocking" };
 }
+
+export default ProfilePage;
