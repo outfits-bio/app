@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import { Layout } from "~/components/Layout";
 import { getPost, getSortedPostsData } from "~/utils/blog.util";
 
-export const BlogPost = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const BlogPost = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
     const { title, date, content } = data;
 
     return (
