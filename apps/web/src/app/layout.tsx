@@ -9,6 +9,8 @@ import { meta } from 'next-seo.config';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from 'react-hot-toast';
 import { api } from '~/utils/api.util';
+import { TRPCReactProvider } from '~/components/TRPCWrapper';
+import { cookies } from "next/headers";
 
 export const metadata = {
   title: meta.title,
@@ -36,9 +38,9 @@ export const metadata = {
     imageWidth: meta.twitter.imageWidth,
     imageHeight: meta.twitter.imageHeight,
   },
-}
+};
 
-export default api.withTRPC(function RootLayout({ Component, pageProps }: AppProps & { session: Session | null }) {
+export default function RootLayout({ Component, pageProps }: AppProps & { session: Session | null }) {
   const { session, ...restPageProps } = pageProps;
   return (
     <>
@@ -49,6 +51,7 @@ export default api.withTRPC(function RootLayout({ Component, pageProps }: AppPro
         <link rel="icon" href="favicon.ico" sizes="32px" />
         <link rel="apple-touch-icon" href="/icon.png"></link>
       </Head>
+      <TRPCReactProvider cookies={cookies().toString()}>
       <SessionProvider session={session}>
         <ThemeProvider enableSystem attribute="class" defaultTheme='light' themes={['light', 'dark', 'light-brown', 'light-hot-pink', 'light-orange', 'light-light-pink']}>
           <Toaster />
@@ -56,6 +59,7 @@ export default api.withTRPC(function RootLayout({ Component, pageProps }: AppPro
           <Component {...restPageProps} />
         </ThemeProvider>
       </SessionProvider>
+      </TRPCReactProvider>
     </>
   )
-});
+};
