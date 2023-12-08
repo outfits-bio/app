@@ -19,7 +19,6 @@ import { Logo } from './Logo';
 import { NavMenu } from './Menu';
 import { NavbarMenu } from './Menus/NavbarMenu';
 import { NotificationsMenu } from './Menus/NotificationsMenu';
-import { BetaFeatureNoticeModal } from './Modals/BetaFeatureNoticeModal';
 import { BugReportModal } from './Modals/BugReportModal';
 import { CreatePostModal } from './Modals/CreatePostModal';
 import { FeedbackModal } from './Modals/FeedbackModal';
@@ -83,7 +82,6 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
     const { asPath, pathname, push } = useRouter();
 
     const [input, setInput] = useState('');
-    const [betaFeatureNoticeModalOpen, setBetaFeatureNoticeModalOpen] = useState(false);
 
     const { data, status } = session;
 
@@ -113,8 +111,6 @@ export const Navbar = ({ title, session, showSlash = true, showActions = true, h
             <Head>
                 <title>{pageTitle}</title>
             </Head>
-
-            {betaFeatureNoticeModalOpen && <BetaFeatureNoticeModal isOpen={betaFeatureNoticeModalOpen} setIsOpen={setBetaFeatureNoticeModalOpen} />}
 
             <div className='flex items-center px-6 sm:px-12 h-full justify-between gap-2'>
                 {input.length > 0 && <div className='absolute w-screen h-screen inset-0' onClick={() => setInput('')}></div>}
