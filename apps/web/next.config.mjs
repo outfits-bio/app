@@ -21,8 +21,6 @@ const withBundleAnalyzer = nextBudleAnalyzer({
   openAnalyzer: true,
 });
 
-const withMillion = million.next({ auto: true, mute: true });
-
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
@@ -49,4 +47,4 @@ const config = {
   },
 };
 
-export default withPlugins([withBundleAnalyzer, withPWA, withMillion], config);
+export default withPlugins([withBundleAnalyzer, withPWA, million.next], config);
