@@ -215,7 +215,7 @@ export const Post = ({ post, user }: PostProps) => {
                     }}
                     iconLeft={
 
-                        (post.authUserHasLiked) ? (
+                        (post.authUserHasLiked && user) ? (
                             <PiHeartFill
                                 onAnimationEnd={() => setLikeAnimation(false)}
                                 className={likeAnimation ? 'animate-ping fill-black dark:fill-white' : ''}
