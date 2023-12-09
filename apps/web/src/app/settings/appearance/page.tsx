@@ -11,7 +11,7 @@ import { AccentCard } from '~/components/AccentCard';
 import { HideAllPresencesModal } from '~/components/Modals/HideAllPresencesModal';
 import { SettingsLayout } from '~/components/SettingsLayout';
 import { ThemeCard } from '~/components/ThemeCard';
-import { api } from '~/utils/api.util';
+import { api } from '~/components/TRPCWrapper';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 

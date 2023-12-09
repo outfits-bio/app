@@ -4,7 +4,7 @@ import { Popover, Transition } from '@headlessui/react';
 import debounce from 'lodash.debounce';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import { Fragment, useCallback, useEffect, useState } from 'react';
@@ -25,7 +25,7 @@ import { BugReportModal } from './Modals/BugReportModal';
 import { CreatePostModal } from './Modals/CreatePostModal';
 import { FeedbackModal } from './Modals/FeedbackModal';
 
-import { api } from '~/utils/api.util';
+import { api } from '~/components/TRPCWrapper';
 
 interface Props {
     title: string;

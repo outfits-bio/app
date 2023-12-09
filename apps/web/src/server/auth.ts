@@ -1,11 +1,9 @@
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import type { GetServerSidePropsContext } from "next";
-import { DefaultSession, getServerSession, NextAuthOptions } from 'next-auth';
-import DiscordProvider from 'next-auth/providers/discord';
-import GoogleProvider from 'next-auth/providers/google';
-import { env } from '~/env.mjs';
-import { prisma } from '~/server/db';
-
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { DefaultSession, getServerSession, NextAuthOptions } from "next-auth";
+import DiscordProvider from "next-auth/providers/discord";
+import GoogleProvider from "next-auth/providers/google";
+import { env } from "~/env.mjs";
+import { db } from "~/server/db";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -59,7 +57,7 @@ export const authOptions: NextAuthOptions = {
     newUser: "/onboarding",
     error: "/auth/error",
   },
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(db),
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
@@ -115,9 +113,4 @@ export const authOptions: NextAuthOptions = {
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */
-export const getServerAuthSession = (ctx: {
-  req: GetServerSidePropsContext["req"];
-  res: GetServerSidePropsContext["res"];
-}) => {
-  return getServerSession(ctx.req, ctx.res, authOptions);
-};
+export const getServerAuthSession = () => getServerSession(authOptions);

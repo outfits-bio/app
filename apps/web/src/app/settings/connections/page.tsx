@@ -11,7 +11,7 @@ import { Button } from '~/components/Button';
 import { SpotifyConnectDiscordModal } from '~/components/Modals/SpotifyConnectDiscordModal';
 import { SpotifySetupModal } from '~/components/Modals/SpotifySetupModal';
 import { SettingsLayout } from '~/components/SettingsLayout';
-import { api } from '~/utils/api.util';
+import { api } from '~/components/TRPCWrapper';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 

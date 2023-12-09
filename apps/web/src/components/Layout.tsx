@@ -1,7 +1,7 @@
 import localFont from 'next/font/local';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 
@@ -36,7 +36,8 @@ const satoshi = localFont({
 });
 
 export const Layout = ({ children, title, showSlash, redirectIfNotAuth, showActions, hideSearch }: Props) => {
-    const { push, pathname } = useRouter();
+    const { push } = useRouter();
+    const pathname = usePathname();
 
     const session = useSession();
 

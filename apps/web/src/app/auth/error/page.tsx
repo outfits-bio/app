@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import { PiCopy } from 'react-icons/pi';
 import { Layout } from '~/components/Layout';

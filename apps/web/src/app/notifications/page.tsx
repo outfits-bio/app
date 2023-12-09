@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import { Layout } from '~/components/Layout';
 import NotificationCard from '~/components/Notification';
-import { api } from '~/utils/api.util';
+import { api } from '~/components/TRPCWrapper';
 
 
 

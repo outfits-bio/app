@@ -1,4 +1,3 @@
-
 import { adminRouter } from "./routers/admin";
 import { notificationsRouter } from "./routers/notifications";
 import { postRouter } from "./routers/post";

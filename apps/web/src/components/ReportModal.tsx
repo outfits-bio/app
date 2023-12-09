@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { Button } from './Button';
 import { CreateReportInput, createReportSchema } from '~/schemas/user.schema';
-import { api } from '~/utils/api.util';
+import { api } from '~/components/TRPCWrapper';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 interface ReportModalProps {

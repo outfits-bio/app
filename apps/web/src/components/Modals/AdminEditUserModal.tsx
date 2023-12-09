@@ -9,7 +9,7 @@ import { Button } from '../Button';
 
 import { EditUserInput, editUserSchema } from '~/schemas/admin.schema';
 import { AppRouter } from '~/server/api/root';
-import { api } from '~/utils/api.util';
+import { api } from '~/components/TRPCWrapper';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 

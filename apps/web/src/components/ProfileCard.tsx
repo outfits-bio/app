@@ -4,7 +4,7 @@ import { inferRouterOutputs } from '@trpc/server';
 import { LinkType } from 'database';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import type { User } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
@@ -24,7 +24,7 @@ import { SpotifySetupModal } from './Modals/SpotifySetupModal';
 import { ReportModal } from './ReportModal';
 
 import type { AppRouter } from '~/server/api/root';
-import { api } from '~/utils/api.util';
+import { api } from '~/components/TRPCWrapper';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 type RouterOutput = inferRouterOutputs<AppRouter>;

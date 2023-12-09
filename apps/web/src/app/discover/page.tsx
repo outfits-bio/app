@@ -2,7 +2,7 @@
 
 import { PostType } from "database";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PiBackpackBold, PiBaseballCapBold, PiBookmarkSimpleBold, PiClockBold, PiCoatHangerBold, PiEyeglassesBold, PiFireBold, PiFolderNotchBold, PiPantsBold, PiShirtFoldedBold, PiSneakerBold, PiTShirtBold, PiWatchBold } from "react-icons/pi";
@@ -10,7 +10,7 @@ import { Button } from "~/components/Button";
 import { ExplorePost, ExplorePostModal } from "~/components/ExplorePostModal";
 import { Layout } from "~/components/Layout";
 import { Post } from "~/components/Post";
-import { api } from "~/utils/api.util";
+import { api } from '~/components/TRPCWrapper';;
 
 export const DiscoverPage = () => {
     const { data: session } = useSession();

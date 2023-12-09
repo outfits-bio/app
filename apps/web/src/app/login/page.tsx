@@ -7,7 +7,7 @@ import { PostSkeleton } from '../../components/Skeletons/PostSkeleton';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
 import { getServerAuthSession } from '~/server/auth';
-import { api } from '~/utils/api.util';
+import { api } from '~/components/TRPCWrapper';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 
 const LoginPage = () => {

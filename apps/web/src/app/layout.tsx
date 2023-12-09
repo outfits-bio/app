@@ -1,15 +1,10 @@
 import '~/styles/globals.css';
 
-import { Analytics } from '@vercel/analytics/react';
-import type { AppProps } from 'next/app';
-import Head from 'next/head';
-import type { Session } from 'next-auth';
-import { SessionProvider } from 'next-auth/react';
 import { meta } from 'next-seo.config';
-import { Toaster } from 'react-hot-toast';
-import { TRPCReactProvider } from '~/components/TRPCWrapper';
+import Head from 'next/head';
 import { cookies } from "next/headers";
-import { NextThemeProvider } from '~/components/ThemeProvider';
+import { ProviderWrapper } from '~/components/ProviderWrapper';
+import { TRPCReactProvider } from '~/components/TRPCWrapper';
 
 export const metadata = {
   title: meta.title,
@@ -39,8 +34,7 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ Component, pageProps }: AppProps & { session: Session | null }) {
-  const { session, ...restPageProps } = pageProps;
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Head>
@@ -51,14 +45,10 @@ export default function RootLayout({ Component, pageProps }: AppProps & { sessio
         <link rel="apple-touch-icon" href="/icon.png"></link>
       </Head>
       <TRPCReactProvider cookies={cookies().toString()}>
-      <SessionProvider session={session}>
-        <NextThemeProvider>
-          <Toaster />
-          <Analytics />
-          <Component {...restPageProps} />
-        </NextThemeProvider>
-      </SessionProvider>
+        <ProviderWrapper>
+          {children}
+        </ProviderWrapper>
       </TRPCReactProvider>
     </>
   )
-};
+}

@@ -16,7 +16,7 @@ import { PostCropModal } from '../PostCropModal';
 import { Spinner } from '../Spinner';
 
 import { useFileUpload } from '~/hooks/file-upload.hook';
-import { api } from '~/utils/api.util';
+import { api } from '~/components/TRPCWrapper';
 import { formatImage } from '~/utils/image-src-format.util';
 
 

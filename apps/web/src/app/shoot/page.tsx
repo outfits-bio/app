@@ -4,7 +4,7 @@ import { Listbox, Transition } from '@headlessui/react';
 import axios from 'axios';
 import { PostType } from 'database';
 import { NextPage } from 'next';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import Cropper, { Area } from 'react-easy-crop';
@@ -13,7 +13,7 @@ import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
 import { getPostTypeName } from '~/components/PostSection/post-section.util';
 import { useFileUpload } from '~/hooks/file-upload.hook';
-import { api } from '~/utils/api.util';
+import { api } from '~/components/TRPCWrapper';
 import getCroppedImg from '~/utils/crop-image.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 

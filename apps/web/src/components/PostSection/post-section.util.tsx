@@ -7,7 +7,7 @@ import {
   PiBackpackBold, PiBaseballCapBold, PiCoatHangerBold, PiEyeglassesBold, PiHoodieBold, PiPantsBold, PiShirtFoldedBold, PiSneakerBold, PiTShirtBold
 } from 'react-icons/pi';
 import { AppRouter } from '~/server/api/root';
-import { api } from '~/utils/api.util';
+import { api } from '~/components/TRPCWrapper';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 

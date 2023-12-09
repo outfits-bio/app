@@ -4,7 +4,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { LinkType } from 'database';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import React, { useEffect, useRef, useState } from 'react';
@@ -22,7 +22,7 @@ import { useFileUpload } from '~/hooks/file-upload.hook';
 import {
   AddLinkInput, addLinkSchema, EditProfileInput, editProfileSchema
 } from '~/schemas/user.schema';
-import { api } from '~/utils/api.util';
+import { api } from '~/components/TRPCWrapper';
 import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar } from '~/utils/image-src-format.util';
 

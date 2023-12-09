@@ -7,7 +7,7 @@ import type { BaseModalProps } from './BaseModal';
 import { Button } from '../Button';
 
 import { CreateBugReportInput, createBugReportSchema } from '~/schemas/user.schema';
-import { api } from '~/utils/api.util';
+import { api } from '~/components/TRPCWrapper';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 export const BugReportModal = (props: BaseModalProps) => {

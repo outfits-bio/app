@@ -2,7 +2,7 @@
 
 import { PostType } from 'database';
 import { GetStaticProps, NextPage } from 'next';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { Layout } from '~/components/Layout';
@@ -10,7 +10,7 @@ import { PostSection } from '~/components/PostSection';
 import { ProfileCard } from '~/components/ProfileCard';
 import { ProfilePost, ProfilePostModal } from '~/components/ProfilePostModal';
 import { generateSSGHelper } from '~/server/utils/ssg.util';
-import { api } from '~/utils/api.util';
+import { api } from '~/components/TRPCWrapper';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 

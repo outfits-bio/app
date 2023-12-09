@@ -1,68 +1,64 @@
+import "server-only";
+
+import {
+  createTRPCProxyClient,
+  loggerLink,
+  TRPCClientError,
+} from "@trpc/client";
+import { callProcedure } from "@trpc/server";
+import { observable } from "@trpc/server/observable";
+import { type TRPCErrorResponse } from "@trpc/server/rpc";
+import { cookies } from "next/headers";
+import { cache } from "react";
+
+import { appRouter, type AppRouter } from "~/server/api/root";
+import { createTRPCContext, transformer } from "~/server/api/trpc";
+
 /**
- * This is the client-side entrypoint for your tRPC API. It is used to create the `api` object which
- * contains the Next.js App-wrapper, as well as your type-safe React Query hooks.
- *
- * We also create a few inference helpers for input and output types.
+ * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
+ * handling a tRPC call from a React Server Component.
  */
-import { httpBatchLink, loggerLink } from "@trpc/client";
-import { createTRPCNext } from "@trpc/next";
-import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
-import superjson from "superjson";
-
-import { type AppRouter } from "~/server/api/root";
-
-const getBaseUrl = () => {
-  if (typeof window !== "undefined") return ""; // browser should use relative url
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use vercel url
-  return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
-};
-
-/** A set of type-safe react-query hooks for your tRPC API. */
-export const api = createTRPCNext<AppRouter>({
-  config() {
-    return {
-      /**
-       * Transformer used for data de-serialization from the server.
-       *
-       * @see https://trpc.io/docs/data-transformers
-       */
-      transformer: superjson,
-
-      /**
-       * Links used to determine request flow from client to server.
-       *
-       * @see https://trpc.io/docs/links
-       */
-      links: [
-        loggerLink({
-          enabled: (opts) =>
-            process.env.NODE_ENV === "development" ||
-            (opts.direction === "down" && opts.result instanceof Error),
-        }),
-        httpBatchLink({
-          url: `${getBaseUrl()}/api/trpc`,
-        }),
-      ],
-    };
-  },
-  /**
-   * Whether tRPC should await queries when server rendering pages.
-   *
-   * @see https://trpc.io/docs/nextjs#ssr-boolean-default-false
-   */
-  ssr: false,
+const createContext = cache(() => {
+  return createTRPCContext({
+    headers: new Headers({
+      cookie: cookies().toString(),
+      "x-trpc-source": "rsc",
+    }),
+  });
 });
 
-/**
- * Inference helper for inputs.
- *
- * @example type HelloInput = RouterInputs['example']['hello']
- */
-export type RouterInputs = inferRouterInputs<AppRouter>;
-
-/**
- * Inference helper for outputs.
- *
- * @example type HelloOutput = RouterOutputs['example']['hello']
- */
-export type RouterOutputs = inferRouterOutputs<AppRouter>;
+export const api = createTRPCProxyClient<AppRouter>({
+  transformer,
+  links: [
+    loggerLink({
+      enabled: (op) =>
+        process.env.NODE_ENV === "development" ||
+        (op.direction === "down" && op.result instanceof Error),
+    }),
+    /**
+     * Custom RSC link that lets us invoke procedures without using http requests. Since Server
+     * Components always run on the server, we can just call the procedure as a function.
+     */
+    () =>
+      ({ op }) =>
+        observable((observer) => {
+          createContext()
+            .then((ctx) => {
+              return callProcedure({
+                procedures: appRouter._def.procedures,
+                path: op.path,
+                rawInput: op.input,
+                ctx,
+                type: op.type,
+              });
+            })
+            .then((data) => {
+              observer.next({ result: { data } });
+              observer.complete();
+            })
+            .catch((cause: TRPCErrorResponse) => {
+              observer.error(TRPCClientError.from(cause));
+            });
+        }),
+  ],
+});

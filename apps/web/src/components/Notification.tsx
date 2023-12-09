@@ -5,7 +5,7 @@ import type { FC } from 'react';
 import { PiSpinnerGap, PiX } from 'react-icons/pi';
 import { Avatar } from './Avatar';
 import { AppRouter } from '~/server/api/root';
-import { api } from '~/utils/api.util';
+import { api } from '~/components/TRPCWrapper';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 type RouterOutput = inferRouterOutputs<AppRouter>['notifications'];

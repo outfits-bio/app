@@ -23,7 +23,7 @@ import { EditProfileInput, editProfileSchema } from '~/schemas/user.schema';
 import { appRouter } from '~/server/api/root';
 import { getServerAuthSession } from '~/server/auth';
 import { prisma } from '~/server/db';
-import { api } from '~/utils/api.util';
+import { api } from '~/components/TRPCWrapper';
 import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
 

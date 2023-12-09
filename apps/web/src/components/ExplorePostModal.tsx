@@ -4,7 +4,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import localFont from 'next/font/local';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import React, { Dispatch, Fragment, SetStateAction, useState } from 'react';
 import { toast } from 'react-hot-toast';

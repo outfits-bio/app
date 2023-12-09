@@ -5,7 +5,7 @@ import { Fragment, useState } from "react";
 import { PiBellSimple } from "react-icons/pi";
 import { Button } from "../Button";
 import NotificationCard from "../Notification";
-import { api } from "~/utils/api.util";
+import { api } from '~/components/TRPCWrapper';
 
 interface NotificationsMenuProps {
     unreadCount?: number;

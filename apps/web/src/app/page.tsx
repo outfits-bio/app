@@ -2,8 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { SessionProvider, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import Marquee from 'react-fast-marquee';
 import { PiBackpackBold, PiBaseballCapBold, PiCoatHangerBold, PiDotsThreeBold, PiEyeglassesBold, PiHammer, PiHeartBold, PiHeartFill, PiLinkSimpleBold, PiPantsBold, PiSealCheck, PiShirtFoldedBold, PiShoppingBagOpenBold, PiSneakerBold, PiTShirtBold, PiWatchBold } from 'react-icons/pi';
@@ -14,9 +14,8 @@ import { Layout } from '~/components/Layout';
 
 import { Logo } from '~/components/Logo';
 import { PostSkeleton } from '~/components/Skeletons/PostSkeleton';
-import { api } from '~/utils/api.util';
+import { api } from '~/components/TRPCWrapper';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
-import { Session } from 'inspector';
 
 const Home = () => {
   const { status, data } = useSession();
@@ -34,8 +33,7 @@ const Home = () => {
     if (status === 'authenticated') {
       push(`/${data.user.username}`);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status]);
+  }, [status, push]);
 
   return (
     <Layout title='outfits.bio' showSlash={false}>

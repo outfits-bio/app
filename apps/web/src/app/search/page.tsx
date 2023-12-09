@@ -3,7 +3,7 @@
 import debounce from 'lodash.debounce';
 import { NextPage } from 'next';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import {
     PiCamera, PiHammer, PiHeart, PiMagnifyingGlass, PiSealCheck, PiSpinnerGap
@@ -11,7 +11,7 @@ import {
 import { Avatar } from '~/components/Avatar';
 import { Button } from '~/components/Button';
 import { Layout } from '~/components/Layout';
-import { api } from '~/utils/api.util';
+import { api } from '~/components/TRPCWrapper';
 
 
 export const SearchPage: NextPage = () => {
