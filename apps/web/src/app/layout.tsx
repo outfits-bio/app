@@ -6,7 +6,6 @@ import Head from 'next/head';
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { meta } from 'next-seo.config';
-import { ThemeProvider } from 'next-themes';
 import { Toaster } from 'react-hot-toast';
 import { TRPCReactProvider } from '~/components/TRPCWrapper';
 import { cookies } from "next/headers";
