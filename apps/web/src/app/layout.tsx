@@ -8,9 +8,9 @@ import { SessionProvider } from 'next-auth/react';
 import { meta } from 'next-seo.config';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from 'react-hot-toast';
-import { api } from '~/utils/api.util';
 import { TRPCReactProvider } from '~/components/TRPCWrapper';
 import { cookies } from "next/headers";
+import { NextThemeProvider } from '~/components/ThemeProvider';
 
 export const metadata = {
   title: meta.title,
@@ -53,11 +53,11 @@ export default function RootLayout({ Component, pageProps }: AppProps & { sessio
       </Head>
       <TRPCReactProvider cookies={cookies().toString()}>
       <SessionProvider session={session}>
-        <ThemeProvider enableSystem attribute="class" defaultTheme='light' themes={['light', 'dark', 'light-brown', 'light-hot-pink', 'light-orange', 'light-light-pink']}>
+        <NextThemeProvider>
           <Toaster />
           <Analytics />
           <Component {...restPageProps} />
-        </ThemeProvider>
+        </NextThemeProvider>
       </SessionProvider>
       </TRPCReactProvider>
     </>
