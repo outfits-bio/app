@@ -1,21 +1,22 @@
 "use client";
 
 import { PostType } from 'database';
-import { GetStaticProps, NextPage } from 'next';
-import { useRouter } from 'next/navigation';
+import { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Layout } from '~/components/Layout';
 import { PostSection } from '~/components/PostSection';
 import { ProfileCard } from '~/components/ProfileCard';
 import { ProfilePost, ProfilePostModal } from '~/components/ProfilePostModal';
-import { generateSSGHelper } from '~/server/utils/ssg.util';
 import { api } from '~/components/TRPCWrapper';
 import { handleErrors } from '~/utils/handle-errors.util';
 
 
-export const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
-    const { push, query } = useRouter();
+export const ProfilePage = () => {
+    const { push } = useRouter();
+    const username = useParams().username as string;
+    const params = useSearchParams();
     const { data, status } = useSession();
 
     const [postModalOpen, setPostModalOpen] = useState<boolean>(false);
@@ -28,8 +29,8 @@ export const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
     }, { retry: 0, enabled: !!profileData?.id, refetchOnMount: false, refetchOnWindowFocus: false, onError: (e) => handleErrors({ e, message: "Failed to get posts!", fn: () => push('/') }) });
 
     useEffect(() => {
-        if (query.postId) {
-            const post = postsData?.find(p => p.id === query.postId);
+        if (params.has('postId')) {
+            const post = postsData?.find(p => p.id === params.get('postId'));
 
             if (post) {
                 setPost(post);
@@ -39,7 +40,7 @@ export const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
             setPost(null);
             setPostModalOpen(false);
         }
-    }, [query.postId, postsData]);
+    }, [params, postsData]);
 
     const isCurrentUser = data?.user.username === username ?? false;
 
@@ -66,37 +67,5 @@ export const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
         </Layout>
     );
 };
-
-export const getStaticProps: GetStaticProps = async (context) => {
-    const ssg = generateSSGHelper();
-
-    const username = context.params?.username?.toString();
-
-    if (!username) return {
-        notFound: true,
-        props: {}
-    }
-
-    try {
-        await ssg.user.getProfile.prefetch({ username });
-
-        return {
-            props: {
-                username,
-                trpcState: ssg.dehydrate(),
-            },
-        }
-    } catch (error) {
-        return {
-            props: {
-                username,
-            },
-        }
-    }
-}
-
-export const getStaticPaths = () => {
-    return { paths: [], fallback: "blocking" };
-}
 
 export default ProfilePage;

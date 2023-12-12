@@ -1,28 +1,14 @@
-import { GetServerSideProps } from 'next';
+import { redirect } from 'next/navigation';
 import { getServerAuthSession } from '~/server/auth';
 
-export const Profile = () => {
-    return null;
-}
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const session = await getServerAuthSession(ctx);
+export default async function Profile() {
+    const session = await getServerAuthSession();
 
     if (!session?.user) {
-        return {
-            redirect: {
-                destination: '/login',
-                permanent: false,
-            }
-        };
+        redirect('/login');
+    } else {
+        redirect(`/${session.user.username}`);
     }
 
-    return {
-        redirect: {
-            destination: `/${session.user.username}`,
-            permanent: false,
-        }
-    };
+    return null;
 }
-
-export default Profile;

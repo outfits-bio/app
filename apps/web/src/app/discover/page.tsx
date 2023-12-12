@@ -2,7 +2,7 @@
 
 import { PostType } from "database";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PiBackpackBold, PiBaseballCapBold, PiBookmarkSimpleBold, PiClockBold, PiCoatHangerBold, PiEyeglassesBold, PiFireBold, PiFolderNotchBold, PiPantsBold, PiShirtFoldedBold, PiSneakerBold, PiTShirtBold, PiWatchBold } from "react-icons/pi";
@@ -10,7 +10,7 @@ import { Button } from "~/components/Button";
 import { ExplorePost, ExplorePostModal } from "~/components/ExplorePostModal";
 import { Layout } from "~/components/Layout";
 import { Post } from "~/components/Post";
-import { api } from '~/components/TRPCWrapper';;
+import { api } from '~/components/TRPCWrapper';
 
 export const DiscoverPage = () => {
     const { data: session } = useSession();
@@ -21,7 +21,7 @@ export const DiscoverPage = () => {
     const [postFromUrl, setPostFromUrl] = useState<ExplorePost | null>(null);
     const [postModalOpen, setPostModalOpen] = useState<boolean>(false);
 
-    const { query } = useRouter();
+    const params = useSearchParams();
 
     const { data,
         isFetching,
@@ -46,8 +46,8 @@ export const DiscoverPage = () => {
     const posts = data?.pages.flatMap((page) => page.posts);
 
     useEffect(() => {
-        if (query.postId) {
-            const post = posts?.find(p => p.id === query.postId) ?? data?.pages.flatMap((page) => page.posts).find(p => p.id === query.postId);
+        if (params.has('postId')) {
+            const post = posts?.find(p => p.id === params.get('postId')) ?? data?.pages.flatMap((page) => page.posts).find(p => p.id === params.get('postId'));
 
             if (post) {
                 setPostFromUrl(post);
@@ -58,7 +58,7 @@ export const DiscoverPage = () => {
             setPostModalOpen(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [query.postId, posts]);
+    }, [params, posts]);
 
     const observer = useRef<IntersectionObserver>();
 

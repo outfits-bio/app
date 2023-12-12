@@ -4,7 +4,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Inter, Urbanist } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import React, { Dispatch, Fragment, SetStateAction, useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -17,9 +17,13 @@ import {
 } from './PostSection/post-section.util';
 import { ReportModal } from './ReportModal';
 
-import { api, RouterOutputs } from '~/utils/api.util';
 import { handleErrors } from '~/utils/handle-errors.util';
 import { formatAvatar, formatImage } from '~/utils/image-src-format.util';
+import { api } from './TRPCWrapper';
+import { inferRouterOutputs } from '@trpc/server';
+import { AppRouter } from '~/server/api/root';
+
+type RouterOutputs = inferRouterOutputs<AppRouter>;
 
 export type ProfilePost = RouterOutputs['post']['getPostsAllTypes'][0];
 
@@ -48,7 +52,9 @@ export const ProfilePostModal = ({ post, user }: ProfilePostModalProps) => {
     const [likeAnimation, setLikeAnimation] = useState(false);
 
     const { data } = useSession();
-    const { asPath, push, query } = useRouter();
+    const { push } = useRouter();
+    const params = useSearchParams();
+    const asPath = usePathname();
     const ctx = api.useContext();
 
     const { mutate } = api.admin.deletePost.useMutation({
@@ -124,13 +130,13 @@ export const ProfilePostModal = ({ post, user }: ProfilePostModalProps) => {
                 <div className="fixed inset-0 bg-black bg-opacity-25" />
             </Transition.Child>
 
-            {reportModalOpen && <ReportModal isOpen={reportModalOpen} setIsOpen={setReportModalOpen} type='POST' id={query.postId?.toString()} />}
+            {reportModalOpen && <ReportModal isOpen={reportModalOpen} setIsOpen={setReportModalOpen} type='POST' id={params.get('postId')?.toString()} />}
             {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} admin post deleteFn={() => {
-                mutate({ id: query.postId?.toString() ?? '' });
+                mutate({ id: params.get('postId')?.toString() ?? '' });
                 push('/discover');
             }} />}
             {confirmDeleteUserModalOpen && <DeleteModal isOpen={confirmDeleteUserModalOpen} setIsOpen={setConfirmDeleteUserModalOpen} post deleteFn={() => {
-                deletePost({ id: query.postId?.toString() ?? '' });
+                deletePost({ id: params.get('postId')?.toString() ?? '' });
             }} />}
 
             <div className="fixed inset-0 overflow-y-auto">
@@ -146,7 +152,7 @@ export const ProfilePostModal = ({ post, user }: ProfilePostModalProps) => {
                         leaveTo="opacity-0 scale-95"
                     >
                         <Dialog.Panel className={`relative overflow-hidden rounded-xl bg-white text-left align-middle shadow-xl transition-all w-[400px] h-[654px]`}>
-                            <Image src={formatImage(post.image, user?.id)} alt={post.type ?? ''} fill className='rounded-xl border border object-cover' />
+                            <Image src={formatImage(post.image, user?.id)} alt={post.type ?? ''} fill className='rounded-xl border object-cover' />
                             <button className='absolute left-4 top-4 text-white' onClick={closeModal}>
                                 <PiX className='w-5 h-4' />
                             </button>
