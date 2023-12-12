@@ -5,11 +5,11 @@ import {
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { TRPCError } from "@trpc/server";
-import { env } from "~/env.mjs";
+import { env } from "@/env.js";
 
 export const generatePresignedUrl = async (
   userId: string,
-  id?: string
+  id?: string,
 ): Promise<{
   url: string;
   id: string;
@@ -33,7 +33,7 @@ export const generatePresignedUrl = async (
       }),
       {
         expiresIn: 30,
-      }
+      },
     );
   } catch (error) {
     console.error(error);
@@ -52,7 +52,7 @@ export const generatePresignedUrl = async (
 
 export const deleteImage = async (
   userId: string,
-  id: string
+  id: string,
 ): Promise<void> => {
   const s3 = new S3Client({
     region: env.AWS_REGION,
@@ -63,6 +63,6 @@ export const deleteImage = async (
     new DeleteObjectCommand({
       Bucket: "outfits",
       Key: `${userId}/${id}.png`,
-    })
+    }),
   );
 };

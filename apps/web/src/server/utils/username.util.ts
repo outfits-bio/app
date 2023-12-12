@@ -1,5 +1,5 @@
 import Filter from "bad-words";
-import { usernameRegex } from "~/schemas/user.schema";
+import { usernameRegex } from "@/schemas/user.schema";
 
 export const validateUsername = (username: string) => {
   const filter = new Filter();
@@ -32,7 +32,7 @@ export const validateUsername = (username: string) => {
     "patreon",
     "kofi",
     // Authentic People
-    "jecta"
+    "jecta",
     // General
   );
 

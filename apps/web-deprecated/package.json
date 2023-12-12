@@ -2,13 +2,7 @@
   "name": "web-deprecated",
   "version": "1.0.0",
   "private": true,
-  "scripts": {
-    "build": "next build",
-    "dev": "next dev",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix",
-    "start": "next start"
-  },
+  "scripts": {},
   "dependencies": {
     "@aws-sdk/client-s3": "^3.470.0",
     "@aws-sdk/s3-request-presigner": "^3.470.0",
