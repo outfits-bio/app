@@ -1,4 +1,4 @@
-import { Area } from "react-easy-crop";
+import type { Area } from "react-easy-crop";
 
 export const createImage = (url: string): Promise<HTMLImageElement> =>
   new Promise((resolve, reject) => {
@@ -34,7 +34,7 @@ export default async function getCroppedImg(
   imageSrc: string,
   pixelCrop: Area | null,
   rotation = 0,
-  flip = { horizontal: false, vertical: false }
+  flip = { horizontal: false, vertical: false },
 ): Promise<{ fileUrl: string; file: Blob } | null> {
   const image = await createImage(imageSrc);
   const canvas = document.createElement("canvas");
@@ -54,7 +54,7 @@ export default async function getCroppedImg(
   const { width: bBoxWidth, height: bBoxHeight } = rotateSize(
     image.width,
     image.height,
-    rotation
+    rotation,
   );
 
   // set canvas size to match the bounding box
@@ -76,7 +76,7 @@ export default async function getCroppedImg(
     pixelCrop.x,
     pixelCrop.y,
     pixelCrop.width,
-    pixelCrop.height
+    pixelCrop.height,
   );
 
   // set canvas width to final desired crop size - this will clear existing context
