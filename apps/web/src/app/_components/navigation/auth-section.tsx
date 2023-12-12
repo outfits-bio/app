@@ -6,6 +6,7 @@ import { PiBellSimple, PiBellSimpleFill, PiCompass, PiDiscordLogo, PiPlus } from
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { api } from "@/trpc/react";
+import { NavbarMenu } from "../menus/navbar-menu";
 
 export function AuthSection() {
     const { data: session } = useSession();
@@ -26,6 +27,8 @@ export function AuthSection() {
                 {pathname === '/discover' && <Link href='/discover'>
                     <Button variant={'outline-ghost'} shape={'square'} iconLeft={<PiCompass />} />
                 </Link>}
+
+                <NavbarMenu />
             </div>
 
             <Link href='/notifications' className='md:hidden relative'>

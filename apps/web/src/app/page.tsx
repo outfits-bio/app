@@ -1,9 +1,8 @@
-import Link from "next/link";
-
 import { getServerAuthSession } from "@/server/auth";
 import { api } from "@/trpc/server";
 import { formatAvatar, formatImage } from "@/utils/image-src-format.util";
 import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { PiBackpackBold, PiBaseballCapBold, PiCoatHangerBold, PiEyeglassesBold, PiHammer, PiLinkSimpleBold, PiPantsBold, PiSealCheck, PiShirtFoldedBold, PiShoppingBagOpenBold, PiSneakerBold, PiTShirtBold, PiWatchBold } from "react-icons/pi";
 import landing from "../../public/landing.png";
