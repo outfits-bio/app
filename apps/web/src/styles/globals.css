@@ -1,4 +1,5 @@
 @tailwind base;
+@tailwind components;
 
 :root {
   --body: #f9f9f9;
@@ -146,5 +147,4 @@
   }
 }
 
-@tailwind components;
 @tailwind utilities;

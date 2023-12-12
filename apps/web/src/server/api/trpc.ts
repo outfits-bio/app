@@ -11,8 +11,8 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
-import { getServerAuthSession } from "~/server/auth";
-import { db } from "~/server/db";
+import { getServerAuthSession } from "@/server/auth";
+import { prisma } from "@/server/db";
 
 /**
  * 1. CONTEXT
@@ -30,7 +30,7 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
   const session = await getServerAuthSession();
 
   return {
-    prisma: db,
+    prisma,
     session,
     ...opts,
   };
@@ -70,8 +70,6 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
  * @see https://trpc.io/docs/router
  */
 export const createTRPCRouter = t.router;
-
-export const mergeRouters = t.mergeRouters;
 
 /**
  * Public (unauthenticated) procedure

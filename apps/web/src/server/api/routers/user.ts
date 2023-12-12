@@ -5,11 +5,11 @@ import {
   editProfileSchema,
   likeProfileSchema,
   removeLinkSchema,
-} from "~/schemas/user.schema";
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+} from "@/schemas/user.schema";
+import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
-import { deleteImage, generatePresignedUrl } from "~/server/utils/image.util";
-import { filterBadWords, validateUsername } from "~/server/utils/username.util";
+import { deleteImage, generatePresignedUrl } from "@/server/utils/image.util";
+import { filterBadWords, validateUsername } from "@/server/utils/username.util";
 
 export const userRouter = createTRPCRouter({
   getMe: protectedProcedure.query(async ({ ctx }) => {

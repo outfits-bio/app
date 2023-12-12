@@ -5,9 +5,9 @@ import {
   deleteUserLinkSchema,
   deleteUserSchema,
   editUserSchema,
-} from "~/schemas/admin.schema";
+} from "@/schemas/admin.schema";
 
-import { deleteImage } from "~/server/utils/image.util";
+import { deleteImage } from "@/server/utils/image.util";
 
 export const adminRouter = createTRPCRouter({
   deleteUser: protectedProcedure

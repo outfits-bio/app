@@ -1,9 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { DefaultSession, getServerSession, NextAuthOptions } from "next-auth";
+import {
+  getServerSession,
+  type DefaultSession,
+  type NextAuthOptions,
+} from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import GoogleProvider from "next-auth/providers/google";
-import { env } from "~/env.mjs";
-import { db } from "~/server/db";
+
+import { env } from "@/env";
+import { prisma } from "@/server/db";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -57,7 +66,7 @@ export const authOptions: NextAuthOptions = {
     newUser: "/onboarding",
     error: "/auth/error",
   },
-  adapter: PrismaAdapter(db),
+  adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,

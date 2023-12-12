@@ -6,8 +6,8 @@ import {
   getProfileSchema,
   likeProfileSchema,
   searchProfileSchema,
-  SpotifyStatus,
-} from "~/schemas/user.schema";
+  type SpotifyStatus,
+} from "@/schemas/user.schema";
 
 export const profileRouter = createTRPCRouter({
   profileExists: publicProcedure
@@ -72,7 +72,7 @@ export const profileRouter = createTRPCRouter({
       return {
         ...user,
         authUserHasLiked: user.likedBy.some(
-          (user) => user.id === ctx.session?.user.id
+          (user) => user.id === ctx.session?.user.id,
         ),
       };
     }),
@@ -230,15 +230,16 @@ export const profileRouter = createTRPCRouter({
       if (!user) return {};
 
       const discordId = user.accounts.find(
-        (account) => account.provider === "discord"
+        (account) => account.provider === "discord",
       )?.providerAccountId;
 
       try {
-        const { data } = await axios.get(
-          `https://api.lanyard.rest/v1/users/${discordId}`
+        const res = await axios.get(
+          `https://api.lanyard.rest/v1/users/${discordId}`,
         );
 
-        const { spotify }: { spotify: SpotifyStatus | null } = data.data;
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+        const { spotify }: { spotify: SpotifyStatus | null } = res.data.data;
 
         if (!spotify) return {};
 

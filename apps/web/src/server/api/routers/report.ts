@@ -1,13 +1,13 @@
 import { TRPCError } from "@trpc/server";
 import axios from "axios";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
-import { env } from "~/env.mjs";
+import { env } from "@/env.js";
 import {
   createBugReportSchema,
   createReportSchema,
   resolveReportSchema,
-} from "~/schemas/user.schema";
-import { formatImage } from "~/utils/image-src-format.util";
+} from "@/schemas/user.schema";
+import { formatImage } from "@/utils/image-src-format.util";
 
 export const reportRouter = createTRPCRouter({
   report: protectedProcedure
@@ -86,7 +86,7 @@ export const reportRouter = createTRPCRouter({
               description: `**Type:** ${type}\n**Reason:** ${reason}\n**Offender:** [${
                 report.user.username
               }](https://outfits.bio/${encodeURI(
-                report.user.username ?? ""
+                report.user.username ?? "",
               )}?postId=${id})`,
               color: 0xff0000,
               image: {

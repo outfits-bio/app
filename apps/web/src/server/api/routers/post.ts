@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { NotificationType, PostType, Prisma } from "database";
+import { NotificationType, PostType, type Prisma } from "database";
 import { z } from "zod";
 import {
   addPostToWishlistSchema,
@@ -7,15 +7,15 @@ import {
   removePostFromWishlistSchema,
   removeReactionSchema,
   toggleLikePostSchema,
-} from "~/schemas/post.schema";
-import { getPostsSchema, paginatedSchema } from "~/schemas/user.schema";
+} from "@/schemas/post.schema";
+import { getPostsSchema, paginatedSchema } from "@/schemas/user.schema";
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
-} from "~/server/api/trpc";
+} from "@/server/api/trpc";
 
-import { deleteImage, generatePresignedUrl } from "~/server/utils/image.util";
+import { deleteImage, generatePresignedUrl } from "@/server/utils/image.util";
 
 export const postTypeSchema = z.object({
   type: z.nativeEnum(PostType),
