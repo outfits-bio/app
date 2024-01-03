@@ -27,3 +27,8 @@ export const removePostFromWishlistSchema = z.object({
 export type RemovePostFromWishlistInput = z.infer<
   typeof removePostFromWishlistSchema
 >;
+
+export const getPostSchema = z.object({
+  id: z.string().cuid(),
+});
+export type GetPostInput = z.infer<typeof getPostSchema>;

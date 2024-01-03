@@ -4,6 +4,7 @@ import { z } from "zod";
 import {
   addPostToWishlistSchema,
   addReactionSchema,
+  getPostSchema,
   removePostFromWishlistSchema,
   removeReactionSchema,
   toggleLikePostSchema,
@@ -463,6 +464,78 @@ export const postRouter = createTRPCRouter({
           };
         }),
         nextCursor,
+      };
+    }),
+
+  getPost: publicProcedure
+    .input(getPostSchema)
+    .query(async ({ ctx, input }) => {
+      const { id } = input;
+
+      const post = await ctx.prisma.post.findUnique({
+        where: {
+          id,
+        },
+        select: {
+          id: true,
+          image: true,
+          type: true,
+          featured: true,
+          likeCount: true,
+          user: {
+            select: {
+              image: true,
+              verified: true,
+              username: true,
+              id: true,
+              admin: true,
+              tagline: true,
+            },
+          },
+          _count: {
+            select: {
+              reactions: true,
+              likes: true,
+              wishlists: true,
+            },
+          },
+          likes: {
+            where: {
+              id: ctx.session?.user.id,
+            },
+            select: {
+              id: true,
+            },
+          },
+          wishlists: {
+            where: {
+              id: ctx.session?.user.id,
+            },
+            select: {
+              id: true,
+            },
+          },
+          reactions: {
+            where: {
+              userId: ctx.session?.user.id,
+            },
+            select: {
+              id: true,
+              content: true,
+            },
+          },
+        },
+      });
+
+      if (!post)
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Invalid post!",
+        });
+
+      return {
+        ...post,
+        authUserHasLiked: post.likes.length > 0,
       };
     }),
 
