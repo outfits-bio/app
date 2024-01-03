@@ -123,6 +123,9 @@ importers:
       '@next/eslint-plugin-next':
         specifier: ^14.0.3
         version: 14.0.4
+      '@prisma/nextjs-monorepo-workaround-plugin':
+        specifier: ^5.7.1
+        version: 5.7.1
       '@types/bad-words':
         specifier: ^3.0.3
         version: 3.0.3
@@ -2925,6 +2928,10 @@ packages:
   /@prisma/engines@5.5.2:
     resolution: {integrity: sha512-Be5hoNF8k+lkB3uEMiCHbhbfF6aj1GnrTBnn5iYFT7GEr3TsOEp1soviEcBR0tYCgHbxjcIxJMhdbvxALJhAqg==}
     requiresBuild: true
+
+  /@prisma/nextjs-monorepo-workaround-plugin@5.7.1:
+    resolution: {integrity: sha512-imzkXQ/iNytpSHAEfXzI4eJcuwuJoBPPak4zuedyOYv6lQoOJ5/nFuW2V17GcumWaxb2qyWrr2NyX9iJvqgL5w==}
+    dev: true
 
   /@resvg/resvg-wasm@2.6.0:
     resolution: {integrity: sha512-iDkBM6Ivex8nULtBu8cX670/lfsGxq8U1cuqE+qS9xFpPQP1enPdVm/33Kq3+B+bAldA+AHNZnCgpmlHo/fZrQ==}
