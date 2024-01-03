@@ -102,7 +102,7 @@ export default async function Home() {
             <div className='shrink-0 grow overflow-hidden flex-col lg:flex'>
               <div className='flex gap-8 mb-0'>
                 {posts.map((post, i) => (
-                  <Link style={{ marginTop: i === 0 ? '16px' : '64px' }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative`}>
+                  <Link style={{ marginTop: i === 0 ? '16px' : '64px' }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-stroke rounded-md relative`}>
                     <Image
                       // 176px is the same as w-44, the width of the container
                       sizes="176px"
@@ -191,7 +191,7 @@ export default async function Home() {
 
           <PersonalizationSection />
 
-          <div className='border border-stroke rounded-xl w-full py-12 flex flex-col px-4 '>
+          {/* <div className='border border-stroke rounded-xl w-full py-12 flex flex-col px-4 '>
             <h2 className='font-bold text-3xl md:text-4xl font-clash mb-4'>Verified Program</h2>
             <p className='mb-4'>Our verified plan is available for everyone for a small fee but will be given to any relatively known creator on other social media platforms setting up their simple virtual wardrobe often these people are recruited by outfits.</p>
             <div className='flex'>
@@ -199,7 +199,7 @@ export default async function Home() {
                 <Button variant={'outline-ghost'}>Sign Up</Button>
               </Link>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -215,14 +215,12 @@ export default async function Home() {
             <div className='flex flex-col gap-1 text-secondary-text'>
               <h3 className='font-bold text-gray-500'>Explore</h3>
               <Link href='/discover' className='text-sm'>Discover</Link>
-              <Link href='/discover' className='text-sm'>Blog</Link>
             </div>
 
             <div className='flex flex-col gap-1 text-secondary-text'>
               <h3 className='font-bold text-gray-500'>Socials</h3>
               <Link href='https://twitter.com/linkyouroutfits' className='text-sm'>X (formerly Twitter)</Link>
               <Link href='https://discord.gg/f4KEs5TVz2' className='text-sm'>Discord</Link>
-              <Link href='https://www.producthunt.com/posts/outfits-bio' className='text-sm'>Product Hunt</Link>
             </div>
 
             <div className='flex flex-col gap-1 text-secondary-text'>

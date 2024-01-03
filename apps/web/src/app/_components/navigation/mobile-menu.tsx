@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { Fragment } from 'react';
 
-import { PiCompass, PiDiscordLogo, PiDotsThree, PiX } from 'react-icons/pi';
+import { PiCompass, PiDotsThree, PiX } from 'react-icons/pi';
 
 export const MobileMenu = () => {
     const { data: session } = useSession();
@@ -40,7 +40,7 @@ export const MobileMenu = () => {
                             <Menu.Item>
                                 {({ active }) => (
                                     <Link href={'/discover'}
-                                        className={`${active ? 'bg-gray-100 dark:bg-opacity-20' : ''
+                                        className={`${active ? 'bg-gray-100 dark:bg-opacity-20 rounded-lg transform transition duration-300 ease-in-out' : ''
                                             } group flex w-full items-center justify-between px-4 py-2 font-clash font-semibold`}
                                     >
                                         <h3>Discover</h3>
@@ -52,15 +52,14 @@ export const MobileMenu = () => {
                             <Menu.Item>
                                 {({ active }) => (
                                     <Link href={'https://discord.gg/f4KEs5TVz2'}
-                                        className={`${active ? 'bg-gray-100 dark:bg-opacity-20' : ''
+                                        className={`${active ? 'bg-gray-100 dark:bg-opacity-20 rounded-lg transform transition duration-300 ease-in-out' : ''
                                             } group flex w-full items-center justify-between px-4 py-2 font-clash font-semibold`}
                                     >
-                                        <h3>Discord</h3>
-
-                                        <PiDiscordLogo className='w-6 h-6' />
+                                        <h3>Create your profile or Login</h3>
                                     </Link>
                                 )}
                             </Menu.Item>
+                            
 
                             <div className='flex w-full items-center justify-center gap-4 font-clash font-semibold opacity-50'>
                                 <Link href={'/docs/terms-of-service'} className='px-4 py-2'>
@@ -68,6 +67,9 @@ export const MobileMenu = () => {
                                 </Link>
                                 <Link href={'/docs/privacy-policy'} className='px-4 py-2'>
                                     Privacy
+                                </Link>
+                                <Link href={'/docs/brand-guide'} className='px-4 py-2'>
+                                    Brand Guide
                                 </Link>
                             </div>
                         </div>

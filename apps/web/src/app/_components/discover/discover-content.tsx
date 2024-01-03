@@ -7,7 +7,7 @@ import { Button } from "../ui/Button";
 import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 import { CategoryButton } from "./category-button";
-import { PiFolderNotchBold, PiBookmarkSimpleBold, PiClockBold, PiFireBold } from "react-icons/pi";
+import { PiBookmarkSimpleBold, PiClockBold, PiFireBold } from "react-icons/pi";
 import { Post } from "./post/post";
 import { DiscoverPostModal } from "../modals/discover-post-modal";
 
@@ -81,9 +81,6 @@ export function DiscoverContent() {
             </div>
 
             <div>
-                <Button variant={'ghost'} iconLeft={<PiFolderNotchBold />} className="justify-start">
-                    Blog
-                </Button>
                 <Link href={'/bookmarks'}>
                     <Button variant={'ghost'} iconLeft={<PiBookmarkSimpleBold />} className="justify-start">
                         Bookmarks

@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { Button } from "../ui/Button";
-import { PiBellSimple, PiBellSimpleFill, PiCompass, PiDiscordLogo, PiPlus } from "react-icons/pi";
+import { PiBellSimple, PiBellSimpleFill, PiCompass, PiPlus } from "react-icons/pi";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { api } from "@/trpc/react";
@@ -42,12 +42,8 @@ export function AuthSection() {
 
     return <div className='items-center gap-4 hidden md:flex'>
         {pathname !== '/discover' && <Link href='/discover'>
-            <Button variant='outline-ghost'>Discover</Button>
+            <Button variant='outline-ghost' iconLeft={<PiCompass />}>Discover</Button>
         </Link>}
-
-        <Link href='https://discord.gg/f4KEs5TVz2'>
-            <Button variant='outline-ghost' iconLeft={<PiDiscordLogo />}></Button>
-        </Link>
 
         <Link href='/login'>
             <Button variant='outline'>Login</Button>
