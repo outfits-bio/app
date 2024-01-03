@@ -98,6 +98,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      </head>
       <body className={`font-satoshi ${clash.variable} ${satoshi.variable} flex flex-col min-h-screen antialiased transition-colors duration-300`}>
         <SessionProvider session={session}>
           <TRPCReactProvider cookies={cookies().toString()}>
