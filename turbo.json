@@ -7,12 +7,12 @@
 		},
 		"lint": {},
 		"dev": {
-			"dependsOn": ["^db:generate"],
-			"cache": false
+			"cache": false,
+			"persistent": true
 		},
 		"build": {
-			"dependsOn": ["^db:generate"],
-			"outputs": ["your-outputs-here"]
+			"dependsOn": ["^build", "^db:generate"],
+			"outputs": [".next/**", "!.next/cache/**"]
 		},
 		"db:generate": {
 			"cache": false
