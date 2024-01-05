@@ -51,7 +51,7 @@ export function Post({ post }: PostProps) {
 
     const truncatedTagline = post.user.tagline && (post.user.tagline.length > 20 ? `${post.user.tagline.slice(0, 20)}...` : post.user.tagline);
 
-    return <div className="snap-start border-2 border-stroke rounded-lg 2xs-h:w-[250px] xs-h:w-[300px] sm-h:w-[320px] w-[350px] max-h-full py-4 flex flex-col items-center gap-2 md:gap-4 md:mt-3">
+    return <div className="snap-start 2xs-h:w-[250px] xs-h:w-[300px] sm-h:w-[320px] w-[350px] max-h-full py-4 flex flex-col items-center gap-2 md:gap-4 md:mt-3">
         <Link href={`/${post.user.username}`} className="flex gap-2 items-center w-full px-4 font-clash">
             <Avatar
                 image={post.user.image}
