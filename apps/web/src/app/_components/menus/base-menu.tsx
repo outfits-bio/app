@@ -15,7 +15,7 @@ export interface BaseMenuProps
 }
 
 export const BaseMenu = forwardRef<HTMLDivElement, BaseMenuProps>(({ className, children, button, ...props }, ref) => {
-    return <Menu as="div" className="relative inline-block text-left z-50" {...props} ref={ref}>
+    return <Menu as="div" className="relative inline-block text-left z-10" {...props} ref={ref}>
         <div>
             <Menu.Button>
                 {button}
@@ -30,7 +30,7 @@ export const BaseMenu = forwardRef<HTMLDivElement, BaseMenuProps>(({ className, 
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
         >
-            <Menu.Items className={cn(variants({ className }))}>
+            <Menu.Items static className={cn(variants({ className }))}>
                 {children}
             </Menu.Items>
         </Transition>

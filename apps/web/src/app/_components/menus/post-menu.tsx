@@ -11,6 +11,7 @@ import toast from 'react-hot-toast';
 import { PiDotsThree } from 'react-icons/pi';
 import { Button } from '../ui/Button';
 import { BaseMenu } from './base-menu';
+import { ReportModal } from '../modals/report-post-modal';
 
 interface PostMenuProps {
     userIsProfileOwner: boolean;
@@ -86,9 +87,7 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
 
         <div className="space-y-1">
             {user && <Menu.Item>
-                <Button variant={'ghost'} onClick={open}>
-                    <p>Report</p>
-                </Button>
+                <ReportModal type={'POST'} id={postId} />
             </Menu.Item>}
             {(userIsProfileOwner && !user?.admin) && <Menu.Item>
                 <Button variant={'ghost'} onClick={handleDeleteUserPost}>

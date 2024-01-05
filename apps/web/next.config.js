@@ -22,8 +22,8 @@ const config = {
       "upload.wikimedia.org",
     ],
   },
-  webpack: (config, { isServer }) => {
-    if (isServer) {
+  webpack: (config, { isServer, dev }) => {
+    if (isServer && !dev) {
       config.plugins = [...config.plugins, new PrismaPlugin()];
     }
 
