@@ -29,7 +29,7 @@ export const NavbarMenu = () => {
         <div className="px-6 pb-2 space-y-1 font-clash font-bold h-12 flex items-center gap-2">
             <p className='peer cursor-pointer hover:underline' onClick={handleShare}>{user.username}</p>
 
-            <div className='h-full peer-hover:flex items-center pb-1 hidden'>
+            <div className='h-full peer-hover:flex items-center pb-5 hidden'>
                 <PiCopySimple className='w-4 h-4 text-secondary-text' />
             </div>
         </div>
@@ -50,15 +50,6 @@ export const NavbarMenu = () => {
                         variant='ghost'
                     >
                         <p className='font-semibold'>Settings</p>
-                    </Button>
-                </Link>
-            </Menu.Item>
-            <Menu.Item>
-                <Link href={'https://discord.gg/f4KEs5TVz2'}>
-                    <Button
-                        variant='ghost'
-                    >
-                        <p className='font-semibold'>Discord</p>
                     </Button>
                 </Link>
             </Menu.Item>

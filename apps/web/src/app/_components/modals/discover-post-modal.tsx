@@ -54,7 +54,7 @@ export const DiscoverPostModal = ({ post }: DiscoverPostModalProps) => {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
             >
-                <div className="fixed inset-0 bg-black bg-opacity-25" />
+                <div className="fixed inset-0 bg-black bg-opacity-40" />
             </Transition.Child>
 
             <div className="fixed inset-0 overflow-y-auto">
@@ -71,11 +71,11 @@ export const DiscoverPostModal = ({ post }: DiscoverPostModalProps) => {
                     >
                         <Dialog.Panel className={`relative overflow-hidden rounded-xl bg-white text-left align-middle shadow-xl transition-all w-[400px] h-[654px]`}>
                             <Image src={formatImage(post.image, post.user.id)} alt={post.type ?? ''} fill className='rounded-xl border border-stroke object-cover' />
-                            <button className='absolute left-4 top-4 text-white' onClick={close}>
+                            <button className='absolute left-4 top-4 text-white focus:outline-none' onClick={close}>
                                 <PiX className='w-5 h-4' />
                             </button>
 
-                            <div className='flex flex-col justify-end items-center p-4 absolute bottom-0 bg-gradient-to-b from-transparent to-black w-full h-1/4 bg-fixed'>
+                            <div className='flex flex-col justify-end items-center p-4 absolute bottom-0 bg-gradient-to-b from-transparent to-black/50 w-full h-1/4 bg-fixed'>
                                 <div className='text-white flex w-full gap-2 mb-2 pl-0.5'>
                                     {/* {getPostTypeIconSmall(post.type)} */}
                                     <h1 className='font-clash'>{getPostTypeName(post.type)}</h1>

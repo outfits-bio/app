@@ -14,13 +14,13 @@ export function NavLogo() {
     const slash = showSlash(pathname);
 
     if (slash) {
-        return <Link href={session ? '/discover' : '/'} className='flex items-center gap-2'>
+        return <Link href={session ? '/discover' : '/'} className='flex items-center gap-2 active:scale-[98%]'>
             <Logo size={'lg'} />
             <h1 className='text-2xl font-black font-clash flex gap-4 items-center'>{title.toLowerCase()}</h1>
         </Link>
     }
 
-    return <Link href={session ? '/discover' : '/'} className='flex items-center gap-2'>
+    return <Link href={session ? '/discover' : '/'} className='flex items-center gap-2 active:scale-[98%]'>
         <Logo size={'lg'} />
         <h1 className='text-2xl font-black font-clash'>outfits.bio</h1>
     </Link>

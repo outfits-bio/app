@@ -21,10 +21,10 @@ export function AuthSection() {
         return <>
             <div className="hidden md:flex items-center justify-center gap-4">
                 <div>
-                    <Button variant={'outline-ghost'} iconLeft={<PiPlus />}>Create</Button>
+                    <Button variant={'outline-ghost'} iconLeft={<PiPlus />}>Post</Button>
                 </div>
 
-                {pathname === '/discover' && <Link href='/discover'>
+                {pathname === '/discover' || <Link href='/discover'>
                     <Button variant={'outline-ghost'} shape={'square'} iconLeft={<PiCompass />} />
                 </Link>}
 
