@@ -26,10 +26,10 @@ export function SocialSection() {
         <div className='flex flex-col items-end gap-2 md:w-[500px]'>
             <div className='rounded-full h-24 w-24 bg-hover border border-stroke relative overflow-hidden'>
                 {/* checkered pattern */}
-                <Image src={'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg'} alt='' fill />
+                <Image src={'https://pub-4bf8804d3efc464b862de36f974618d4.r2.dev/cloqayyqq0000l60fiyj33iqv/cloqayyqq0000l60fiyj33iqv-1699480994183.png'} alt='' width={512} height={512} />
             </div>
 
-            <h3 className='font-clash text-2xl font-bold'>Username</h3>
+            <h3 className='font-clash text-2xl font-bold'>TheFitChecker</h3>
 
             <span className='inline text-sm'>
                 <PiHeartBold className='text-lg mb-1 inline mr-1' />
