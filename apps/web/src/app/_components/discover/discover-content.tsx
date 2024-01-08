@@ -23,7 +23,7 @@ export function DiscoverContent() {
     const { data, isFetchingNextPage, isFetching, hasNextPage, fetchNextPage } = api.post.getLatestPosts.useInfiniteQuery({
         category: activeCategory,
         types: activePostTypes.length > 0 ? activePostTypes : undefined,
-    });
+    }, { getNextPageParam: (lastPage) => lastPage.nextCursor, });
 
     const { data: queryPost } = api.post.getPost.useQuery({
         id: params.get('postId') ?? '',
@@ -108,8 +108,6 @@ export function DiscoverContent() {
             <div className="flex flex-col items-center gap-3 overflow-y-scroll hide-scrollbar snap-mandatory snap-y scroll-smooth">
                 {posts ? posts.map((post, index) => {
                     return <div ref={posts.length === index + 1 ? lastElementRef : null} key={post.id}>
-                        {index > 0 && <div className="w-full h-0.5 bg-stroke md:block hidden" />}
-
                         <Post post={post} />
                     </div>
                 }) : null}
