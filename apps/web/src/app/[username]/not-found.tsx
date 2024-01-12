@@ -1,10 +1,13 @@
+"use client";
+
 import Link from 'next/link';
-import { ProfileNotFoundUsername } from '../_components/profile/not-found';
 import { Button } from '../_components/ui/Button';
+import { useParams } from 'next/navigation';
+import { NotFoundHeader } from '../_components/profile/not-found';
 
 export const UserNotFoundPage = () => {
     return <div className='w-screen h-screen -mt-20 pt-20 flex justify-center items-center flex-col font-satoshi gap-4'>
-        <ProfileNotFoundUsername />
+        <NotFoundHeader />
         <article className='text-center'>
             <p className='text-lg'>This could be your handle.</p>
         </article>

@@ -27,3 +27,4 @@ export const getPostTypeName = (type: PostType): string => {
       return "Jewelry";
   }
 };
+

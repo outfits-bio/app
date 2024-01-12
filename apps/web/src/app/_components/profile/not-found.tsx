@@ -1,9 +1,9 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 
-export function ProfileNotFoundUsername() {
-    const params = useSearchParams();
+export function NotFoundHeader() {
+    const params = useParams<{ username: string }>();
 
-    return <h1 className='text-center text-5xl font-black font-clash'>{params.get('username')}</h1>
+    return <h1 className='text-center text-5xl font-black font-clash'>{params.username}</h1>
 }
