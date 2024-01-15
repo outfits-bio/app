@@ -1,9 +1,8 @@
 "use client";
 
 import Link from 'next/link';
-import { Button } from '../_components/ui/Button';
-import { useParams } from 'next/navigation';
 import { NotFoundHeader } from '../_components/profile/not-found';
+import { Button } from '../_components/ui/Button';
 
 export const UserNotFoundPage = () => {
     return <div className='w-screen h-screen -mt-20 pt-20 flex justify-center items-center flex-col font-satoshi gap-4'>

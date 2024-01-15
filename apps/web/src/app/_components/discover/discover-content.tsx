@@ -2,14 +2,14 @@
 
 import { api } from "@/trpc/react";
 import { PostType } from "database";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { Button } from "../ui/Button";
 import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
-import { CategoryButton } from "./category-button";
 import { PiBookmarkSimpleBold, PiClockBold, PiFireBold } from "react-icons/pi";
+import { PostModal } from "../modals/post-modal";
+import { Button } from "../ui/Button";
+import { CategoryButton } from "./category-button";
 import { Post } from "./post/post";
-import { DiscoverPostModal } from "../modals/discover-post-modal";
 
 export function DiscoverContent() {
     const params = useSearchParams();
@@ -24,12 +24,6 @@ export function DiscoverContent() {
         category: activeCategory,
         types: activePostTypes.length > 0 ? activePostTypes : undefined,
     }, { getNextPageParam: (lastPage) => lastPage.nextCursor, });
-
-    const { data: queryPost } = api.post.getPost.useQuery({
-        id: params.get('postId') ?? '',
-    }, {
-        enabled: params.has('postId'),
-    });
 
     const handleChangePostType = (type: PostType) => {
         if (activePostTypes.includes(type)) {
@@ -66,7 +60,7 @@ export function DiscoverContent() {
     );
 
     return <div className="flex h-full">
-        {(queryPost && params.has('postId')) && <DiscoverPostModal post={queryPost} />}
+        <PostModal />
         <section className="w-80 bg-white dark:bg-black border-r border-stroke hidden md:flex flex-col justify-between p-4 h-full">
             <div className="flex flex-col gap-2 w-full">
                 <CategoryButton activePostTypes={activePostTypes} handleChangePostType={handleChangePostType} type={PostType.OUTFIT} />
