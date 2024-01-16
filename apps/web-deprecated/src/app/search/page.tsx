@@ -3,7 +3,7 @@
 import debounce from 'lodash.debounce';
 import { NextPage } from 'next';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import {
     PiCamera, PiHammer, PiHeart, PiMagnifyingGlass, PiSealCheck, PiSpinnerGap
@@ -15,11 +15,11 @@ import { api } from '~/components/TRPCWrapper';
 
 
 export const SearchPage: NextPage = () => {
-    const { query } = useRouter();
+    const params = useSearchParams();
 
-    const username = query.username?.toString();
+    const username = params.get('username')?.toString();
 
-    const [input, setInput] = useState(username ?? '');
+    const [input, setInput] = useState(username);
 
     const request = debounce(async () => {
         refetch();

@@ -15,7 +15,7 @@ export const showActions = (pathname: string) => {
 };
 
 export const showSearch = (pathname: string) => {
-  const paths = ["/onboarding"];
+  const paths = ["/onboarding", "/search"];
 
   if (paths.includes(pathname)) return false;
 

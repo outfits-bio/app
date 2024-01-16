@@ -8,7 +8,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { PiHammer, PiMagnifyingGlass, PiMagnifyingGlassBold, PiSealCheck, PiSpinnerGap } from "react-icons/pi";
-import { Avatar } from "../ui/Avatar";
+import { Avatar } from "../../ui/Avatar";
 
 export function SearchBar() {
     const pathname = usePathname();

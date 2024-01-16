@@ -1,4 +1,4 @@
-import { SearchBar } from "../search/search-bar";
+import { SearchBar } from "../search/search-bar/with-popover";
 import { AuthSection } from "./auth-section";
 import { MobileMenu } from "./mobile-menu";
 import { NavLogo } from "./nav-logo";
