@@ -14,7 +14,6 @@ interface SearchListProps {
 }
 
 export function SearchList({ searchParams }: SearchListProps) {
-    const params = useSearchParams();
     const [input, setInput] = useState(searchParams.username ?? '');
 
     const { data: searchData, isFetching, isRefetching, refetch, fetchNextPage, isFetchingNextPage, hasNextPage } = api.user.searchProfiles.useInfiniteQuery({ username: input }, {
@@ -27,14 +26,10 @@ export function SearchList({ searchParams }: SearchListProps) {
     const isLoading = isFetching || isRefetching || isFetchingNextPage;
 
     useEffect(() => {
-        const query = params.get('username') ?? '';
-
-        setInput(query);
-
-        if (query.length > 0) {
+        if (searchParams.username) {
             void refetch();
         }
-    }, [params]);
+    }, [searchParams.username]);
 
     return <div className="w-full md:w-5/6 lg:w-3/4 xl:w-1/2">
         <SearchBar isFetching={isFetching} refetch={refetch} input={input} setInput={setInput} />
