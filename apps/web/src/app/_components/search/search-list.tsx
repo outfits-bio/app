@@ -18,7 +18,7 @@ export function SearchList({ searchParams }: SearchListProps) {
     const [input, setInput] = useState(searchParams.username);
 
     const { data: searchData, isFetching, refetch, fetchNextPage, isFetchingNextPage, hasNextPage } = api.user.searchProfiles.useInfiniteQuery({ username: input }, {
-        enabled: input.length > 0,
+        enabled: false,
         getNextPageParam: (lastPage) => lastPage?.nextCursor,
     });
 
@@ -26,6 +26,7 @@ export function SearchList({ searchParams }: SearchListProps) {
 
     useEffect(() => {
         setInput(params.get('username') ?? '');
+        void refetch();
     }, [params.get('username')]);
 
     return <div className="w-full md:w-5/6 lg:w-3/4 xl:w-1/2">
