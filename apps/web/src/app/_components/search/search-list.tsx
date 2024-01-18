@@ -15,24 +15,31 @@ interface SearchListProps {
 
 export function SearchList({ searchParams }: SearchListProps) {
     const params = useSearchParams();
-    const [input, setInput] = useState(searchParams.username);
+    const [input, setInput] = useState(searchParams.username ?? '');
 
-    const { data: searchData, isFetching, refetch, fetchNextPage, isFetchingNextPage, hasNextPage } = api.user.searchProfiles.useInfiniteQuery({ username: input }, {
+    const { data: searchData, isFetching, isRefetching, refetch, fetchNextPage, isFetchingNextPage, hasNextPage } = api.user.searchProfiles.useInfiniteQuery({ username: input }, {
         enabled: false,
         getNextPageParam: (lastPage) => lastPage?.nextCursor,
     });
 
-    const users = input.length > 0 ? searchData?.pages.flatMap((page) => page?.users) : [];
+    const users = input && input.length > 0 ? searchData?.pages.flatMap((page) => page?.users) : [];
+
+    const isLoading = isFetching || isRefetching || isFetchingNextPage;
 
     useEffect(() => {
-        setInput(params.get('username') ?? '');
-        void refetch();
-    }, [params.get('username')]);
+        const query = params.get('username') ?? '';
+
+        setInput(query);
+
+        if (query.length > 0) {
+            void refetch();
+        }
+    }, [params]);
 
     return <div className="w-full md:w-5/6 lg:w-3/4 xl:w-1/2">
         <SearchBar isFetching={isFetching} refetch={refetch} input={input} setInput={setInput} />
 
-        {(users?.length ?? 0) > 0 ? users?.map((user) => (
+        {(users?.length ?? 0) > 0 && users?.map((user) => (
             <Link href={`/${user?.username}`} key={user?.id}>
                 <div className='bg-white dark:bg-black border border-stroke p-4 rounded-md hover:bg-body dark:hover:bg-body cursor-pointer flex gap-2'>
                     <Avatar image={user?.image} id={user?.id} username={user?.username} />
@@ -57,7 +64,8 @@ export function SearchList({ searchParams }: SearchListProps) {
                     </div>
                 </div>
             </Link>
-        )) : !isFetching && <div className='bg-white dark:bg-black border border-stroke p-4 rounded-md'>No results</div>}
+        ))}
+        {(!isLoading && users?.length === 0) && <div className='bg-white dark:bg-black border border-stroke p-4 rounded-md'>No results</div>}
         {hasNextPage && <Button onClick={() => fetchNextPage()} centerItems variant={'ghost'} isLoading={isFetchingNextPage}>
             Load More
         </Button>}
