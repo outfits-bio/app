@@ -210,7 +210,7 @@ const SettingsPage = () => {
               <input
                 id="username"
                 type="text"
-                className="w-full px-4 py-2 border rounded-md border-stroke dark:text-white dark:bg-black"
+                className="w-full px-4 py-2 border rounded-xl border-stroke dark:text-white dark:bg-black"
                 {...register('username')}
               />
             </div>
@@ -221,7 +221,7 @@ const SettingsPage = () => {
               </label>
               <textarea
                 id="tagline"
-                className="w-full px-4 py-2 border rounded-md border-stroke dark:text-white dark:bg-black"
+                className="w-full px-4 py-2 border rounded-xl border-stroke dark:text-white dark:bg-black"
                 placeholder='Enter your catchy tagline...'
                 {...register('tagline')}
               />
@@ -244,7 +244,7 @@ const SettingsPage = () => {
           <div className='flex flex-col gap-2'>
             {userData?.links.map(link =>
               <div className='flex items-center gap-2 w-full' key={link.id}>
-                <p className='gap-1 py-2 h-12 w-full cursor-default overflow-x-hidden flex px-4 items-center select-none rounded-md border border-stroke'>
+                <p className='gap-1 py-2 h-12 w-full cursor-default overflow-x-hidden flex px-4 items-center select-none rounded-xl border border-stroke'>
                   {link.type === LinkType.TWITTER && <PiTwitterLogo className='w-5 h-5' />}
                   {link.type === LinkType.YOUTUBE && <PiYoutubeLogo className='w-5 h-5' />}
                   {link.type === LinkType.TIKTOK && <PiTiktokLogo className='w-5 h-5' />}
@@ -272,7 +272,7 @@ const SettingsPage = () => {
                   id="link"
                   type="text"
                   placeholder='https://example.com'
-                  className="px-4 py-2 h-12 w-full border rounded-md border-stroke dark:text-white dark:bg-black"
+                  className="px-4 py-2 h-12 w-full border rounded-xl border-stroke dark:text-white dark:bg-black"
                   {...registerLink('url')}
                 />
                 <div>

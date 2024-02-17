@@ -67,7 +67,7 @@ export function Post({ post }: PostProps) {
             </div>
         </Link>
 
-        <div onClick={handleSetParams} className="relative cursor-pointer w-[305px] 3xs-h:w-[199px] 3xs-h:h-[325px] 2xs-h:w-[214px] 2xs-h:h-[350px] xs-h:w-[244px] xs-h:h-[400px] sm-h:w-[275px] sm-h:h-[450px] h-[500px] md:w-[320px] md:h-[524px] rounded-md overflow-hidden border border-stroke">
+        <div onClick={handleSetParams} className="relative cursor-pointer w-[305px] 3xs-h:w-[199px] 3xs-h:h-[325px] 2xs-h:w-[214px] 2xs-h:h-[350px] xs-h:w-[244px] xs-h:h-[400px] sm-h:w-[275px] sm-h:h-[450px] h-[500px] md:w-[320px] md:h-[524px] rounded-xl overflow-hidden border border-stroke">
             <Image
                 src={formatImage(post.image, post.user.id)}
                 className="object-cover"

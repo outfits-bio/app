@@ -108,7 +108,7 @@ export const CreatePostModal = (props: CreatePostModalProps) => {
                     rotation={rotation}
                     aspect={176 / 288}
                     cropSize={{ width: 244.4, height: 400 }}
-                    classes={{ containerClassName: 'bg-hover rounded-md' }}
+                    classes={{ containerClassName: 'bg-hover rounded-xl' }}
                     showGrid={true}
                     onCropChange={(crop) => setCrop(crop)}
                     onRotationChange={(rotation) => setRotation(rotation)}
@@ -128,7 +128,7 @@ export const CreatePostModal = (props: CreatePostModalProps) => {
                     <button
                         onClick={() => ref.current?.click()}
                         type='submit'
-                        className='w-full h-full bg-white dark:bg-black border hover:bg-stroke border-stroke gap-2 flex items-center justify-center font-bold flex-col text-sm rounded-md'>
+                        className='w-full h-full bg-white dark:bg-black border hover:bg-stroke border-stroke gap-2 flex items-center justify-center font-bold flex-col text-sm rounded-xl'>
                         <PiPlus className='w-8 h-8 text-secondary-text' />
                         <p className='text-secondary-text font-clash'>Upload Or Drop</p>
                     </button>
@@ -144,12 +144,12 @@ export const CreatePostModal = (props: CreatePostModalProps) => {
                 max={3}
                 aria-labelledby="Zoom"
                 onChange={(e) => setZoom(e.target.valueAsNumber)}
-                className="w-full h-2 bg-gray-200 rounded-lg mb-3 appearance-none cursor-pointer dark:bg-gray-700 accent-black dark:accent-white"
+                className="w-full h-2 bg-gray-200 rounded-xl mb-3 appearance-none cursor-pointer dark:bg-gray-700 accent-black dark:accent-white"
             />
 
             <div className='relative w-full'>
                 <Listbox value={type} onChange={setType}>
-                    <Listbox.Button className={"relative font-clash text-secondary-text font-semibold w-full cursor-pointer rounded-md py-3 pl-6 pr-10 text-left border border-stroke"}>
+                    <Listbox.Button className={"relative font-clash text-secondary-text font-semibold w-full cursor-pointer rounded-xl py-3 pl-6 pr-10 text-left border border-stroke"}>
                         <span className="block truncate">{getPostTypeName(type)}</span>
                         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-6">
                             <PiCaretDown
@@ -164,12 +164,12 @@ export const CreatePostModal = (props: CreatePostModalProps) => {
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <Listbox.Options className="absolute bottom-0 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-black p-2 gap-2 shadow-lg border border-stroke font-clash font-semibold">
+                        <Listbox.Options className="absolute bottom-0 max-h-60 w-full overflow-auto rounded-xl bg-white dark:bg-black p-2 gap-2 shadow-lg border border-stroke font-clash font-semibold">
                             <Listbox.Option
                                 key={PostType.OUTFIT}
                                 value={PostType.OUTFIT}
                                 className={({ active }) =>
-                                    `relative cursor-pointer select-none rounded-md py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
+                                    `relative cursor-pointer select-none rounded-xl py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
                                     }`
                                 }
 
@@ -181,7 +181,7 @@ export const CreatePostModal = (props: CreatePostModalProps) => {
                                 key={PostType.HEADWEAR}
                                 value={PostType.HEADWEAR}
                                 className={({ active }) =>
-                                    `relative cursor-pointer select-none rounded-md py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
+                                    `relative cursor-pointer select-none rounded-xl py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
                                     }`
                                 }
 
@@ -193,7 +193,7 @@ export const CreatePostModal = (props: CreatePostModalProps) => {
                                 key={PostType.SHOES}
                                 value={PostType.SHOES}
                                 className={({ active }) =>
-                                    `relative cursor-pointer select-none rounded-md py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
+                                    `relative cursor-pointer select-none rounded-xl py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
                                     }`
                                 }
                             >
@@ -204,7 +204,7 @@ export const CreatePostModal = (props: CreatePostModalProps) => {
                                 key={PostType.HOODIE}
                                 value={PostType.HOODIE}
                                 className={({ active }) =>
-                                    `relative cursor-pointer select-none rounded-md py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
+                                    `relative cursor-pointer select-none rounded-xl py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
                                     }`
                                 }
                             >
@@ -215,7 +215,7 @@ export const CreatePostModal = (props: CreatePostModalProps) => {
                                 key={PostType.PANTS}
                                 value={PostType.PANTS}
                                 className={({ active }) =>
-                                    `relative cursor-pointer select-none rounded-md py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
+                                    `relative cursor-pointer select-none rounded-xl py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
                                     }`
                                 }
                             >
@@ -226,7 +226,7 @@ export const CreatePostModal = (props: CreatePostModalProps) => {
                                 key={PostType.SHIRT}
                                 value={PostType.SHIRT}
                                 className={({ active }) =>
-                                    `relative cursor-pointer select-none rounded-md py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
+                                    `relative cursor-pointer select-none rounded-xl py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
                                     }`
                                 }
                             >
@@ -237,7 +237,7 @@ export const CreatePostModal = (props: CreatePostModalProps) => {
                                 key={PostType.WATCH}
                                 value={PostType.WATCH}
                                 className={({ active }) =>
-                                    `relative cursor-pointer select-none rounded-md py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
+                                    `relative cursor-pointer select-none rounded-xl py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
                                     }`
                                 }
                             >
@@ -248,7 +248,7 @@ export const CreatePostModal = (props: CreatePostModalProps) => {
                                 key={PostType.GLASSES}
                                 value={PostType.GLASSES}
                                 className={({ active }) =>
-                                    `relative cursor-pointer select-none rounded-md py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
+                                    `relative cursor-pointer select-none rounded-xl py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
                                     }`
                                 }
                             >
@@ -259,7 +259,7 @@ export const CreatePostModal = (props: CreatePostModalProps) => {
                                 key={PostType.JEWELRY}
                                 value={PostType.JEWELRY}
                                 className={({ active }) =>
-                                    `relative cursor-pointer select-none rounded-md py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
+                                    `relative cursor-pointer select-none rounded-xl py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
                                     }`
                                 }
                             >

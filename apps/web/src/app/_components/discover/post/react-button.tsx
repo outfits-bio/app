@@ -59,7 +59,7 @@ export default function ReactButton({ post }: PostProps) {
             leaveTo="opacity-0 translate-y-1"
         >
             <Popover.Panel className="absolute left-1/2 z-10 bottom-14 -translate-x-1/2 transform px-4 sm:px-0">
-                <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                <div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-black ring-opacity-5">
                     <div className="relative flex justify-between items-center gap-1 bg-white p-2 text-2xl">
                         <Button variant={post.reactions.find(p => p.content === '🔥') ? 'primary' : 'outline-ghost'} isLoading={reactionLoading('🔥')} centerItems shape={'circle'} onClick={() => handleToggleReact('🔥')}>
                             {reactionLoading('🔥') ? '' : '🔥'}

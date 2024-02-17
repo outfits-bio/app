@@ -53,7 +53,7 @@ export const ReportModal = ({ type, id }: ReportModalProps) => {
                         </label>
                         <textarea
                             id="reason"
-                            className="w-full px-4 py-2 border-stroke rounded-md border dark:border-white dark:text-white dark:bg-black"
+                            className="w-full px-4 py-2 border-stroke rounded-xl border dark:border-white dark:text-white dark:bg-black"
                             placeholder='Please describe the reason for your report.'
                             {...register('reason')}
                         />

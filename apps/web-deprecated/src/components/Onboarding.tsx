@@ -156,8 +156,8 @@ export const Onboarding = ({ session, username }: { username: string, session: S
 
                             <div className='flex grow h-full flex-col gap-2 w-full sm:w-auto mt-11 sm:mt-auto'>
                                 {(errors.tagline || errors.username) && <p className='text-error text-sm'>{!!errors.username ? errors.username.message : errors.tagline?.message}</p>}
-                                <input {...register("username")} type="text" className='border border-stroke px-3 py-2 rounded-lg placeholder:text-gray-500 dark:bg-black' placeholder='Your special @username, here' />
-                                <textarea {...register("tagline")} className='border border-stroke px-3 py-2 rounded-lg grow resize-none placeholder:text-gray-500 h-20 dark:bg-black' placeholder='Your tagline, short description, bio, whatnot' />
+                                <input {...register("username")} type="text" className='border border-stroke px-3 py-2 rounded-xl placeholder:text-gray-500 dark:bg-black' placeholder='Your special @username, here' />
+                                <textarea {...register("tagline")} className='border border-stroke px-3 py-2 rounded-xl grow resize-none placeholder:text-gray-500 h-20 dark:bg-black' placeholder='Your tagline, short description, bio, whatnot' />
                             </div>
                         </div>
 
@@ -221,7 +221,7 @@ export const Onboarding = ({ session, username }: { username: string, session: S
 
                     <div className='flex gap-8 -mt-72'>
                         {posts && posts.slice(0, 7).map((post, i) =>
-                            <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative`}>
+                            <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-xl relative`}>
                                 <Image
                                     // 176px is the same as w-44, the width of the container
                                     sizes="176px"
@@ -249,7 +249,7 @@ export const Onboarding = ({ session, username }: { username: string, session: S
 
                     <div className='flex gap-8 -mt-60'>
                         {posts && posts.slice(8, 15).map((post, i) =>
-                            <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
+                            <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-xl relative mt-[${48 * i}px]`}>
                                 <Image
                                     // 176px is the same as w-44, the width of the container
                                     sizes="176px"
@@ -277,7 +277,7 @@ export const Onboarding = ({ session, username }: { username: string, session: S
 
                     <div className='flex gap-8 -mt-60'>
                         {posts && posts.slice(16, 23).map((post, i) =>
-                            <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
+                            <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-xl relative mt-[${48 * i}px]`}>
                                 <Image
                                     // 176px is the same as w-44, the width of the container
                                     sizes="176px"
@@ -305,7 +305,7 @@ export const Onboarding = ({ session, username }: { username: string, session: S
 
                     <div className='flex gap-8 -mt-60'>
                         {posts && posts.slice(24, 31).map((post, i) =>
-                            <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative mt-[${48 * i}px]`}>
+                            <Link style={{ marginTop: `${48 * i}px` }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-xl relative mt-[${48 * i}px]`}>
                                 <Image
                                     // 176px is the same as w-44, the width of the container
                                     sizes="176px"

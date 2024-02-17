@@ -120,7 +120,7 @@ const Home = () => {
 
             <div className='w-5/6 flex gap-2'>
               <div className='relative w-6 h-6 shrink-0'>
-                <Image src={'https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg'} alt={''} fill className='rounded-md' />
+                <Image src={'https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg'} alt={''} fill className='rounded-xl' />
               </div>
               <Marquee pauseOnHover autoFill speed={40} className='cursor-pointer select-none'>
                 <p className='text-sm mx-4'>Listening to <span className='font-bold'>Can&apos;t Tell Me Nothing</span> by <span className='font-bold'>Kanye West</span></p>
@@ -186,7 +186,7 @@ const Home = () => {
                   <PostSkeleton className='rotate-12 mt-4' />
                   <PostSkeleton className='rotate-12 mt-16' />
                 </> : posts?.map((post, i) => (
-                  <Link style={{ marginTop: i === 0 ? '16px' : '64px' }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-md relative`}>
+                  <Link style={{ marginTop: i === 0 ? '16px' : '64px' }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-gray-500 rounded-xl relative`}>
                     <Image
                       // 176px is the same as w-44, the width of the container
                       sizes="176px"

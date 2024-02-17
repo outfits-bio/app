@@ -160,7 +160,7 @@ export const Post = ({ post, user }: PostProps) => {
 
     const truncatedTagline = post.user.tagline && (post.user.tagline.length > 20 ? `${post.user.tagline.slice(0, 20)}...` : post.user.tagline);
 
-    return <div className="snap-start border-2 border-stroke rounded-lg 2xs-h:w-[250px] xs-h:w-[300px] sm-h:w-[320px] w-[350px] max-h-full py-4 flex flex-col items-center gap-2 md:gap-4 md:mt-3">
+    return <div className="snap-start border-2 border-stroke rounded-xl 2xs-h:w-[250px] xs-h:w-[300px] sm-h:w-[320px] w-[350px] max-h-full py-4 flex flex-col items-center gap-2 md:gap-4 md:mt-3">
         {reportModalOpen && <ReportModal isOpen={reportModalOpen} setIsOpen={setReportModalOpen} type='POST' id={post.id} />}
         {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} post admin deleteFn={() => {
             mutate({ id: post.id });
@@ -185,7 +185,7 @@ export const Post = ({ post, user }: PostProps) => {
             </div>
         </Link>
 
-        <Link href={`/discover?postId=${post.id}`} className="relative w-[305px] 3xs-h:w-[199px] 3xs-h:h-[325px] 2xs-h:w-[214px] 2xs-h:h-[350px] xs-h:w-[244px] xs-h:h-[400px] sm-h:w-[275px] sm-h:h-[450px] h-[500px] md:w-[320px] md:h-[524px] rounded-md overflow-hidden border border-stroke">
+        <Link href={`/discover?postId=${post.id}`} className="relative w-[305px] 3xs-h:w-[199px] 3xs-h:h-[325px] 2xs-h:w-[214px] 2xs-h:h-[350px] xs-h:w-[244px] xs-h:h-[400px] sm-h:w-[275px] sm-h:h-[450px] h-[500px] md:w-[320px] md:h-[524px] rounded-xl overflow-hidden border border-stroke">
             <Image
                 src={formatImage(post.image, post.user.id)}
                 className="object-cover"
@@ -246,7 +246,7 @@ export const Post = ({ post, user }: PostProps) => {
                         leaveTo="opacity-0 translate-y-1"
                     >
                         <Popover.Panel className="absolute left-1/2 z-10 bottom-14 -translate-x-1/2 transform px-4 sm:px-0">
-                            <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                            <div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-black ring-opacity-5">
                                 <div className="relative flex justify-between items-center gap-1 bg-white p-2 text-2xl">
                                     <Button variant={post.reactions.find(p => p.content === '🔥') ? 'primary' : 'outline-ghost'} isLoading={reactionLoading('🔥')} centerItems shape={'circle'} onClick={() => handleToggleReact('🔥')}>
                                         {reactionLoading('🔥') ? '' : '🔥'}

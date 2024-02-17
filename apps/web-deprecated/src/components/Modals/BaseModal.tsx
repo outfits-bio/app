@@ -19,7 +19,7 @@ const satoshi = localFont({
     variable: '--font-satoshi',
 });
 
-const variants = cva('w-96 gap-2 overflow-hidden rounded-md bg-white dark:bg-black border border-stroke p-4 text-left align-middle shadow-xl transition-all z-30', {
+const variants = cva('w-96 gap-2 overflow-hidden rounded-xl bg-white dark:bg-black border border-stroke p-4 text-left align-middle shadow-xl transition-all z-30', {
     variants: {
         size: {
             sm: 'w-96',

@@ -54,7 +54,7 @@ export const SearchPage: NextPage = () => {
                     id="link"
                     type="text"
                     placeholder='Search for users'
-                    className="pl-4 py-2 w-full border rounded-md border-stroke dark:text-white dark:bg-black"
+                    className="pl-4 py-2 w-full border rounded-xl border-stroke dark:text-white dark:bg-black"
                     onChange={(e) => {
                         setInput(e.target.value)
                         debounceRequest()
@@ -69,7 +69,7 @@ export const SearchPage: NextPage = () => {
 
                     {(users?.length ?? 0) > 0 ? users?.map((user) => (
                         <Link href={`/${user?.username}`} key={user?.id}>
-                            <div className='bg-white dark:bg-black border border-stroke p-4 rounded-md hover:bg-body dark:hover:bg-body cursor-pointer flex gap-2'>
+                            <div className='bg-white dark:bg-black border border-stroke p-4 rounded-xl hover:bg-body dark:hover:bg-body cursor-pointer flex gap-2'>
                                 <Avatar image={user?.image} id={user?.id} username={user?.username} />
 
                                 <div className='flex flex-col gap-1'>
@@ -92,7 +92,7 @@ export const SearchPage: NextPage = () => {
                                 </div>
                             </div>
                         </Link>
-                    )) : <div className='bg-white dark:bg-black border border-stroke p-4 rounded-md'>No results</div>}
+                    )) : <div className='bg-white dark:bg-black border border-stroke p-4 rounded-xl'>No results</div>}
                     {hasNextPage && <Button onClick={() => fetchNextPage()} centerItems variant={'ghost'} isLoading={isFetchingNextPage}>
                         Load More
                     </Button>}

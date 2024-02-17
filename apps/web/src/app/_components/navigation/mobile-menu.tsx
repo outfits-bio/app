@@ -40,7 +40,7 @@ export const MobileMenu = () => {
                             <Menu.Item>
                                 {({ active }) => (
                                     <Link href={'/discover'}
-                                        className={`${active ? 'bg-gray-100 dark:bg-opacity-20 rounded-lg transform transition duration-300 ease-in-out' : ''
+                                        className={`${active ? 'bg-gray-100 dark:bg-opacity-20 rounded-xl transform transition duration-300 ease-in-out' : ''
                                             } group flex w-full items-center justify-between px-4 py-2 font-clash font-semibold`}
                                     >
                                         <h3>Discover</h3>
@@ -52,7 +52,7 @@ export const MobileMenu = () => {
                             <Menu.Item>
                                 {({ active }) => (
                                     <Link href={'https://discord.gg/f4KEs5TVz2'}
-                                        className={`${active ? 'bg-gray-100 dark:bg-opacity-20 rounded-lg transform transition duration-300 ease-in-out' : ''
+                                        className={`${active ? 'bg-gray-100 dark:bg-opacity-20 rounded-xl transform transition duration-300 ease-in-out' : ''
                                             } group flex w-full items-center justify-between px-4 py-2 font-clash font-semibold`}
                                     >
                                         <h3>Create your profile or Login</h3>

@@ -71,7 +71,7 @@ export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="flex overflow-hidden rounded-md dark:text-white bg-white dark:bg-black border dark:border-white p-4 text-left align-middle shadow-xl transition-all">
+                            <Dialog.Panel className="flex overflow-hidden rounded-xl dark:text-white bg-white dark:bg-black border dark:border-white p-4 text-left align-middle shadow-xl transition-all">
                                 <div>
                                     <div className='flex justify-end w-full mb-2'>
                                         <div>
@@ -89,7 +89,7 @@ export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
                                             rotation={rotation}
                                             aspect={176 / 288}
                                             cropSize={{ width: 320, height: 524 }}
-                                            classes={{ containerClassName: 'bg-gray-100 rounded-md' }}
+                                            classes={{ containerClassName: 'bg-gray-100 rounded-xl' }}
                                             showGrid={true}
                                             onCropChange={(crop) => setCrop(crop)}
                                             onRotationChange={(rotation) => setRotation(rotation)}
@@ -106,7 +106,7 @@ export const PostCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
                                         max={3}
                                         aria-labelledby="Zoom"
                                         onChange={(e) => setZoom(e.target.valueAsNumber)}
-                                        className="w-[320px] h-2 bg-gray-200 rounded-lg mb-3 appearance-none cursor-pointer dark:bg-gray-700 accent-black dark:accent-white"
+                                        className="w-[320px] h-2 bg-gray-200 rounded-xl mb-3 appearance-none cursor-pointer dark:bg-gray-700 accent-black dark:accent-white"
                                     />
 
                                     <Button centerItems onClick={handleClose}>

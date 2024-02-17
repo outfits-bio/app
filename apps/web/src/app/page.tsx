@@ -102,7 +102,7 @@ export default async function Home() {
             <div className='shrink-0 grow overflow-hidden flex-col lg:flex'>
               <div className='flex gap-8 mb-0'>
                 {posts.map((post, i) => (
-                  <Link style={{ marginTop: i === 0 ? '16px' : '64px' }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-stroke rounded-md relative`}>
+                  <Link style={{ marginTop: i === 0 ? '16px' : '64px' }} href={`/discover/?postId=${post.id}`} key={post.id} className={`w-44 h-72 rotate-12 min-w-[176px] border border-stroke rounded-xl relative`}>
                     <Image
                       // 176px is the same as w-44, the width of the container
                       sizes="176px"

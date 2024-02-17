@@ -40,7 +40,7 @@ export const DeleteModal = ({ isOpen, setIsOpen, deleteFn, admin = false, post =
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-96 gap-2 flex flex-col overflow-hidden rounded-md dark:text-white bg-white dark:bg-black border border-stroke p-4 text-left align-middle shadow-xl transition-all">
+                            <Dialog.Panel className="w-96 gap-2 flex flex-col overflow-hidden rounded-xl dark:text-white bg-white dark:bg-black border border-stroke p-4 text-left align-middle shadow-xl transition-all">
                                 <h1 className='text-2xl font-semibold'>Are you sure?</h1>
 
                                 {post ? <p className='text-sm'>

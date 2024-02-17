@@ -80,7 +80,7 @@
 }
 
 .skeleton {
-  @apply animate-pulse rounded-md bg-gray-300 dark:bg-gray-700;
+  @apply animate-pulse rounded-xl bg-gray-300 dark:bg-gray-700;
 }
 
 .background-animate {

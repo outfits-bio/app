@@ -39,7 +39,7 @@ export function SocialSection() {
 
             <div className='w-5/6 flex gap-2'>
                 <div className='relative w-6 h-6 shrink-0'>
-                    <Image src={'https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg'} alt={''} fill className='rounded-md' />
+                    <Image src={'https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg'} alt={''} fill className='rounded-xl' />
                 </div>
                 <Marquee pauseOnHover autoFill speed={40} className='cursor-pointer select-none'>
                     <p className='text-sm mx-4'>Listening to <span className='font-bold'>Can&apos;t Tell Me Nothing</span> by <span className='font-bold'>Kanye West</span></p>

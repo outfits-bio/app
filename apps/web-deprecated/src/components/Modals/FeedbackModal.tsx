@@ -38,7 +38,7 @@ export const FeedbackModal = (props: BaseModalProps) => {
             <form onSubmit={handleSubmit(handleFormSubmit)} className='flex flex-col gap-2'>
                 <div className='flex flex-col gap-2'>
                     <label htmlFor='description' className='text-sm font-semibold'>How are we doing?</label>
-                    <textarea {...register('description')} className='w-full h-32 p-2 rounded-md border border-stroke dark:border-gray-700 bg-white dark:bg-black text-black dark:text-white' />
+                    <textarea {...register('description')} className='w-full h-32 p-2 rounded-xl border border-stroke dark:border-gray-700 bg-white dark:bg-black text-black dark:text-white' />
                 </div>
 
                 <div className='flex w-full gap-2'>

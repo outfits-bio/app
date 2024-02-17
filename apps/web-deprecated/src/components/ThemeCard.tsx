@@ -60,7 +60,7 @@ export const Vector = ({ variant }: { variant: 'dark' | 'light' | null | undefin
 }
 
 export const ThemeCard = forwardRef<HTMLButtonElement, ThemeCardProps>(({ variant, active, ...props }, ref) => {
-    return <button ref={ref} className={cn(variants({ active }), 'border-stroke border px-4 py-3 flex flex-col gap-3 rounded-md')} {...props}>
+    return <button ref={ref} className={cn(variants({ active }), 'border-stroke border px-4 py-3 flex flex-col gap-3 rounded-xl')} {...props}>
         {variant !== 'system' ? <div className={cn(variants({ variant }))}>
             <Vector variant={variant} />
         </div> : <div className='bg-white dark:bg-black h-[100px] w-40 relative'>
