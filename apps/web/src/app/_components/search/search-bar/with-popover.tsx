@@ -41,7 +41,7 @@ export function SearchBar() {
             id="link"
             type="text"
             placeholder='Search for users'
-            className="pl-4 py-2 h-12 w-[400px] border rounded-md border-stroke text-secondary-text dark:bg-black focus:outline-none"
+            className="pl-4 py-2 h-12 w-[400px] border rounded-xl border-stroke text-secondary-text dark:bg-black focus:outline-none"
             onChange={(e) => {
                 setInput(e.target.value)
                 debounceRequest()
@@ -56,7 +56,7 @@ export function SearchBar() {
 
         <div className='w-[1px] h-full absolute right-12 bg-stroke' />
 
-        <button className='absolute right-0 flex items-center justify-center h-full w-12 hover:bg-hover disabled:hover:bg-transparent rounded-r-md' disabled={!input} onClick={() => input && router.push(`/search?username=${input}`)}>
+        <button className='absolute right-0 flex items-center justify-center h-full w-12 hover:bg-hover disabled:hover:bg-transparent rounded-r-xl' disabled={!input} onClick={() => input && router.push(`/search?username=${input}`)}>
             {isFetching ? <PiSpinnerGap className=' text-secondary-text w-6 h-6 animate-spin' /> : <PiMagnifyingGlass className='text-secondary-text w-6 h-6' />}
         </button>
 
@@ -75,14 +75,14 @@ export function SearchBar() {
                             leaveTo="opacity-0 translate-y-1"
                         >
                             <Popover.Panel>
-                                <div className="relative border border-stroke rounded-md p-4 bg-white dark:bg-black w-full flex flex-col gap-2 shadow-lg">
-                                    <Link href={`/search?username=${input}`} className='flex items-center rounded-md p-2 bg-stroke border border-stroke text-secondary-text w-full text-left'>
+                                <div className="relative border border-stroke rounded-xl p-4 bg-white dark:bg-black w-full flex flex-col gap-2 shadow-lg">
+                                    <Link href={`/search?username=${input}`} className='flex items-center rounded-xl p-2 bg-stroke border border-stroke text-secondary-text w-full text-left'>
                                         <PiMagnifyingGlassBold className='text-xl mr-2' />
                                         <p>Search for &quot;{input}&quot;</p>
                                     </Link>
 
                                     {searchData?.users ? searchData.users?.map((user) => (
-                                        <Link href={`/${user.username}`} key={user.id} className='flex items-center rounded-md p-2 hover:bg-hover w-full text-left border border-stroke'>
+                                        <Link href={`/${user.username}`} key={user.id} className='flex items-center rounded-xl p-2 hover:bg-hover w-full text-left border border-stroke'>
                                             <Avatar image={user.image} id={user.id} username={user.username} size={'xs'} className='mr-2' />
                                             <p>{user.username}</p>
                                             {user.admin ? <PiHammer className='ml-1 text-primary' /> : user.verified ? <PiSealCheck className='ml-1 text-primary' /> : null}
