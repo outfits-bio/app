@@ -42,14 +42,14 @@ export function SearchBar({ isFetching, refetch, input, setInput }: SearchBarPro
             autoComplete='off'
             type="text"
             placeholder='Search for users'
-            className="pl-4 py-2 h-12 w-full border rounded-md border-stroke text-secondary-text dark:bg-black focus:outline-none"
+            className="pl-4 py-2 h-12 w-full border rounded-xl border-stroke text-secondary-text dark:bg-black focus:outline-none"
             onChange={handleChange}
             value={input}
         />
 
         <div className='w-[1px] h-full absolute right-12 bg-stroke' />
 
-        <button className='absolute right-0 flex items-center justify-center h-full w-12 hover:bg-hover disabled:hover:bg-transparent rounded-r-md' disabled={!input} onClick={() => input && router.push(`/search?username=${input}`)}>
+        <button className='absolute right-0 flex items-center justify-center h-full w-12 hover:bg-hover disabled:hover:bg-transparent rounded-r-xl' disabled={!input} onClick={() => input && router.push(`/search?username=${input}`)}>
             {isFetching ? <PiSpinnerGap className=' text-secondary-text w-6 h-6 animate-spin' /> : <PiMagnifyingGlass className='text-secondary-text w-6 h-6' />}
         </button>
     </div>
