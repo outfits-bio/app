@@ -17,8 +17,8 @@ const variants = cva('font-semibold font-clash self-stretch h-12 py-2 gap-3 flex
             false: 'justify-between'
         },
         shape: {
-            normal: 'px-6 w-full rounded-lg',
-            square: 'w-12 px-2 rounded-lg justify-center',
+            normal: 'px-6 w-full rounded-xl',
+            square: 'w-12 px-2 rounded-xl justify-center',
             circle: 'rounded-full px-2 w-12 justify-center',
         },
         accent: {
