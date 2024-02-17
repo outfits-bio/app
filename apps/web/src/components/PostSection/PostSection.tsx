@@ -92,7 +92,7 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
                 </div>
             </h2>}
 
-            <div className={postsExist ? 'w-full overflow-scroll mb-5' : 'w-full overflow-scroll md:mb-5'}>
+            <div className={postsExist ? 'w-full overflow-scroll-auto mb-5' : 'w-full overflow-scroll-auto md:mb-5'}>
                 <div className="flex gap-4 min-w-max pb-1">
                     {posts?.map((post, i) => (
                         <>
