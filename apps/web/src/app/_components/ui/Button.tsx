@@ -4,11 +4,11 @@ import { forwardRef } from 'react';
 import { PiSpinnerGap } from 'react-icons/pi';
 import { cn } from '@/utils/cn.util';
 
-const variants = cva('font-semibold font-clash self-stretch h-12 max-[425px]:h-9 py-2 gap-3 flex items-center', {
+const variants = cva('font-semibold font-clash self-stretch min-[320px]:h-9 max-[426px]:h-12 py-2 gap-3 flex items-center', {
     variants: {
         variant: {
             primary: 'bg-accent border-accent border dark:text-black text-white hover:opacity-[99%] dark:hover:bg-opacity-[99%] disabled:bg-opacity-80 dark:disabled:bg-opacity-80 active:scale-[99%]',
-            outline: 'max-[425px]:bg-neutral-200 border dark:border-white disabled:bg-hover bg-transparent hover:bg-hover transform transition duration-100 ease-in-out active:scale-[99%]',
+            outline: 'min-[320px]:bg-neutral-200 max-[426px]:bg-transparant border dark:border-white disabled:bg-hover bg-transparent hover:bg-hover transform transition duration-100 ease-in-out active:scale-[99%]',
             ghost: 'border border-transparent hover:bg-hover disabled:bg-hover transform transition duration-100 ease-in-out active:scale-[99%]',
             'outline-ghost': 'border border-stroke hover:bg-hover disabled:bg-hover transform transition duration-100 ease-in-out active:scale-[99%]',
         },
