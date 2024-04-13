@@ -6,26 +6,26 @@ export interface PostTypeIconProps extends React.HTMLAttributes<HTMLDivElement> 
     type: PostType;
 }
 
-export const PostTypeIcon = forwardRef<HTMLDivElement, PostTypeIconProps>(({ className, type, ...props }, ref) => {
+export const PostTypeIcon = forwardRef<HTMLDivElement, PostTypeIconProps>(({ className, type }) => {
     switch (type) {
         case PostType.OUTFIT:
-            return <PiCoatHangerBold ref={ref} {...props} classname={className} />;
+            return <PiCoatHangerBold className={className} />;
         case PostType.HOODIE:
-            return <PiShirtFoldedBold ref={ref} {...props} classname={className} />;
+            return <PiShirtFoldedBold className={className} />;
         case PostType.SHIRT:
-            return <PiTShirtBold ref={ref} {...props} classname={className} />;
+            return <PiTShirtBold className={className} />;
         case PostType.PANTS:
-            return <PiPantsBold ref={ref} {...props} classname={className} />;
+            return <PiPantsBold className={className} />;
         case PostType.SHOES:
-            return <PiSneakerBold ref={ref} {...props} classname={className} />;
+            return <PiSneakerBold className={className} />;
         case PostType.WATCH:
-            return <PiBackpackBold ref={ref} {...props} classname={className} />;
+            return <PiBackpackBold className={className} />;
         case PostType.HEADWEAR:
-            return <PiBaseballCapBold ref={ref} {...props} classname={className} />;
+            return <PiBaseballCapBold className={className} />;
         case PostType.JEWELRY:
-            return <PiWatchBold ref={ref} {...props} classname={className} />;
+            return <PiWatchBold className={className} />;
         case PostType.GLASSES:
-            return <PiEyeglassesBold ref={ref} {...props} classname={className} />;
+            return <PiEyeglassesBold className={className} />;
     }
 });
 
