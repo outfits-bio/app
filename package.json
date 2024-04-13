@@ -1,15 +1,19 @@
 {
-	"private": true,
-	"scripts": {
-		"build": "turbo run build",
-		"dev": "turbo run dev",
-		"lint": "turbo run lint",
-		"format": "prettier --write \"**/*.{ts,tsx,md}\""
-	},
-	"devDependencies": {
-		"eslint": "^8.55.0",
-		"prettier": "^3.1.0",
-		"turbo": "^1.11.3"
-	},
-	"packageManager": "pnpm@8.6.10"
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "workspaces": ["apps/*", "packages/*"],
+  "devDependencies": {
+    "eslint": "^8.55.0",
+    "prettier": "^3.1.0",
+    "turbo": "^1.11.3"
+  },
+  "packageManager": "bun@1.1.3",
+  "dependencies": {
+    "@vercel/speed-insights": "^1.0.10"
+  }
 }

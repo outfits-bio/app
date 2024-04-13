@@ -8,6 +8,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import type { Metadata } from "next";
 import { getServerAuthSession } from "@/server/auth";
 import SessionProvider from "./_components/wrappers/session-provider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Navbar } from "./_components/navigation/navbar";
 
 const clash = localFont({
@@ -99,7 +100,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
-      <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
       </head>
       <body className={`font-satoshi ${clash.variable} ${satoshi.variable} flex flex-col min-h-screen antialiased transition-colors duration-300`}>
         <SessionProvider session={session}>
@@ -110,6 +111,7 @@ export default async function RootLayout({
             </main>
           </TRPCReactProvider>
         </SessionProvider>
+        <SpeedInsights />
       </body>
     </html>
   );

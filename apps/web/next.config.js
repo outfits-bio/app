@@ -14,12 +14,31 @@ import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin";
 /** @type {import("next").NextConfig} */
 const config = {
   images: {
-    domains: [
-      "pub-4bf8804d3efc464b862de36f974618d4.r2.dev",
-      "lh3.googleusercontent.com",
-      "cdn.discordapp.com",
-      "ui-avatars.com",
-      "upload.wikimedia.org",
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'pub-4bf8804d3efc464b862de36f974618d4.r2.dev',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.discordapp.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ui-avatars.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'upload.wikimedia.org',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.scdn.co',
+      },
     ],
   },
   webpack: (config, { isServer, dev }) => {

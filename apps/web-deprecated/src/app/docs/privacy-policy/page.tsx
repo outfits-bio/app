@@ -158,7 +158,7 @@ export const PrivacyPolicyPage = () => {
             <br />
             other technologies
             <br />
-            ➔ Any form of authentication used by MySQL
+            ➔ Any form of authentication used by Postgresql
             <br />
             ➔ Encrypted data backups
             <br />
