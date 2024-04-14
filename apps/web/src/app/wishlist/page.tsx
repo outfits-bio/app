@@ -1,5 +1,5 @@
 import { getServerAuthSession } from "@/server/auth";
-import { BookmarksContent } from "../_components/bookmarks/bookmarks-content";
+import { WishlistContent } from "../_components/wishlist/wishlist-content";
 import { redirect } from "next/navigation";
 
 export default async function BookmarksPage() {
@@ -9,5 +9,5 @@ export default async function BookmarksPage() {
         redirect('/login');
     }
 
-    return <BookmarksContent />;
+    return <WishlistContent />;
 }

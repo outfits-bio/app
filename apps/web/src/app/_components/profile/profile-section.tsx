@@ -155,7 +155,7 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                 {(profileData?.lanyardEnabled && !data?.user.hideLanyard) && <div className='w-full flex items-center gap-4'>
                     {(lanyardData?.albumArt) ? <>
                         <div className='relative w-6 h-6'>
-                            <Image src={lanyardData.albumArt} alt={lanyardData.title} fill className='rounded-full animate-spin-cd border' />
+                            <Image src={lanyardData.albumArt} alt={lanyardData.title} className='rounded-full animate-spin-cd border' width={40} height={40} />
                         </div>
 
                         <Marquee pauseOnHover autoFill speed={40} className='cursor-pointer select-none'>

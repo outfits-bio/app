@@ -6,7 +6,7 @@ import { useCallback, useRef } from "react";
 import { Post } from "../discover/post/post";
 import { DiscoverPostModal } from "../modals/discover-post-modal";
 
-export function BookmarksContent() {
+export function WishlistContent() {
     const params = useSearchParams();
 
     const { data, isFetchingNextPage, isFetching, hasNextPage, fetchNextPage } = api.post.getWishlist.useInfiniteQuery({}, { getNextPageParam: (lastPage) => lastPage.nextCursor, });
