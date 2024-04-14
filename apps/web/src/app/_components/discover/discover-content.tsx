@@ -76,7 +76,7 @@ export function DiscoverContent() {
                             <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 transform ${isFilterOpen ? 'rotate-180' : 'rotate-0'}`} viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 3.586L3.707 9.879a1 1 0 101.414 1.414L10 6.414l4.879 4.879a1 1 0 101.414-1.414L10 3.586z" clipRule="evenodd" /></svg>
                         </Button>
                         {isFilterOpen && (
-                            <div className="absolute top-full left-0 w-full bg-white dark:bg-black border border-stroke rounded-xl">
+                            <div className="absolute top-full left-0 w-full bg-white dark:bg-black border border-stroke rounded-lg">
                                 <div className="flex flex-col gap-2 p-4">
                                     <CategoryButton activePostTypes={activePostTypes} handleChangePostType={handleChangePostType} type={PostType.OUTFIT} />
                                     <CategoryButton activePostTypes={activePostTypes} handleChangePostType={handleChangePostType} type={PostType.HOODIE} />
