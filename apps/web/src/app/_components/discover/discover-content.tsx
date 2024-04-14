@@ -96,7 +96,7 @@ export function DiscoverContent() {
                 <div>
                     <Link href={'/bookmarks'}>
                         <Button variant={'ghost'} iconLeft={<PiBookmarkSimpleBold />} className="justify-start">
-                            Bookmarks
+                            Wishlist
                         </Button>
                     </Link>
                 </div>

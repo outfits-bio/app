@@ -34,6 +34,7 @@ export default {
       animation: {
         ping: "ping 200ms ease-in-out",
         "spin-words": "spin-words 10s infinite",
+        "spin-cd": "spin 30s linear infinite",
       },
       keyframes: {
         "spin-words": {

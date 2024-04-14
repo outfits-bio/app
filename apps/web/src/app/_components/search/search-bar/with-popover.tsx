@@ -76,13 +76,13 @@ export function SearchBar() {
                         >
                             <Popover.Panel>
                                 <div className="relative border border-stroke rounded-xl p-4 bg-white dark:bg-black w-full flex flex-col gap-2 shadow-lg">
-                                    <Link href={`/search?username=${input}`} className='flex items-center rounded-xl p-2 bg-stroke border border-stroke text-secondary-text w-full text-left'>
+                                    <Link href={`/search?username=${input}`} className='flex items-center rounded-lg p-2 bg-stroke border border-stroke text-secondary-text w-full text-left'>
                                         <PiMagnifyingGlassBold className='text-xl mr-2' />
                                         <p>Search for &quot;{input}&quot;</p>
                                     </Link>
 
                                     {searchData?.users ? searchData.users?.map((user) => (
-                                        <Link href={`/${user.username}`} key={user.id} className='flex items-center rounded-xl p-2 hover:bg-hover w-full text-left border border-stroke'>
+                                        <Link href={`/${user.username}`} key={user.id} className='flex items-center rounded-md p-2 hover:bg-hover w-full text-left border border-stroke'>
                                             <Avatar image={user.image} id={user.id} username={user.username} size={'xs'} className='mr-2' />
                                             <p>{user.username}</p>
                                             {user.admin ? <PiHammer className='ml-1 text-primary' /> : user.verified ? <PiSealCheck className='ml-1 text-primary' /> : null}

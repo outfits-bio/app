@@ -88,37 +88,35 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
                 </div>
             </h2>}
 
-            <div className={postsExist ? 'w-full overflow-scroll-auto mb-5' : 'w-full overflow-scroll-auto md:mb-5'}>
+            <div className={postsExist ? 'w-full overflow-scroll mb-5' : 'w-full overflow-scroll md:mb-5'}>
                 <div className="flex gap-4 min-w-max pb-1">
                     {posts?.map((post, i) => (
-                        <>
-                            <Link
-                                href={`/${profileData?.username}?postId=${post.id}`}
-                                onMouseEnter={() => setDeleteButton(post.id)}
-                                onMouseLeave={() => setDeleteButton(null)}
-                                key={post.id ?? `loading_${i}`}
-                                className="w-[126px] h-[206px] border border-border rounded-lg relative overflow-hidden">
+                        <Link
+                            href={`/${profileData?.username}?postId=${post.id}`}
+                            onMouseEnter={() => setDeleteButton(post.id)}
+                            onMouseLeave={() => setDeleteButton(null)}
+                            key={post.id ?? `loading_${i}`}
+                            className="w-[126px] h-[206px] border border-border rounded-lg relative overflow-hidden">
 
-                                {isLoading && i === 0 ?
-                                    <div className='bg-hover w-full h-full flex items-center justify-center'>
-                                        {/* <Spinner /> */}
-                                    </div>
-                                    :
-                                    post.id &&
-                                    <Image
-                                        sizes="126px"
-                                        src={formatImage(post.image, profileData?.id)}
-                                        className="object-cover"
-                                        fill
-                                        alt={post.type}
-                                        // Outfits and Hoodies are above the fold on most screens, so we want to prioritize them
-                                        priority={post.type === 'OUTFIT' || post.type === 'HOODIE'}
-                                    />
-                                }
-                            </Link>
-                        </>
+                            {isLoading && i === 0 ?
+                                <div className='bg-hover w-full h-full flex items-center justify-center'>
+                                    {/* <Spinner /> */}
+                                </div>
+                                :
+                                post.id &&
+                                <Image
+                                    sizes="126px"
+                                    src={formatImage(post.image, profileData?.id)}
+                                    className="object-cover"
+                                    fill
+                                    alt={post.type}
+                                    // Outfits and Hoodies are above the fold on most screens, so we want to prioritize them
+                                    priority={post.type === 'OUTFIT' || post.type === 'HOODIE'}
+                                />
+                            }
+                        </Link>
                     ))}
-                    {(userIsProfileOwner) && <div onDragEnter={handleDrag} className='relative hidden md:block'>
+                    {(userIsProfileOwner) && <div key="upload-button" onDragEnter={handleDrag} className='relative hidden md:block'>
                         <input ref={ref} type="file" className='hidden' accept='image/*' onChange={handleChange} />
                         {postsExist && <>
                             {dragActive &&

@@ -80,12 +80,14 @@ export const ProfileCard = ({ profileData, username }: Props) => {
         }),
     })
 
-    const userUrl = `${window.location.origin}${pathname}`;
-
     const handleShare = () => {
-        void navigator.clipboard.writeText(userUrl);
-
-        toast.success('Copied profile link to clipboard!');
+        if (typeof window !== 'undefined') {
+            const userUrl = `${window.location.origin}${pathname}`;
+            void navigator.clipboard.writeText(userUrl);
+            toast.success('Copied profile link to clipboard!');
+        } else {
+            toast.error('An error occurred while copying the profile link.');
+        }
     }
 
     return (
@@ -153,7 +155,7 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                 {(profileData?.lanyardEnabled && !data?.user.hideLanyard) && <div className='w-full flex items-center gap-4'>
                     {(lanyardData?.albumArt) ? <>
                         <div className='relative w-6 h-6'>
-                            <Image src={lanyardData.albumArt} alt={lanyardData.title} fill className='rounded-xl' />
+                            <Image src={lanyardData.albumArt} alt={lanyardData.title} fill className='rounded-full animate-spin-cd border' />
                         </div>
 
                         <Marquee pauseOnHover autoFill speed={40} className='cursor-pointer select-none'>

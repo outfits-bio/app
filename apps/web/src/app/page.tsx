@@ -54,14 +54,14 @@ export default async function Home() {
             <div className='flex justify-center gap-3'>
               <div>
                 <Link href={'/login'}>
-                  <Button variant={'outline-ghost'} className='orange-selection'>Get Started</Button>
+                  <Button variant={'outline-ghost'} className='orange-selection'>Log In</Button>
                 </Link>
               </div>
 
               <div>
-                <Link href={'#more'}>
+                <Link href={'/login'}>
                   <Button className='orange-selection'>
-                    Learn More
+                    Create Account
                   </Button>
                 </Link>
               </div>
@@ -72,7 +72,7 @@ export default async function Home() {
         <Image src={landing} alt='Landing Image' className='w-11/12 md:w-2/3 shadow-2xl object-contain hover:-translate-y-16 transition-all duration-300' />
       </section>
 
-      <div id='more' className='h-12 bg-white dark:bg-black' />
+      {/* <div id='more' className='h-12 bg-white dark:bg-black' />
 
       <section className='flex flex-col items-center gap-12 w-full border-b border-stroke py-12 px-4 sm:px-12 lg:px-24 bg-white dark:bg-black'>
         <h1 className='text-4xl md:text-5xl font-bold font-clash text-center'>Your wardrobe, <span className='text-orange-accent'>electrified</span></h1>
@@ -200,8 +200,6 @@ export default async function Home() {
               </Link>
             </div>
           </div> */}
-        </div>
-      </section>
 
       <Footer />
     </>

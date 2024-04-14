@@ -48,7 +48,7 @@
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: transparent var(--blur);
+  scrollbar-color: transparent transparent;
 }
 
 *::-webkit-scrollbar {
@@ -66,7 +66,6 @@
 
 *::-webkit-scrollbar-thumb {
   background-color: var(--blur);
-  @apply dark:bg-slate-500;
   border-radius: 9999999px;
 }
 
