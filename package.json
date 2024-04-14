@@ -6,7 +6,10 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "devDependencies": {
     "eslint": "^8.55.0",
     "prettier": "^3.1.0",

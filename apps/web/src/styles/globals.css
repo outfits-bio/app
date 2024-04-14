@@ -123,24 +123,31 @@
   23% {
     transform: translateY(-112%);
   }
+
   25% {
     transform: translateY(-100%);
   }
+
   48% {
     transform: translateY(-212%);
   }
+
   50% {
     transform: translateY(-200%);
   }
+
   73% {
     transform: translateY(-312%);
   }
+
   75% {
     transform: translateY(-300%);
   }
+
   88% {
     transform: translateY(-412%);
   }
+
   90% {
     transform: translateY(-400%);
   }

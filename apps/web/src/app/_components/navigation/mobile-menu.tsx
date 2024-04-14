@@ -59,7 +59,7 @@ export const MobileMenu = () => {
                                     </Link>
                                 )}
                             </Menu.Item>
-                            
+
 
                             <div className='flex w-full items-center justify-center gap-4 font-clash font-semibold opacity-50'>
                                 <Link href={'/docs/terms-of-service'} className='px-4 py-2'>
