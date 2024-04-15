@@ -39,12 +39,12 @@ export function LikeButton({ post, variant = 'default' }: LikeButtonProps) {
             (post.authUserHasLiked && session?.user) ? (
                 <PiHeartFill
                     onAnimationEnd={() => setLikeAnimation(false)}
-                    className={likeAnimation ? 'animate-ping fill-black dark:fill-white' : ''}
+                    className={likeAnimation ? 'animate-like fill-black dark:fill-white' : ''}
                 />
             ) : (
                 <PiHeartBold
                     onAnimationEnd={() => setLikeAnimation(false)}
-                    className={likeAnimation ? 'animate-ping fill-black dark:fill-white' : ''}
+                    className={likeAnimation ? 'animate-like-end fill-black dark:fill-white' : ''}
                 />
             )}
 
@@ -59,12 +59,12 @@ export function LikeButton({ post, variant = 'default' }: LikeButtonProps) {
             (post.authUserHasLiked) ? (
                 <PiHeartFill
                     onAnimationEnd={() => setLikeAnimation(false)}
-                    className={likeAnimation ? 'animate-ping fill-white' : ''}
+                    className={likeAnimation ? 'animate-unlike fill-white' : ''}
                 />
             ) : (
                 <PiHeartBold
                     onAnimationEnd={() => setLikeAnimation(false)}
-                    className={likeAnimation ? 'animate-ping fill-white' : ''}
+                    className={likeAnimation ? 'animate-unlike-end fill-white' : ''}
                 />
             )
         }

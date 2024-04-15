@@ -4,7 +4,7 @@ import { api } from "@/trpc/react";
 import { PostType } from "database";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { PiBookmarkSimpleBold, PiClockBold, PiFireBold } from "react-icons/pi";
 import { PostModal } from "../modals/post-modal";
 import { Button } from "../ui/Button";
@@ -45,7 +45,6 @@ export function DiscoverContent() {
     const posts = data?.pages.flatMap((page) => page.posts);
 
     const observer = useRef<IntersectionObserver>();
-
     const lastElementRef = useCallback(
         (node: HTMLDivElement) => {
             if (isFetchingNextPage || isFetching) return;
@@ -60,12 +59,28 @@ export function DiscoverContent() {
         [isFetchingNextPage, isFetching, hasNextPage, fetchNextPage]
     );
 
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'ArrowUp') {
+                window.scrollBy(0, -100);
+            } else if (event.key === 'ArrowDown') {
+                window.scrollBy(0, 100);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
+
     return (
         <div className="flex h-full">
             <PostModal />
             <section className="w-80 bg-white dark:bg-black border-r border-stroke hidden md:flex flex-col justify-between p-4 h-full">
+                {/* Filter */}
                 <div className="flex flex-col gap-2 w-full">
-                    {/* Filter Dropdown */}
                     <div className="relative">
                         <Button
                             onClick={() => setIsFilterOpen(!isFilterOpen)}
@@ -93,6 +108,7 @@ export function DiscoverContent() {
                     </div>
                 </div>
 
+                {/* Wishlist */}
                 <div>
                     <Link href={'/wishlist'}>
                         <Button variant={'ghost'} iconLeft={<PiBookmarkSimpleBold />} className="justify-start">

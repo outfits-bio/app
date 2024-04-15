@@ -35,6 +35,7 @@ export default {
         ping: "ping 200ms ease-in-out",
         "spin-words": "spin-words 10s infinite",
         "spin-cd": "spin 30s linear infinite",
+        "like": "like .6s ease-in-out",
       },
       keyframes: {
         "spin-words": {
@@ -46,6 +47,9 @@ export default {
           "75%": { transform: "translateY(-300%)" },
           "85%": { transform: "translateY(-412%)" },
           "100%": { transform: "translateY(-400%)" },
+        },
+        like: {
+          "100%": { transform: "scale(1.2)" },
         },
       },
     },
