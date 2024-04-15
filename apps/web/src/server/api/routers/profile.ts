@@ -169,6 +169,7 @@ export const profileRouter = createTRPCRouter({
         where: {
           username: {
             contains: username,
+            mode: "insensitive",
           },
         },
         select: {
@@ -195,7 +196,6 @@ export const profileRouter = createTRPCRouter({
 
       return { users, nextCursor };
     }),
-
   getTotalUsers: publicProcedure.query(async ({ ctx }) => {
     const users = await ctx.prisma.user.count();
 
