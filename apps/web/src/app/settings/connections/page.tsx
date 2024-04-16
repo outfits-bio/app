@@ -1,6 +1,8 @@
 "use client";
 
-import { SettingsCard } from "@/app/_components/settings/settings-card";
+import { GoogleCard } from "@/app/_components/settings/connections/google-card";
+import { DiscordCard } from "@/app/_components/settings/connections/discord-card";
+import { SpotifyStatusCard } from "@/app/_components/settings/connections/spotify-status-card";
 import { SettingsSidebar } from "@/app/_components/settings/settings-sidebar";
 
 export default function AppearanceSettingsPage() {
@@ -12,7 +14,9 @@ export default function AppearanceSettingsPage() {
                     <h1 className="font-clash font-bold text-3xl">Connections</h1>
                     <p>Manage your connections and plugins</p>
                 </div>
-                <SettingsCard />
+                <GoogleCard />
+                <DiscordCard />
+                <SpotifyStatusCard />
             </section>
         </div>
     )

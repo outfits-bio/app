@@ -1,7 +1,11 @@
 "use client";
 
-import { SettingsCard } from "@/app/_components/settings/settings-card";
+import { AvatarCard } from "@/app/_components/settings/profile/avatar-card";
+import { UsernameCard } from "@/app/_components/settings/profile/username-card";
+import { TaglineCard } from "@/app/_components/settings/profile/tagline-card";
+import { LinksCard } from "@/app/_components/settings/profile/links-card";
 import { SettingsSidebar } from "@/app/_components/settings/settings-sidebar";
+import { DeleteAccountCard } from "@/app/_components/settings/profile/delete-account-card";
 
 export default function AppearanceSettingsPage() {
     return (
@@ -12,7 +16,11 @@ export default function AppearanceSettingsPage() {
                     <h1 className="font-clash font-bold text-3xl">Profile</h1>
                     <p>Edit and manage your profile.</p>
                 </div>
-                <SettingsCard />
+                <AvatarCard />
+                <UsernameCard />
+                <TaglineCard />
+                <LinksCard />
+                <DeleteAccountCard />
             </section>
         </div>
     )
