@@ -4,9 +4,8 @@ import { signOut } from 'next-auth/react';
 
 export function SettingsSidebar() {
     return (
-        <section className="w-80 bg-white dark:bg-black border-r border-stroke hidden md:flex flex-col justify-between p-4 h-full">
-            <div className="flex flex-col gap-2 w-full">
-                <div className="flex flex-col gap-2 p-4 divide-y divide-stroke">
+        <section className="w-80 bg-white dark:bg-black border-r border-stroke hidden md:flex flex-col justify-between p-4">
+                <div className="flex flex-col gap-2 divide-y divide-stroke">
                     <div className='gap-2 flex flex-col'>
                         <Link href='/settings/profile'>
                             <Button variant='ghost' className='justify-start transition duration-300 ease-in-out'>Profile</Button>
@@ -31,7 +30,6 @@ export function SettingsSidebar() {
                         <Button variant={'ghost'} className='justify-start transition duration-300 ease-in-out' onClick={() => signOut({ callbackUrl: '/' })}>Logout</Button>
                     </div>
                 </div>
-            </div>
         </section>
     );
 }

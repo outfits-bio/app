@@ -24,7 +24,7 @@ export function LinksCard() {
             <div className="flex items-center gap-24 p-4 px-10 self-stretch justify-between border-t bg-gray-100">
                 <p>Maximum of 3 links. Mainstream platforms have their own icons.</p>
                 <div className="flex items-center gap-3">
-                    <Button>Save Changes</Button>
+                    <Button>Save</Button>
                 </div>
             </div>
         </div>
