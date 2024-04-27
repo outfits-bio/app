@@ -112,7 +112,11 @@ export default async function RootLayout({
               {children}
             </main>
             <MobileNav />
-            <Toaster />
+            <Toaster
+              toastOptions={{
+                className: 'border font-clash font-bold',
+              }}
+            />
           </TRPCReactProvider>
         </SessionProvider>
         <SpeedInsights />
