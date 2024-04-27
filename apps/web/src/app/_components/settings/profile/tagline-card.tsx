@@ -9,7 +9,7 @@ export function TaglineCard() {
                     <p>Your tagline is essentially a small biograph about you, what you like or what you do.</p>
                 </div>
                 <div className="flex justify-between items-center self-stretch border rounded-lg">
-                    <div className="flex items-center gap-4 p-3 py-5 flex-1 self-stretch">I enjoy linking my outfits.</div>
+                    <input className="flex items-center gap-4 p-3 py-4 flex-1 self-stretch" placeholder="I enjoy linking my outfits." />
                 </div>
             </div>
             <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between border-t bg-gray-100">
