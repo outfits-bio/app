@@ -10,6 +10,7 @@ import { PostModal } from "../modals/post-modal";
 import { Button } from "../ui/Button";
 import { CategoryButton } from "./category-button";
 import { Post } from "./post/post";
+import { RegisterBanner } from "./register-banner"
 
 export function DiscoverContent() {
     const params = useSearchParams();
@@ -148,6 +149,7 @@ export function DiscoverContent() {
                         );
                     }) : null}
                 </div>
+                <RegisterBanner />
             </section>
         </div>
     );

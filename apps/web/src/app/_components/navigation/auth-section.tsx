@@ -28,6 +28,13 @@ export function AuthSection() {
                     <Button variant={'outline-ghost'} shape={'square'} iconLeft={<PiCompass />} />
                 </Link>}
 
+                <Link href='/notifications' className='relative'>
+                    <Button variant='outline-ghost' shape={'circle'} iconLeft={iconComponent} />
+                    {hasNotifications ? <div className="absolute top-0 right-0 w-4 h-4 rounded-full bg-error text-white text-[9px] font-bold flex items-center justify-center">
+                        {notificationsCount}
+                    </div> : null}
+                </Link>
+
                 <NavbarMenu />
             </div>
 

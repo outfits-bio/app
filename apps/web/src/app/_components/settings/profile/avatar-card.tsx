@@ -13,8 +13,7 @@ export function AvatarCard() {
             <div className="flex items-center gap-24 p-4 px-10 self-stretch justify-between border-t bg-gray-100">
             <p>Click to upload or simply drag and drop your image.</p>
                 <div className="flex items-center gap-3">
-                    <Button variant="ghost">Reset</Button>
-                    <Button variant="outline">Edit</Button>
+                    <Button variant="ghost">Remove</Button>
                     <Button>Upload</Button>
                 </div>
             </div>

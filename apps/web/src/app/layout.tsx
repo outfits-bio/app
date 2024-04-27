@@ -10,6 +10,7 @@ import { getServerAuthSession } from "@/server/auth";
 import SessionProvider from "./_components/wrappers/session-provider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Navbar } from "./_components/navigation/navbar";
+import { MobileNav } from "./_components/navigation/mobile-nav";
 
 const clash = localFont({
   src: '../../public/fonts/ClashDisplay-Variable.woff2',
@@ -106,9 +107,10 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <TRPCReactProvider cookies={cookies().toString()}>
             <Navbar />
-            <main className="h-screen pt-20 overflow-x-hidden pb-24 md:pb-0 scroll-smooth">
+            <main className="h-screen pt-20 overflow-x-hidden md:pb-0 scroll-smooth">
               {children}
             </main>
+            <MobileNav />
           </TRPCReactProvider>
         </SessionProvider>
         <SpeedInsights />
