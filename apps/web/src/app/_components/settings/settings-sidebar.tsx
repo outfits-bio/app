@@ -20,12 +20,6 @@ export function SettingsSidebar() {
                         </Link>
                     </div>
 
-                    <div className='gap-2 flex flex-col pt-2 sm:hidden'>
-                        <Button variant='ghost' className='justify-start transition duration-300 ease-in-out'>Report Bug</Button>
-
-                        <Button variant='ghost' className='justify-start transition duration-300 ease-in-out'>Send Feedback</Button>
-                    </div>
-
                     <div className='flex flex-col gap-2 pt-2'>
                         <Button variant={'ghost'} className='justify-start transition duration-300 ease-in-out' onClick={() => signOut({ callbackUrl: '/' })}>Logout</Button>
                     </div>

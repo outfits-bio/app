@@ -58,22 +58,6 @@ export const NavbarMenu = () => {
             <Menu.Item>
                 <Button
                     variant='ghost'
-                // onClick={() => setBugReportModalOpen(true)}
-                >
-                    <p className='font-semibold'>Report Bug</p>
-                </Button>
-            </Menu.Item>
-            <Menu.Item>
-                <Button
-                    variant='ghost'
-                // onClick={() => setFeedbackModalOpen(true)}
-                >
-                    <p className='font-semibold'>Feedback</p>
-                </Button>
-            </Menu.Item>
-            <Menu.Item>
-                <Button
-                    variant='ghost'
                     onClick={() => signOut()}
                 >
                     <p className='font-semibold'>Logout</p>

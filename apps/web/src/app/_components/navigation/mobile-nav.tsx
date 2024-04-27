@@ -26,11 +26,11 @@ export function MobileNav() {
                     {pathname === "/search" ? <PiMagnifyingGlassFill /> : <PiMagnifyingGlass />}
                 </Link>
 
-                <Link href={'/shoot'} className='rounded-xl flex flex-col items-center justify-center text-3xl transition duration-300 ease-in-out'>
-                    <Button shape={'square'} variant={'outline-ghost'} accent>
-                        <PiPlus />
-                    </Button>
-                </Link>
+                {/* <Link href={'/shoot'} className='rounded-xl flex flex-col items-center justify-center text-3xl transition duration-300 ease-in-out'> */}
+                <Button shape={'square'} variant={'outline-ghost'} accent>
+                    <PiPlus />
+                </Button>
+                {/* </Link> */}
 
                 <Link href={'/settings'} className='grow rounded-xl flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
                     {pathname.startsWith("/settings") ? <PiGearFill /> : <PiGear />}

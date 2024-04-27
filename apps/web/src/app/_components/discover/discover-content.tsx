@@ -3,6 +3,7 @@
 import { api } from "@/trpc/react";
 import { PostType } from "database";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PiBookmarkSimpleBold, PiClockBold, PiFireBold } from "react-icons/pi";
@@ -16,6 +17,8 @@ export function DiscoverContent() {
     const params = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
+    const { data: session } = useSession();
+
 
     const [activePostTypes, setActivePostTypes] = useState<PostType[]>([]);
     const [isFilterOpen, setIsFilterOpen] = useState(true); // Added state for filter dropdown
@@ -110,13 +113,15 @@ export function DiscoverContent() {
                 </div>
 
                 {/* Wishlist */}
-                <div>
-                    <Link href={'/wishlist'}>
-                        <Button variant={'ghost'} iconLeft={<PiBookmarkSimpleBold />} className="justify-start">
-                            Wishlist
-                        </Button>
-                    </Link>
-                </div>
+                {session &&
+                    <div>
+                        <Link href={'/wishlist'}>
+                            <Button variant={'ghost'} iconLeft={<PiBookmarkSimpleBold />} className="justify-start">
+                                Wishlist
+                            </Button>
+                        </Link>
+                    </div>
+                }
             </section>
 
             <section className="grow flex flex-col gap-4 items-center pt-2 md:pt-4">
