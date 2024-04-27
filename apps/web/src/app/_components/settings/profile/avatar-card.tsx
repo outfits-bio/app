@@ -10,7 +10,7 @@ export function AvatarCard() {
                 </div>
                 <div className="flex w-[88px] h-[88px] justify-center items-center bg-gray-200 border rounded-full" />
             </div>
-            <div className="flex items-center gap-24 p-4 px-10 self-stretch justify-between border-t bg-gray-100">
+            <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between border-t bg-gray-100">
             <p>Click to upload or simply drag and drop your image.</p>
                 <div className="flex items-center gap-3">
                     <Button variant="ghost">Remove</Button>

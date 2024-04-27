@@ -9,7 +9,7 @@ export function DeleteAccountCard() {
                     <p>If you don't want to have an account on outfits.bio anymore, then you can request an account deletion.</p>
                 </div>
             </div>
-            <div className="flex items-center gap-24 p-4 px-10 self-stretch justify-between border-t bg-red-100">
+            <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between border-t bg-red-100">
                 <p>This action is irreversible, and cannot be undone after.</p>
                 <div className="flex items-center gap-3">
                     <Button className="bg-red-500 border-none">Delete Account</Button>

@@ -12,7 +12,7 @@ export function TaglineCard() {
                     <div className="flex items-center gap-4 p-3 py-5 flex-1 self-stretch">I enjoy linking my outfits.</div>
                 </div>
             </div>
-            <div className="flex items-center gap-24 p-4 px-10 self-stretch justify-between border-t bg-gray-100">
+            <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between border-t bg-gray-100">
                 <p>You can only have up to 200 characters.</p>
                 <div className="flex items-center gap-3">
                     <Button>Save</Button>

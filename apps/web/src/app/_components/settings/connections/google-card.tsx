@@ -9,7 +9,7 @@ export function GoogleCard() {
                     <p>Sign in with google, a classic.</p>
                 </div>
             </div>
-            <div className="flex items-center gap-24 p-6 px-10 self-stretch justify-end border-t bg-gray-100">
+            <div className="flex flex-wrap items-center gap-3 p-6 px-10 self-stretch justify-end border-t bg-gray-100">
                 <div className="flex items-center gap-3">
                     <Button>Connect</Button>
                 </div>
