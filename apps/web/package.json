@@ -26,7 +26,7 @@
     "axios": "^1.6.2",
     "bad-words": "^3.0.4",
     "class-variance-authority": "^0.7.0",
-    "clsx": "^2.0.0",
+    "clsx": "^2.1.1",
     "database": "workspace:*",
     "date-fns": "^2.30.0",
     "gray-matter": "^4.0.3",
@@ -42,7 +42,7 @@
     "react-icons": "4.12.0",
     "server-only": "^0.0.1",
     "superjson": "^2.2.1",
-    "tailwind-merge": "^2.1.0",
+    "tailwind-merge": "^2.3.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {

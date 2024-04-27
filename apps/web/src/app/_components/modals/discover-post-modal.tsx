@@ -75,7 +75,7 @@ export const DiscoverPostModal = ({ post }: DiscoverPostModalProps) => {
                                 <PiX className='w-5 h-4' />
                             </button>
 
-                            <div className='flex flex-col justify-end items-center p-4 absolute bottom-0 bg-gradient-to-b from-transparent to-black/15 w-full h-1/7 bg-fixed'>
+                            <div className='flex flex-col justify-end items-center p-4 absolute bottom-0 bg-black bg-opacity-20 w-full h-1/7 bg-fixed'>
                                 <div className='text-white flex w-full gap-2 mb-2 pl-0.5'>
                                     {/* {getPostTypeIconSmall(post.type)} */}
                                     <h1 className='font-clash'>{getPostTypeName(post.type)}</h1>

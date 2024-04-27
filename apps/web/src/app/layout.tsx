@@ -9,6 +9,7 @@ import type { Metadata } from "next";
 import { getServerAuthSession } from "@/server/auth";
 import SessionProvider from "./_components/wrappers/session-provider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Toaster } from 'react-hot-toast';
 import { Navbar } from "./_components/navigation/navbar";
 import { MobileNav } from "./_components/navigation/mobile-nav";
 
@@ -111,6 +112,7 @@ export default async function RootLayout({
               {children}
             </main>
             <MobileNav />
+            <Toaster />
           </TRPCReactProvider>
         </SessionProvider>
         <SpeedInsights />
