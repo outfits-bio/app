@@ -14,7 +14,7 @@ export function Footer() {
       <div className='grid gap-8 lg:gap-20 xl:gap-32 grid-cols-1 sm:grid-cols-3'>
         <div className='flex flex-col gap-1 text-secondary-text'>
           <h3 className='font-bold text-gray-500'>Explore</h3>
-          <Link href='/discover' className='text-sm'>Discover</Link>
+          <Link href='/' className='text-sm'>Discover</Link>
         </div>
 
         <div className='flex flex-col gap-1 text-secondary-text'>

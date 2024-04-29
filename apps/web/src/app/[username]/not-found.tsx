@@ -12,7 +12,7 @@ export const UserNotFoundPage = () => {
         </article>
         <div className='relative w-[500]'>
             <div className='flex gap-2 items-center'>
-                <Link href='/discover'>
+                <Link href='/'>
                     <Button centerItems variant={'outline-ghost'}>
                         Discover
                     </Button>

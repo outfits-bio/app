@@ -24,7 +24,7 @@ export function AuthSection() {
                     <Button variant={'outline-ghost'} iconLeft={<PiPlus />}>Post</Button>
                 </div>
 
-                {pathname === '/discover' || <Link href='/discover'>
+                {pathname === ('/discover' && "/") || <Link href='/'>
                     <Button variant={'outline-ghost'} shape={'square'} iconLeft={<PiCompass />} />
                 </Link>}
 
@@ -48,7 +48,7 @@ export function AuthSection() {
     }
 
     return <div className='items-center gap-4 hidden md:flex'>
-        {pathname !== '/discover' && <Link href='/discover'>
+        {pathname !== ('/discover' && "/") && <Link href='/'>
             <Button variant='outline-ghost' iconLeft={<PiCompass />}>Discover</Button>
         </Link>}
 

@@ -18,8 +18,8 @@ export function MobileNav() {
     if (pathname !== '/login' && pathname !== '/onboarding' && pathname !== '/') {
         return (
             <div className="flex w-full h-20 justify-between items-center p-5 px-4 border-t gap-3 sm:hidden fixed bottom-0 left-0 right-0 bg-white bg-opacity-95">
-                <Link href={'/discover'} className='grow rounded-xl flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
-                    {pathname === "/discover" ? <PiHouseFill /> : <PiHouse />}
+                <Link href={'/'} className='grow rounded-xl flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
+                    {pathname === ('/discover' && "/") ? <PiHouseFill /> : <PiHouse />}
                 </Link>
 
                 <Link href={'/search'} className='grow rounded-xl flex items-center justify-center text-3xl transition duration-300 ease-in-out'>

@@ -39,7 +39,7 @@ export const MobileMenu = () => {
                         <div className="p-4 space-y-2">
                             <Menu.Item>
                                 {({ active }) => (
-                                    <Link href={'/discover'}
+                                    <Link href={'/'}
                                         className={`${active ? 'bg-gray-100 dark:bg-opacity-20 rounded-xl transform transition duration-300 ease-in-out' : ''
                                             } group flex w-full items-center justify-between px-4 py-2 font-clash font-semibold`}
                                     >
