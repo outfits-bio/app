@@ -8,6 +8,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import type { Metadata } from "next";
 import { getServerAuthSession } from "@/server/auth";
 import SessionProvider from "./_components/wrappers/session-provider";
+import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from 'react-hot-toast';
 import { Navbar } from "./_components/navigation/navbar";
@@ -119,6 +120,7 @@ export default async function RootLayout({
             />
           </TRPCReactProvider>
         </SessionProvider>
+        <Analytics />
         <SpeedInsights />
       </body>
     </html>
