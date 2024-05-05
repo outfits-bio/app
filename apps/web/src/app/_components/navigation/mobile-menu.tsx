@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { Fragment } from 'react';
 
-import { PiCompass, PiDotsThree, PiX } from 'react-icons/pi';
+import { PiDotsThree, PiX } from 'react-icons/pi';
 
 export const MobileMenu = () => {
     const { data: session } = useSession();
@@ -39,18 +39,6 @@ export const MobileMenu = () => {
                         <div className="p-4 space-y-2">
                             <Menu.Item>
                                 {({ active }) => (
-                                    <Link href={'/'}
-                                        className={`${active ? 'bg-gray-100 dark:bg-opacity-20 rounded-xl transform transition duration-300 ease-in-out' : ''
-                                            } group flex w-full items-center justify-between px-4 py-2 font-clash font-semibold`}
-                                    >
-                                        <h3>Discover</h3>
-
-                                        <PiCompass className='w-6 h-6' />
-                                    </Link>
-                                )}
-                            </Menu.Item>
-                            <Menu.Item>
-                                {({ active }) => (
                                     <Link href={'https://discord.gg/f4KEs5TVz2'}
                                         className={`${active ? 'bg-gray-100 dark:bg-opacity-20 rounded-xl transform transition duration-300 ease-in-out' : ''
                                             } group flex w-full items-center justify-between px-4 py-2 font-clash font-semibold`}
@@ -69,7 +57,7 @@ export const MobileMenu = () => {
                                     Privacy
                                 </Link>
                                 <Link href={'/docs/brand-guide'} className='px-4 py-2'>
-                                    Brand Guide
+                                    Branding
                                 </Link>
                             </div>
                         </div>
