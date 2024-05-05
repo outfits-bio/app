@@ -28,9 +28,9 @@ export const MobileMenu = () => {
                     as={Fragment}
                     enter="transition-all ease-in-out duration-50"
                     enterFrom="h-0"
-                    enterTo="h-44"
+                    enterTo="h-28"
                     leave="transition-all ease-in-out duration-50"
-                    leaveFrom="h-44"
+                    leaveFrom="h-28"
                     leaveTo="h-0"
 
                 >
