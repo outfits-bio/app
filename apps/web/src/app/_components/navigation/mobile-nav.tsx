@@ -18,26 +18,26 @@ export function MobileNav() {
     if (pathname !== '/login' && pathname !== '/onboarding') {
         return (
             <div className="flex w-full h-20 justify-between items-center p-5 px-4 border-t gap-3 sm:hidden fixed bottom-0 left-0 right-0 bg-white bg-opacity-95">
-                <Link href={'/'} className='grow rounded-xl flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
+                <Link href={'/'} className='grow rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[105%]'>
                     {pathname === ('/discover' && "/") ? <PiHouseFill /> : <PiHouse />}
                 </Link>
 
-                <Link href={'/search'} className='grow rounded-xl flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
+                <Link href={'/search'} className='grow rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[105%]'>
                     {pathname === "/search" ? <PiMagnifyingGlassFill /> : <PiMagnifyingGlass />}
                 </Link>
 
-                <Link href={'#'} className='rounded-xl flex flex-col items-center justify-center text-2xl transition duration-300 ease-in-out'>
+                <Link href={'#'} className='rounded-xl flex flex-col items-center justify-center text-2xl transform transition duration-100 ease-in-out active:scale-[105%]'>
                 <Button shape={'square'} variant={'outline-ghost'} accent>
                     <PiPlus />
                 </Button>
                 </Link>
 
-                <Link href={'/settings'} className='grow rounded-xl flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
+                <Link href={'/settings'} className='grow rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[105%]'>
                     {pathname.startsWith("/settings") ? <PiGearFill /> : <PiGear />}
                 </Link>
 
                 {session ? (
-                    <Link href={"/" + session.user.username} className='grow rounded-xl flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
+                    <Link href={"/" + session.user.username} className='grow rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[105%]'>
                         <Avatar
                             image={session.user.image}
                             id={session.user.id}
@@ -45,7 +45,7 @@ export function MobileNav() {
                             size={'xs'} />
                     </Link>
                 ) : (
-                    <Link href={'/login'} className='grow rounded-xl flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
+                    <Link href={'/login'} className='grow rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[105%]'>
                         <PiUserPlus />
                     </Link>
                 )}
