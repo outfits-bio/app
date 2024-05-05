@@ -15,7 +15,7 @@ export function MobileNav() {
     const { data: session } = useSession();
     const pathname = usePathname();
 
-    if (pathname !== '/login' && pathname !== '/onboarding' && pathname !== '/') {
+    if (pathname !== '/login' && pathname !== '/onboarding') {
         return (
             <div className="flex w-full h-20 justify-between items-center p-5 px-4 border-t gap-3 sm:hidden fixed bottom-0 left-0 right-0 bg-white bg-opacity-95">
                 <Link href={'/'} className='grow rounded-xl flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
@@ -26,11 +26,11 @@ export function MobileNav() {
                     {pathname === "/search" ? <PiMagnifyingGlassFill /> : <PiMagnifyingGlass />}
                 </Link>
 
-                {/* <Link href={'/shoot'} className='rounded-xl flex flex-col items-center justify-center text-3xl transition duration-300 ease-in-out'> */}
+                <Link href={'#'} className='rounded-xl flex flex-col items-center justify-center text-2xl transition duration-300 ease-in-out'>
                 <Button shape={'square'} variant={'outline-ghost'} accent>
                     <PiPlus />
                 </Button>
-                {/* </Link> */}
+                </Link>
 
                 <Link href={'/settings'} className='grow rounded-xl flex items-center justify-center text-3xl transition duration-300 ease-in-out'>
                     {pathname.startsWith("/settings") ? <PiGearFill /> : <PiGear />}
