@@ -152,7 +152,7 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                         </Link>)}
                 </div>
 
-                {(profileData?.lanyardEnabled && !data?.user.hideLanyard) && <div className='w-full flex items-center gap-4'>
+                {(profileData?.lanyardEnabled && !data?.user.hideLanyard && lanyardData?.albumArt) && <div className='w-full flex items-center gap-4'>
                     {(lanyardData?.albumArt) ? <>
                         <div className='relative w-6 h-6'>
                             <Image src={lanyardData.albumArt} alt={lanyardData.title} className='rounded-full animate-spin-cd border' width={40} height={40} />
@@ -166,8 +166,8 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                     {lanyardData === null && isCurrentUser && <p onClick={() => setSpotifySetupModalOpen(true)} className='text-sm text-error flex gap-2 items-center cursor-pointer hover:underline'>More setup required to display Spotify. <PiQuestion className='w-4 h-4' /></p>}
                 </div>}
 
-                <div className='w-full flex items-center justify-between gap-4'>
-                    {!isCurrentUser && !profileData?.username?.toLowerCase().includes(data?.user.username?.toLowerCase() ?? '') && <>
+                
+                    {!isCurrentUser && !profileData?.username?.toLowerCase().includes(data?.user.username?.toLowerCase() ?? '') && <div className='w-full flex items-center justify-between gap-4'>
                         <div className='grow'>
                             <Button
                                 accent
@@ -204,9 +204,9 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                         <div>
                             {/* {(data?.user && profileData) && <ProfileMenu setAdminEditUserModalOpen={setAdminEditUserModalOpen} username={profileData.username ?? ''} user={currentUser} userUrl={userUrl} handleDeleteUser={handleDeleteUser} setReportModalOpen={setReportModalOpen} />} */}
                         </div>
-                    </>}
+                    </div>}
 
-                    {(isCurrentUser || (data?.user && profileData && data?.user.username.toLowerCase() === (profileData?.username ?? '').toLowerCase())) && <>
+                    {(isCurrentUser || (data?.user && profileData && data?.user.username.toLowerCase() === (profileData?.username ?? '').toLowerCase())) && <div className="flex gap-3">
                         <Link href='/settings/profile' className='grow'>
                             <Button variant='outline' iconLeft={<PiPencilSimple />} centerItems>
                                 Edit
@@ -218,9 +218,8 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                                 Share
                             </Button>
                         </div>
-                    </>}
+                    </div>}
                 </div>
             </div>
-        </div >
     )
 }
