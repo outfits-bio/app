@@ -26,7 +26,7 @@ export function MobileNav() {
                     {pathname === "/search" ? <PiMagnifyingGlassFill /> : <PiMagnifyingGlass />}
                 </Link>
 
-                <Link href={'#'} className='rounded-xl flex flex-col items-center justify-center text-2xl transform transition duration-100 ease-in-out active:scale-[110%]'>
+                <Link href={'#'} className='rounded-xl flex flex-col items-center justify-center text-2xl'>
                 <Button shape={'square'} variant={'outline-ghost'} accent>
                     <PiPlus />
                 </Button>
