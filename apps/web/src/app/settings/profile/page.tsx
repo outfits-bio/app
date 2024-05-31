@@ -1,4 +1,5 @@
-"use client";
+import { getServerAuthSession } from "@/server/auth";
+import { redirect } from "next/navigation";
 
 import { AvatarCard } from "@/app/_components/settings/profile/avatar-card";
 import { UsernameCard } from "@/app/_components/settings/profile/username-card";
@@ -7,7 +8,13 @@ import { LinksCard } from "@/app/_components/settings/profile/links-card";
 import { SettingsSidebar } from "@/app/_components/settings/settings-sidebar";
 import { DeleteAccountCard } from "@/app/_components/settings/profile/delete-account-card";
 
-export default function ProfileSettingsPage() {
+export default async function ProfileSettingsPage() {
+    const session = await getServerAuthSession();
+
+    if (!session?.user) {
+        redirect('/login');
+    }
+    
     return (
         <div className="flex">
             <SettingsSidebar />
