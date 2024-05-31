@@ -1,4 +1,4 @@
-export const PrivacyPolicyPage = () => {
+export default async function PrivacyPolicyPage() {
     return <>
         <div className='container p-6 md:p-12'>
             <h1 className='font-black font-clash text-4xl sm:text-5xl'>Outfits.bio Terms of Service</h1>
@@ -433,5 +433,3 @@ export const PrivacyPolicyPage = () => {
         </div>
     </>
 }
-
-export default PrivacyPolicyPage;
