@@ -109,7 +109,7 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <TRPCReactProvider cookies={cookies().toString()}>
             <Navbar />
-            <main className="h-screen pt-20 overflow-x-hidden md:pb-0 scroll-smooth">
+            <main className="h-screen pt-20 overflow-x-hidden md:pb-0 scroll-smooth pb-20">
               {children}
             </main>
             <MobileNav />
