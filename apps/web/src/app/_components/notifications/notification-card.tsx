@@ -16,7 +16,8 @@ interface NotificationCardProps {
 
 const RelativeDate = ({ date }: { date: Date }) => {
     const timeString = intlFormatDistance(date, Date.now(), {
-        style: 'narrow'
+        style: 'narrow',
+        locale: 'en',
     });
 
     return <>{timeString}</>
