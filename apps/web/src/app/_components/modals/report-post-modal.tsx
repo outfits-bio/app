@@ -60,7 +60,7 @@ export const ReportModal = ({ type, id }: ReportModalProps) => {
                     </div>
 
                     <div className='flex w-full gap-2'>
-                        <Button variant='outline' centerItems onClick={() => setIsOpen(false)}>No, Abort</Button>
+                        <Button variant='outline' centerItems onClick={() => setIsOpen(false)}>Cancel</Button>
                         <Button centerItems type='submit'>Report</Button>
                     </div>
                 </form>
