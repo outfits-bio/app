@@ -1,18 +1,18 @@
 "use client";
 
-import axios from "axios";
-import { Dialog, Listbox, Transition } from '@headlessui/react';
-import { Fragment, useCallback, useEffect, useRef, useState } from "react";
-import { Button } from "../ui/Button";
-import { PiPlus, PiCaretDown } from "react-icons/pi";
-import { api } from "@/trpc/react";
-import { PostType } from "database";
 import { useFileUpload } from "@/hooks/file-upload.hook";
+import { api } from "@/trpc/react";
+import getCroppedImg from "@/utils/crop-image.util";
 import { handleErrors } from "@/utils/handle-errors.util";
-import Cropper from "react-easy-crop";
-import type { Area } from "react-easy-crop";
-import getCroppedImg from "@/utils/crop-image.util"
 import { getPostTypeName } from "@/utils/names.util";
+import { Dialog, Listbox, Transition } from '@headlessui/react';
+import axios from "axios";
+import { PostType } from "database";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
+import type { Area } from "react-easy-crop";
+import Cropper from "react-easy-crop";
+import { PiCaretDown, PiPlus } from "react-icons/pi";
+import { Button } from "../ui/Button";
 
 export function CreatePostModal() {
     const [isOpen, setIsOpen] = useState(false);

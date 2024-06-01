@@ -2,7 +2,7 @@
 
 import debounce from 'lodash.debounce';
 import { useRouter, useSearchParams } from "next/navigation";
-import { type ChangeEvent, useCallback, type Dispatch, type SetStateAction, useEffect } from "react";
+import { type ChangeEvent, type Dispatch, type SetStateAction, useCallback, useEffect } from "react";
 import { PiMagnifyingGlass, PiSpinnerGap } from "react-icons/pi";
 
 interface SearchBarProps {

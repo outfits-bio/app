@@ -3,19 +3,19 @@
 import { api } from "@/trpc/react";
 import type { RouterOutputs } from "@/trpc/shared";
 import { handleErrors } from "@/utils/handle-errors.util";
+import { LinkType } from "database";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import Marquee from "react-fast-marquee";
 import toast from "react-hot-toast";
+import { PiCameraBold, PiDiscordLogoBold, PiGithubLogoBold, PiHammerBold, PiHeartBold, PiHeartFill, PiInstagramLogoBold, PiLinkSimpleBold, PiPencilSimple, PiQuestion, PiSealCheckBold, PiShareFat, PiTiktokLogoBold, PiTwitterLogoBold, PiYoutubeLogoBold } from "react-icons/pi";
+import { PostModal } from "../modals/post-modal";
 import { ReportModal } from "../modals/report-post-modal";
 import { Avatar } from "../ui/Avatar";
-import { PiCameraBold, PiDiscordLogoBold, PiGithubLogoBold, PiHammerBold, PiHeartBold, PiHeartFill, PiInstagramLogoBold, PiLinkSimpleBold, PiPencilSimple, PiQuestion, PiSealCheckBold, PiShareFat, PiTiktokLogoBold, PiTwitterLogoBold, PiYoutubeLogoBold } from "react-icons/pi";
-import { LinkType } from "database";
-import Link from "next/link";
-import Image from "next/image";
-import Marquee from "react-fast-marquee";
 import { Button } from "../ui/Button";
-import { PostModal } from "../modals/post-modal";
 
 interface Props {
     profileData?: RouterOutputs['user']['getProfile'];
@@ -166,60 +166,60 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                     {lanyardData === null && isCurrentUser && <p onClick={() => setSpotifySetupModalOpen(true)} className='text-sm text-error flex gap-2 items-center cursor-pointer hover:underline'>More setup required to display Spotify. <PiQuestion className='w-4 h-4' /></p>}
                 </div>}
 
-                
-                    {!isCurrentUser && !profileData?.username?.toLowerCase().includes(data?.user.username?.toLowerCase() ?? '') && <div className='w-full flex items-center justify-between gap-4'>
-                        <div className='grow'>
-                            <Button
-                                accent
-                                centerItems
-                                onClick={() => {
-                                    if (status !== 'authenticated') {
-                                        router.push('/login');
-                                        return;
-                                    }
 
-                                    setLikeAnimation(true);
-                                    if (profileData?.id) mutate({ id: profileData.id });
-                                }}
-                                iconLeft={
+                {!isCurrentUser && !profileData?.username?.toLowerCase().includes(data?.user.username?.toLowerCase() ?? '') && <div className='w-full flex items-center justify-between gap-4'>
+                    <div className='grow'>
+                        <Button
+                            accent
+                            centerItems
+                            onClick={() => {
+                                if (status !== 'authenticated') {
+                                    router.push('/login');
+                                    return;
+                                }
 
-                                    (profileData?.authUserHasLiked) ? (
-                                        <PiHeartFill
-                                            onAnimationEnd={() => setLikeAnimation(false)}
-                                            className={likeAnimation ? 'animate-ping text-white dark:text-black' : ''}
-                                        />
-                                    ) : (
-                                        <PiHeartBold
-                                            onAnimationEnd={() => setLikeAnimation(false)}
-                                            className={likeAnimation ? 'animate-ping text-white dark:text-black' : ''}
-                                        />
-                                    )}
+                                setLikeAnimation(true);
+                                if (profileData?.id) mutate({ id: profileData.id });
+                            }}
+                            iconLeft={
 
-                                disabled={isLoading}
-                            >
-                                Follow{(profileData?.authUserHasLiked) ? 'ed' : ''}
-                            </Button>
-                        </div>
+                                (profileData?.authUserHasLiked) ? (
+                                    <PiHeartFill
+                                        onAnimationEnd={() => setLikeAnimation(false)}
+                                        className={likeAnimation ? 'animate-ping text-white dark:text-black' : ''}
+                                    />
+                                ) : (
+                                    <PiHeartBold
+                                        onAnimationEnd={() => setLikeAnimation(false)}
+                                        className={likeAnimation ? 'animate-ping text-white dark:text-black' : ''}
+                                    />
+                                )}
 
-                        <div>
-                            {/* {(data?.user && profileData) && <ProfileMenu setAdminEditUserModalOpen={setAdminEditUserModalOpen} username={profileData.username ?? ''} user={currentUser} userUrl={userUrl} handleDeleteUser={handleDeleteUser} setReportModalOpen={setReportModalOpen} />} */}
-                        </div>
-                    </div>}
+                            disabled={isLoading}
+                        >
+                            Follow{(profileData?.authUserHasLiked) ? 'ed' : ''}
+                        </Button>
+                    </div>
 
-                    {(isCurrentUser || (data?.user && profileData && data?.user.username.toLowerCase() === (profileData?.username ?? '').toLowerCase())) && <div className="flex gap-3">
-                        <Link href='/settings/profile' className='grow'>
-                            <Button variant='outline' iconLeft={<PiPencilSimple />} centerItems>
-                                Edit
-                            </Button>
-                        </Link>
+                    <div>
+                        {/* {(data?.user && profileData) && <ProfileMenu setAdminEditUserModalOpen={setAdminEditUserModalOpen} username={profileData.username ?? ''} user={currentUser} userUrl={userUrl} handleDeleteUser={handleDeleteUser} setReportModalOpen={setReportModalOpen} />} */}
+                    </div>
+                </div>}
 
-                        <div className='grow'>
-                            <Button variant='outline' iconLeft={<PiShareFat />} centerItems onClick={handleShare}>
-                                Share
-                            </Button>
-                        </div>
-                    </div>}
-                </div>
+                {(isCurrentUser || (data?.user && profileData && data?.user.username.toLowerCase() === (profileData?.username ?? '').toLowerCase())) && <div className="flex gap-3">
+                    <Link href='/settings/profile' className='grow'>
+                        <Button variant='outline' iconLeft={<PiPencilSimple />} centerItems>
+                            Edit
+                        </Button>
+                    </Link>
+
+                    <div className='grow'>
+                        <Button variant='outline' iconLeft={<PiShareFat />} centerItems onClick={handleShare}>
+                            Share
+                        </Button>
+                    </div>
+                </div>}
             </div>
+        </div>
     )
 }

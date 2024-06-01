@@ -1,5 +1,3 @@
-import { TRPCError } from "@trpc/server";
-import { Prisma } from "database";
 import {
   addLinkSchema,
   editProfileSchema,
@@ -7,6 +5,8 @@ import {
   removeLinkSchema,
 } from "@/schemas/user.schema";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { TRPCError } from "@trpc/server";
+import { Prisma } from "database";
 
 import { deleteImage, generatePresignedUrl } from "@/server/utils/image.util";
 import { filterBadWords, validateUsername } from "@/server/utils/username.util";

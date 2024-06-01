@@ -6,7 +6,7 @@ import type { api } from "@/trpc/react";
 import type { RouterOutputs } from "@/trpc/shared";
 import { handleErrors } from "@/utils/handle-errors.util";
 import { type Post, PostType } from "database";
-import { PiCoatHangerBold, PiShirtFoldedBold, PiTShirtBold, PiPantsBold, PiSneakerBold, PiBackpackBold, PiEyeglassesBold, PiBaseballCapBold, PiHoodieBold } from "react-icons/pi";
+import { PiBackpackBold, PiBaseballCapBold, PiCoatHangerBold, PiEyeglassesBold, PiHoodieBold, PiPantsBold, PiShirtFoldedBold, PiSneakerBold, PiTShirtBold } from "react-icons/pi";
 
 type PartialPost = Omit<Omit<Post, "userId">, "updatedAt">;
 type Context = ReturnType<(typeof api)["useUtils"]>;

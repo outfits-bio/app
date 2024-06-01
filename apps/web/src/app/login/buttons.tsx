@@ -1,8 +1,8 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { Button } from "../_components/ui/Button";
 import { PiDiscordLogo, PiGoogleLogo } from "react-icons/pi";
+import { Button } from "../_components/ui/Button";
 
 export function LoginButtons() {
 

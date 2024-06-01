@@ -1,9 +1,9 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { Button } from "../ui/Button";
-import { Avatar } from "../ui/Avatar"
 import Link from "next/link";
+import { Avatar } from "../ui/Avatar";
+import { Button } from "../ui/Button";
 
 import {
     PiGear, PiGearFill, PiHouse, PiHouseFill, PiMagnifyingGlass, PiMagnifyingGlassFill, PiPlus, PiUserPlus
@@ -27,9 +27,9 @@ export function MobileNav() {
                 </Link>
 
                 <Link href={'#'} className='rounded-xl flex flex-col items-center justify-center text-2xl'>
-                <Button shape={'square'} variant={'outline-ghost'} accent>
-                    <PiPlus />
-                </Button>
+                    <Button shape={'square'} variant={'outline-ghost'} accent>
+                        <PiPlus />
+                    </Button>
                 </Link>
 
                 <Link href={'/settings'} className='grow rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[110%]'>

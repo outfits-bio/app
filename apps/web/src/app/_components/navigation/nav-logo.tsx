@@ -1,10 +1,10 @@
 "use client";
 
+import { showSlash } from "@/utils/nav-options.util";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "../ui/Logo";
-import { showSlash } from "@/utils/nav-options.util";
 
 export function NavLogo() {
     const { data: session } = useSession();

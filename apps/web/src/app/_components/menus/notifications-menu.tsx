@@ -1,13 +1,12 @@
 "use client";
 
-import { useSession } from "next-auth/react";
-import { useState } from "react";
-import { Button } from "../ui/Button";
 import { api } from "@/trpc/react";
-import { Popover, Transition } from '@headlessui/react'
-import { Fragment } from 'react';
-import { NotificationCard } from "../notifications/notification-card";
+import { Popover, Transition } from '@headlessui/react';
+import { useSession } from "next-auth/react";
+import { Fragment, useState } from "react";
 import { PiBellSimple, PiBellSimpleFill } from "react-icons/pi";
+import { NotificationCard } from "../notifications/notification-card";
+import { Button } from "../ui/Button";
 
 export function NotificationsMenu() {
     const { data: session } = useSession();

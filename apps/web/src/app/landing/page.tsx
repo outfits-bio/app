@@ -1,15 +1,12 @@
 import { getServerAuthSession } from "@/server/auth";
 import { api } from "@/trpc/server";
-import { formatAvatar, formatImage } from "@/utils/image-src-format.util";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { PiBackpackBold, PiBaseballCapBold, PiCoatHangerBold, PiEyeglassesBold, PiHammer, PiLinkSimpleBold, PiPantsBold, PiSealCheck, PiShirtFoldedBold, PiShoppingBagOpenBold, PiSneakerBold, PiTShirtBold, PiWatchBold } from "react-icons/pi";
+import { PiBackpackBold, PiBaseballCapBold, PiCoatHangerBold, PiEyeglassesBold, PiPantsBold, PiShirtFoldedBold, PiShoppingBagOpenBold, PiSneakerBold, PiTShirtBold, PiWatchBold } from "react-icons/pi";
 import landing from "../../../public/landing.png";
-import { PersonalizationSection } from "../_components/landing/personalization-section";
-import { SocialSection } from "../_components/landing/social-secion";
-import { Button } from "../_components/ui/Button";
 import { Footer } from "../_components/landing/footer";
+import { Button } from "../_components/ui/Button";
 
 export default async function Home() {
   const session = await getServerAuthSession();

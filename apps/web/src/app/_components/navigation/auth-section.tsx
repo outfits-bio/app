@@ -1,14 +1,14 @@
 "use client";
 
-import { useSession } from "next-auth/react";
-import { Button } from "../ui/Button";
-import { PiBellSimple, PiBellSimpleFill, PiCompass } from "react-icons/pi";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
 import { api } from "@/trpc/react";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { PiBellSimple, PiBellSimpleFill, PiCompass } from "react-icons/pi";
 import { NavbarMenu } from "../menus/navbar-menu";
-import { CreatePostModal } from "../modals/create-post-modal";
 import { NotificationsMenu } from "../menus/notifications-menu";
+import { CreatePostModal } from "../modals/create-post-modal";
+import { Button } from "../ui/Button";
 
 export function AuthSection() {
     const { data: session } = useSession();
@@ -23,7 +23,7 @@ export function AuthSection() {
         return <>
             <div className="hidden md:flex items-center justify-center gap-4">
                 <div>
-                    <CreatePostModal/>
+                    <CreatePostModal />
                 </div>
 
                 {pathname === ('/discover' && "/") || <Link href='/'>

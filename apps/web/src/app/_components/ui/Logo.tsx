@@ -1,6 +1,6 @@
+import { cn } from '@/utils/cn.util';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { forwardRef } from 'react';
-import { cn } from '@/utils/cn.util';
 
 const variants = cva('', {
     variants: {

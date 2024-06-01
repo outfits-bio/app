@@ -1,11 +1,11 @@
-import { TRPCError } from "@trpc/server";
-import { NotificationType } from "database";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
 import {
   deleteUserLinkSchema,
   deleteUserSchema,
   editUserSchema,
 } from "@/schemas/admin.schema";
+import { TRPCError } from "@trpc/server";
+import { NotificationType } from "database";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 import { deleteImage } from "@/server/utils/image.util";
 

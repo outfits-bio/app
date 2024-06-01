@@ -2,8 +2,8 @@
 
 import { api } from "@/trpc/react";
 import { PostType } from "database";
-import Link from "next/link";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PiBookmarkSimpleBold, PiClockBold, PiFireBold } from "react-icons/pi";
@@ -11,7 +11,7 @@ import { PostModal } from "../modals/post-modal";
 import { Button } from "../ui/Button";
 import { CategoryButton } from "./category-button";
 import { Post } from "./post/post";
-import { RegisterBanner } from "./register-banner"
+import { RegisterBanner } from "./register-banner";
 
 export function DiscoverContent() {
     const params = useSearchParams();

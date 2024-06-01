@@ -16,7 +16,6 @@ import { Button } from "../../ui/Button";
 import { LikeButton } from "./like-button";
 import ReactButton from "./react-button";
 import WishlistButton from "./wishlist-button";
-import { ReportModal } from "../../modals/report-post-modal";
 
 export interface PostProps {
     post: inferRouterOutputs<AppRouter>['post']['getLatestPosts']['posts'][number];

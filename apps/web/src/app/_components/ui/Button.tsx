@@ -1,8 +1,8 @@
-import { cva } from 'class-variance-authority';
+import { cn } from '@/utils/cn.util';
 import type { VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
 import { forwardRef } from 'react';
 import { PiSpinnerGap } from 'react-icons/pi';
-import { cn } from '@/utils/cn.util';
 
 const variants = cva('font-semibold font-clash self-stretch h-12 py-2 gap-3 flex items-center', {
     variants: {

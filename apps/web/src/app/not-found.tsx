@@ -1,5 +1,5 @@
-import { Button } from "./_components/ui/Button"
 import Link from "next/link";
+import { Button } from "./_components/ui/Button";
 
 export default async function NotFoundPage() {
     return <div className="flex flex-col h-full w-full justify-center items-center gap-3">

@@ -1,11 +1,11 @@
+import type { AddReactionInput } from "@/schemas/post.schema";
+import { api } from "@/trpc/react";
+import { handleErrors } from "@/utils/handle-errors.util";
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { PiChatCircleBold } from "react-icons/pi";
 import { Button } from "../../ui/Button";
 import type { PostProps } from "./post";
-import { api } from "@/trpc/react";
-import { handleErrors } from "@/utils/handle-errors.util";
-import type { AddReactionInput } from "@/schemas/post.schema";
 
 export default function ReactButton({ post }: PostProps) {
 

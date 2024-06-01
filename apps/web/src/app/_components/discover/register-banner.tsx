@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
-import { Button } from "../ui/Button";
 import Link from "next/link";
+import { Button } from "../ui/Button";
 
 export function RegisterBanner() {
     const { data: session } = useSession();

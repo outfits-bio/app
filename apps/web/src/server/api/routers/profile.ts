@@ -1,13 +1,13 @@
-import { TRPCError } from "@trpc/server";
-import axios from "axios";
-import { NotificationType } from "database";
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import {
   getProfileSchema,
   likeProfileSchema,
   searchProfileSchema,
   type SpotifyStatus,
 } from "@/schemas/user.schema";
+import { TRPCError } from "@trpc/server";
+import axios from "axios";
+import { NotificationType } from "database";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const profileRouter = createTRPCRouter({
   profileExists: publicProcedure

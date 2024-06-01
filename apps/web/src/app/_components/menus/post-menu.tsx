@@ -9,9 +9,9 @@ import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { PiDotsThree } from 'react-icons/pi';
+import { ReportModal } from '../modals/report-post-modal';
 import { Button } from '../ui/Button';
 import { BaseMenu } from './base-menu';
-import { ReportModal } from '../modals/report-post-modal';
 
 interface PostMenuProps {
     userIsProfileOwner: boolean;
