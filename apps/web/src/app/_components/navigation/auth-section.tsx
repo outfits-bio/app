@@ -2,11 +2,12 @@
 
 import { useSession } from "next-auth/react";
 import { Button } from "../ui/Button";
-import { PiBellSimple, PiBellSimpleFill, PiCompass, PiPlus } from "react-icons/pi";
+import { PiBellSimple, PiBellSimpleFill, PiCompass } from "react-icons/pi";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { api } from "@/trpc/react";
 import { NavbarMenu } from "../menus/navbar-menu";
+import { CreatePostModal } from "../modals/create-post-modal";
 import { NotificationsMenu } from "../menus/notifications-menu";
 
 export function AuthSection() {
@@ -22,7 +23,7 @@ export function AuthSection() {
         return <>
             <div className="hidden md:flex items-center justify-center gap-4">
                 <div>
-                    <Button variant={'outline-ghost'} iconLeft={<PiPlus />}>Post</Button>
+                    <CreatePostModal/>
                 </div>
 
                 {pathname === ('/discover' && "/") || <Link href='/'>
