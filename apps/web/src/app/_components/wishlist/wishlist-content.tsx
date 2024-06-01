@@ -47,10 +47,10 @@ export function WishlistContent() {
                     </div>
                 }) : null}
                 {((posts?.length ?? 0) === 0) && (
-                                <div className='flex flex-col items-center justify-center font-clash py-2'>
-                                    <h3 className='text-center'>That&apos;s it, you don&apos;t haven&apos;t added any posts to your wishlist</h3>
-                                </div>
-                            )}
+                    <div className='flex flex-col items-center justify-center font-clash py-2'>
+                        <h3 className='text-center'>That&apos;s it, you don&apos;t haven&apos;t added any posts to your wishlist</h3>
+                    </div>
+                )}
             </div>
         </section>
     </div>;
