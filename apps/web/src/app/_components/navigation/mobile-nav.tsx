@@ -6,7 +6,9 @@ import { Avatar } from "../ui/Avatar";
 import { Button } from "../ui/Button";
 
 import {
-    PiGear, PiGearFill, PiHouse, PiHouseFill, PiMagnifyingGlass, PiMagnifyingGlassFill, PiPlus, PiUserPlus
+    PiBookmarkSimple,
+    PiBookmarkSimpleFill,
+    PiHouse, PiHouseFill, PiMagnifyingGlass, PiMagnifyingGlassFill, PiPlus, PiUserPlus
 } from 'react-icons/pi';
 
 import { usePathname } from "next/navigation";
@@ -32,8 +34,8 @@ export function MobileNav() {
                     </Button>
                 </Link>
 
-                <Link href={'/settings'} className='grow rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[110%]'>
-                    {pathname.startsWith("/settings") ? <PiGearFill /> : <PiGear />}
+                <Link href={'/wishlist'} className='grow rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[110%]'>
+                    {pathname.startsWith("/wishlist") ? <PiBookmarkSimpleFill /> : <PiBookmarkSimple />}
                 </Link>
 
                 {session ? (

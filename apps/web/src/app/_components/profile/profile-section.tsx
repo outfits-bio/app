@@ -11,7 +11,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import Marquee from "react-fast-marquee";
 import toast from "react-hot-toast";
-import { PiCameraBold, PiDiscordLogoBold, PiGithubLogoBold, PiHammerBold, PiHeartBold, PiHeartFill, PiInstagramLogoBold, PiLinkSimpleBold, PiPencilSimple, PiQuestion, PiSealCheckBold, PiShareFat, PiTiktokLogoBold, PiTwitterLogoBold, PiYoutubeLogoBold } from "react-icons/pi";
+import { PiGear, PiCameraBold, PiDiscordLogoBold, PiGithubLogoBold, PiHammerBold, PiHeartBold, PiHeartFill, PiInstagramLogoBold, PiLinkSimpleBold, PiPencilSimple, PiQuestion, PiSealCheckBold, PiShareFat, PiTiktokLogoBold, PiTwitterLogoBold, PiYoutubeLogoBold } from "react-icons/pi";
 import { PostModal } from "../modals/post-modal";
 import { ReportModal } from "../modals/report-post-modal";
 import { Avatar } from "../ui/Avatar";
@@ -218,6 +218,9 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                             Share
                         </Button>
                     </div>
+                    <Link href='/settings' className='sm:hidden'>
+                        <Button variant='outline' shape="square" iconLeft={<PiGear />} centerItems />
+                    </Link>
                 </div>}
             </div>
         </div>
