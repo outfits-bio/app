@@ -19,12 +19,12 @@ export function MobileNav() {
 
     if (pathname !== '/login' && pathname !== '/onboarding') {
         return (
-            <div className="flex w-full h-20 justify-between items-center p-5 pb-7 px-4 border-t gap-3 sm:hidden fixed bottom-0 left-0 right-0 bg-white bg-opacity-95">
-                <Link href={'/'} className='grow rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[110%]'>
+            <div className="flex w-full h-20 justify-between items-center p-5 pb-7 px-6 border-t gap-3 sm:hidden fixed bottom-0 left-0 right-0 bg-white bg-opacity-95">
+                <Link href={'/'} className='rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[110%]'>
                     {pathname === ('/discover' && "/") ? <PiHouseFill /> : <PiHouse />}
                 </Link>
 
-                <Link href={'/search'} className='grow rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[110%]'>
+                <Link href={'/search'} className='rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[110%]'>
                     {pathname === "/search" ? <PiMagnifyingGlassFill /> : <PiMagnifyingGlass />}
                 </Link>
 
@@ -34,12 +34,12 @@ export function MobileNav() {
                     </Button>
                 </Link>
 
-                <Link href={'/wishlist'} className='grow rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[110%]'>
+                <Link href={'/wishlist'} className='rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[110%]'>
                     {pathname.startsWith("/wishlist") ? <PiBookmarkSimpleFill /> : <PiBookmarkSimple />}
                 </Link>
 
                 {session ? (
-                    <Link href={"/" + session.user.username} className='grow rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[110%]'>
+                    <Link href={"/" + session.user.username} className='rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[110%]'>
                         <Avatar
                             image={session.user.image}
                             id={session.user.id}
@@ -47,7 +47,7 @@ export function MobileNav() {
                             size={'xs'} />
                     </Link>
                 ) : (
-                    <Link href={'/login'} className='grow rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[110%]'>
+                    <Link href={'/login'} className='rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[110%]'>
                         <PiUserPlus />
                     </Link>
                 )}
