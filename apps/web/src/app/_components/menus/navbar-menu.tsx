@@ -45,6 +45,15 @@ export const NavbarMenu = () => {
                 </Link>
             </Menu.Item>
             <Menu.Item>
+                <Link href={'/wishlist'}>
+                    <Button
+                        variant='ghost'
+                    >
+                        <p className='font-semibold'>Wishlist</p>
+                    </Button>
+                </Link>
+            </Menu.Item>
+            <Menu.Item>
                 <Link href={'/settings/profile'}>
                     <Button
                         variant='ghost'
