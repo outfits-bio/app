@@ -1,5 +1,5 @@
-import Filter from "bad-words";
 import { usernameRegex } from "@/schemas/user.schema";
+import Filter from "bad-words";
 
 export const validateUsername = (username: string) => {
   const filter = new Filter();

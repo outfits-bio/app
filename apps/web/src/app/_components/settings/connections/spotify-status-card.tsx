@@ -11,8 +11,8 @@ export function SpotifyStatusCard() {
                 </div>
             </div>
             <div className="flex flex-wrap items-center gap-3 p-6 px-10 self-stretch justify-between border-t bg-gray-100">
-                    <p>Powered by Lanyard. Learn more</p>
-                </div>
+                <p>Powered by Lanyard. Learn more</p>
+            </div>
         </div>
     )
 }

@@ -56,7 +56,7 @@ export function SearchList() {
                 </Link>
             )) : <div className='bg-white dark:bg-black border border-stroke p-4 rounded-xl'>No results</div>}
         </div>}
-        {hasNextPage && <Button onClick={() => fetchNextPage()} centerItems variant={'ghost'} isLoading={isFetchingNextPage} className="mt-2" >
+        {hasNextPage && <Button onClick={() => fetchNextPage()} centerItems variant={'ghost'} isLoading={isFetchingNextPage} className="mt-2 border border-stroke" >
             Load More
         </Button>}
     </div>

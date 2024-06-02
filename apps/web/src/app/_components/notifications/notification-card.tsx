@@ -5,8 +5,8 @@ import type { RouterOutputs } from '@/trpc/shared';
 import { handleErrors } from '@/utils/handle-errors.util';
 import { intlFormatDistance } from 'date-fns';
 import Link from 'next/link';
-import { Avatar } from '../ui/Avatar';
 import { PiSpinnerGap, PiX } from 'react-icons/pi';
+import { Avatar } from '../ui/Avatar';
 
 
 interface NotificationCardProps {

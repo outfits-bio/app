@@ -2,8 +2,8 @@
 
 import { api } from "@/trpc/react";
 import { PostType } from "database";
-import Link from "next/link";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PiBookmarkSimpleBold, PiClockBold, PiFireBold } from "react-icons/pi";
@@ -11,7 +11,7 @@ import { PostModal } from "../modals/post-modal";
 import { Button } from "../ui/Button";
 import { CategoryButton } from "./category-button";
 import { Post } from "./post/post";
-import { RegisterBanner } from "./register-banner"
+import { RegisterBanner } from "./register-banner";
 
 export function DiscoverContent() {
     const params = useSearchParams();
@@ -84,18 +84,18 @@ export function DiscoverContent() {
             <PostModal />
             <section className="w-80 bg-white dark:bg-black border-r border-stroke hidden md:flex flex-col justify-between p-4 h-full">
                 {/* Filter */}
-                <div className="flex flex-col gap-2 w-full">
+                <div className="flex flex-col w-full">
                     <div className="relative">
                         <Button
                             onClick={() => setIsFilterOpen(!isFilterOpen)}
-                            className="mb-2 flex "
+                            className={`flex ${isFilterOpen ? 'rounded-b-none' : ''}`}
                             variant={'outline'}
                         >
                             <span>Filter</span>
                             <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 transform ${isFilterOpen ? 'rotate-180  mb-1' : 'rotate-0  mt-1'}`} viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 3.586L3.707 9.879a1 1 0 101.414 1.414L10 6.414l4.879 4.879a1 1 0 101.414-1.414L10 3.586z" clipRule="evenodd" /></svg>
                         </Button>
                         {isFilterOpen && (
-                            <div className=" w-full bg-white dark:bg-black border border-stroke rounded-lg">
+                            <div className=" w-full bg-white dark:bg-black border border-stroke border-t-0 rounded-xl rounded-t-none">
                                 <div className="flex flex-col gap-2 p-4">
                                     <CategoryButton activePostTypes={activePostTypes} handleChangePostType={handleChangePostType} type={PostType.OUTFIT} />
                                     <CategoryButton activePostTypes={activePostTypes} handleChangePostType={handleChangePostType} type={PostType.HOODIE} />
@@ -129,7 +129,7 @@ export function DiscoverContent() {
                 <div className="w-[350px] flex border-b-2 border-stroke gap-1 pb-0.5 pb-2">
                     <button
                         onClick={() => handleChangeCategory('latest')}
-                        className={`${activeCategory === 'latest' ? 'text-inherit bg-stroke' : 'text-secondary-text'} w-1/2 py-2 font-medium font-clash flex gap-2 items-center justify-center hover:bg-stroke transition-colors duration-150 rounded-xl`}
+                        className={`${activeCategory === 'latest' ? 'text-inherit border' : 'text-secondary-text'} w-1/2 py-2 font-medium font-clash flex gap-2 items-center justify-center hover:bg-stroke transition-colors duration-150 rounded-xl`}
                     >
                         <PiClockBold className="text-2xl" />
                         <p>Latest</p>
@@ -137,7 +137,7 @@ export function DiscoverContent() {
 
                     <button
                         onClick={() => handleChangeCategory('popular')}
-                        className={`${activeCategory === 'popular' ? 'text-inherit bg-stroke' : 'text-secondary-text'} w-1/2 py-2 font-medium font-clash flex gap-2 items-center justify-center hover:bg-stroke transition-colors duration-150 rounded-xl`}
+                        className={`${activeCategory === 'popular' ? 'text-inherit border' : 'text-secondary-text'} w-1/2 py-2 font-medium font-clash flex gap-2 items-center justify-center hover:bg-stroke transition-colors duration-150 rounded-xl`}
                     >
                         <PiFireBold className="text-2xl" />
                         <p>Popular</p>

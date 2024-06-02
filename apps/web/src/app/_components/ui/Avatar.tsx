@@ -1,9 +1,9 @@
-import { cva } from 'class-variance-authority';
-import type { VariantProps } from 'class-variance-authority';
-import Image from 'next/image';
-import { forwardRef } from 'react';
 import { cn } from '@/utils/cn.util';
 import { formatAvatar } from '@/utils/image-src-format.util';
+import type { VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
+import Image from 'next/image';
+import { forwardRef } from 'react';
 
 
 const variants = cva('relative border border-stroke rounded-full', {

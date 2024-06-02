@@ -1,6 +1,6 @@
-import { useSearchParams } from "next/navigation"
-import { DiscoverPostModal } from "./discover-post-modal"
 import { api } from "@/trpc/react";
+import { useSearchParams } from "next/navigation";
+import { DiscoverPostModal } from "./discover-post-modal";
 
 export function PostModal() {
     const params = useSearchParams();

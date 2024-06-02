@@ -1,9 +1,9 @@
-import { PiBookmarkSimpleFill, PiBookmarkSimpleBold } from "react-icons/pi";
-import { Button } from "../../ui/Button";
-import type { PostProps } from "./post";
-import { useSession } from "next-auth/react";
 import { api } from "@/trpc/react";
 import { handleErrors } from "@/utils/handle-errors.util";
+import { useSession } from "next-auth/react";
+import { PiBookmarkSimpleBold, PiBookmarkSimpleFill } from "react-icons/pi";
+import { Button } from "../../ui/Button";
+import type { PostProps } from "./post";
 
 export default function WishlistButton({ post }: PostProps) {
 

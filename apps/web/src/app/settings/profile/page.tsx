@@ -2,11 +2,11 @@ import { getServerAuthSession } from "@/server/auth";
 import { redirect } from "next/navigation";
 
 import { AvatarCard } from "@/app/_components/settings/profile/avatar-card";
-import { UsernameCard } from "@/app/_components/settings/profile/username-card";
-import { TaglineCard } from "@/app/_components/settings/profile/tagline-card";
-import { LinksCard } from "@/app/_components/settings/profile/links-card";
-import { SettingsSidebar } from "@/app/_components/settings/settings-sidebar";
 import { DeleteAccountCard } from "@/app/_components/settings/profile/delete-account-card";
+import { LinksCard } from "@/app/_components/settings/profile/links-card";
+import { TaglineCard } from "@/app/_components/settings/profile/tagline-card";
+import { UsernameCard } from "@/app/_components/settings/profile/username-card";
+import { SettingsSidebar } from "@/app/_components/settings/settings-sidebar";
 
 export default async function ProfileSettingsPage() {
     const session = await getServerAuthSession();
@@ -14,7 +14,7 @@ export default async function ProfileSettingsPage() {
     if (!session?.user) {
         redirect('/login');
     }
-    
+
     return (
         <div className="flex">
             <SettingsSidebar />

@@ -1,8 +1,8 @@
 import { getServerAuthSession } from "@/server/auth";
 import { redirect } from "next/navigation";
 
-import Link from 'next/link';
 import { signOut } from 'next-auth/react';
+import Link from 'next/link';
 import { Button } from '../_components/ui/Button';
 
 export default async function SettingsPage() {

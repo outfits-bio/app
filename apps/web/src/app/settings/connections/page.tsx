@@ -1,8 +1,8 @@
 import { getServerAuthSession } from "@/server/auth";
 import { redirect } from "next/navigation";
 
-import { GoogleCard } from "@/app/_components/settings/connections/google-card";
 import { DiscordCard } from "@/app/_components/settings/connections/discord-card";
+import { GoogleCard } from "@/app/_components/settings/connections/google-card";
 import { SpotifyStatusCard } from "@/app/_components/settings/connections/spotify-status-card";
 import { SettingsSidebar } from "@/app/_components/settings/settings-sidebar";
 
@@ -12,7 +12,7 @@ export default async function ConnectionsSettingsPage() {
     if (!session?.user) {
         redirect('/login');
     }
-    
+
     return (
         <div className="flex">
             <SettingsSidebar />

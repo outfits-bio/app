@@ -1,18 +1,18 @@
 import "@/styles/globals.css";
 
+import { meta } from 'next-seo.config';
 import localFont from 'next/font/local';
 import { cookies } from "next/headers";
-import { meta } from 'next-seo.config';
 
-import { TRPCReactProvider } from "@/trpc/react";
-import type { Metadata } from "next";
 import { getServerAuthSession } from "@/server/auth";
-import SessionProvider from "./_components/wrappers/session-provider";
-import { Analytics } from "@vercel/analytics/react"
+import { TRPCReactProvider } from "@/trpc/react";
+import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import type { Metadata } from "next";
 import { Toaster } from 'react-hot-toast';
-import { Navbar } from "./_components/navigation/navbar";
 import { MobileNav } from "./_components/navigation/mobile-nav";
+import { Navbar } from "./_components/navigation/navbar";
+import SessionProvider from "./_components/wrappers/session-provider";
 
 const clash = localFont({
   src: '../../public/fonts/ClashDisplay-Variable.woff2',
