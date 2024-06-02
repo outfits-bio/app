@@ -1,9 +1,8 @@
 import { getServerAuthSession } from "@/server/auth";
 import { redirect } from "next/navigation";
-
-import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { Button } from '../_components/ui/Button';
+import LogoutButton from '../_components/settings/signout-button';
 
 export default async function SettingsPage() {
     const session = await getServerAuthSession();
@@ -12,7 +11,7 @@ export default async function SettingsPage() {
         redirect('/login');
     }
 
-    return <>
+    return (
         <div className="w-screen flex flex-col gap-2 p-4 divide-y divide-stroke">
             <div className='gap-2 flex flex-col'>
                 <Link href='/settings/profile'>
@@ -29,8 +28,8 @@ export default async function SettingsPage() {
             </div>
 
             <div className='flex flex-col gap-2 pt-2'>
-                <Button variant={'ghost'} className='justify-start transition duration-300 ease-in-out' onClick={() => signOut({ callbackUrl: '/' })}>Logout</Button>
+                <LogoutButton />
             </div>
         </div>
-    </>;
+    );
 }
