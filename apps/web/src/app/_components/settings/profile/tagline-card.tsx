@@ -32,7 +32,7 @@ export function TaglineCard() {
         onError: (e) => handleErrors({ e, message: "Failed to edit profile!", fn: () => setLoading(false) })
     });
 
-    const handleFormSubmit = async ({ tagline }: EditProfileInput) => {
+    const handleFormSubmit = ({ tagline }: EditProfileInput) => {
         setLoading(true);
 
         // If the user didn't change their tagline, do nothing
