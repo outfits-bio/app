@@ -1,13 +1,15 @@
 "use client";
-import { type ChangeEvent, useState, useRef, useEffect } from "react";
+import { type ChangeEvent, useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "../../ui/Button"
 import { Avatar } from "../../ui/Avatar"
 import { toast } from "react-hot-toast";
+import type { Area } from "react-easy-crop";
 import { useSession } from "next-auth/react";
 import axios from 'axios';
 import { useForm } from "react-hook-form";
 import { formatAvatar } from "@/utils/image-src-format.util";
 import { handleErrors } from "@/utils/handle-errors.util";
+import getCroppedImg from "@/utils/crop-image.util";
 import { api } from "@/trpc/react";
 import { useFileUpload } from "@/hooks/file-upload.hook";
 
@@ -15,19 +17,20 @@ export function AvatarCard() {
     const { data: session, update } = useSession();
     const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
     const [loading, setLoading] = useState<boolean>(false);
+    const [croppedAreaPixelsState, setCroppedAreaPixelsState] = useState<Area | null>(null);
+    const [crop, setCrop] = useState({ x: 0, y: 0 });
+    const [isCropped, setIsCropped] = useState<boolean>(false);
     const ref = useRef<HTMLInputElement>(null);
 
 
-    const { register, handleSubmit, getValues, setValue, watch } = useForm();
-    watch("avatar");
+    const { register, handleSubmit, getValues, setValue } = useForm();
 
     useEffect(() => {
         if (!session?.user) return;
-
         setFileUrl(formatAvatar(session.user.image, session.user.id));
     }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        , [session, watch]);
+        , [session]);
 
     /**
    * This creates a presigned url for the image and then uploads the image to the presigned url
@@ -38,7 +41,7 @@ export function AvatarCard() {
         onSuccess: async (result) => {
             await axios.put(result, file);
 
-            update();
+            await update();
             toast.success("Avatar Updated!");
         },
         onError: (e) => handleErrors({ e, message: "Failed to set image!", fn: () => setLoading(false) })
@@ -47,7 +50,7 @@ export function AvatarCard() {
     const { mutate: deleteImage } = api.user.deleteImage.useMutation({
         onSuccess: async () => {
             toast.success("Image deleted!");
-            update();
+            await update();
         },
         onError: (e) => handleErrors({ e, message: "Failed to delete image!", fn: () => setLoading(false) })
     });
@@ -62,7 +65,6 @@ export function AvatarCard() {
     };
 
     const handleFormChange = async (e: ChangeEvent<HTMLInputElement>) => {
-        handleChange(e)
         handleSubmit(handleFormSubmit);
     }
 
@@ -83,7 +85,8 @@ export function AvatarCard() {
                                         onDragEnter={handleDrag}
                                         onDragLeave={handleDrag}
                                         onDragOver={handleDrag}
-                                        onDrop={handleDrop} />
+                                        onDrop={handleDrop}
+                                    />
                                 }
 
                                 <input
@@ -92,7 +95,7 @@ export function AvatarCard() {
                                     name="avatar"
                                     type="file"
                                     className="hidden"
-                                    onChange={handleFormChange}
+                                    onChange={handleChange}
                                     accept='image/*'
                                 />
 

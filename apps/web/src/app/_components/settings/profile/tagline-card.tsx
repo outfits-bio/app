@@ -25,8 +25,8 @@ export function TaglineCard() {
     });
 
     const { mutate } = api.user.editProfile.useMutation({
-        onSuccess: (data) => {
-            update();
+        onSuccess: async (data) => {
+            await update();
             toast.success("Tagline updated!")
         },
         onError: (e) => handleErrors({ e, message: "Failed to edit profile!", fn: () => setLoading(false) })
@@ -36,7 +36,7 @@ export function TaglineCard() {
         setLoading(true);
 
         // If the user didn't change their tagline, do nothing
-        if ((tagline && tagline.length)) mutate({
+        if (tagline?.length) mutate({
             tagline
         });
         else {
