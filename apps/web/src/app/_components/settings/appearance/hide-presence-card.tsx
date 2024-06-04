@@ -1,7 +1,7 @@
 export function HidePresenceCard() {
     return (
         <div className="flex flex-col items-start rounded-lg border bg-white">
-            <div className="flex items-start flex gap-24 p-10 self-stretch">
+            <div className="flex flex-wrap items-start flex gap-24 p-10 self-stretch">
                 <div className="flex flex-col items-start gap-3 flex-1">
                     <h1 className="font-clash font-bold text-3xl">Hide all presences</h1>
                     <p>This hides all Spotify statuses on peoples profiles including your own even if you have it enabled.</p>

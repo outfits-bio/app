@@ -8,15 +8,15 @@ export function LinksCard() {
                     <h1 className="font-clash font-bold text-3xl">Social Links.</h1>
                     <p>Add links of your socials or websites to your profile</p>
                 </div>
-                <div className="flex justify-between items-center self-stretch border rounded-lg">
+                <div className="flex justify-between items-center self-stretch border rounded-lg w-fit md:w-full">
                     <div className="flex p-3 items-center gap-10 self-stretch bg-gray-100">https://</div>
                     <input className="flex items-center gap-4 p-3 py-4 flex-1 self-stretch" placeholder="example.com" />
                 </div>
-                <div className="flex justify-between items-center self-stretch border rounded-lg">
+                <div className="flex justify-between items-center self-stretch border rounded-lg w-fit md:w-full">
                     <div className="flex p-3 items-center gap-10 self-stretch bg-gray-100">https://</div>
                     <input className="flex items-center gap-4 p-3 py-4 flex-1 self-stretch" placeholder="example.com" />
                 </div>
-                <div className="flex justify-between items-center self-stretch border rounded-lg">
+                <div className="flex justify-between items-center self-stretch border rounded-lg w-fit md:w-full">
                     <div className="flex p-3 items-center gap-10 self-stretch bg-gray-100">https://</div>
                     <input className="flex items-center gap-4 p-3 py-4 flex-1 self-stretch" placeholder="example.com" />
                 </div>

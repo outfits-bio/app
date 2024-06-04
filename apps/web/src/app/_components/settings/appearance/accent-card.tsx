@@ -7,7 +7,7 @@ export function AccentCard() {
                     <p>Give your experience a personalized touch of your own.</p>
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex gap-2 max-w-full overflow-auto">
                     <div className="flex items-start gap-10 p-3 rounded-full border">
                         <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56" fill="none">
                             <circle cx="28" cy="28" r="28" fill="#171717" />

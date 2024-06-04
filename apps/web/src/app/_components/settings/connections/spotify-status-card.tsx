@@ -1,7 +1,7 @@
 export function SpotifyStatusCard() {
     return (
         <div className="flex flex-col items-start rounded-lg border bg-white">
-            <div className="flex items-start flex gap-24 p-10 self-stretch">
+            <div className="flex flex-wrap items-start flex gap-24 p-10 self-stretch">
                 <div className="flex flex-col items-start gap-3 flex-1">
                     <h1 className="font-clash font-bold text-3xl">Show Spotify Status</h1>
                     <p>Very nice free addition to your profile, display your spotify status as long as you are only on Discord.</p>
