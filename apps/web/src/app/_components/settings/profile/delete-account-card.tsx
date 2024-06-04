@@ -27,7 +27,7 @@ export function DeleteAccountCard() {
     };
 
     return (
-        <div className="flex flex-col items-start rounded-lg border bg-white dark:bg-black">
+        <div className="flex flex-col items-start rounded-lg border border-stroke bg-white dark:bg-black">
             <form className="self-stretch" onSubmit={handleSubmit(handleFormSubmit)}>
                 <div className="flex items-start flex gap-24 p-10 self-stretch">
                     <div className="flex flex-col items-start gap-3 flex-1">
@@ -35,10 +35,10 @@ export function DeleteAccountCard() {
                         <p>If you don't want to have an account on outfits.bio anymore, then you can request an account deletion.</p>
                     </div>
                 </div>
-                <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between border-t bg-red-100">
+                <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between border-t dark:border-stroke bg-red-100 dark:bg-red-900">
                     <p>This action is irreversible, and cannot be undone after.</p>
                     <div className="flex items-center gap-3">
-                        <Button type="submit" className="bg-red-500 border-none">Delete Account</Button>
+                        <Button type="submit" className="bg-red-500 border-none dark:text-white">Delete Account</Button>
                     </div>
                 </div>
             </form>
