@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 export function SettingsSidebar() {
     return (
-        <section className="w-80 bg-white dark:bg-black border-r border-stroke hidden md:flex flex-col justify-between px-4">
+        <section className="w-80 bg-white dark:bg-black border-r border-stroke hidden md:flex flex-col justify-between px-4 min-h-screen">
             <div className="flex flex-col gap-2 divide-y divide-stroke sticky top-0 pt-4">
                 <div className='gap-2 flex flex-col'>
                     <Link href='/settings/profile'>

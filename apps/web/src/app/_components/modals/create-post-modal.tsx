@@ -69,7 +69,7 @@ export function CreatePostModal() {
 
     return (
         <>
-            <Button onClick={() => setIsOpen(true)} variant={'outline-ghost'} iconLeft={<PiPlus />}>Post</Button>
+            <Button onClick={() => setIsOpen(true)} iconLeft={<PiPlus />}>Post</Button>
             <Transition show={isOpen} as={Fragment}>
                 <Dialog onClose={() => setIsOpen(false)} className="fixed inset-0 z-10 flex items-center justify-center">
                     <Transition.Child
