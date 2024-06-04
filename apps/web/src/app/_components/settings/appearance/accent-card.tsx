@@ -1,6 +1,6 @@
 export function AccentCard() {
     return (
-        <div className="flex flex-col items-start rounded-lg border bg-white">
+        <div className="flex flex-col items-start rounded-lg border bg-white dark:bg-black">
             <div className="flex flex-col items-start flex gap-5 p-10 self-stretch">
                 <div className="flex flex-col items-start gap-3 flex-1">
                     <h1 className="font-clash font-bold text-3xl">Accent colors</h1>

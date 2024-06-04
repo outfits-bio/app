@@ -44,7 +44,7 @@ export function TaglineCard() {
         }
     };
     return (
-        <div className="flex flex-col items-start rounded-lg border bg-white">
+        <div className="flex flex-col items-start rounded-lg border bg-white dark:bg-black">
             <form className="self-stretch" onSubmit={handleSubmit(handleFormSubmit)}>
                 <div className="flex flex-col items-start flex gap-5 p-10 self-stretch">
                     <div className="flex flex-col items-start gap-3 flex-1">

@@ -2,7 +2,7 @@ import { Button } from "../../ui/Button"
 
 export function GoogleCard() {
     return (
-        <div className="flex flex-col items-start rounded-lg border bg-white">
+        <div className="flex flex-col items-start rounded-lg border bg-white dark:bg-black">
             <div className="flex items-start flex gap-24 p-10 self-stretch">
                 <div className="flex flex-col items-start gap-3 flex-1">
                     <h1 className="font-clash font-bold text-3xl">Google</h1>
