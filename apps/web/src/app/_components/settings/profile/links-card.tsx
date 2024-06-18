@@ -26,17 +26,17 @@ export function LinksCard() {
     });
 
     const { mutate: addLink, isLoading: linkLoading } = api.user.addLink.useMutation({
-        onSuccess: () => {
+        onSuccess: async () => {
             resetField("url");
-            ctx.user.getMe.refetch();
+            await ctx.user.getMe.refetch();
             toast.success("Link added!");
         },
         onError: (e) => handleErrors({ e, message: "Failed to add link!", fn: () => setLoading(false) })
     });
 
     const { mutate: removeLink, isLoading: removeLinkLoading, variables: removeLinkVariables } = api.user.removeLink.useMutation({
-        onSuccess: () => {
-            ctx.user.getMe.refetch();
+        onSuccess: async () => {
+            await ctx.user.getMe.refetch();
             toast.success("Link removed!");
         },
         onError: (e) => handleErrors({ e, message: "Failed to remove link!", fn: () => setLoading(false) })
@@ -54,9 +54,9 @@ export function LinksCard() {
                     </div>
                     {userData?.links.length && userData?.links.length <= 3 ?
                         <>
-                            <ProfileLink {...userData?.links[0]!} />
-                            <ProfileLink {...userData?.links[1]!} />
-                            <ProfileLink {...userData?.links[2]!} />
+                            <ProfileLink {...userData.links[0]!} />
+                            <ProfileLink {...userData.links[1]!} />
+                            <ProfileLink {...userData.links[2]!} />
                         </> : <>
                             {userData?.links.map((link) => (<ProfileLink key={link.id} {...link} />))}
                         </>
