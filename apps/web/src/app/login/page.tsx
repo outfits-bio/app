@@ -22,10 +22,10 @@ export default async function LoginPage() {
       </p>
     </div>
     <div className='absolute inset-0 hidden md:block -z-10'>
-      <div className='absolute bg-gray-200 w-32 h-48 rounded-lg transform -rotate-12 top-20 left-1 pop-in-1'></div>
-      <div className='absolute bg-gray-200 w-32 h-48 rounded-lg transform rotate-6 top-20 right-40 pop-in-2' style={{ animationDelay: '0.2s' }}></div>
-      <div className='absolute bg-gray-200 w-32 h-48 rounded-lg transform rotate-3 bottom-20 left-40 pop-in-3' style={{ animationDelay: '0.4s' }}></div>
-      <div className='absolute bg-gray-200 w-32 h-48 rounded-lg transform -rotate-6 bottom-40 right-1 pop-in-4' style={{ animationDelay: '0.6s' }}></div>
+      <div className='absolute bg-gray-200 w-32 h-48 rounded-lg transform -rotate-12 top-20 left-1 pop-in-1' />
+      <div className='absolute bg-gray-200 w-32 h-48 rounded-lg transform rotate-6 top-20 right-40 pop-in-2' style={{ animationDelay: '0.2s' }} />
+      <div className='absolute bg-gray-200 w-32 h-48 rounded-lg transform rotate-3 bottom-20 left-40 pop-in-3' style={{ animationDelay: '0.4s' }} />
+      <div className='absolute bg-gray-200 w-32 h-48 rounded-lg transform -rotate-6 bottom-40 right-1 pop-in-4' style={{ animationDelay: '0.6s' }} />
     </div>
   </div>  
 }
