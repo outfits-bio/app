@@ -89,7 +89,7 @@ export function DiscoverContent() {
                         <Button
                             onClick={() => setIsFilterOpen(!isFilterOpen)}
                             className={`flex ${isFilterOpen ? 'rounded-b-none' : ''}`}
-                            variant={'outline'}
+                            variant={'outline-ghost'}
                         >
                             <span>Filter</span>
                             <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 transform ${isFilterOpen ? 'rotate-180  mb-1' : 'rotate-0  mt-1'}`} viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 3.586L3.707 9.879a1 1 0 101.414 1.414L10 6.414l4.879 4.879a1 1 0 101.414-1.414L10 3.586z" clipRule="evenodd" /></svg>

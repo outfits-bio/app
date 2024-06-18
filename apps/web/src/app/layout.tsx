@@ -13,6 +13,7 @@ import { Toaster } from 'react-hot-toast';
 import { MobileNav } from "./_components/navigation/mobile-nav";
 import { Navbar } from "./_components/navigation/navbar";
 import SessionProvider from "./_components/wrappers/session-provider";
+import ThemeProvider from "./_components/wrappers/theme-provider";
 
 const clash = localFont({
   src: '../../public/fonts/ClashDisplay-Variable.woff2',
@@ -108,16 +109,18 @@ export default async function RootLayout({
       <body className={`font-satoshi ${clash.variable} ${satoshi.variable} flex flex-col min-h-screen antialiased transition-colors duration-300`}>
         <SessionProvider session={session}>
           <TRPCReactProvider cookies={cookies().toString()}>
-            <Navbar />
-            <main className="h-screen pt-20 overflow-x-hidden md:pb-0 scroll-smooth pb-20">
-              {children}
-            </main>
-            <MobileNav />
-            <Toaster
-              toastOptions={{
-                className: 'border font-clash font-bold',
-              }}
-            />
+            <ThemeProvider>
+              <Navbar />
+              <main className="h-screen pt-20 overflow-x-hidden md:pb-0 scroll-smooth pb-20">
+                {children}
+              </main>
+              <MobileNav />
+              <Toaster
+                toastOptions={{
+                  className: 'border font-clash font-bold',
+                }}
+              />
+            </ThemeProvider>
           </TRPCReactProvider>
         </SessionProvider>
         <Analytics />

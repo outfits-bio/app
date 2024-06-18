@@ -69,8 +69,8 @@ export function AvatarCard() {
     }
 
     return (
-        <div className="flex flex-col items-start rounded-lg border bg-white">
-            <div className="flex items-start flex gap-24 p-10 self-stretch">
+        <div className="flex flex-col items-start rounded-lg border border-stroke bg-white dark:bg-black">
+            <div className="flex flex-wrap items-start flex gap-24 p-10 self-stretch">
                 <div className="flex flex-col items-start gap-3 flex-1">
                     <h1 className="font-clash font-bold text-3xl">Avatar</h1>
                     <p>Take your best shot because your avatar is how you will appear on most of the website.</p>
@@ -78,7 +78,7 @@ export function AvatarCard() {
                 <form onSubmit={handleSubmit(handleFormSubmit)}>
                     {session ? (
                         <div>
-                            <div className='rounded-full h-44 w-44 flex items-center justify-center border border' onClick={() => ref.current?.click()}>
+                            <div className='rounded-full h-44 w-44 flex items-center justify-center border dark:border-stroke' onClick={() => ref.current?.click()}>
                                 {dragActive &&
                                     <div
                                         className='absolute w-full h-full inset-0'
@@ -130,7 +130,7 @@ export function AvatarCard() {
                     }
                 </form>
             </div>
-            <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between border-t bg-gray-100">
+            <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between border-t dark:border-stroke bg-gray-100 dark:bg-gray-900 dark:bg-gray-900">
                 <p>Click to upload or simply drag and drop your image.</p>
                 <div className="flex items-center gap-3">
                     <Button variant="ghost" onClick={() => deleteImage()}>Remove</Button>
