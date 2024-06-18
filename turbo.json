@@ -16,6 +16,9 @@
 			]
 		},
 		"build": {
+			"env": [
+				"NEXT_PUBLIC_*"
+			],
 			"dependsOn": [
 				"^build",
 				"^db:generate"
