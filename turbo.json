@@ -28,6 +28,13 @@
 				"!.next/cache/**"
 			]
 		},
+		"start": {
+			"dependsOn": [
+				"^start",
+				"^build",
+				"^db:generate"
+			]
+		},
 		"db:generate": {
 			"cache": false
 		}
