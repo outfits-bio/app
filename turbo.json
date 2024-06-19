@@ -1,9 +1,9 @@
 {
 	"$schema": "https://turbo.build/schema.json",
-	"globalEnv": [
+	"globalDependencies": [
 		"**/.env.*local"
 	],
-	"tasks": {
+	"pipeline": {
 		"db:push": {
 			"cache": false
 		},
