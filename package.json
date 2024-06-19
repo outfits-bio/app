@@ -2,11 +2,11 @@
   "name": "outfits.bio",
   "private": true,
   "scripts": {
-    "build": "turbo run build --env-mode=loose",
+    "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "start": "turbo run start -- -p 8080"
+    "start": "turbo run start"
   },
   "workspaces": [
     "apps/*",
