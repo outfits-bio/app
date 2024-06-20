@@ -97,22 +97,19 @@ export function DiscoverContent() {
                         {isFilterOpen && (
                             <div className=" w-full bg-white dark:bg-black border border-stroke border-t-0 rounded-xl rounded-t-none">
                                 <div className="flex flex-col gap-2 p-4">
-                                    <CategoryButton activePostTypes={activePostTypes} handleChangePostType={handleChangePostType} type={PostType.OUTFIT} />
-                                    <CategoryButton activePostTypes={activePostTypes} handleChangePostType={handleChangePostType} type={PostType.HOODIE} />
-                                    <CategoryButton activePostTypes={activePostTypes} handleChangePostType={handleChangePostType} type={PostType.SHIRT} />
-                                    <CategoryButton activePostTypes={activePostTypes} handleChangePostType={handleChangePostType} type={PostType.PANTS} />
-                                    <CategoryButton activePostTypes={activePostTypes} handleChangePostType={handleChangePostType} type={PostType.SHOES} />
-                                    <CategoryButton activePostTypes={activePostTypes} handleChangePostType={handleChangePostType} type={PostType.WATCH} />
-                                    <CategoryButton activePostTypes={activePostTypes} handleChangePostType={handleChangePostType} type={PostType.HEADWEAR} />
-                                    <CategoryButton activePostTypes={activePostTypes} handleChangePostType={handleChangePostType} type={PostType.JEWELRY} />
-                                    <CategoryButton activePostTypes={activePostTypes} handleChangePostType={handleChangePostType} type={PostType.GLASSES} />
+                                    {Object.values(PostType).map((type) => (
+                                        <CategoryButton
+                                            key={type}
+                                            activePostTypes={activePostTypes}
+                                            handleChangePostType={handleChangePostType}
+                                            type={type}
+                                        />
+                                    ))}
                                 </div>
                             </div>
                         )}
                     </div>
                 </div>
-
-                {/* Wishlist */}
                 {session &&
                     <div>
                         <Link href={'/wishlist'}>
@@ -126,7 +123,7 @@ export function DiscoverContent() {
 
             <section className="grow flex flex-col gap-4 items-center pt-2 md:pt-4">
                 {/* Post Type */}
-                <div className="w-[350px] flex border-b-2 border-stroke gap-1 pb-0.5 pb-2">
+                <div className="w-[350px] flex border-b-2 border-stroke gap-1 pb-2">
                     <button
                         onClick={() => handleChangeCategory('latest')}
                         className={`${activeCategory === 'latest' ? 'text-inherit border' : 'text-secondary-text'} w-1/2 py-2 font-medium font-clash flex gap-2 items-center justify-center hover:bg-stroke transition-colors duration-150 rounded-xl`}

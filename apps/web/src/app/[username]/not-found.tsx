@@ -10,7 +10,7 @@ export const UserNotFoundPage = () => {
         <article className='text-center'>
             <p className='text-lg'>This could be your handle.</p>
         </article>
-        <div className='relative w-[500]'>
+        <div>
             <div className='flex gap-2 items-center'>
                 <Link href='/'>
                     <Button centerItems variant={'outline-ghost'}>

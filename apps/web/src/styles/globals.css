@@ -154,19 +154,19 @@
 }
 
 .pop-in-1 {
-  animation: pop-in-1 0.6s ease-out;
+  animation: pop-in-1 0.6s ease-out forwards;
 }
 
 .pop-in-2 {
-  animation: pop-in-2 0.6s ease-out;
+  animation: pop-in-2 0.6s ease-out forwards;
 }
 
 .pop-in-3 {
-  animation: pop-in-3 0.6s ease-out;
+  animation: pop-in-3 0.6s ease-out forwards;
 }
 
 .pop-in-4 {
-  animation: pop-in-4 0.6s ease-out;
+  animation: pop-in-4 0.6s ease-out forwards;
 }
 
 @keyframes pop-in-1 {
