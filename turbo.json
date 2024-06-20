@@ -3,7 +3,7 @@
 	"globalDependencies": [
 		"**/.env.*local"
 	],
-	"pipeline": {
+	"tasks": {
 		"db:push": {
 			"cache": false
 		},
@@ -16,9 +16,7 @@
 			]
 		},
 		"build": {
-			"env": [
-				"NEXT_PUBLIC_*"
-			],
+			"env": ["*"],
 			"dependsOn": [
 				"^build",
 				"^db:generate"
