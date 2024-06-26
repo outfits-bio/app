@@ -3,6 +3,7 @@
 import { api } from "@/trpc/react";
 import type { RouterOutputs } from "@/trpc/shared";
 import { handleErrors } from "@/utils/handle-errors.util";
+import type { User } from 'next-auth';
 import { LinkType } from "database";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -16,13 +17,15 @@ import { PostModal } from "../modals/post-modal";
 import { ReportModal } from "../modals/report-post-modal";
 import { Avatar } from "../ui/Avatar";
 import { Button } from "../ui/Button";
+import { ProfileMenu } from "../menus/profile-menu";
 
 interface Props {
     profileData?: RouterOutputs['user']['getProfile'];
     username: string;
+    currentUser: User;
 }
 
-export const ProfileCard = ({ profileData, username }: Props) => {
+export const ProfileCard = ({ profileData, username, currentUser }: Props) => {
 
     const { data, status } = useSession();
     const router = useRouter();
@@ -79,6 +82,10 @@ export const ProfileCard = ({ profileData, username }: Props) => {
             }
         }),
     })
+
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
+
+    const userUrl = `${origin}${window.location.pathname}`;
 
     const handleShare = () => {
         if (typeof window !== 'undefined') {
@@ -202,7 +209,7 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                     </div>
 
                     <div>
-                        {/* {(data?.user && profileData) && <ProfileMenu setAdminEditUserModalOpen={setAdminEditUserModalOpen} username={profileData.username ?? ''} user={currentUser} userUrl={userUrl} handleDeleteUser={handleDeleteUser} setReportModalOpen={setReportModalOpen} />} */}
+                        {(data?.user && profileData) && <ProfileMenu setAdminEditUserModalOpen={setAdminEditUserModalOpen} username={profileData.username ?? ''} user={currentUser} userUrl={userUrl} handleDeleteUser={handleDeleteUser} setReportModalOpen={setReportModalOpen} />}
                     </div>
                 </div>}
 

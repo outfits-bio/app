@@ -42,7 +42,7 @@ export default async function LoginPage() {
         {posts.map((post, i) => (
           <div
             key={i}
-            className={`opacity-0 absolute bg-gray-200 w-32 h-48 border rounded-lg transform rotate-${i % 2 === 0 ? 6 : -6} ${i === 0 ? 'top-20 right-40' : i === 1 ? 'bottom-20 left-40' : i === 2 ? '-rotate-12 top-20 left-1' : '-rotate-6 bottom-40 right-1'
+            className={`opacity-0 absolute bg-gray-200 w-40 h-60 border rounded-lg transform rotate-${i % 2 === 0 ? 6 : -6} ${i === 0 ? 'top-20 right-40' : i === 1 ? 'bottom-20 left-40' : i === 2 ? '-rotate-12 top-20 left-1' : '-rotate-6 bottom-40 right-1'
               } pop-in-${i + 1}`}
             style={{ animationDelay: `${i * 0.2}s` }}
           >

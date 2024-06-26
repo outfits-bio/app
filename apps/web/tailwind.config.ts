@@ -31,6 +31,9 @@ export default {
       boxShadow: {
         dropdown: "0px 4px 16px 0px rgba(0, 0, 0, 0.25);",
       },
+      backdropBlur: {
+        xs: '1px',
+      },
       animation: {
         ping: "ping 200ms ease-in-out",
         "spin-words": "spin-words 10s infinite",

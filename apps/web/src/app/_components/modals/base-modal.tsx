@@ -22,10 +22,10 @@ const satoshi = localFont({
 const variants = cva('w-96 gap-2 overflow-hidden rounded-xl bg-white dark:bg-black border border-stroke p-4 text-left align-middle shadow-xl transition-all z-10', {
     variants: {
         size: {
-            sm: 'w-96',
-            md: 'w-128',
-            lg: 'w-192',
-            xl: 'w-256',
+            sm: 'min-w-96',
+            md: 'min-w-128',
+            lg: 'min-w-192',
+            xl: 'min-w-256',
         },
     },
     defaultVariants: {

@@ -1,17 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
 import { useParamsModal } from '@/hooks/params-modal.hook';
 import { api } from '@/trpc/react';
 import { handleErrors } from '@/utils/handle-errors.util';
 import { Menu } from '@headlessui/react';
+import { useRouter } from "next/navigation";
 import { useSession } from 'next-auth/react';
-import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { PiDotsThree } from 'react-icons/pi';
 import { ReportModal } from '../modals/report-post-modal';
 import { Button } from '../ui/Button';
 import { BaseMenu } from './base-menu';
+import { DeleteModal } from '../modals/delete-modal';
 
 interface PostMenuProps {
     userIsProfileOwner: boolean;
@@ -23,11 +25,10 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
     const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false);
     const [confirmDeleteUserModalOpen, setConfirmDeleteUserModalOpen] = useState(false);
 
-    const params = useSearchParams();
+    const router = useRouter();
 
     const { data: session } = useSession();
     const { close } = useParamsModal('postId');
-    const { open } = useParamsModal('reportPost', postId);
 
     const user = session?.user;
 
@@ -58,7 +59,8 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
         onError: (e) => handleErrors({ e, message: 'An error occurred while deleting this post.' })
     });
 
-    const handleDeletePost = () => {
+    const handleDeletePost = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
         if (!postId) {
             toast.error('An error occurred while deleting this post.');
             return;
@@ -67,7 +69,8 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
         setConfirmDeleteModalOpen(true);
     }
 
-    const handleDeleteUserPost = () => {
+    const handleDeleteUserPost = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
         if (!postId) {
             toast.error('An error occurred while deleting this post.');
             return;
@@ -77,13 +80,13 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
     }
 
     return <BaseMenu {...props} button={button ?? <PiDotsThree className='w-5 h-5 text-white mt-1.5' />} className='right-0 bottom-0 w-44 origin-top-right'>
-        {/* {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} post admin deleteFn={() => {
-            mutate({ id: query.postId?.toString() ?? '' });
-            push('/discover');
+        {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} post admin deleteFn={() => {
+            mutate({ id: postId?.toString() ?? '' });
+            router.push('/discover');
         }} />}
         {confirmDeleteUserModalOpen && <DeleteModal isOpen={confirmDeleteUserModalOpen} setIsOpen={setConfirmDeleteUserModalOpen} post deleteFn={() => {
-            deletePost({ id: query.postId?.toString() ?? '' });
-        }} />} */}
+            deletePost({ id: postId?.toString() ?? '' });
+        }} />}
 
         <div className="space-y-1">
             {user && <Menu.Item>
