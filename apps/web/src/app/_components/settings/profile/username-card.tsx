@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { Button } from "../../ui/Button"
 import { api } from "@/trpc/react";
 import {
-    EditProfileInput, editProfileSchema
+    type EditProfileInput, editProfileSchema
 } from '@/schemas/user.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from "react-hot-toast";
@@ -16,6 +16,7 @@ export function UsernameCard() {
     const { register, handleSubmit, setValue, formState: { errors }, setError, clearErrors } = useForm<EditProfileInput>({
         resolver: zodResolver(editProfileSchema),
     });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [loading, setLoading] = useState<boolean>(false);
     const { data: userData } = api.user.getMe.useQuery(undefined, {
         onSuccess: (data) => {
@@ -24,7 +25,7 @@ export function UsernameCard() {
     });
 
     const { mutate } = api.user.editProfile.useMutation({
-        onSuccess: async (data) => {
+        onSuccess: async () => {
             await update();
             toast.success("Username updated!")
         },
@@ -57,7 +58,7 @@ export function UsernameCard() {
     return (
         <div className="flex flex-col items-start rounded-lg border border-stroke bg-white dark:bg-black">
             <form className="self-stretch" onSubmit={handleSubmit(handleFormSubmit)}>
-                <div className="flex flex-col items-start flex gap-5 p-10 self-stretch">
+                <div className="flex flex-col items-start gap-5 p-10 self-stretch">
                     <div className="flex flex-col items-start gap-3 flex-1">
                         <h1 className="font-clash font-bold text-3xl">Username</h1>
                         <p>This is how you will appear everywhere on the platform. Put whatever you are comfortable with.</p>

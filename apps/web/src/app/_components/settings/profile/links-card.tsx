@@ -3,7 +3,7 @@ import { useState } from "react";
 import { api } from "@/trpc/react";
 import { useForm } from "react-hook-form";
 import {
-    AddLinkInput, addLinkSchema
+    type AddLinkInput, addLinkSchema
 } from '@/schemas/user.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { handleErrors } from '@/utils/handle-errors.util';
@@ -17,10 +17,11 @@ export function LinksCard() {
     });
     const ctx = api.useContext();
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [loading, setLoading] = useState<boolean>(false);
 
     const { data: userData } = api.user.getMe.useQuery(undefined, {
-        onSuccess: (data) => {
+        onSuccess: () => {
             // do nothing 
         }
     });
@@ -47,7 +48,7 @@ export function LinksCard() {
     return (
         <div className="flex flex-col items-start rounded-lg border bg-white">
             <form className="self-stretch" onSubmit={handleSubmitLink(handleFormSubmitLink)}>
-                <div className="flex flex-col items-start flex gap-5 p-10 self-stretch">
+                <div className="flex flex-col items-start gap-5 p-10 self-stretch">
                     <div className="flex flex-col items-start gap-3 flex-1">
                         <h1 className="font-clash font-bold text-3xl">Social Links.</h1>
                         <p>Add links of your socials or websites to your profile</p>

@@ -10,10 +10,11 @@ import { handleErrors } from '@/utils/handle-errors.util';
 export function DeleteAccountCard() {
     const { update } = useSession();
     const { handleSubmit } = useForm();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [loading, setLoading] = useState<boolean>(false);
 
     const { mutate } = api.user.deleteProfile.useMutation({
-        onSuccess: async (data) => {
+        onSuccess: async () => {
             await update();
             toast.success("Your profile has been deleted.")
         },
@@ -29,7 +30,7 @@ export function DeleteAccountCard() {
     return (
         <div className="flex flex-col items-start rounded-lg border border-stroke bg-white dark:bg-black">
             <form className="self-stretch" onSubmit={handleSubmit(handleFormSubmit)}>
-                <div className="flex items-start flex gap-24 p-10 self-stretch">
+                <div className="flex items-start gap-24 p-10 self-stretch">
                     <div className="flex flex-col items-start gap-3 flex-1">
                         <h1 className="font-clash font-bold text-3xl">Delete account</h1>
                         <p>If you don't want to have an account on outfits.bio anymore, then you can request an account deletion.</p>

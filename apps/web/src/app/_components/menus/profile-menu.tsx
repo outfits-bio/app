@@ -1,6 +1,6 @@
 import { Menu } from '@headlessui/react';
 import { useSession } from 'next-auth/react';
-import { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { PiDotsThree } from 'react-icons/pi';

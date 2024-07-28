@@ -4,7 +4,7 @@ import { Button } from "../../ui/Button"
 import { api } from "@/trpc/react";
 import { useForm } from "react-hook-form";
 import {
-    EditProfileInput, editProfileSchema
+    type EditProfileInput, editProfileSchema
 } from '@/schemas/user.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { handleErrors } from '@/utils/handle-errors.util';
@@ -16,6 +16,7 @@ export function TaglineCard() {
     const { register, handleSubmit, setValue, formState: { errors }, } = useForm<EditProfileInput>({
         resolver: zodResolver(editProfileSchema),
     });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [loading, setLoading] = useState<boolean>(false);
     const { update } = useSession();
     const { data: userData } = api.user.getMe.useQuery(undefined, {
@@ -25,7 +26,7 @@ export function TaglineCard() {
     });
 
     const { mutate } = api.user.editProfile.useMutation({
-        onSuccess: async (data) => {
+        onSuccess: async () => {
             await update();
             toast.success("Tagline updated!")
         },
@@ -46,7 +47,7 @@ export function TaglineCard() {
     return (
         <div className="flex flex-col items-start rounded-lg border border-stroke bg-white dark:bg-black">
             <form className="self-stretch" onSubmit={handleSubmit(handleFormSubmit)}>
-                <div className="flex flex-col items-start flex gap-5 p-10 self-stretch">
+                <div className="flex flex-col items-start gap-5 p-10 self-stretch">
                     <div className="flex flex-col items-start gap-3 flex-1">
                         <h1 className="font-clash font-bold text-3xl">Tagline</h1>
                         <p>Your tagline is essentially a small biograph about you, what you like or what you do.</p>

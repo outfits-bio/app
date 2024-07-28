@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { LinkType } from "database";
 import {
-    PiDiscordLogo, PiGithubLogo, PiInstagramLogo, PiLinkSimple, PiPlus, PiSubtract, PiTiktokLogo, PiTrash,
+    PiDiscordLogo, PiGithubLogo, PiInstagramLogo, PiLinkSimple, PiTiktokLogo,
     PiTwitterLogo, PiYoutubeLogo
 } from 'react-icons/pi';
 

@@ -3,7 +3,6 @@
 import { api } from "@/trpc/react";
 import type { RouterOutputs } from "@/trpc/shared";
 import { handleErrors } from "@/utils/handle-errors.util";
-import type { User } from 'next-auth';
 import { LinkType } from "database";
 import { useSession } from "next-auth/react";
 import Image from "next/image";

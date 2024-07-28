@@ -163,7 +163,7 @@ export function CreatePostModal() {
                                             leaveFrom="opacity-100"
                                             leaveTo="opacity-0"
                                         >
-                                            <Listbox.Options className="absolute mt-2 bg-white dark:bg-black max-h-60 w-full overflow-auto rounded-xl bg-white dark:bg-black p-2 gap-2 shadow-lg border border-stroke font-clash font-semibold z-50">
+                                            <Listbox.Options className="absolute mt-2 bg-white dark:bg-black max-h-60 w-full overflow-auto rounded-xl p-2 gap-2 shadow-lg border border-stroke font-clash font-semibold z-50">
                                                 <Listbox.Option
                                                     key={PostType.OUTFIT}
                                                     value={PostType.OUTFIT}

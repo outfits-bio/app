@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Dispatch, Fragment, SetStateAction } from 'react';
-
+import type { Dispatch, SetStateAction } from 'react';
+import { Fragment } from 'react';
 
 import { Button } from '../ui/Button';
 

@@ -7,7 +7,7 @@ export function ThemeCard() {
 
     return (
         <div className="flex flex-col items-start rounded-lg border border-stroke bg-white dark:bg-black">
-            <div className="flex flex-col items-start flex gap-5 p-10 self-stretch">
+            <div className="flex flex-col items-start gap-5 p-10 self-stretch">
                 <div className="flex flex-col items-start gap-3 flex-1">
                     <h1 className="font-clash font-bold text-3xl">Themes</h1>
                     <p>Do you prefer a lighter or dark theme?</p>
