@@ -34,7 +34,7 @@ export function DiscordCard() {
                     <p>Connect discord, required for spotify.</p>
                 </div>
             </div>
-            <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between border-t dark:border-stroke bg-gray-100 dark:bg-gray-900">
+            <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between border-t dark:border-stroke bg-gray-100 dark:bg-neutral-900">
                 <p>Connecting discord is required if you want to display your spotify status </p>
                 <div className="flex items-center gap-3">
                     {discordAccount ? (

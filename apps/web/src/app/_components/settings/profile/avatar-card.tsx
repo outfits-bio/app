@@ -130,7 +130,7 @@ export function AvatarCard() {
                     }
                 </form>
             </div>
-            <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between border-t dark:border-stroke bg-gray-100 dark:bg-gray-900 dark:bg-gray-900">
+            <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between border-t dark:border-stroke bg-gray-100 dark:bg-neutral-900 dark:bg-neutral-900">
                 <p>Click to upload or simply drag and drop your image.</p>
                 <div className="flex items-center gap-3">
                     <Button variant="ghost" onClick={() => deleteImage()}>Remove</Button>

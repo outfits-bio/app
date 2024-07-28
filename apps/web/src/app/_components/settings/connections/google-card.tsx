@@ -34,7 +34,7 @@ export function GoogleCard() {
                     <p>Sign in with google, a classic.</p>
                 </div>
             </div>
-            <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-end border-t dark:border-stroke bg-gray-100 dark:bg-gray-900">
+            <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-end border-t dark:border-stroke bg-gray-100 dark:bg-neutral-900">
                 <div className="flex items-center gap-3">
                     {googleAccount ? (
                         <>

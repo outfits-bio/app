@@ -56,7 +56,7 @@ export function TaglineCard() {
                         {errors.tagline && <p>{errors.tagline.message}</p>}
                     </div>
                 </div>
-                <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between border-t dark:border-stroke bg-gray-100 dark:bg-gray-900">
+                <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between border-t dark:border-stroke bg-gray-100 dark:bg-neutral-900">
                     <p>You can only have up to 200 characters.</p>
                     <div className="flex items-center gap-3">
                         <Button type="submit">Save</Button>

@@ -43,7 +43,7 @@ export function SpotifyStatusCard() {
                     <div className="w-[32px] h-[32px] flex-shrink-0 bg-black rounded-full dark:bg-white" />
                 </div>
             </div>
-            <div className="flex flex-wrap items-center gap-3 p-6 px-10 self-stretch justify-between border-t dark:border-stroke bg-gray-100 dark:bg-gray-900">
+            <div className="flex flex-wrap items-center gap-3 p-6 px-10 self-stretch justify-between border-t dark:border-stroke bg-gray-100 dark:bg-neutral-900">
                 <p>Powered by Lanyard</p>
             </div>
         </div>
