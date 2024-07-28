@@ -22,10 +22,9 @@ import { ProfileMenu } from "../menus/profile-menu";
 interface Props {
     profileData?: RouterOutputs['user']['getProfile'];
     username: string;
-    currentUser: User;
 }
 
-export const ProfileCard = ({ profileData, username, currentUser }: Props) => {
+export const ProfileCard = ({ profileData, username }: Props) => {
 
     const { data, status } = useSession();
     const router = useRouter();
@@ -209,7 +208,7 @@ export const ProfileCard = ({ profileData, username, currentUser }: Props) => {
                     </div>
 
                     <div>
-                        {(data?.user && profileData) && <ProfileMenu setAdminEditUserModalOpen={setAdminEditUserModalOpen} username={profileData.username ?? ''} user={currentUser} userUrl={userUrl} handleDeleteUser={handleDeleteUser} setReportModalOpen={setReportModalOpen} />}
+                        {(data?.user && profileData) && <ProfileMenu setAdminEditUserModalOpen={setAdminEditUserModalOpen} username={profileData.username ?? ''} userUrl={userUrl} handleDeleteUser={handleDeleteUser} setReportModalOpen={setReportModalOpen} />}
                     </div>
                 </div>}
 
