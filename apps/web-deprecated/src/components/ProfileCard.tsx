@@ -123,7 +123,7 @@ export const ProfileCard = ({ profileData, username, isCurrentUser, currentUser,
                             <span>{profileData?.username}</span>
                             <div className='group relative w-max'>
                                 {profileData?.admin ? <PiHammerBold className='w-6 h-6 md:w-8 md:h-8' /> : profileData?.verified && <PiSealCheckBold className='w-6 h-6 md:w-8 md:h-8' />}
-                                <span className='opacity-0 transition-opacity group-hover:opacity-100 pointer-events-none absolute w-0 h-0 -top-2 left-1/3 border-x-[5px] border-x-transparent border-t-[7.5px] border-t-black dark:border-t-white' />
+                                <span className='opacity-0 transition-opacity group-hover:opacity-100 pointer-events-none absolute w-0 h-0 -top-2 left-1/3 border-x-[5px] border-x-transparent border-t-[7.5px] border-t-black dark:border-t-stroke' />
                                 <span
                                     className="shadow-lg pointer-events-none absolute bg-black dark:bg-white -top-[42px] -left-full w-max rounded-xl p-2 opacity-0 transition-opacity group-hover:opacity-100"
                                 >

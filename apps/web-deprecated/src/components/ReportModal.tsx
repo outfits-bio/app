@@ -62,7 +62,7 @@ export const ReportModal = ({ isOpen, setIsOpen, type, id }: ReportModalProps) =
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-96 gap-2 flex flex-col overflow-hidden rounded-xl dark:text-white bg-white dark:bg-black border dark:border-white p-4 text-left align-middle shadow-xl transition-all">
+                            <Dialog.Panel className="w-96 gap-2 flex flex-col overflow-hidden rounded-xl dark:text-white bg-white dark:bg-black border dark:border-stroke p-4 text-left align-middle shadow-xl transition-all">
                                 <h1 className='text-2xl font-semibold'>Report {type === "USER" ? 'User' : 'Post'}</h1>
 
                                 <form onSubmit={handleSubmit(handleReportSubmit)}>
@@ -72,7 +72,7 @@ export const ReportModal = ({ isOpen, setIsOpen, type, id }: ReportModalProps) =
                                         </label>
                                         <textarea
                                             id="reason"
-                                            className="w-full px-4 py-2 border rounded-xl border dark:border-white dark:text-white dark:bg-black"
+                                            className="w-full px-4 py-2 border rounded-xl border dark:border-stroke dark:text-white dark:bg-black"
                                             placeholder='Please describe the reason for your report.'
                                             {...register('reason')}
                                         />

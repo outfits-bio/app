@@ -28,7 +28,7 @@ export const NavMenu = () => {
 
                 >
                     <Menu.Items
-                        className="h-44 border-b border dark:border-white bg-white dark:bg-black fixed overflow-hidden inset-0 mt-20 w-full ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        className="h-44 border-b border dark:border-stroke bg-white dark:bg-black fixed overflow-hidden inset-0 mt-20 w-full ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="p-4 space-y-2">
                             <Menu.Item>
                                 {({ active }) => (
