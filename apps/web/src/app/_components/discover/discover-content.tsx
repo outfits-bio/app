@@ -126,7 +126,7 @@ export function DiscoverContent() {
                 <div className="w-[350px] flex border-b-2 border-stroke gap-1 pb-2">
                     <button
                         onClick={() => handleChangeCategory('latest')}
-                        className={`${activeCategory === 'latest' ? 'text-inherit border' : 'text-secondary-text'} w-1/2 py-2 font-medium font-clash flex gap-2 items-center justify-center hover:bg-stroke transition-colors duration-150 rounded-xl`}
+                        className={`${activeCategory === 'latest' ? 'text-inherit border dark:border-stroke' : 'text-secondary-text'} w-1/2 py-2 font-medium font-clash flex gap-2 items-center justify-center hover:bg-stroke transition-colors duration-150 rounded-xl`}
                     >
                         <PiClockBold className="text-2xl" />
                         <p>Latest</p>
@@ -134,7 +134,7 @@ export function DiscoverContent() {
 
                     <button
                         onClick={() => handleChangeCategory('popular')}
-                        className={`${activeCategory === 'popular' ? 'text-inherit border' : 'text-secondary-text'} w-1/2 py-2 font-medium font-clash flex gap-2 items-center justify-center hover:bg-stroke transition-colors duration-150 rounded-xl`}
+                        className={`${activeCategory === 'popular' ? 'text-inherit border dark:border-stroke' : 'text-secondary-text'} w-1/2 py-2 font-medium font-clash flex gap-2 items-center justify-center hover:bg-stroke transition-colors duration-150 rounded-xl`}
                     >
                         <PiFireBold className="text-2xl" />
                         <p>Popular</p>
