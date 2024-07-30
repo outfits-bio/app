@@ -14,6 +14,7 @@ import { useEffect, useRef, useState } from 'react';
 import { PiPlus } from 'react-icons/pi';
 import { Button } from '../ui/Button';
 import { type PostSectionProps, getPostTypeCount, getPostTypeIcon, onError, onMutate, onSettled } from './post-utils';
+import { CropPostModal } from '../modals/crop-post-modal';
 
 export const PostSection = ({ profileData, postsData, type, loading }: PostSectionProps) => {
 
@@ -62,7 +63,7 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
 
     return (
         <div className="w-full pr-2" key={type}>
-            {/* {cropModalOpen && <PostCropModal
+            {cropModalOpen && <CropPostModal
                 type={type}
                 setIsCropped={setIsCropped}
                 fileUrl={fileUrl}
@@ -71,7 +72,7 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
                 setFileUrl={setFileUrl}
                 setIsOpen={setCropModalOpen}
             />
-            } */}
+            }
 
             {(postsExist || userIsProfileOwner) && !loading && <h2 className={postsExist ? "pr-2 text-2xl md:text-4xl mb-5 flex items-center gap-3 font-clash" : "pr-2 text-2xl md:text-4xl md:mb-5 items-center gap-3 font-clash hidden md:flex"}>
                 {getPostTypeIcon(type)}

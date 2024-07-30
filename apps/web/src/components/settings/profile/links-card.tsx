@@ -10,6 +10,8 @@ import { handleErrors } from '@/utils/handle-errors.util';
 import { ProfileLink } from "../../ui/ProfielLink";
 import toast from "react-hot-toast";
 import { Button } from "../../ui/Button"
+import { PiDiscordLogo, PiGithubLogo, PiInstagramLogo, PiLinkSimple, PiPlus, PiTiktokLogo, PiTrash, PiTwitterLogo, PiYoutubeLogo } from "react-icons/pi";
+import { LinkType } from "database";
 
 export function LinksCard() {
     const { register: registerLink, handleSubmit: handleSubmitLink, resetField } = useForm<AddLinkInput>({
@@ -46,30 +48,63 @@ export function LinksCard() {
     const handleFormSubmitLink = ({ url }: AddLinkInput) => addLink({ url });
 
     return (
-        <div className="flex flex-col items-start rounded-lg border bg-white">
-            <form className="self-stretch" onSubmit={handleSubmitLink(handleFormSubmitLink)}>
-                <div className="flex flex-col items-start gap-5 p-10 self-stretch">
-                    <div className="flex flex-col items-start gap-3 flex-1">
-                        <h1 className="font-clash font-bold text-3xl">Social Links.</h1>
-                        <p>Add links of your socials or websites to your profile</p>
-                    </div>
-                    {userData?.links.length && userData?.links.length <= 3 ?
-                        <>
-                            <ProfileLink {...userData.links[0]!} />
-                            <ProfileLink {...userData.links[1]!} />
-                            <ProfileLink {...userData.links[2]!} />
-                        </> : <>
-                            {userData?.links.map((link) => (<ProfileLink key={link.id} {...link} />))}
-                        </>
-                    }
+        <div className="flex flex-col items-start rounded-sm border bg-white">
+            <div className="flex flex-col items-start gap-5 p-10 self-stretch">
+                <div className="flex flex-col items-start gap-3 flex-1">
+                    <h1 className="font-clash font-bold text-3xl">Social Links.</h1>
+                    <p>Add links of your socials or websites to your profile</p>
                 </div>
-                <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between border-t bg-gray-100">
-                    <p>Maximum of 3 links. Mainstream platforms have their own icons.</p>
-                    <div className="flex items-center gap-3">
-                        <Button>Save</Button>
-                    </div>
+
+                <div className='flex flex-col gap-2 w-full'>
+                    {userData?.links.map(link =>
+                        <div className='flex items-center gap-2 w-full' key={link.id}>
+                            <p className='gap-1 py-2 h-12 w-full cursor-default overflow-x-hidden flex px-4 items-center select-none rounded-xl border border-stroke'>
+                                {link.type === LinkType.TWITTER && <PiTwitterLogo className='w-5 h-5' />}
+                                {link.type === LinkType.YOUTUBE && <PiYoutubeLogo className='w-5 h-5' />}
+                                {link.type === LinkType.TIKTOK && <PiTiktokLogo className='w-5 h-5' />}
+                                {link.type === LinkType.DISCORD && <PiDiscordLogo className='w-5 h-5' />}
+                                {link.type === LinkType.INSTAGRAM && <PiInstagramLogo className='w-5 h-5' />}
+                                {link.type === LinkType.GITHUB && <PiGithubLogo className='w-5 h-5' />}
+                                {link.type === LinkType.WEBSITE && <PiLinkSimple className='w-5 h-5' />}
+                                <span className='underline'>{link.url}</span>
+                            </p>
+                            <div>
+                                <Button variant='outline' iconLeft={<PiTrash />}
+                                    centerItems
+                                    isLoading={removeLinkLoading && removeLinkVariables?.id === link.id}
+                                    onClick={() => removeLink({ id: link.id })}
+                                />
+                            </div>
+                        </div>
+                    )}
                 </div>
-            </form>
+
+                <form className='' onSubmit={handleSubmitLink(handleFormSubmitLink)}>
+                    {userData?.links && userData?.links?.length < 6 &&
+                        <div className='flex gap-2'>
+                            <input
+                                id="link"
+                                type="text"
+                                placeholder='https://example.com'
+                                className="px-4 py-2 h-12 border rounded-xl border-stroke dark:text-white dark:bg-black"
+                                {...registerLink('url')}
+                            />
+                            <div>
+                                <Button
+                                    type="submit"
+                                    disabled={linkLoading}
+                                    isLoading={linkLoading}
+                                    centerItems
+                                    iconLeft={<PiPlus />}
+                                />
+                            </div>
+                        </div>}
+                </form>
+
+            </div>
+            <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between border-t bg-gray-100">
+                <p>Mainstream platforms have their own icons.</p>
+            </div>
         </div>
     )
 }

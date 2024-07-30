@@ -1,29 +1,27 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { Button } from "../../ui/Button"
 import { Avatar } from "../../ui/Avatar"
 import { toast } from "react-hot-toast";
-import type { Area } from "react-easy-crop";
 import { useSession } from "next-auth/react";
 import axios from 'axios';
 import { useForm } from "react-hook-form";
 import { formatAvatar } from "@/utils/image-src-format.util";
 import { handleErrors } from "@/utils/handle-errors.util";
-import getCroppedImg from "@/utils/crop-image.util";
 import { api } from "@/trpc/react";
 import { useFileUpload } from "@/hooks/file-upload.hook";
+import { AvatarCropModal } from "@/components/modals/avatar-crop-modal";
+import { PiSubtract } from "react-icons/pi";
 
 export function AvatarCard() {
     const { data: session, update } = useSession();
     const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
     const [loading, setLoading] = useState<boolean>(false);
-    const [croppedAreaPixelsState, setCroppedAreaPixelsState] = useState<Area | null>(null);
-    const [crop, setCrop] = useState({ x: 0, y: 0 });
-    const [isCropped, setIsCropped] = useState<boolean>(false);
     const ref = useRef<HTMLInputElement>(null);
 
 
-    const { register, handleSubmit, getValues, setValue } = useForm();
+    const { handleSubmit } = useForm();
 
     useEffect(() => {
         if (!session?.user) return;
@@ -65,11 +63,13 @@ export function AvatarCard() {
     };
 
     const handleFormChange = async () => {
+        console.log("file has changed");
         handleSubmit(handleFormSubmit);
     }
 
     return (
         <div className="flex flex-col items-start rounded-lg border border-stroke bg-white dark:bg-black">
+            {cropModalOpen && <AvatarCropModal setFileUrl={setFileUrl} fileUrl={fileUrl} isOpen={cropModalOpen} setFile={setFile} setIsOpen={setCropModalOpen} />}
             <div className="flex-wrap items-start flex gap-24 p-10 self-stretch">
                 <div className="flex flex-col items-start gap-3 flex-1">
                     <h1 className="font-clash font-bold text-3xl">Avatar</h1>
@@ -85,36 +85,30 @@ export function AvatarCard() {
                                         onDragEnter={handleDrag}
                                         onDragLeave={handleDrag}
                                         onDragOver={handleDrag}
-                                        onDrop={handleDrop}
-                                    />
+                                        onDrop={handleDrop} />
                                 }
 
                                 <input
                                     ref={ref}
                                     id="avatar"
-                                    name="avatar"
                                     type="file"
                                     className="hidden"
                                     onChange={handleChange}
                                     accept='image/*'
                                 />
-
                                 {(file) ? (
-                                    <Avatar
+                                    <img
+                                        src={fileUrl ?? ""}
+                                        alt="Avatar Preview"
                                         className="h-44 w-44 object-contain rounded-full cursor-pointer"
-                                        image={fileUrl ?? ""}
-                                        id={session.user.id}
-                                        username={session.user.username}
-                                        size={'lg'} />
-
+                                    />
                                 ) : (
                                     fileUrl ? (
-                                        <Avatar
+                                        <img
+                                            src={fileUrl ?? ""}
+                                            alt="Avatar Preview"
                                             className="h-44 w-44 object-contain rounded-full cursor-pointer"
-                                            image={fileUrl ?? ""}
-                                            id={session.user.id}
-                                            username={session.user.username}
-                                            size={'lg'} />
+                                        />
                                     ) : (
                                         <div className="cursor-pointer text-center p-4">
                                             Drag and drop or click to upload
@@ -130,11 +124,12 @@ export function AvatarCard() {
                     }
                 </form>
             </div>
-            <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between border-t dark:border-stroke bg-gray-100 dark:bg-neutral-900 dark:bg-neutral-900">
+            <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between border-t dark:border-stroke bg-gray-100 dark:bg-neutral-900">
                 <p>Click to upload or simply drag and drop your image.</p>
                 <div className="flex items-center gap-3">
                     <Button variant="ghost" onClick={() => deleteImage()}>Remove</Button>
-                    <Button onClick={() => ref.current?.click()}>Upload</Button>
+                    <Button variant='outline' centerItems iconLeft={<PiSubtract />} type='button' onClick={() => setCropModalOpen(true)}>Edit/Crop</Button>
+                    <Button onClick={handleSubmit(handleFormSubmit)}>Save</Button>
                 </div>
             </div>
         </div>

@@ -10,7 +10,7 @@ import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { PiDotsThree } from 'react-icons/pi';
-import { ReportModal } from '../modals/report-post-modal';
+import { ReportModal } from '../modals/report-modal';
 import { Button } from '../ui/Button';
 import { BaseMenu } from './base-menu';
 import { DeleteModal } from '../modals/delete-modal';
@@ -24,6 +24,7 @@ interface PostMenuProps {
 export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostMenuProps) => {
     const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false);
     const [confirmDeleteUserModalOpen, setConfirmDeleteUserModalOpen] = useState(false);
+    const [reportModalOpen, setReportModalOpen] = useState(false);
 
     const router = useRouter();
 
@@ -79,29 +80,60 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
         setConfirmDeleteUserModalOpen(true);
     }
 
-    return <BaseMenu {...props} button={button ?? <PiDotsThree className='w-5 h-5 text-white mt-1.5' />} className='right-0 bottom-0 w-44 origin-top-right'>
-        {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} post admin deleteFn={() => {
-            mutate({ id: postId?.toString() ?? '' });
-            router.push('/discover');
-        }} />}
-        {confirmDeleteUserModalOpen && <DeleteModal isOpen={confirmDeleteUserModalOpen} setIsOpen={setConfirmDeleteUserModalOpen} post deleteFn={() => {
-            deletePost({ id: postId?.toString() ?? '' });
-        }} />}
+    const handleReportModalOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
+        setReportModalOpen(true);
+    }
 
-        <div className="space-y-1">
-            {user && <Menu.Item>
-                <ReportModal type={'POST'} id={postId} />
-            </Menu.Item>}
-            {(userIsProfileOwner && !user?.admin) && <Menu.Item>
-                <Button variant={'ghost'} onClick={handleDeleteUserPost}>
-                    <p>Delete</p>
-                </Button>
-            </Menu.Item>}
-            {user?.admin && <Menu.Item>
-                <Button variant={'ghost'} onClick={handleDeletePost}>
-                    <p>Delete</p>
-                </Button>
-            </Menu.Item>}
-        </div>
-    </BaseMenu>
+    return (
+        <BaseMenu {...props} button={button ?? <PiDotsThree className='w-5 h-5 text-white mt-1.5' />} className='right-0 bottom-0 w-44 origin-top-right'>
+            {confirmDeleteModalOpen && (
+                <DeleteModal
+                    isOpen={confirmDeleteModalOpen}
+                    setIsOpen={setConfirmDeleteModalOpen}
+                    post
+                    admin
+                    deleteFn={() => {
+                        mutate({ id: postId?.toString() ?? '' });
+                        router.push('/discover');
+                    }}
+                />
+            )}
+            {confirmDeleteUserModalOpen && (
+                <DeleteModal
+                    isOpen={confirmDeleteUserModalOpen}
+                    setIsOpen={setConfirmDeleteUserModalOpen}
+                    post
+                    deleteFn={() => {
+                        deletePost({ id: postId?.toString() ?? '' });
+                    }}
+                />
+            )}
+
+            <div className="space-y-1">
+                {user && (
+                    <Menu.Item as="div">
+                        <Button variant={'ghost'} onClick={handleReportModalOpen}>
+                            <p>Report</p>
+                        </Button>
+                        <ReportModal isOpen={reportModalOpen} setIsOpen={setReportModalOpen} type={'POST'} id={postId} />
+                    </Menu.Item>
+                )}
+                {userIsProfileOwner && !user?.admin && (
+                    <Menu.Item as="div">
+                        <Button variant={'ghost'} onClick={handleDeleteUserPost}>
+                            <p>Delete</p>
+                        </Button>
+                    </Menu.Item>
+                )}
+                {user?.admin && (
+                    <Menu.Item as="div">
+                        <Button variant={'ghost'} onClick={handleDeletePost}>
+                            <p>Delete</p>
+                        </Button>
+                    </Menu.Item>
+                )}
+            </div>
+        </BaseMenu>
+    );
 }

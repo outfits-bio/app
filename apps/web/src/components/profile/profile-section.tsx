@@ -13,10 +13,13 @@ import Marquee from "react-fast-marquee";
 import toast from "react-hot-toast";
 import { PiGear, PiCameraBold, PiDiscordLogoBold, PiGithubLogoBold, PiHammerBold, PiHeartBold, PiHeartFill, PiInstagramLogoBold, PiLinkSimpleBold, PiPencilSimple, PiQuestion, PiSealCheckBold, PiShareFat, PiTiktokLogoBold, PiTwitterLogoBold, PiYoutubeLogoBold } from "react-icons/pi";
 import { PostModal } from "../modals/post-modal";
-import { ReportModal } from "../modals/report-post-modal";
+import { ReportModal } from "../modals/report-modal";
 import { Avatar } from "../ui/Avatar";
 import { Button } from "../ui/Button";
 import { ProfileMenu } from "../menus/profile-menu";
+import { AdminEditUserModal } from "../modals/admin-edit-user-modal";
+import { DeleteModal } from "../modals/delete-modal";
+import { SpotifySetupModal } from "../modals/spotify-setup-modal";
 
 interface Props {
     profileData?: RouterOutputs['user']['getProfile'];
@@ -98,13 +101,13 @@ export const ProfileCard = ({ profileData, username }: Props) => {
     return (
         <div className="md:h-full flex flex-col font-satoshi md:bg-white md:dark:bg-black md:border-r border-stroke pl-4 py-4 md:px-12">
             <PostModal />
-            {reportModalOpen && <ReportModal type='USER' id={profileData?.id} />}
-            {/* {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} admin deleteFn={() => {
+            {reportModalOpen && <ReportModal isOpen={reportModalOpen} setIsOpen={setReportModalOpen} type='USER' id={profileData?.id} />}
+            {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} admin deleteFn={() => {
                 deleteUser({ id: profileData?.id ?? '' });
-                router.push('/discover');
-            }} />} */}
-            {/* {spotifySetupModalOpen && <SpotifySetupModal isOpen={spotifySetupModalOpen} setIsOpen={setSpotifySetupModalOpen} />} */}
-            {/* {(adminEditUserModalOpen && profileData) && <AdminEditUserModal targetUser={profileData} isOpen={adminEditUserModalOpen} setIsOpen={setAdminEditUserModalOpen} />} */}
+                router.push('/');
+            }} />}
+            {spotifySetupModalOpen && <SpotifySetupModal isOpen={spotifySetupModalOpen} close={() => setSpotifySetupModalOpen(false)} />}
+            {(adminEditUserModalOpen && profileData) && <AdminEditUserModal targetUser={profileData} isOpen={adminEditUserModalOpen} setIsOpen={setAdminEditUserModalOpen} close={() => setAdminEditUserModalOpen(false)} />}
 
             <div className='md:w-96 w-full flex flex-col gap-4'>
                 <div className='flex md:flex-col gap-4 md:justify-normal'>
