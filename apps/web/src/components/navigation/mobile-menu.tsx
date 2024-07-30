@@ -15,7 +15,7 @@ export const MobileMenu = () => {
     return <Menu as="div" className="inline-block text-left md:hidden">
         {({ open }) => (
             <div>
-                {open && <div className="fixed inset-0 top-20 bg-black/30 transition-all ease-in-out duration-50" aria-hidden="true" />}
+                {open && <div className="fixed inset-0 top-12 bg-black/30 transition-all ease-in-out duration-50" aria-hidden="true" />}
 
                 <div>
                     <Menu.Button className="inline-flex w-full justify-center bg-opacity-20 p-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
@@ -35,7 +35,7 @@ export const MobileMenu = () => {
 
                 >
                     <Menu.Items
-                        className="h-28 border-b border dark:border-stroke bg-white dark:bg-black fixed overflow-hidden inset-0 mt-20 w-full ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        className="h-28 border-b border dark:border-stroke bg-white dark:bg-black fixed overflow-hidden inset-0 mt-12 w-full ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="p-4 space-y-2">
                             <Menu.Item>
                                 {({ active }) => (

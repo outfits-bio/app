@@ -78,6 +78,18 @@
   scrollbar-width: none;
 }
 
+.mobilenav {
+  height: 65px;
+  height: calc(env(safe-area-inset-bottom, 0) + 65px);
+}
+
+@media (max-width: 768px) {
+  .mobileapp {
+    height: calc(100dvh - 65px);
+    height: calc(100dvh - calc(env(safe-area-inset-bottom, 0) + 65px));
+  }
+}
+
 .skeleton {
   @apply animate-pulse rounded-xl bg-gray-300 dark:bg-gray-700;
 }
@@ -174,14 +186,16 @@
     transform: scale(0);
     opacity: 0;
   }
+
   50% {
     transform: scale(1.2);
     opacity: 1;
   }
+
   100% {
     transform: scale(1);
     opacity: 1;
-    rotate: -12deg; 
+    rotate: -12deg;
   }
 }
 
@@ -190,10 +204,12 @@
     transform: scale(0);
     opacity: 0;
   }
+
   50% {
     transform: scale(1.2);
     opacity: 1;
   }
+
   100% {
     transform: scale(1);
     opacity: 1;
@@ -206,10 +222,12 @@
     transform: scale(0);
     opacity: 0;
   }
+
   50% {
     transform: scale(1.2);
     opacity: 1;
   }
+
   100% {
     transform: scale(1);
     opacity: 1;
@@ -222,10 +240,12 @@
     transform: scale(0);
     opacity: 0;
   }
+
   50% {
     transform: scale(1.2);
     opacity: 1;
   }
+
   100% {
     transform: scale(1);
     opacity: 1;

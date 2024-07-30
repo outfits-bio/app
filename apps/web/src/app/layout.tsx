@@ -111,7 +111,7 @@ export default async function RootLayout({
           <TRPCReactProvider cookies={cookies().toString()}>
             <ThemeProvider>
               <Navbar />
-              <main className="h-screen pt-20 overflow-x-hidden md:pb-0 scroll-smooth pb-20">
+              <main className="h-screen pt-12 md:pt-20 overflow-x-hidden scroll-smooth">
                 {children}
               </main>
               <MobileNav />

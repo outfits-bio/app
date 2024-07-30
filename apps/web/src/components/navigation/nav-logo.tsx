@@ -16,12 +16,12 @@ export function NavLogo() {
     if (slash) {
         return <Link href="/" className='flex items-center gap-2 hover:scale-[102%] active:scale-[99%]'>
             <Logo size={'lg'} />
-            <h1 className='text-2xl font-black font-clash flex gap-4 items-center'>/{title.toLowerCase()}</h1>
+            <h1 className='text-xl md:text-2xl font-black font-clash flex gap-4 items-center'>/{title.toLowerCase()}</h1>
         </Link>
     }
 
     return <Link href={session ? '/' : '/'} className='flex items-center gap-2 hover:scale-[102%] active:scale-[99%]'>
         <Logo size={'lg'} />
-        <h1 className='text-2xl font-black font-clash'>outfits.bio</h1>
+        <h1 className='text-xl md:text-2xl font-black font-clash'>outfits.bio</h1>
     </Link>
 }
