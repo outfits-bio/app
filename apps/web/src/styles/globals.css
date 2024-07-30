@@ -85,8 +85,7 @@
 
 @media (max-width: 768px) {
   body {
-    height: calc(100dvh - 65px);
-    height: calc(100dvh - calc(env(safe-area-inset-bottom, 0) + 65px));
+    margin-bottom: calc(env(safe-area-inset-bottom, 0) + 65px);
   }
 }
 

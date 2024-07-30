@@ -19,7 +19,7 @@ export function MobileNav() {
 
     if (pathname !== '/login' && pathname !== '/onboarding') {
         return (
-            <div className="flex w-full h-21 justify-between items-center py-2 px-6 border-t gap-3 sm:hidden fixed bottom-0 left-0 right-0 bg-white bg-opacity-95 dark:bg-black dark:border-stroke mobilenav">
+            <div className="flex w-full h-21 justify-between items-center pt-1 px-6 border-t gap-3 sm:hidden fixed bottom-0 left-0 right-0 bg-white bg-opacity-95 dark:bg-black dark:border-stroke mobilenav">
                 <Link href={'/'} className='rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[110%]'>
                     {pathname === '/discover' || pathname === '/' ? <PiHouseFill /> : <PiHouse />}
                 </Link>
