@@ -3,6 +3,7 @@
 import { api } from "@/trpc/react";
 import { toast } from 'react-hot-toast';
 import { handleErrors } from "@/utils/handle-errors.util";
+import Link from "next/link";
 
 export function SpotifyStatusCard() {
     const ctx = api.useUtils();
@@ -44,7 +45,9 @@ export function SpotifyStatusCard() {
                 </div>
             </div>
             <div className="flex flex-wrap items-center gap-3 p-6 px-10 self-stretch justify-between border-t dark:border-stroke bg-gray-100 dark:bg-neutral-900">
-                <p>Powered by Lanyard</p>
+                <p>We use <Link className='underline' href='https://github.com/Phineas/lanyard'>Lanyard</Link> to power our Spotify Status feature.
+                    To use Lanyard, you must join their Discord Server using the Discord account that&apos;s connected to outfits.bio.
+                </p>
             </div>
         </div>
     )

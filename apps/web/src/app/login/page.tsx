@@ -38,11 +38,11 @@ export default async function LoginPage() {
           .
         </p>
       </div>
-      <div className='absolute inset-0 hidden md:block -z-10'>
+      <div className='absolute inset-0 block -z-10'>
         {posts.map((post, i) => (
           <div
             key={i}
-            className={`opacity-0 absolute bg-gray-200 w-40 h-60 border rounded-lg transform rotate-${i % 2 === 0 ? 6 : -6} ${i === 0 ? 'top-20 right-40' : i === 1 ? 'bottom-20 left-40' : i === 2 ? '-rotate-12 top-20 left-1' : '-rotate-6 bottom-40 right-1'
+            className={`opacity-0 absolute bg-gray-200 w-20 h-32 md:w-40 md:h-60 border rounded-lg transform rotate-${i % 2 === 0 ? 6 : -6} ${i === 0 ? 'top-5 right-5 md:top-20 md:right-40' : i === 1 ? 'top-5 left-5 md:bottom-20 md:left-40' : i === 2 ? '-rotate-12 bottom-5 left-5 md:top-20 md:left-1' : '-rotate-6 bottom-5 right-5 md:bottom-40 md:right-1'
               } pop-in-${i + 1}`}
             style={{ animationDelay: `${i * 0.2}s` }}
           >

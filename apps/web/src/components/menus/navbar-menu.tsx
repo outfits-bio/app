@@ -65,6 +65,15 @@ export const NavbarMenu = () => {
         </div>
         <div className="pt-2 space-y-1">
             <Menu.Item>
+                <Link href={'https://discord.gg/f4KEs5TVz2'}>
+                    <Button
+                        variant='ghost'
+                    >
+                        <p className='font-semibold'>Join Discord</p>
+                    </Button>
+                </Link>
+            </Menu.Item>
+            <Menu.Item>
                 <Button
                     variant='ghost'
                     onClick={() => signOut()}
