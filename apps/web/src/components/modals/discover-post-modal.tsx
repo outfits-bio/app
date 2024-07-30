@@ -24,13 +24,13 @@ interface DiscoverPostModalProps {
 }
 
 const clash = localFont({
-    src: '../../../../public/fonts/ClashDisplay-Variable.woff2',
+    src: '../../../public/fonts/ClashDisplay-Variable.woff2',
     display: 'swap',
     variable: '--font-clash',
 });
 
 const satoshi = localFont({
-    src: '../../../../public/fonts/Satoshi-Variable.woff2',
+    src: '../../../public/fonts/Satoshi-Variable.woff2',
     display: 'swap',
     variable: '--font-satoshi',
 });
@@ -76,7 +76,7 @@ export const DiscoverPostModal = ({ post }: DiscoverPostModalProps) => {
                             </button>
 
                             <div className='flex flex-col justify-end items-center p-4 absolute bottom-0 backdrop-filter backdrop-blur-xs bg-black bg-opacity-10 w-full h-1/7 bg-fixed'>
-                            <div className='text-white flex w-full gap-2 mb-2 pl-0.5 shadow-text'>
+                                <div className='text-white flex w-full gap-2 mb-2 pl-0.5 shadow-text'>
                                     {/* {getPostTypeIconSmall(post.type)} */}
                                     <h1 className='font-clash'>{getPostTypeName(post.type)}</h1>
                                 </div>

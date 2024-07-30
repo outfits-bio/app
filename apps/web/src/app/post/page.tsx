@@ -12,7 +12,7 @@ import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import type { Area } from "react-easy-crop";
 import Cropper from "react-easy-crop";
 import { PiCaretDown, PiPlus } from "react-icons/pi";
-import { Button } from "@/app/_components/ui/Button";
+import { Button } from "@/components/ui/Button";
 // import { redirect } from "next/navigation";
 
 export default function PostPage() {

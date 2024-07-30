@@ -1,12 +1,12 @@
 import { getServerAuthSession } from "@/server/auth";
 import { redirect } from "next/navigation";
 
-import { AvatarCard } from "@/app/_components/settings/profile/avatar-card";
-import { DeleteAccountCard } from "@/app/_components/settings/profile/delete-account-card";
-import { LinksCard } from "@/app/_components/settings/profile/links-card";
-import { TaglineCard } from "@/app/_components/settings/profile/tagline-card";
-import { UsernameCard } from "@/app/_components/settings/profile/username-card";
-import { SettingsSidebar } from "@/app/_components/settings/settings-sidebar";
+import { AvatarCard } from "@/components/settings/profile/avatar-card";
+import { DeleteAccountCard } from "@/components/settings/profile/delete-account-card";
+import { LinksCard } from "@/components/settings/profile/links-card";
+import { TaglineCard } from "@/components/settings/profile/tagline-card";
+import { UsernameCard } from "@/components/settings/profile/username-card";
+import { SettingsSidebar } from "@/components/settings/settings-sidebar";
 
 export default async function ProfileSettingsPage() {
     const session = await getServerAuthSession();

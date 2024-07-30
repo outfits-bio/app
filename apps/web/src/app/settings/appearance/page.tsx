@@ -1,9 +1,9 @@
 import { getServerAuthSession } from "@/server/auth";
 import { redirect } from "next/navigation";
 
-import { AccentCard } from "@/app/_components/settings/appearance/accent-card";
-import { ThemeCard } from "@/app/_components/settings/appearance/theme-card";
-import { SettingsSidebar } from "@/app/_components/settings/settings-sidebar";
+import { AccentCard } from "@/components/settings/appearance/accent-card";
+import { ThemeCard } from "@/components/settings/appearance/theme-card";
+import { SettingsSidebar } from "@/components/settings/settings-sidebar";
 
 export default async function AppearanceSettingsPage() {
     const session = await getServerAuthSession();

@@ -1,4 +1,4 @@
-import { DiscoverContent } from "./_components/discover/discover-content";
+import { DiscoverContent } from "@/components/discover/discover-content";
 
 export default async function DiscoverPage() {
     return <DiscoverContent />;

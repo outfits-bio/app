@@ -1,5 +1,5 @@
 "use client";
-import { type ChangeEvent, useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "../../ui/Button"
 import { Avatar } from "../../ui/Avatar"
 import { toast } from "react-hot-toast";
@@ -64,7 +64,7 @@ export function AvatarCard() {
         setLoading(false);
     };
 
-    const handleFormChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const handleFormChange = async () => {
         handleSubmit(handleFormSubmit);
     }
 
@@ -75,7 +75,7 @@ export function AvatarCard() {
                     <h1 className="font-clash font-bold text-3xl">Avatar</h1>
                     <p>Take your best shot because your avatar is how you will appear on most of the website.</p>
                 </div>
-                <form onSubmit={handleSubmit(handleFormSubmit)}>
+                <form onChange={handleFormChange} onSubmit={handleSubmit(handleFormSubmit)}>
                     {session ? (
                         <div>
                             <div className='rounded-full h-44 w-44 flex items-center justify-center border dark:border-stroke' onClick={() => ref.current?.click()}>

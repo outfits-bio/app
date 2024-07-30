@@ -1,4 +1,4 @@
-import { SearchList } from "../_components/search/search-list";
+import { SearchList } from "@/components/search/search-list";
 
 export default async function SearchPage() {
 

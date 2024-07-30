@@ -1,7 +1,7 @@
 "use client";
 
 import { api } from "@/trpc/react";
-import { NotificationCard } from "../_components/notifications/notification-card";
+import { NotificationCard } from "@/components/notifications/notification-card";
 
 export default function NotificationsPage() {
     const { data: notifications, refetch } = api.notifications.getNotifications.useQuery();

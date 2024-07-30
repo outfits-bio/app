@@ -1,8 +1,8 @@
 import { getServerAuthSession } from "@/server/auth";
 import { redirect } from "next/navigation";
 import Link from 'next/link';
-import { Button } from '../_components/ui/Button';
-import LogoutButton from '../_components/settings/signout-button';
+import { Button } from '@/components/ui/Button';
+import LogoutButton from '@/components/settings/signout-button';
 
 export default async function SettingsPage() {
     const session = await getServerAuthSession();

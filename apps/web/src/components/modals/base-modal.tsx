@@ -8,13 +8,13 @@ import localFont from 'next/font/local';
 import { Fragment, forwardRef } from 'react';
 
 const clash = localFont({
-    src: '../../../../public/fonts/ClashDisplay-Variable.woff2',
+    src: '../../../public/fonts/ClashDisplay-Variable.woff2',
     display: 'swap',
     variable: '--font-clash',
 });
 
 const satoshi = localFont({
-    src: '../../../../public/fonts/Satoshi-Variable.woff2',
+    src: '../../../public/fonts/Satoshi-Variable.woff2',
     display: 'swap',
     variable: '--font-satoshi',
 });

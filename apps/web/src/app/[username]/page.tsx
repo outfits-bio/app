@@ -1,7 +1,7 @@
 import { api } from "@/trpc/server";
 import { notFound } from "next/navigation";
-import { Posts } from "../_components/profile/posts";
-import { ProfileCard } from "../_components/profile/profile-section";
+import { Posts } from "@/components/profile/posts";
+import { ProfileCard } from "@/components/profile/profile-section";
 
 export default async function ProfilePage({ params }: { params: { username: string } }) {
     try {

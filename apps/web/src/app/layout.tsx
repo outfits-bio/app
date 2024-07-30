@@ -10,10 +10,10 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Toaster } from 'react-hot-toast';
-import { MobileNav } from "./_components/navigation/mobile-nav";
-import { Navbar } from "./_components/navigation/navbar";
-import SessionProvider from "./_components/wrappers/session-provider";
-import ThemeProvider from "./_components/wrappers/theme-provider";
+import { MobileNav } from "@/components/navigation/mobile-nav";
+import { Navbar } from "@/components/navigation/navbar";
+import SessionProvider from "@/components/wrappers/session-provider";
+import ThemeProvider from "@/components/wrappers/theme-provider";
 
 const clash = localFont({
   src: '../../public/fonts/ClashDisplay-Variable.woff2',
