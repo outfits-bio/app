@@ -14,7 +14,7 @@ export function AuthSection() {
     const { data: session } = useSession();
     const pathname = usePathname();
 
-    const iconComponent = pathname === "/notifications" ? <PiBellSimpleFill /> : <PiBellSimple />;
+    const iconComponent = pathname === "/notifications" ? <PiBellSimpleFill className="h-5 w-5" /> : <PiBellSimple className="h-5 w-5" />;
 
     if (session && session.user) {
         const { data: notificationsCount } = api.notifications.getUnreadNotificationsCount.useQuery(undefined, { enabled: !!session });
@@ -35,7 +35,7 @@ export function AuthSection() {
             </div>
 
             <Link href='/notifications' className='md:hidden relative'>
-                <Button variant='outline-ghost' shape={'circle'} iconLeft={iconComponent} />
+                <Button className="h-8 w-8" variant='outline-ghost' shape={'circle'} iconLeft={iconComponent} />
                 {hasNotifications ? <div className="absolute top-0 right-0 w-4 h-4 rounded-full bg-error text-white text-[9px] font-bold flex items-center justify-center">
                     {notificationsCount}
                 </div> : null}

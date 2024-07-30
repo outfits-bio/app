@@ -8,7 +8,7 @@ import { getServerAuthSession } from "@/server/auth";
 import { TRPCReactProvider } from "@/trpc/react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Toaster } from 'react-hot-toast';
 import { MobileNav } from "@/components/navigation/mobile-nav";
 import { Navbar } from "@/components/navigation/navbar";
@@ -92,6 +92,12 @@ export const metadata: Metadata = {
     { rel: "apple-touch-startup-image", media: "screen and (device-width: 744px) and (device-height: 1133px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)", url: "/splash_screens/8.3__iPad_Mini_portrait.png" },
   ],
   manifest: '/manifest.json',
+};
+
+export const viewport: Viewport = {
+  initialScale: 1,
+  viewportFit: "cover",
+  width: "device-width",
 };
 
 export default async function RootLayout({
