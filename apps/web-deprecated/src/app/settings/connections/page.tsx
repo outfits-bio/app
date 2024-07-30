@@ -65,7 +65,7 @@ export const ConnectionsSettingsPage: NextPage = () => {
             <div className={`w-full md:w-[450px] h-24 flex flex-col gap-2 justify-between ${isLoading ? 'skeleton' : ''}`}>
                 {discordAccount ?
                     <div className='flex items-center gap-2'>
-                        <div className='py-2 h-12 grow w-full cursor-default flex justify-center items-center select-none rounded-xl border border dark:border-stroke'>
+                        <div className='py-2 h-12 grow w-full cursor-default flex justify-center items-center select-none rounded-xl border dark:border-stroke'>
                             <PiDiscordLogo className='w-6 h-6 mr-2' />
                             <span>Discord Connected</span>
                         </div>
@@ -87,7 +87,7 @@ export const ConnectionsSettingsPage: NextPage = () => {
 
                 {googleAccount ?
                     <div className='flex items-center gap-2'>
-                        <div className='py-2 h-12 grow w-full cursor-default flex justify-center items-center select-none rounded-xl border border dark:border-stroke'>
+                        <div className='py-2 h-12 grow w-full cursor-default flex justify-center items-center select-none rounded-xl border dark:border-stroke'>
                             <PiGoogleLogo className='w-6 h-6 mr-2' />
                             <span>Google Connected</span>
                         </div>

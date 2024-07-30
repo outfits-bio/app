@@ -70,7 +70,7 @@ export function AvatarCard() {
 
     return (
         <div className="flex flex-col items-start rounded-lg border border-stroke bg-white dark:bg-black">
-            <div className="flex flex-wrap items-start flex gap-24 p-10 self-stretch">
+            <div className="flex-wrap items-start flex gap-24 p-10 self-stretch">
                 <div className="flex flex-col items-start gap-3 flex-1">
                     <h1 className="font-clash font-bold text-3xl">Avatar</h1>
                     <p>Take your best shot because your avatar is how you will appear on most of the website.</p>
