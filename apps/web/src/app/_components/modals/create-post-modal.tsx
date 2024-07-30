@@ -16,7 +16,7 @@ import { Button } from "../ui/Button";
 
 export function CreatePostModal() {
     const [isOpen, setIsOpen] = useState(false);
-    const ctx = api.useContext();
+    const ctx = api.useUtils();
 
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [type, setType] = useState<PostType>("OUTFIT")
