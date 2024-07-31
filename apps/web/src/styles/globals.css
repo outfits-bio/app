@@ -46,38 +46,6 @@
   --accent: #fff;
 }
 
-* {
-  scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
-}
-
-*::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-*::-webkit-scrollbar-corner {
-  background: transparent;
-}
-
-*::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: var(--blur);
-  border-radius: 9999999px;
-}
-
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.hide-scrollbar {
-  scrollbar-color: transparent;
-  scrollbar-width: none;
-}
-
 .mobilenav {
   height: 65px;
   height: calc(env(safe-area-inset-bottom, 0) + 65px);
@@ -253,3 +221,19 @@
 }
 
 @tailwind utilities;
+
+@layer utilities {
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+}

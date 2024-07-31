@@ -43,13 +43,13 @@ export function NotificationsMenu() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <Popover.Panel className="absolute right-1 rounded-xl divide-y divide-stroke mt-1 origin-top-right border border-stroke bg-white dark:bg-black shadow-dropdown p-4 divide-none z-10 max-h-[410px] overflow-auto">
+                    <Popover.Panel className="absolute right-1 rounded-xl divide-y divide-stroke mt-1 origin-top-right border border-stroke bg-white dark:bg-black shadow-dropdown p-4 divide-none z-10 max-h-[438px] overflow-auto">
                         <div className="flex flex-col w-full sm:w-[400px] gap-2 font-clash py-2">
                             <h1 className="font-bold text-xl pt-0">Your Inbox</h1>
                             {notifications?.slice(0, visibleCount).map((notification, index) => (
                                 <NotificationCard key={index} notification={notification} refetch={refetch} />
                             )) ?? <></>}
-                            <div className='flex flex-col items-center justify-center font-clash py-2'>
+                            <div className='flex flex-col items-center justify-center font-clash pt-2'>
                                 {notifications && notifications.length > visibleCount && (
                                     <Button onClick={loadMoreNotifications} variant="outline">
                                         Load more

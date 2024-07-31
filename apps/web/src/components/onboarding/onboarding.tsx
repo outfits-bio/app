@@ -153,8 +153,8 @@ export const Onboarding = ({ session, username }: { username: string, session: S
 
                         <div className='flex grow h-full flex-col gap-2 w-full sm:w-auto mt-11 sm:mt-auto'>
                             {(errors.tagline && errors.username) && <p className='text-error text-sm'>{!!errors.username ? errors.username.message : errors.tagline?.message}</p>}
-                            <input {...register("username")} type="text" className='border border-stroke px-3 py-2 rounded-xl placeholder:text-gray-500 dark:bg-black' placeholder='Your special @username, here' />
-                            <textarea {...register("tagline")} className='border border-stroke px-3 py-2 rounded-xl grow resize-none placeholder:text-gray-500 h-20 dark:bg-black' placeholder='Your tagline, short description, bio, whatnot' />
+                            <input {...register("username")} type="text" className='border border-stroke px-3 py-2 rounded-lg placeholder:text-gray-500 dark:bg-black' placeholder='Your special @username, here' />
+                            <textarea {...register("tagline")} className='border border-stroke px-3 py-2 rounded-lg grow resize-none placeholder:text-gray-500 h-20 dark:bg-black' placeholder='Your tagline, short description, bio, whatnot' />
                         </div>
                     </div>
 

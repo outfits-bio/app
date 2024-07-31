@@ -97,7 +97,7 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
                             onMouseEnter={() => setDeleteButton(post.id)}
                             onMouseLeave={() => setDeleteButton(null)}
                             key={post.id ?? `loading_${i}`}
-                            className="w-[126px] h-[206px] border border-border rounded-lg relative overflow-hidden">
+                            className="w-[126px] h-[206px] border border-border rounded-lg relative overflow-hidden dark:border-stroke">
 
                             {isLoading && i === 0 ?
                                 <div className='bg-hover w-full h-full flex items-center justify-center'>

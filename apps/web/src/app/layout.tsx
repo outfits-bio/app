@@ -111,6 +111,7 @@ export default async function RootLayout({
     <html lang="en">
       <head>
         <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="theme-color" content="#FF254D" />
       </head>
       <body className={`font-satoshi ${clash.variable} ${satoshi.variable} flex flex-col min-h-screen antialiased transition-colors duration-300`}>
         <SessionProvider session={session}>
