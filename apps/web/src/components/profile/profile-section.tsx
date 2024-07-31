@@ -73,8 +73,9 @@ export const ProfileCard = ({ profileData, username }: Props) => {
 
             return previousProfileData;
         },
-        onSettled: () => {
-            void ctx.user.getProfile.refetch({ username });
+        onSettled: async () => {
+            await ctx.user.getProfile.refetch({ username });
+            router.refresh();
         },
         onError: (e) => handleErrors({
             e, message: "Could not like!", fn: () => {
