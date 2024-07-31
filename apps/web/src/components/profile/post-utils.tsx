@@ -6,7 +6,7 @@ import type { api } from "@/trpc/react";
 import type { RouterOutputs } from "@/trpc/shared";
 import { handleErrors } from "@/utils/handle-errors.util";
 import { type Post, PostType } from "database";
-import { PiBackpackBold, PiBaseballCapBold, PiCoatHangerBold, PiEyeglassesBold, PiHoodieBold, PiPantsBold, PiShirtFoldedBold, PiSneakerBold, PiTShirtBold } from "react-icons/pi";
+import { PiBackpack, PiBaseballCap, PiBaseballCapBold, PiCoatHanger, PiCoatHangerBold, PiEyeglasses, PiEyeglassesBold, PiHoodieBold, PiPants, PiPantsBold, PiShirtFolded, PiSneaker, PiSneakerBold, PiTShirt, PiTShirtBold } from "react-icons/pi";
 
 type PartialPost = Omit<Omit<Post, "userId">, "updatedAt">;
 type Context = ReturnType<(typeof api)["useUtils"]>;
@@ -82,23 +82,23 @@ export const getPostTypeCount = (
 export const getPostTypeIcon = (type: PostType): React.ReactNode => {
     switch (type) {
         case PostType.OUTFIT:
-            return <PiCoatHangerBold className='md:w-12 md:h-12 w-8 h-8' />
+            return <PiCoatHanger className='md:w-12 md:h-12 w-8 h-8' />
         case PostType.HOODIE:
-            return <PiShirtFoldedBold className='md:w-12 md:h-12 w-8 h-8' />
+            return <PiShirtFolded className='md:w-12 md:h-12 w-8 h-8' />
         case PostType.SHIRT:
-            return <PiTShirtBold className='md:w-12 md:h-12 w-8 h-8' />
+            return <PiTShirt className='md:w-12 md:h-12 w-8 h-8' />
         case PostType.PANTS:
-            return <PiPantsBold className='md:w-12 md:h-12 w-8 h-8' />
+            return <PiPants className='md:w-12 md:h-12 w-8 h-8' />
         case PostType.SHOES:
-            return <PiSneakerBold className='md:w-12 md:h-12 w-8 h-8' />
+            return <PiSneaker className='md:w-12 md:h-12 w-8 h-8' />
         case PostType.WATCH:
-            return <PiBackpackBold className='md:w-12 md:h-12 w-8 h-8' />
+            return <PiBackpack className='md:w-12 md:h-12 w-8 h-8' />
         case PostType.GLASSES:
-            return <PiEyeglassesBold className='md:w-12 md:h-12 w-8 h-8' />
+            return <PiEyeglasses className='md:w-12 md:h-12 w-8 h-8' />
         case PostType.HEADWEAR:
-            return <PiBaseballCapBold className='md:w-12 md:h-12 w-8 h-8' />
+            return <PiBaseballCap className='md:w-12 md:h-12 w-8 h-8' />
         case PostType.JEWELRY:
-            return <PiTShirtBold className='md:w-12 md:h-12 w-8 h-8' />
+            return <PiTShirt className='md:w-12 md:h-12 w-8 h-8' />
     }
 };
 
