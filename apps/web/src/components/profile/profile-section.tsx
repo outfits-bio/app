@@ -20,6 +20,7 @@ import { ProfileMenu } from "../menus/profile-menu";
 import { AdminEditUserModal } from "../modals/admin-edit-user-modal";
 import { DeleteModal } from "../modals/delete-modal";
 import { SpotifySetupModal } from "../modals/spotify-setup-modal";
+import { FollowersModal } from "../modals/followers-modal";
 
 interface Props {
     profileData?: RouterOutputs['user']['getProfile'];
@@ -38,6 +39,7 @@ export const ProfileCard = ({ profileData, username }: Props) => {
     const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false);
     const [spotifySetupModalOpen, setSpotifySetupModalOpen] = useState(false);
     const [adminEditUserModalOpen, setAdminEditUserModalOpen] = useState(false);
+    const [followersModalOpen, setFollowersModalOpen] = useState(false);
 
     const isCurrentUser = profileData?.id === data?.user.id;
 
@@ -129,7 +131,7 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                             </div>
                         </h1>
 
-                        <p className={`grow`}>{profileData?.tagline}</p>
+                        {profileData?.tagline && profileData?.tagline.length > 1 && <p className={`grow`}>{profileData?.tagline}</p>}
 
                         <div className='flex gap-4 text-sm md:text-base'>
                             <p className={`flex items-center gap-1`}>
@@ -137,10 +139,13 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                                 <span><span className='font-bold'>{profileData?.imageCount}</span> Post{profileData?.imageCount !== 1 ? 's' : ''}</span>
                             </p>
 
-                            <p className='flex items-center gap-1'>
-                                <PiHeartBold className='w-5 h-5' />
-                                <span><span className='font-bold'>{profileData?.likeCount}</span> Follower{profileData?.likeCount !== 1 ? 's' : ''}</span>
-                            </p>
+                            <span onClick={() => setFollowersModalOpen(true)}>
+                                <p className='flex items-center gap-1'>
+                                    <PiHeartBold className='w-5 h-5' />
+                                    <span><span className='font-bold'>{profileData?.likeCount}</span> Follower{profileData?.likeCount !== 1 ? 's' : ''}</span>
+                                    <FollowersModal isOpen={followersModalOpen} setIsOpen={setFollowersModalOpen} profileId={profileData?.id ?? ''} />
+                                </p>
+                            </span>
                         </div>
                     </div>
                 </div>

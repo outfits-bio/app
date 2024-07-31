@@ -23,6 +23,10 @@ export const getProfileSchema = z.object({
   username: z.string().min(3).max(20),
 });
 
+export const getFollowersByIdSchema = z.object({
+  id: z.string(),
+});
+
 export const searchProfileSchema = z
   .object({
     username: z.string().max(20),

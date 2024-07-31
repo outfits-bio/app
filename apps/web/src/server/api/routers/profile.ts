@@ -1,5 +1,6 @@
 import {
   getProfileSchema,
+  getFollowersByIdSchema,
   likeProfileSchema,
   searchProfileSchema,
   type SpotifyStatus,
@@ -54,8 +55,57 @@ export const profileRouter = createTRPCRouter({
           verified: true,
           admin: true,
           likedBy: {
-            where: { id: ctx.session?.user.id },
-            select: { id: true },
+            select: { id: true, username: true, image: true },
+          },
+          links: true,
+          lanyardEnabled: true,
+        },
+      });
+
+      if (!user) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "User not found",
+        });
+      }
+
+      return {
+        ...user,
+        authUserHasLiked: user.likedBy.some(
+          (user) => user.id === ctx.session?.user.id,
+        ),
+      };
+    }),
+
+  getFollowersById: publicProcedure
+    .input(getFollowersByIdSchema)
+    .query(async ({ input, ctx }) => {
+      const { id } = input;
+
+      const user = await ctx.prisma.user.findUnique({
+        where: {
+          id,
+        },
+        select: {
+          id: true,
+          username: true,
+          tagline: true,
+          image: true,
+          hoodiePostCount: true,
+          outfitPostCount: true,
+          shirtPostCount: true,
+          shoesPostCount: true,
+          pantsPostCount: true,
+          watchPostCount: true,
+          glassesPostCount: true,
+          headwearPostCount: true,
+          jewelryPostCount: true,
+          imageCount: true,
+          likeCount: true,
+          verified: true,
+          admin: true,
+          likedBy: {
+            select: { id: true, username: true, image: true, verified: true, admin: true },
           },
           links: true,
           lanyardEnabled: true,

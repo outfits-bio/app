@@ -41,7 +41,7 @@ export const ReportModal = ({ isOpen, setIsOpen, type, id }: ReportModalProps) =
 
     return (
         <BaseModal isOpen={isOpen} close={() => setIsOpen(false)}>
-            <h1 className='text-2xl font-semibold'>Report {type === "USER" ? 'User' : 'Post'}</h1>
+            <h1 className='text-2xl font-clash font-semibold'>Report {type === "USER" ? 'User' : 'Post'}</h1>
 
             <form onSubmit={handleSubmit(handleReportSubmit)}>
                 <div className="mb-4">
