@@ -500,12 +500,7 @@ export const postRouter = createTRPCRouter({
             },
           },
           likes: {
-            where: {
-              id: ctx.session?.user.id,
-            },
-            select: {
-              id: true,
-            },
+            select: { id: true, username: true, image: true, verified: true, admin: true },
           },
           wishlists: {
             where: {

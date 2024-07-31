@@ -139,7 +139,7 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                                 <span><span className='font-bold'>{profileData?.imageCount}</span> Post{profileData?.imageCount !== 1 ? 's' : ''}</span>
                             </p>
 
-                            <span onClick={() => setFollowersModalOpen(true)}>
+                            <span className="cursor-pointer" onClick={() => setFollowersModalOpen(true)}>
                                 <p className='flex items-center gap-1'>
                                     <PiHeartBold className='w-5 h-5' />
                                     <span><span className='font-bold'>{profileData?.likeCount}</span> Follower{profileData?.likeCount !== 1 ? 's' : ''}</span>
