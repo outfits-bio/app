@@ -131,7 +131,7 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                             </div>
                         </h1>
 
-                        {profileData?.tagline && profileData?.tagline.length > 1 && <p className={`grow`}>{profileData?.tagline}</p>}
+                        {profileData?.tagline && profileData?.tagline.length > 0 && <p className={`grow`}>{profileData?.tagline}</p>}
 
                         <div className='flex gap-4 text-sm md:text-base'>
                             <p className={`flex items-center gap-1`}>
