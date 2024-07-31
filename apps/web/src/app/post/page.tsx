@@ -13,10 +13,11 @@ import type { Area } from "react-easy-crop";
 import Cropper from "react-easy-crop";
 import { PiCaretDown, PiPlus } from "react-icons/pi";
 import { Button } from "@/components/ui/Button";
-// import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function PostPage() {
-    const ctx = api.useContext();
+    const ctx = api.useUtils();
+    const router = useRouter();
 
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [type, setType] = useState<PostType>("OUTFIT")
@@ -39,7 +40,7 @@ export default function PostPage() {
         onSuccess: async (result) => {
             await axios.put(result.res, file);
             await ctx.post.getPostsAllTypes.refetch();
-            // return redirect(`/profile`);
+            return router.push(`/profile`);
         }
     });
 

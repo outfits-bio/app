@@ -95,7 +95,7 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
                     admin
                     deleteFn={() => {
                         mutate({ id: postId?.toString() ?? '' });
-                        router.push('/discover');
+                        router.push('/');
                     }}
                 />
             )}

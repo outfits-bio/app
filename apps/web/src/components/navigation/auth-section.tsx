@@ -26,7 +26,7 @@ export function AuthSection() {
                     <CreatePostModal />
                 </div>
 
-                {pathname === '/discover' || pathname === '/' ? null : <Link href='/'>
+                {pathname === '/' && <Link href='/'>
                     <Button variant={'outline-ghost'} shape={'square'} iconLeft={<PiCompass />} />
                 </Link>}
 
@@ -44,7 +44,7 @@ export function AuthSection() {
     }
 
     return <div className='items-center gap-4 hidden md:flex'>
-        {pathname !== '/discover' && pathname !== '/' && <Link href='/'>
+        {pathname === '/' && <Link href='/'>
             <Button variant='outline-ghost' iconLeft={<PiCompass />}>Discover</Button>
         </Link>}
 
