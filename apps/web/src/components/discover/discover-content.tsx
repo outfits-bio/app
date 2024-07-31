@@ -84,7 +84,7 @@ export function DiscoverContent() {
             <PostModal />
             <section className="w-80 bg-white dark:bg-black border-r border-stroke hidden md:flex flex-col justify-between p-4 h-full">
                 {/* Filter */}
-                <div className="flex flex-col w-full">
+                <div className="flex flex-col w-full overflow-scroll">
                     <div className="relative">
                         <Button
                             onClick={() => setIsFilterOpen(!isFilterOpen)}
