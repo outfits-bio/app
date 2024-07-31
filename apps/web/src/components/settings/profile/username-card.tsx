@@ -13,16 +13,11 @@ import { handleErrors } from '@/utils/handle-errors.util';
 
 export function UsernameCard() {
     const { data: session, update } = useSession();
-    const { register, handleSubmit, setValue, formState: { errors }, setError, clearErrors } = useForm<EditProfileInput>({
+    const { register, handleSubmit, formState: { errors }, setError, clearErrors } = useForm<EditProfileInput>({
         resolver: zodResolver(editProfileSchema),
     });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [loading, setLoading] = useState<boolean>(false);
-    const { data: userData } = api.user.getMe.useQuery(undefined, {
-        onSuccess: (data) => {
-            setValue("username", data.username ?? '');
-        }
-    });
 
     const { mutate } = api.user.editProfile.useMutation({
         onSuccess: async () => {

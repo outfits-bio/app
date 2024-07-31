@@ -12,11 +12,11 @@ export function SpotifyStatusCard() {
         retry: 1,
     });
 
-    const { data: accountsData, isLoading } = api.user.getAccounts.useQuery(undefined, {
+    const { data: accountsData } = api.user.getAccounts.useQuery(undefined, {
         retry: 1,
     });
 
-    const { mutate: setLanyardEnabled, isLoading: setLanyardEnabledLoading } = api.user.toggleEnableLanyard.useMutation({
+    const { mutate: setLanyardEnabled } = api.user.toggleEnableLanyard.useMutation({
         onSuccess: async () => {
             await ctx.user.getLanyardEnabled.refetch();
         },

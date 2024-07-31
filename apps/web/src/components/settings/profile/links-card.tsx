@@ -7,7 +7,6 @@ import {
 } from '@/schemas/user.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { handleErrors } from '@/utils/handle-errors.util';
-import { ProfileLink } from "../../ui/ProfielLink";
 import toast from "react-hot-toast";
 import { Button } from "../../ui/Button"
 import { PiDiscordLogo, PiGithubLogo, PiInstagramLogo, PiLinkSimple, PiPlus, PiTiktokLogo, PiTrash, PiTwitterLogo, PiYoutubeLogo } from "react-icons/pi";
@@ -51,7 +50,7 @@ export function LinksCard() {
         <div className="flex flex-col items-start rounded-lg border bg-white dark:bg-black dark:border-stroke">
             <div className="flex flex-col items-start gap-5 p-10 self-stretch">
                 <div className="flex flex-col items-start gap-3 flex-1">
-                    <h1 className="font-clash font-bold text-3xl">Social Links.</h1>
+                    <h1 className="font-clash font-bold text-3xl">Social Links</h1>
                     <p>Add links of your socials or websites to your profile</p>
                 </div>
 

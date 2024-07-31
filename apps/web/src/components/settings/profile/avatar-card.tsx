@@ -17,6 +17,7 @@ import { PiSubtract } from "react-icons/pi";
 export function AvatarCard() {
     const { data: session, update } = useSession();
     const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [loading, setLoading] = useState<boolean>(false);
     const ref = useRef<HTMLInputElement>(null);
 

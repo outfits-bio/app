@@ -5,11 +5,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import type { Session } from 'next-auth';
 import { useSession } from 'next-auth/react';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { PiArrowLeft, PiArrowRight, PiHammer, PiSealCheck } from 'react-icons/pi';
+import { PiArrowLeft, PiArrowRight } from 'react-icons/pi';
 import { Button } from '@/components/ui/Button';
 import { AvatarCropModal } from '@/components/modals/avatar-crop-modal';
 import { OnboardingAppearance } from '@/components/onboarding/onboarding-appearance';
@@ -18,7 +16,6 @@ import { api } from '@/trpc/react';
 import { useFileUpload } from '@/hooks/file-upload.hook';
 import { type EditProfileInput, editProfileSchema } from '@/schemas/user.schema';
 import { handleErrors } from '@/utils/handle-errors.util';
-import { formatAvatar, formatImage } from '@/utils/image-src-format.util';
 
 export const Onboarding = ({ session, username }: { username: string, session: Session }) => {
     const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
@@ -36,8 +33,6 @@ export const Onboarding = ({ session, username }: { username: string, session: S
         },
         resolver: zodResolver(editProfileSchema),
     });
-
-    const { data: posts } = api.post.getLoginPosts.useQuery(undefined, {});
 
     // This fetches the user's data and sets the username and username fields to the user's current username and username
     const { data } = api.user.getMe.useQuery(undefined, {

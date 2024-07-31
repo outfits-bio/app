@@ -13,17 +13,12 @@ import toast from "react-hot-toast";
 
 
 export function TaglineCard() {
-    const { register, handleSubmit, setValue, formState: { errors }, } = useForm<EditProfileInput>({
+    const { register, handleSubmit, formState: { errors }, } = useForm<EditProfileInput>({
         resolver: zodResolver(editProfileSchema),
     });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [loading, setLoading] = useState<boolean>(false);
     const { update } = useSession();
-    const { data: userData } = api.user.getMe.useQuery(undefined, {
-        onSuccess: (data) => {
-            setValue("tagline", data.tagline ?? '');
-        }
-    });
 
     const { mutate } = api.user.editProfile.useMutation({
         onSuccess: async () => {
