@@ -48,7 +48,7 @@ export function LinksCard() {
     const handleFormSubmitLink = ({ url }: AddLinkInput) => addLink({ url });
 
     return (
-        <div className="flex flex-col items-start rounded-sm border bg-white">
+        <div className="flex flex-col items-start rounded-lg border bg-white dark:bg-black dark:border-stroke">
             <div className="flex flex-col items-start gap-5 p-10 self-stretch">
                 <div className="flex flex-col items-start gap-3 flex-1">
                     <h1 className="font-clash font-bold text-3xl">Social Links.</h1>
@@ -102,7 +102,7 @@ export function LinksCard() {
                 </form>
 
             </div>
-            <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between border-t bg-gray-100">
+            <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch justify-between rounded-b-lg border-t dark:border-stroke bg-gray-100 dark:bg-neutral-900">
                 <p>Mainstream platforms have their own icons.</p>
             </div>
         </div>
