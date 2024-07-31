@@ -1,4 +1,5 @@
 @tailwind base;
+@tailwind components;
 
 :root {
   --body: #f9f9f9;
@@ -45,41 +46,19 @@
   --accent: #fff;
 }
 
-* {
-  scrollbar-width: thin;
-  scrollbar-color: transparent var(--blur);
+.mobilenav {
+  height: 65px;
+  height: calc(env(safe-area-inset-bottom, 0) + 65px);
 }
 
-*::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-*::-webkit-scrollbar-corner {
-  background: transparent;
-}
-
-*::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: var(--blur);
-  @apply dark:bg-slate-500;
-  border-radius: 9999999px;
-}
-
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.hide-scrollbar {
-  scrollbar-color: transparent;
-  scrollbar-width: none;
+@media (max-width: 768px) {
+  body {
+    margin-bottom: calc(env(safe-area-inset-bottom, 0) + 65px);
+  }
 }
 
 .skeleton {
-  @apply animate-pulse rounded-md bg-gray-300 dark:bg-gray-700;
+  @apply animate-pulse rounded-xl bg-gray-300 dark:bg-gray-700;
 }
 
 .background-animate {
@@ -123,28 +102,138 @@
   23% {
     transform: translateY(-112%);
   }
+
   25% {
     transform: translateY(-100%);
   }
+
   48% {
     transform: translateY(-212%);
   }
+
   50% {
     transform: translateY(-200%);
   }
+
   73% {
     transform: translateY(-312%);
   }
+
   75% {
     transform: translateY(-300%);
   }
+
   88% {
     transform: translateY(-412%);
   }
+
   90% {
     transform: translateY(-400%);
   }
 }
 
-@tailwind components;
+.pop-in-1 {
+  animation: pop-in-1 0.6s ease-out forwards;
+}
+
+.pop-in-2 {
+  animation: pop-in-2 0.6s ease-out forwards;
+}
+
+.pop-in-3 {
+  animation: pop-in-3 0.6s ease-out forwards;
+}
+
+.pop-in-4 {
+  animation: pop-in-4 0.6s ease-out forwards;
+}
+
+@keyframes pop-in-1 {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    rotate: -12deg;
+  }
+}
+
+@keyframes pop-in-2 {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    rotate: 6deg;
+  }
+}
+
+@keyframes pop-in-3 {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    rotate: 3deg;
+  }
+}
+
+@keyframes pop-in-4 {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    rotate: -6deg;
+  }
+}
+
 @tailwind utilities;
+
+@layer utilities {
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+}

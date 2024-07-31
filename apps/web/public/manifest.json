@@ -1,9 +1,9 @@
 {
-  "theme_color": "#000000",
+  "theme_color": "#ffffff",
   "background_color": "#F9F9F9",
   "display": "fullscreen",
   "scope": "https://outfits.bio/",
-  "start_url": "https://outfits.bio/discover",
+  "start_url": "https://outfits.bio/",
   "name": "outfits.bio",
   "short_name": "outfits.bio",
   "description": "Your wardrobe in the cloud, share and inspire your followers",

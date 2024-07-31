@@ -31,9 +31,14 @@ export default {
       boxShadow: {
         dropdown: "0px 4px 16px 0px rgba(0, 0, 0, 0.25);",
       },
+      backdropBlur: {
+        xs: '1px',
+      },
       animation: {
         ping: "ping 200ms ease-in-out",
         "spin-words": "spin-words 10s infinite",
+        "spin-cd": "spin 30s linear infinite",
+        "like": "like .6s ease-in-out",
       },
       keyframes: {
         "spin-words": {
@@ -46,9 +51,12 @@ export default {
           "85%": { transform: "translateY(-412%)" },
           "100%": { transform: "translateY(-400%)" },
         },
+        like: {
+          "100%": { transform: "scale(1.2)" },
+        },
       },
     },
   },
   darkMode: "class",
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [require("@tailwindcss/typography"), require('@headlessui/tailwindcss')],
 } satisfies Config;

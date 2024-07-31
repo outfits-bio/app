@@ -1,4 +1,6 @@
-import { ChangeEvent, DragEvent, useState } from 'react';
+"use client";
+
+import { type ChangeEvent, type DragEvent, useState } from 'react';
 
 export const useFileUpload = () => {
     const [dragActive, setDragActive] = useState<boolean>(false);

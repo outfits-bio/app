@@ -1,21 +1,22 @@
-import { TRPCError } from "@trpc/server";
-import { NotificationType, PostType, Prisma } from "database";
-import { z } from "zod";
 import {
   addPostToWishlistSchema,
   addReactionSchema,
+  getPostSchema,
   removePostFromWishlistSchema,
   removeReactionSchema,
   toggleLikePostSchema,
-} from "~/schemas/post.schema";
-import { getPostsSchema, paginatedSchema } from "~/schemas/user.schema";
+} from "@/schemas/post.schema";
+import { getPostsSchema, paginatedSchema } from "@/schemas/user.schema";
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
-} from "~/server/api/trpc";
+} from "@/server/api/trpc";
+import { TRPCError } from "@trpc/server";
+import { NotificationType, PostType, type Prisma } from "database";
+import { z } from "zod";
 
-import { deleteImage, generatePresignedUrl } from "~/server/utils/image.util";
+import { deleteImage, generatePresignedUrl } from "@/server/utils/image.util";
 
 export const postTypeSchema = z.object({
   type: z.nativeEnum(PostType),
@@ -466,6 +467,78 @@ export const postRouter = createTRPCRouter({
       };
     }),
 
+  getPost: publicProcedure
+    .input(getPostSchema)
+    .query(async ({ ctx, input }) => {
+      const { id } = input;
+
+      const post = await ctx.prisma.post.findUnique({
+        where: {
+          id,
+        },
+        select: {
+          id: true,
+          image: true,
+          type: true,
+          featured: true,
+          likeCount: true,
+          user: {
+            select: {
+              image: true,
+              verified: true,
+              username: true,
+              id: true,
+              admin: true,
+              tagline: true,
+            },
+          },
+          _count: {
+            select: {
+              reactions: true,
+              likes: true,
+              wishlists: true,
+            },
+          },
+          likes: {
+            where: {
+              id: ctx.session?.user.id,
+            },
+            select: {
+              id: true,
+            },
+          },
+          wishlists: {
+            where: {
+              id: ctx.session?.user.id,
+            },
+            select: {
+              id: true,
+            },
+          },
+          reactions: {
+            where: {
+              userId: ctx.session?.user.id,
+            },
+            select: {
+              id: true,
+              content: true,
+            },
+          },
+        },
+      });
+
+      if (!post)
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Invalid post!",
+        });
+
+      return {
+        ...post,
+        authUserHasLiked: post.likes.length > 0,
+      };
+    }),
+
   getLatestPosts: publicProcedure
     .input(getPostsSchema)
     .query(async ({ ctx, input }) => {
@@ -616,5 +689,40 @@ export const postRouter = createTRPCRouter({
     });
 
     return posts;
+  }),
+
+  getFourRandomPosts: publicProcedure.query(async ({ ctx }) => {
+    const count = await ctx.prisma.post.count();
+
+    const skip = Math.max(0, Math.floor(Math.random() * count) - 4);
+    const orderDirection = Math.random() > 0.5 ? "asc" : "desc";
+
+    const posts = await ctx.prisma.post.findMany({
+      where: {},
+      select: {
+        id: true,
+        image: true,
+        type: true,
+        featured: true,
+        user: {
+          select: {
+            image: true,
+            verified: true,
+            username: true,
+            id: true,
+            admin: true,
+          },
+        },
+      },
+      take: 4,
+      skip,
+      orderBy: {
+        createdAt: orderDirection,
+      },
+    });
+
+    const uniquePosts = Array.from(new Set(posts.map(post => post.id))).map(id => posts.find(post => post.id === id));
+
+    return uniquePosts;
   }),
 });

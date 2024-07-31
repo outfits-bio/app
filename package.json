@@ -1,15 +1,24 @@
 {
-	"private": true,
-	"scripts": {
-		"build": "turbo run build",
-		"dev": "turbo run dev",
-		"lint": "turbo run lint",
-		"format": "prettier --write \"**/*.{ts,tsx,md}\""
-	},
-	"devDependencies": {
-		"eslint": "^8.53.0",
-		"prettier": "^3.0.3",
-		"turbo": "^1.10.16"
-	},
-	"packageManager": "pnpm@8.6.10"
+  "name": "outfits.bio",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "start": "turbo run start"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "eslint": "^9.8.0",
+    "prettier": "3.3.3",
+    "prettier-plugin-css-order": "^2.1.2",
+    "prettier-plugin-organize-imports": "^4.0.0",
+    "prettier-plugin-tailwindcss": "^0.6.5",
+    "turbo": "^2.0.9"
+  },
+  "packageManager": "bun@1.1.3"
 }

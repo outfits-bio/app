@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/prefer-optional-chain */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { toast } from "react-hot-toast";
 
@@ -37,7 +40,7 @@ export const handleErrors = ({ e, message, fn }: HandleErrorsProps) => {
     return;
   }
 
-  toast.error(message || "Something went wrong");
+  toast.error(message ?? "Something went wrong");
 
   fn && void fn();
   return;
