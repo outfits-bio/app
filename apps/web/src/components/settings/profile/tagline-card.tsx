@@ -13,6 +13,9 @@ import toast from "react-hot-toast";
 
 
 export function TaglineCard() {
+    const { data: session } = useSession();
+    const { data: tagline } = api.user.getProfile.useQuery({ username: session?.user?.username ?? '' });
+
     const { register, handleSubmit, formState: { errors }, } = useForm<EditProfileInput>({
         resolver: zodResolver(editProfileSchema),
     });
@@ -48,8 +51,13 @@ export function TaglineCard() {
                         <p>Your tagline is essentially a small biograph about you, what you like or what you do.</p>
                     </div>
                     <div className="flex justify-between items-center self-stretch border dark:border-stroke rounded-lg">
-                        <input {...register('tagline', { maxLength: 200 })} className="flex rounded-lg items-center gap-4 p-3 py-4 flex-1 self-stretch" placeholder="I enjoy linking my outfits." />
-                        {errors.tagline && <p>{errors.tagline.message}</p>}
+                        <input
+                            {...register('tagline', { maxLength: 200 })}
+                            className="flex rounded-lg items-center gap-4 p-3 py-4 flex-1 self-stretch"
+                            placeholder="I enjoy linking my outfits."
+                            defaultValue={tagline?.tagline ?? ''}
+                        />
+                        {errors.tagline && <p className="text-red-500 text-sm">{errors.tagline.message}</p>}
                     </div>
                 </div>
                 <div className="flex flex-wrap items-center gap-3 p-4 px-10 self-stretch rounded-b-lg justify-between border-t dark:border-stroke bg-gray-100 dark:bg-neutral-900">
