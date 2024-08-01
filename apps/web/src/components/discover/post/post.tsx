@@ -1,5 +1,7 @@
 'use client'
 
+import { api } from '@/trpc/react'
+import { handleErrors } from '@/utils/handle-errors.util'
 import { PostInfoModal } from '@/components/modals/post-info-modal'
 import type { AppRouter } from '@/server/api/root'
 import { formatImage } from '@/utils/image-src-format.util'
@@ -58,6 +60,21 @@ export function Post({ post }: PostProps) {
 
     toast.success('Copied post link to clipboard!')
   }
+
+  const ctx = api.useUtils()
+
+  const { mutate: toggleLikePost } =
+    api.post.toggleLikePost.useMutation({
+      onSuccess: () => {
+        void ctx.post.getLatestPosts.refetch()
+        void ctx.post.getPostsAllTypes.refetch({ id: post.user.id })
+      },
+      onError: (e) =>
+        handleErrors({
+          e,
+          message: 'An error occurred while liking this post.',
+        }),
+    })
 
   const truncatedTagline =
     post.user.tagline &&
@@ -130,6 +147,7 @@ export function Post({ post }: PostProps) {
 
       <div
         onClick={handleSetParams}
+        onDoubleClick={() => toggleLikePost({ id: post.id })}
         className="relative md:cursor-pointer w-full aspect-[53/87] flex justify-center overflow-hidden "
         onKeyDown={handleSetParams}
       >
