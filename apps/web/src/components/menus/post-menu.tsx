@@ -72,12 +72,12 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
         <BaseMenu {...props} button={button ?? <PiDotsThree className='w-5 h-5 text-white mt-1.5' />} className='right-0 bottom-0 w-44 origin-top-right'>
             <div className="space-y-1">
                 {user && (
-                    <Menu.Item as="div">
+                    <Menu.Item onClick={(e) => e.preventDefault()} as="div">
                         <ReportModal type='POST' id={postId} />
                     </Menu.Item>
                 )}
                 {userIsProfileOwner && !user?.admin && (
-                    <Menu.Item as="div">
+                    <Menu.Item onClick={(e) => e.preventDefault()} as="div">
                         <DeleteModal
                             ref={ref}
                             post
@@ -92,7 +92,7 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
                     </Menu.Item>
                 )}
                 {user?.admin && (
-                    <Menu.Item as="div">
+                    <Menu.Item onClick={(e) => e.preventDefault()} as="div">
                         <DeleteModal
                             ref2={ref2}
                             post
