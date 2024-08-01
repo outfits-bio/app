@@ -60,7 +60,7 @@ export function UsernameCard() {
                     </div>
                     <div className="flex justify-between items-center self-stretch border dark:border-stroke rounded-lg">
                         <div className="flex p-3 items-center gap-10 rounded-l-lg self-stretch bg-gray-100 dark:bg-neutral-900">outfits.bio/</div>
-                        <input {...register("username", { maxLength: 24 })} className="flex items-center gap-4 p-3 py-4 flex-1 rounded-r-lg self-stretch" placeholder={session?.user?.username ?? "username"} />
+                        <input {...register("username", { maxLength: 24 })} className="flex items-center gap-4 p-3 py-4 flex-1 rounded-r-lg self-stretch" placeholder={session?.user?.username ?? "username"} value={session?.user?.username} />
                     </div>
                     <div>{errors.username && <p className="text-red-500 text-sm">{errors.username.message}</p>}</div>
                 </div>
