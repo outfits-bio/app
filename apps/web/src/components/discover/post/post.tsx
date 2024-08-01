@@ -23,6 +23,7 @@ import { Button } from '../../ui/Button'
 import { LikeButton } from './like-button'
 import ReactButton from './react-button'
 import WishlistButton from './wishlist-button'
+import { useMediaQuery } from '@/hooks/use-media-query.hook'
 
 export interface PostProps {
   post: inferRouterOutputs<AppRouter>['post']['getLatestPosts']['posts'][number]
@@ -36,13 +37,16 @@ export function Post({ post }: PostProps) {
   const { data: session } = useSession()
 
   const user = session?.user
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const handleSetParams = () => {
-    const currentParams = new URLSearchParams(Array.from(params.entries()))
+    if (isDesktop) {
+      const currentParams = new URLSearchParams(Array.from(params.entries()))
 
-    currentParams.set('postId', post.id)
+      currentParams.set('postId', post.id)
 
-    router.push(`${pathname}?${currentParams.toString()}`)
+      router.push(`${pathname}?${currentParams.toString()}`)
+    } else return;
   }
 
   const handleShare = (postId: string) => {
@@ -126,7 +130,7 @@ export function Post({ post }: PostProps) {
 
       <div
         onClick={handleSetParams}
-        className="relative cursor-pointer w-full aspect-[53/87] flex justify-center overflow-hidden "
+        className="relative md:cursor-pointer w-full aspect-[53/87] flex justify-center overflow-hidden "
         onKeyDown={handleSetParams}
       >
         <Image
