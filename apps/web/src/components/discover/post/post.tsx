@@ -11,11 +11,12 @@ import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import toast from 'react-hot-toast'
 import {
   PiDotsThreeBold,
   PiHammer,
+  PiHeartStraightFill,
   PiSealCheck,
   PiShareFatBold,
 } from 'react-icons/pi'
@@ -61,6 +62,7 @@ export function Post({ post }: PostProps) {
     toast.success('Copied post link to clipboard!')
   }
 
+  const [likeAnimation, setLikeAnimation] = useState<boolean>(false)
   const ctx = api.useUtils()
 
   const { mutate: toggleLikePost } =
@@ -147,10 +149,21 @@ export function Post({ post }: PostProps) {
 
       <div
         onClick={handleSetParams}
-        onDoubleClick={() => toggleLikePost({ id: post.id })}
+        onDoubleClick={() => {
+          setLikeAnimation(true)
+          toggleLikePost({ id: post.id })
+        }}
         className="relative md:cursor-pointer w-full aspect-[53/87] flex justify-center overflow-hidden "
         onKeyDown={handleSetParams}
       >
+        {likeAnimation && (
+          <div className="fixed inset-0 flex items-center justify-center text-white">
+            <PiHeartStraightFill
+              className='w-24 h-24 animate-like'
+              onAnimationEnd={() => setLikeAnimation(false)}
+            />
+          </div>
+        )}
         <Image
           src={formatImage(post.image, post.user.id)}
           className="object-cover !w-auto border border-stroke rounded-xl !static"
