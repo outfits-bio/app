@@ -7,11 +7,17 @@ import { Avatar } from "../ui/Avatar";
 import {
     PiBookmarkSimple,
     PiBookmarkSimpleFill,
-    PiHouse, PiHouseFill, PiMagnifyingGlass, PiMagnifyingGlassFill, PiUserPlus
+    PiHouse, PiHouseFill, PiMagnifyingGlass, PiMagnifyingGlassFill, PiUserPlus, PiPlus
 } from 'react-icons/pi';
 
 import { usePathname } from "next/navigation";
-import { CreatePostModal } from "../modals/create-post-modal";
+import dynamic from 'next/dynamic';
+import { Button } from "../ui/Button";
+
+const CreatePostModal = dynamic(() => import('../modals/create-post-modal').then(mod => mod.CreatePostModal), {
+    loading: () => <Button className="px-3 md:px-6" iconLeft={<PiPlus />}><span className="hidden sm:inline">Post</span></Button>,
+    ssr: false
+});
 
 export function MobileNav() {
     const { data: session } = useSession();

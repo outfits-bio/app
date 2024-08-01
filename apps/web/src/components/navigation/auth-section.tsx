@@ -4,11 +4,16 @@ import { api } from "@/trpc/react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { PiBellSimple, PiBellSimpleFill, PiCompass } from "react-icons/pi";
+import { PiBellSimple, PiBellSimpleFill, PiCompass, PiPlus } from "react-icons/pi";
 import { NavbarMenu } from "../menus/navbar-menu";
 import { NotificationsMenu } from "../menus/notifications-menu";
-import { CreatePostModal } from "../modals/create-post-modal";
+import dynamic from 'next/dynamic';
 import { Button } from "../ui/Button";
+
+const CreatePostModal = dynamic(() => import('../modals/create-post-modal').then(mod => mod.CreatePostModal), {
+    loading: () => <Button className="px-3 md:px-6" iconLeft={<PiPlus />}><span className="hidden sm:inline">Post</span></Button>,
+    ssr: false
+});
 
 export function AuthSection() {
     const { data: session } = useSession();
