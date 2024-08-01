@@ -21,7 +21,7 @@ export function DiscoverContent() {
     const { data: session } = useSession()
 
     const [activePostTypes, setActivePostTypes] = useState<PostType[]>([])
-    const [isFilterOpen, setIsFilterOpen] = useState(true) // Added state for filter dropdown
+    const [isFilterOpen, setIsFilterOpen] = useState(true)
 
     const activeCategory =
         params.get('category') === 'popular' ? 'popular' : 'latest'
