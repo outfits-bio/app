@@ -13,6 +13,7 @@ import { api } from "@/trpc/react";
 import { useFileUpload } from "@/hooks/file-upload.hook";
 import { AvatarCropModal } from "@/components/modals/avatar-crop-modal";
 import { PiSubtract } from "react-icons/pi";
+import Image from "next/image";
 
 export function AvatarCard() {
     const { data: session, update } = useSession();
@@ -98,17 +99,21 @@ export function AvatarCard() {
                                     accept='image/*'
                                 />
                                 {(file) ? (
-                                    <img
+                                    <Image
                                         src={fileUrl ?? ""}
                                         alt="Avatar Preview"
                                         className="h-44 w-44 object-contain rounded-full cursor-pointer"
+                                        width={256}
+                                        height={256}
                                     />
                                 ) : (
                                     fileUrl ? (
-                                        <img
+                                        <Image
                                             src={fileUrl ?? ""}
                                             alt="Avatar Preview"
                                             className="h-44 w-44 object-contain rounded-full cursor-pointer"
+                                            width={256}
+                                            height={256}
                                         />
                                     ) : (
                                         <div className="cursor-pointer text-center p-4">

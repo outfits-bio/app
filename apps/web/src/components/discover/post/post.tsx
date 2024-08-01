@@ -16,7 +16,6 @@ import { Button } from "../../ui/Button";
 import { LikeButton } from "./like-button";
 import ReactButton from "./react-button";
 import WishlistButton from "./wishlist-button";
-import { useState } from "react";
 import { PostInfoModal } from "@/components/modals/post-info-modal";
 
 export interface PostProps {
@@ -27,8 +26,6 @@ export function Post({ post }: PostProps) {
     const params = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
-
-    const [postInfoModalOpen, setPostInfoModalOpen] = useState(false);
 
     const { data: session } = useSession();
 
@@ -80,12 +77,14 @@ export function Post({ post }: PostProps) {
             />
         </div>
 
-        <PostInfoModal isOpen={postInfoModalOpen} setIsOpen={setPostInfoModalOpen} postId={post.id} />
+
 
         {(post._count.likes > 0 || post._count.reactions > 0 || post._count.wishlists > 0) && <p className="text-sm font-clash text-secondary-text font-medium self-start pl-4 flex gap-1">
-            <span className="flex gap-1 cursor-pointer" onClick={() => setPostInfoModalOpen(true)}><span className="font-bold">{post._count.likes}</span> {post._count.likes === 1 ? ' like' : ' likes'}
-                {post._count.reactions || post._count.wishlists ? ', ' : ''}
-            </span>
+            <PostInfoModal postId={post.id}>
+                <span className="flex gap-1 cursor-pointer"><span className="font-bold">{post._count.likes}</span> {post._count.likes === 1 ? ' like' : ' likes'}
+                    {post._count.reactions || post._count.wishlists ? ', ' : ''}
+                </span>
+            </PostInfoModal>
             {post._count.reactions > 0 && <span className="flex gap-1"><span className="font-bold">{post._count.reactions}</span> {post._count.reactions === 1 ? ' reaction' : ' reactions'}
                 {post._count.wishlists ? ', ' : ''}
             </span>}

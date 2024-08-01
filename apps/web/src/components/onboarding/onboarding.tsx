@@ -16,6 +16,7 @@ import { api } from '@/trpc/react';
 import { useFileUpload } from '@/hooks/file-upload.hook';
 import { type EditProfileInput, editProfileSchema } from '@/schemas/user.schema';
 import { handleErrors } from '@/utils/handle-errors.util';
+import Image from 'next/image';
 
 export const Onboarding = ({ session, username }: { username: string, session: Session }) => {
     const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
@@ -126,17 +127,21 @@ export const Onboarding = ({ session, username }: { username: string, session: S
                                 accept='image/*'
                             />
                             {(file) ? (
-                                <img
+                                <Image
                                     src={fileUrl ?? ""}
                                     alt="Avatar Preview"
                                     className="h-64 w-64 sm:h-44 sm:w-44 object-contain rounded-full cursor-pointer"
+                                    width={256}
+                                    height={256}
                                 />
                             ) : (
                                 fileUrl ? (
-                                    <img
+                                    <Image
                                         src={fileUrl ?? ""}
                                         alt="Avatar Preview"
                                         className="h-64 w-64 sm:h-44 sm:w-44 object-contain rounded-full cursor-pointer"
+                                        width={256}
+                                        height={256}
                                     />
                                 ) : (
                                     <div className="cursor-pointer text-center p-4">

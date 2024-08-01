@@ -3,15 +3,15 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { Avatar } from "../ui/Avatar";
-import { Button } from "../ui/Button";
 
 import {
     PiBookmarkSimple,
     PiBookmarkSimpleFill,
-    PiHouse, PiHouseFill, PiMagnifyingGlass, PiMagnifyingGlassFill, PiPlus, PiUserPlus
+    PiHouse, PiHouseFill, PiMagnifyingGlass, PiMagnifyingGlassFill, PiUserPlus
 } from 'react-icons/pi';
 
 import { usePathname } from "next/navigation";
+import { CreatePostModal } from "../modals/create-post-modal";
 
 export function MobileNav() {
     const { data: session } = useSession();
@@ -28,11 +28,9 @@ export function MobileNav() {
                     {pathname === "/search" ? <PiMagnifyingGlassFill /> : <PiMagnifyingGlass />}
                 </Link>
 
-                <Link href={'/post'} className='rounded-xl flex flex-col items-center justify-center text-2xl'>
-                    <Button shape={'square'} variant={'outline-ghost'} accent>
-                        <PiPlus />
-                    </Button>
-                </Link>
+                <div className="max-w-fit">
+                    <CreatePostModal />
+                </div>
 
                 <Link href={'/wishlist'} className='rounded-xl flex items-center justify-center text-3xl transform transition duration-100 ease-in-out active:scale-[110%]'>
                     {pathname.startsWith("/wishlist") ? <PiBookmarkSimpleFill /> : <PiBookmarkSimple />}

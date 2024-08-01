@@ -1,61 +1,41 @@
-import { Dialog, Transition } from '@headlessui/react';
-import type { Dispatch, SetStateAction } from 'react';
-import { Fragment } from 'react';
 
+import type { ReactNode } from 'react';
 import { Button } from '../ui/Button';
+import { BaseModal, BaseModalClose, BaseModalContent, BaseModalDescription, BaseModalTitle, BaseModalTrigger } from './base-modal';
 
 interface DeleteModalProps {
-    isOpen: boolean;
-    setIsOpen: Dispatch<SetStateAction<boolean>>;
     deleteFn: () => void;
     admin?: boolean;
     post?: boolean;
+    children?: ReactNode;
+    ref?: React.RefObject<HTMLButtonElement>;
+    ref2?: React.RefObject<HTMLButtonElement>;
 }
 
-export const DeleteModal = ({ isOpen, setIsOpen, deleteFn, admin = false, post = false }: DeleteModalProps) => {
-
+export const DeleteModal = ({ deleteFn, admin = false, post = false, children, ref, ref2 }: DeleteModalProps) => {
     return (
-        <Transition appear show={isOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-10" open={isOpen} onClose={() => setIsOpen(false)}>
-                <Transition.Child
-                    as={Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                >
-                    <div className="fixed inset-0 bg-black bg-opacity-25" />
-                </Transition.Child>
+        <BaseModal>
+            <BaseModalTrigger ref={ref ?? ref2}>
+                {children}
+            </BaseModalTrigger>
 
-                <div className="fixed inset-0 overflow-y-auto">
-                    <div className="flex min-h-full items-center justify-center p-4 text-center">
-                        <Transition.Child
-                            as={Fragment}
-                            enter="ease-out duration-300"
-                            enterFrom="opacity-0 scale-95"
-                            enterTo="opacity-100 scale-100"
-                            leave="ease-in duration-200"
-                            leaveFrom="opacity-100 scale-100"
-                            leaveTo="opacity-0 scale-95"
-                        >
-                            <Dialog.Panel className="w-96 gap-2 flex flex-col overflow-hidden rounded-xl dark:text-white bg-white dark:bg-black border border-stroke p-4 text-left align-middle shadow-xl transition-all">
-                                <h1 className='font-clash text-2xl font-semibold'>Are you sure?</h1>
+            <BaseModalContent>
+                <BaseModalTitle>Are you sure?</BaseModalTitle>
+                <BaseModalDescription>
+                    You can&apos;t undo this action.
+                </BaseModalDescription>
 
-                                {post ? <p className='text-sm'>
-                                    You&apos;re about to delete this post, once you do it will be gone forever. Are you sure you would like to proceed?
-                                </p> : <p className='w-full text-sm'>You&apos;re about to delete {admin ? "this" : 'your'} account on outfits.bio, once you do {admin ? 'they' : 'you'} will no longer be able to login, and all of {admin ? 'their' : 'your'} data will be erased. Are you sure you would like to proceed?</p>}
+                {post ? <p className='text-sm'>
+                    You&apos;re about to delete this post, once you do it will be gone forever. Are you sure you would like to proceed?
+                </p> : <p className='w-full text-sm'>You&apos;re about to delete {admin ? "this" : 'your'} account on outfits.bio, once you do {admin ? 'they' : 'you'} will no longer be able to login, and all of {admin ? 'their' : 'your'} data will be erased. Are you sure you would like to proceed?</p>}
 
-                                <div className='flex w-full gap-2'>
-                                    <Button variant='outline' centerItems onClick={() => setIsOpen(false)}>No, Abort</Button>
-                                    <Button className='bg-red-500 border-none' centerItems onClick={() => { deleteFn(); setIsOpen(false); }}>Delete {post ? 'Post' : 'Account'}</Button>
-                                </div>
-                            </Dialog.Panel>
-                        </Transition.Child>
-                    </div>
+                <div className='flex w-full gap-2'>
+                    <BaseModalClose>
+                        <Button variant='outline' className='text-nowrap' centerItems>No, Abort</Button>
+                    </BaseModalClose>
+                    <Button className='bg-red-500 border-none' centerItems onClick={() => { deleteFn(); (ref?.current?.click() ?? ref2?.current?.click()) }}>Delete {post ? 'Post' : 'Account'}</Button>
                 </div>
-            </Dialog>
-        </Transition >
+            </BaseModalContent>
+        </BaseModal >
     )
 }

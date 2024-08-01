@@ -1,80 +1,143 @@
-"use client";
+import React from "react";
+import { useMediaQuery } from "../../hooks/use-media-query.hook";
 
-import { cn } from '@/utils/cn.util';
-import { Dialog, Transition } from '@headlessui/react';
-import type { VariantProps } from "class-variance-authority";
-import { cva } from 'class-variance-authority';
-import localFont from 'next/font/local';
-import { Fragment, forwardRef } from 'react';
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 
-const clash = localFont({
-    src: '../../../public/fonts/ClashDisplay-Variable.woff2',
-    display: 'swap',
-    variable: '--font-clash',
-});
+import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
+} from "@/components/ui/drawer";
 
-const satoshi = localFont({
-    src: '../../../public/fonts/Satoshi-Variable.woff2',
-    display: 'swap',
-    variable: '--font-satoshi',
-});
+export interface BaseModalProps {
+    children?: React.ReactNode;
+    className?: string;
+    ref?: React.RefObject<HTMLButtonElement>;
+}
 
-const variants = cva('min-w-96 gap-2 overflow-hidden rounded-xl bg-white dark:bg-black border border-stroke p-4 text-left align-middle shadow-xl transition-all z-10', {
-    variants: {
-        size: {
-            sm: 'min-w-96',
-            md: 'min-w-128',
-            lg: 'min-w-192',
-            xl: 'min-w-256',
-        },
-    },
-    defaultVariants: {
-        size: 'md',
+export const BaseModal = ({ children }: BaseModalProps) => {
+    const isDesktop = useMediaQuery("(min-width: 768px)");
+
+    if (isDesktop) {
+        return <Dialog>{children}</Dialog>;
+    } else {
+        return <Drawer>{children}</Drawer>;
+    }
+};
+
+BaseModal.displayName = "BaseModal";
+
+export const BaseModalClose = ({ children }: BaseModalProps) => {
+    const isDesktop = useMediaQuery("(min-width: 768px)");
+
+    if (isDesktop) {
+        return <DialogClose>{children}</DialogClose>;
+    } else {
+        return <DrawerClose>{children}</DrawerClose>;
+    }
+};
+
+BaseModalClose.displayName = "BaseModalClose";
+
+export const BaseModalTrigger = React.forwardRef<
+    HTMLButtonElement,
+    BaseModalProps
+>(({ children, className }: BaseModalProps, ref) => {
+    const isDesktop = useMediaQuery("(min-width: 768px)");
+
+    if (isDesktop) {
+        return (
+            <DialogTrigger className={className} ref={ref} asChild>
+                {children}
+            </DialogTrigger>
+        );
+    } else {
+        return (
+            <DrawerTrigger className={className} ref={ref} asChild>
+                {children}
+            </DrawerTrigger>
+        );
     }
 });
 
-export interface BaseModalProps
-    extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof variants> {
-    isOpen: boolean;
-    close: () => void;
-}
+BaseModalTrigger.displayName = "BaseModalTrigger";
 
-export const BaseModal = forwardRef<HTMLDivElement, BaseModalProps>(({ className, children, isOpen, close, ...props }, ref) => {
+export const BaseModalContent = ({ children, className }: BaseModalProps) => {
+    const isDesktop = useMediaQuery("(min-width: 768px)");
 
-    return <Transition appear show={isOpen} as={Fragment} {...props}>
-        <Dialog as="div" className={`relative z-50 ${clash.variable} ${satoshi.variable} font-clash`} open={isOpen} onClose={close}>
-            <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-            >
-                <div className="fixed inset-0 bg-black bg-opacity-25" />
-            </Transition.Child>
+    if (isDesktop) {
+        return <DialogContent>{children}</DialogContent>;
+    } else {
+        return (
+            <DrawerContent className={"px-4 outline-none p-mobile " + className}>
+                {children}
+            </DrawerContent>
+        );
+    }
+};
 
-            <div className="fixed inset-0 overflow-y-auto">
-                <div className="flex min-h-full items-center justify-center p-4 text-center">
-                    <Transition.Child
-                        as={Fragment}
-                        enter="ease-out duration-300"
-                        enterFrom="opacity-0 scale-95"
-                        enterTo="opacity-100 scale-100"
-                        leave="ease-in duration-200"
-                        leaveFrom="opacity-100 scale-100"
-                        leaveTo="opacity-0 scale-95"
-                    >
-                        <Dialog.Panel className={cn(variants({ className }))} ref={ref}>
-                            {children}
-                        </Dialog.Panel>
-                    </Transition.Child>
-                </div>
-            </div>
-        </Dialog>
-    </Transition>
-});
+BaseModalContent.displayName = "BaseModalContent";
 
-BaseModal.displayName = 'BaseModal';
+export const BaseModalHeader = ({ children }: BaseModalProps) => {
+    const isDesktop = useMediaQuery("(min-width: 768px)");
+
+    if (isDesktop) {
+        return <DialogHeader>{children}</DialogHeader>;
+    } else {
+        return <DrawerHeader>{children}</DrawerHeader>;
+    }
+};
+
+BaseModalHeader.displayName = "BaseModalHeader";
+
+export const BaseModalFooter = ({ children, className }: BaseModalProps) => {
+    const isDesktop = useMediaQuery("(min-width: 768px)");
+
+    if (isDesktop) {
+        return <DialogFooter className={className}>{children}</DialogFooter>;
+    } else {
+        return (
+            <DrawerFooter className={"px-0 " + className}>{children}</DrawerFooter>
+        );
+    }
+};
+
+BaseModalFooter.displayName = "BaseModalFooter";
+
+export const BaseModalTitle = ({ children }: BaseModalProps) => {
+    const isDesktop = useMediaQuery("(min-width: 768px)");
+
+    if (isDesktop) {
+        return <DialogTitle className="font-clash font-semibold">{children}</DialogTitle>;
+    } else {
+        return <DrawerTitle className="font-clash font-semibold">{children}</DrawerTitle>;
+    }
+};
+
+BaseModalTitle.displayName = "BaseModalTitle";
+
+export const BaseModalDescription = ({ children }: BaseModalProps) => {
+    const isDesktop = useMediaQuery("(min-width: 768px)");
+
+    if (isDesktop) {
+        return <DialogDescription>{children}</DialogDescription>;
+    } else {
+        return <DrawerDescription>{children}</DrawerDescription>;
+    }
+};
+
+BaseModalDescription.displayName = "BaseModalDescription";

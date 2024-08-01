@@ -13,12 +13,9 @@ import Marquee from "react-fast-marquee";
 import toast from "react-hot-toast";
 import { PiGear, PiCameraBold, PiDiscordLogoBold, PiGithubLogoBold, PiHammerBold, PiHeartBold, PiHeartFill, PiInstagramLogoBold, PiLinkSimpleBold, PiPencilSimple, PiQuestion, PiSealCheckBold, PiShareFat, PiTiktokLogoBold, PiTwitterLogoBold, PiYoutubeLogoBold } from "react-icons/pi";
 import { PostModal } from "../modals/post-modal";
-import { ReportModal } from "../modals/report-modal";
 import { Avatar } from "../ui/Avatar";
 import { Button } from "../ui/Button";
 import { ProfileMenu } from "../menus/profile-menu";
-import { AdminEditUserModal } from "../modals/admin-edit-user-modal";
-import { DeleteModal } from "../modals/delete-modal";
 import { SpotifySetupModal } from "../modals/spotify-setup-modal";
 import { FollowersModal } from "../modals/followers-modal";
 
@@ -35,29 +32,10 @@ export const ProfileCard = ({ profileData, username }: Props) => {
     const ctx = api.useUtils();
 
     const [likeAnimation, setLikeAnimation] = useState(false);
-    const [reportModalOpen, setReportModalOpen] = useState(false);
-    const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false);
-    const [spotifySetupModalOpen, setSpotifySetupModalOpen] = useState(false);
-    const [adminEditUserModalOpen, setAdminEditUserModalOpen] = useState(false);
-    const [followersModalOpen, setFollowersModalOpen] = useState(false);
 
     const isCurrentUser = profileData?.id === data?.user.id;
 
     const { data: lanyardData } = api.user.getLanyardStatus.useQuery({ username });
-
-    const { mutate: deleteUser } = api.admin.deleteUser.useMutation({
-        onSuccess: () => toast.success('User deleted successfully!'),
-        onError: (e) => handleErrors({ e, message: 'An error occurred while deleting this user.' })
-    });
-
-    const handleDeleteUser = () => {
-        if (!profileData?.id) {
-            toast.error('An error occurred while deleting this user.');
-            return;
-        }
-
-        setConfirmDeleteModalOpen(true);
-    }
 
     const { mutate, isLoading } = api.user.likeProfile.useMutation({
         onMutate: async () => {
@@ -89,7 +67,7 @@ export const ProfileCard = ({ profileData, username }: Props) => {
 
     const origin = typeof window !== 'undefined' ? window.location.origin : '';
 
-    const userUrl = `${origin}${window.location.pathname}`;
+    const userUrl = typeof window !== 'undefined' ? `${origin}${window.location.pathname}` : '';
 
     const handleShare = () => {
         if (typeof window !== 'undefined') {
@@ -104,13 +82,6 @@ export const ProfileCard = ({ profileData, username }: Props) => {
     return (
         <div className="md:h-full flex flex-col font-satoshi md:bg-white md:dark:bg-black md:border-r border-stroke pl-4 py-4 md:px-12">
             <PostModal />
-            {reportModalOpen && <ReportModal isOpen={reportModalOpen} setIsOpen={setReportModalOpen} type='USER' id={profileData?.id} />}
-            {confirmDeleteModalOpen && <DeleteModal isOpen={confirmDeleteModalOpen} setIsOpen={setConfirmDeleteModalOpen} admin deleteFn={() => {
-                deleteUser({ id: profileData?.id ?? '' });
-                router.push('/');
-            }} />}
-            {spotifySetupModalOpen && <SpotifySetupModal isOpen={spotifySetupModalOpen} close={() => setSpotifySetupModalOpen(false)} />}
-            {(adminEditUserModalOpen && profileData) && <AdminEditUserModal targetUser={profileData} isOpen={adminEditUserModalOpen} setIsOpen={setAdminEditUserModalOpen} close={() => setAdminEditUserModalOpen(false)} />}
 
             <div className='md:w-96 w-full flex flex-col gap-4'>
                 <div className='flex md:flex-col gap-4 md:justify-normal'>
@@ -139,13 +110,14 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                                 <span><span className='font-bold'>{profileData?.imageCount}</span> Post{profileData?.imageCount !== 1 ? 's' : ''}</span>
                             </p>
 
-                            <span className="cursor-pointer" onClick={() => setFollowersModalOpen(true)}>
-                                <p className='flex items-center gap-1'>
-                                    <PiHeartBold className='w-5 h-5' />
-                                    <span><span className='font-bold'>{profileData?.likeCount}</span> Follower{profileData?.likeCount !== 1 ? 's' : ''}</span>
-                                    <FollowersModal isOpen={followersModalOpen} setIsOpen={setFollowersModalOpen} profileId={profileData?.id ?? ''} />
-                                </p>
-                            </span>
+                            <FollowersModal profileId={profileData?.id ?? ''}>
+                                <span className="cursor-pointer">
+                                    <p className='flex items-center gap-1'>
+                                        <PiHeartBold className='w-5 h-5' />
+                                        <span><span className='font-bold'>{profileData?.likeCount}</span> Follower{profileData?.likeCount !== 1 ? 's' : ''}</span>
+                                    </p>
+                                </span>
+                            </FollowersModal>
                         </div>
                     </div>
                 </div>
@@ -177,7 +149,7 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                             </p>
                         </Marquee>
                     </> : null}
-                    {lanyardData === null && isCurrentUser && <p onClick={() => setSpotifySetupModalOpen(true)} className='text-sm text-error flex gap-2 items-center cursor-pointer hover:underline'>More setup required to display Spotify. <PiQuestion className='w-4 h-4' /></p>}
+                    {lanyardData === null && isCurrentUser && <SpotifySetupModal><p className='text-sm text-error flex gap-2 items-center cursor-pointer hover:underline'>More setup required to display Spotify. <PiQuestion className='w-4 h-4' /></p></SpotifySetupModal>}
                 </div>}
 
 
@@ -216,7 +188,7 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                     </div>
 
                     <div>
-                        {(data?.user && profileData) && <ProfileMenu setAdminEditUserModalOpen={setAdminEditUserModalOpen} username={profileData.username ?? ''} userUrl={userUrl} handleDeleteUser={handleDeleteUser} setReportModalOpen={setReportModalOpen} />}
+                        {(data?.user && profileData) && <ProfileMenu profileData={profileData} username={profileData.username ?? ''} userUrl={userUrl} type='USER' id={profileData?.id} />}
                     </div>
                 </div>}
 

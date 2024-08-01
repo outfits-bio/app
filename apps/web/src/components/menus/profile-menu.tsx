@@ -1,26 +1,51 @@
 import { Menu } from '@headlessui/react';
 import { useSession } from 'next-auth/react';
-import type { Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { PiDotsThree } from 'react-icons/pi';
 
+import { api } from '@/trpc/react';
+import { handleErrors } from "@/utils/handle-errors.util";
 import { BaseMenu } from './base-menu';
 import { Button } from '../ui/Button';
+import { AdminEditUserModal } from '../modals/admin-edit-user-modal';
+import { ReportModal } from '../modals/report-modal';
+import type { ReportType } from 'database';
+import { DeleteModal } from '../modals/delete-modal';
+import { useRouter } from "next/navigation";
+import { useRef } from 'react';
 
 
 interface ProfileMenuProps {
     username: string;
     userUrl: string;
-    setReportModalOpen: Dispatch<SetStateAction<boolean>>;
-    setAdminEditUserModalOpen: Dispatch<SetStateAction<boolean>>;
-    handleDeleteUser: () => void;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    profileData: any;
+    type: ReportType;
+    id: string;
 }
 
-export const ProfileMenu = ({ userUrl, username, setReportModalOpen, setAdminEditUserModalOpen, handleDeleteUser, ...props }: ProfileMenuProps) => {
+export const ProfileMenu = ({ userUrl, username, profileData, type, id, ...props }: ProfileMenuProps) => {
     const { data: session } = useSession();
+    const router = useRouter();
+    const ref = useRef<HTMLButtonElement>(null);
 
     const user = session?.user;
+
+    const { mutate: deleteUser } = api.admin.deleteUser.useMutation({
+        onSuccess: () => toast.success('User deleted successfully!'),
+        onError: (e) => handleErrors({ e, message: 'An error occurred while deleting this user.' })
+    });
+
+    const handleDeleteUser = () => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        if (!profileData?.id) {
+            toast.error('An error occurred while deleting this user.');
+            return;
+        }
+
+        ref.current?.click();
+    }
 
     const handleShare = async () => {
         await navigator.clipboard.writeText(userUrl);
@@ -41,23 +66,30 @@ export const ProfileMenu = ({ userUrl, username, setReportModalOpen, setAdminEdi
                 </Button>
             </Menu.Item>
             {user && <Menu.Item>
-                <Button variant={'ghost'} onClick={() => setReportModalOpen(true)}>
-                    <p>Report</p>
-                </Button>
+                <ReportModal type={type} id={id} />
             </Menu.Item>}
 
         </div>
 
         {user?.admin && <div className="pt-2 space-y-1">
             <Menu.Item>
-                <Button variant={'ghost'} onClick={handleDeleteUser}>
-                    <p>Delete</p>
-                </Button>
+                <DeleteModal admin deleteFn={() => {
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+                    deleteUser({ id: profileData?.id ?? '' });
+                    router.push('/');
+                }}>
+                    <Button variant={'ghost'} onClick={handleDeleteUser}>
+                        Delete
+                    </Button>
+                </DeleteModal>
             </Menu.Item>
             <Menu.Item>
-                <Button variant={'ghost'} onClick={() => setAdminEditUserModalOpen(true)}>
-                    <p>Edit Profile</p>
-                </Button>
+                {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
+                <AdminEditUserModal targetUser={profileData}>
+                    <Button variant={'ghost'}>
+                        <p>Edit Profile</p>
+                    </Button>
+                </AdminEditUserModal>
             </Menu.Item>
         </div>}
     </BaseMenu>
