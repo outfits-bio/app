@@ -64,7 +64,7 @@ export default function ReactButton({ post }: PostProps) {
           centerItems
           shape={'circle'}
           iconLeft={<PiChatCircleBold />}
-          className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent focus:outline-none"
+          className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent focus:outline-none md:dark:text-white"
         />
       </Popover.Button>
       <Transition

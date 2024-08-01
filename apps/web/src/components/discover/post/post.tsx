@@ -65,7 +65,7 @@ export function Post({ post }: PostProps) {
     <div
       className={`flex-col justify-center ${mobile ? 'flex sm:hidden absolute bottom-3 left-3' : 'hidden sm:flex'}`}
     >
-      <p className="flex items-center gap-1 font-medium text-white sm:text-black ">
+      <p className="flex items-center gap-1 font-medium text-white sm:text-black md:dark:text-white ">
         {post.user.username}{' '}
         {post.user.admin ? (
           <PiHammer className="w-4 h-4" />
@@ -77,29 +77,29 @@ export function Post({ post }: PostProps) {
       {(post._count.likes > 0 ||
         post._count.reactions > 0 ||
         post._count.wishlists > 0) && (
-        <p className="flex self-start gap-1 text-sm font-medium font-clash text-white/80 sm:text-secondary-text">
-          <PostInfoModal postId={post.id}>
-            <span className="flex gap-1 cursor-pointer">
-              <span className="font-bold">{post._count.likes}</span>{' '}
-              {post._count.likes === 1 ? ' like' : ' likes'}
-              {post._count.reactions || post._count.wishlists ? ', ' : ''}
-            </span>
-          </PostInfoModal>
-          {post._count.reactions > 0 && (
-            <span className="flex gap-1">
-              <span className="font-bold">{post._count.reactions}</span>{' '}
-              {post._count.reactions === 1 ? ' reaction' : ' reactions'}
-              {post._count.wishlists ? ', ' : ''}
-            </span>
-          )}
-          {post._count.wishlists > 0 && (
-            <span className="flex gap-1">
-              <span className="font-bold">{post._count.wishlists}</span>{' '}
-              {post._count.wishlists === 1 ? ' wishlist' : ' wishlists'}
-            </span>
-          )}
-        </p>
-      )}
+          <p className="flex self-start gap-1 text-sm font-medium font-clash text-white/80 sm:text-secondary-text">
+            <PostInfoModal postId={post.id}>
+              <span className="flex gap-1 cursor-pointer">
+                <span className="font-bold">{post._count.likes}</span>{' '}
+                {post._count.likes === 1 ? ' like' : ' likes'}
+                {post._count.reactions || post._count.wishlists ? ', ' : ''}
+              </span>
+            </PostInfoModal>
+            {post._count.reactions > 0 && (
+              <span className="flex gap-1">
+                <span className="font-bold">{post._count.reactions}</span>{' '}
+                {post._count.reactions === 1 ? ' reaction' : ' reactions'}
+                {post._count.wishlists ? ', ' : ''}
+              </span>
+            )}
+            {post._count.wishlists > 0 && (
+              <span className="flex gap-1">
+                <span className="font-bold">{post._count.wishlists}</span>{' '}
+                {post._count.wishlists === 1 ? ' wishlist' : ' wishlists'}
+              </span>
+            )}
+          </p>
+        )}
       <p className="inline text-sm text-stroke sm:text-secondary-text 2xs-h:hidden">
         {truncatedTagline && `${truncatedTagline} - `}
         {getPostTypeName(post.type).toLowerCase()}
@@ -168,7 +168,7 @@ export function Post({ post }: PostProps) {
             centerItems
             shape={'circle'}
             iconLeft={<PiShareFatBold />}
-            className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent"
+            className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent md:dark:text-white"
             onClick={() => handleShare(post.id)}
           />
         </div>
