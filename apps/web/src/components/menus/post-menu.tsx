@@ -4,16 +4,15 @@
 import { useParamsModal } from '@/hooks/params-modal.hook';
 import { api } from '@/trpc/react';
 import { handleErrors } from '@/utils/handle-errors.util';
-import { Menu } from '@headlessui/react';
 import { useRouter } from "next/navigation";
 import { useSession } from 'next-auth/react';
 import toast from 'react-hot-toast';
 import { PiDotsThree } from 'react-icons/pi';
 import { ReportModal } from '../modals/report-modal';
 import { Button } from '../ui/Button';
-import { BaseMenu } from './base-menu';
 import { DeleteModal } from '../modals/delete-modal';
 import { useRef } from 'react';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 
 interface PostMenuProps {
     userIsProfileOwner: boolean;
@@ -69,15 +68,18 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
     }
 
     return (
-        <BaseMenu {...props} button={button ?? <PiDotsThree className='w-5 h-5 text-white mt-1.5' />} className='right-0 bottom-0 w-44 origin-top-right'>
-            <div className="space-y-1">
+        <Popover {...props}>
+            <PopoverTrigger>
+                {button ?? <PiDotsThree className='w-5 h-5 text-white mt-1.5' />}
+            </PopoverTrigger>
+            <PopoverContent className="space-y-1 w-fit">
                 {user && (
-                    <Menu.Item onClick={(e) => e.preventDefault()} as="div">
+                    <div>
                         <ReportModal type='POST' id={postId} />
-                    </Menu.Item>
+                    </div>
                 )}
                 {userIsProfileOwner && !user?.admin && (
-                    <Menu.Item onClick={(e) => e.preventDefault()} as="div">
+                    <div>
                         <DeleteModal
                             ref={ref}
                             post
@@ -89,10 +91,10 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
                                 <p>Delete</p>
                             </Button>
                         </DeleteModal>
-                    </Menu.Item>
+                    </div>
                 )}
                 {user?.admin && (
-                    <Menu.Item onClick={(e) => e.preventDefault()} as="div">
+                    <div>
                         <DeleteModal
                             ref2={ref2}
                             post
@@ -106,9 +108,9 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
                                 Delete
                             </Button>
                         </DeleteModal>
-                    </Menu.Item>
+                    </div>
                 )}
-            </div>
-        </BaseMenu >
+            </PopoverContent>
+        </Popover >
     );
 }
