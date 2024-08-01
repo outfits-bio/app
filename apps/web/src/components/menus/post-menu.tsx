@@ -87,7 +87,7 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
                                 deletePost({ id: postId?.toString() ?? '' });
                             }}
                         >
-                            <Button variant={'ghost'} onClick={handleDeleteUserPost}>
+                            <Button variant={'ghost'}>
                                 <p>Delete</p>
                             </Button>
                         </DeleteModal>
