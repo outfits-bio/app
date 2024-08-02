@@ -1,7 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/Button";
-import Link from "next/link";
+import { LoginButtons } from "@/app/login/buttons";
 
 const errors = {
     Signin: "Try signing with a different account.",
@@ -29,7 +28,7 @@ const Error = () => {
         <div className="flex flex-col items-center justify-center h-full gap-3">
             <h1 className="text-5xl font-clash font-bold">Oops! Something went wrong</h1>
             <h2 className="text-lg">{errorMessage}</h2>
-            <Link href="/login"><Button>Login</Button></Link>
+            <LoginButtons />
         </div>
     )
 }

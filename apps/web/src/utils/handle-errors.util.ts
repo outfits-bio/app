@@ -12,7 +12,7 @@ export const formatErrors = (e: any) => {
   } else {
     if (e.data) {
       if (e.data.code && e.data.code === "UNAUTHORIZED") {
-        return ["Unauthorized"];
+        return ["Unauthorized, are you logged in?"];
       }
 
       return [e.message as string];
