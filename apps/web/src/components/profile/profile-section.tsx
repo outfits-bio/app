@@ -72,10 +72,20 @@ export const ProfileCard = ({ profileData, username }: Props) => {
     const handleShare = () => {
         if (typeof window !== 'undefined') {
             const userUrl = `${window.location.origin}${pathname}`;
-            void navigator.clipboard.writeText(userUrl);
-            toast.success('Copied profile link to clipboard!');
-        } else {
-            toast.error('An error occurred while copying the profile link.');
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'outfits.bio',
+                    text: 'Check out this profile on outfits.bio!',
+                    url: userUrl,
+                })
+                    .catch((error) => {
+                        console.error('Error sharing:', error);
+                    });
+            } else {
+                void navigator.clipboard.writeText(userUrl)
+                toast.success('Copied profile link to clipboard!')
+            }
         }
     }
 

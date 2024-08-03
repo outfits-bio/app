@@ -72,7 +72,7 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
             <PopoverTrigger>
                 {button ?? <PiDotsThree className='w-5 h-5 text-white mt-1.5' />}
             </PopoverTrigger>
-            <PopoverContent className="space-y-1 w-fit">
+            <PopoverContent className="space-y-1 w-fit mr-2 md:mr-0">
                 {user && (
                     <div>
                         <ReportModal type='POST' id={postId} />

@@ -54,11 +54,15 @@ export function AuthSection() {
             </Link>
         )}
 
-        <Link href='/login'>
-            <Button variant='outline'>Login</Button>
-        </Link>
-        <Link href='/login'>
-            <Button variant='primary'>Create your profile</Button>
-        </Link>
+        {pathname !== '/login' && (
+            <>
+                <Link href='/login'>
+                    <Button variant='outline'>Login</Button>
+                </Link>
+                <Link href='/login'>
+                    <Button variant='primary'>Create your profile</Button>
+                </Link>
+            </>
+        )}
     </div>;
 }

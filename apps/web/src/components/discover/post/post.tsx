@@ -161,6 +161,9 @@ export function Post({ post }: PostProps) {
         onClick={handleSetParams}
         onDoubleClick={() => {
           setLikeAnimation(true)
+          if (navigator.vibrate) {
+            navigator.vibrate(200);
+          }
           toggleLikePost({ id: post.id })
         }}
         className="relative md:cursor-pointer w-full aspect-[53/87] flex justify-center overflow-hidden "
