@@ -57,18 +57,15 @@ export function Post({ post }: PostProps) {
 
     const url = `${origin}${pathname}?postId=${postId}`
 
-    if (!isDesktop) {
-      if (navigator.share) {
-        navigator.share({
-          title: 'outfits.bio',
-          text: 'Check out this post on outfits.bio!',
-          url: url,
-        })
-          .catch(() => toast.error('Could not share'));
-      } else {
-        void navigator.clipboard.writeText(url)
-        toast.success('Copied post link to clipboard!')
-      }
+    if (navigator.share) {
+      navigator.share({
+        title: 'outfits.bio',
+        text: 'Check out this post on outfits.bio!',
+        url: url,
+      })
+        .catch((error) => {
+          console.error('Error sharing:', error);
+        });
     } else {
       void navigator.clipboard.writeText(url)
       toast.success('Copied post link to clipboard!')
