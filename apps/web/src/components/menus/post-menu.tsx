@@ -57,16 +57,6 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
         onError: (e) => handleErrors({ e, message: 'An error occurred while deleting this post.' })
     });
 
-    const handleDeleteUserPost = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        if (!postId) {
-            toast.error('An error occurred while deleting this post.');
-            return;
-        }
-
-        ref2.current?.click();
-    }
-
     return (
         <Popover {...props}>
             <PopoverTrigger>
