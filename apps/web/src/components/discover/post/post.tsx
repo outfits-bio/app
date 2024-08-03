@@ -57,9 +57,22 @@ export function Post({ post }: PostProps) {
 
     const url = `${origin}${pathname}?postId=${postId}`
 
-    void navigator.clipboard.writeText(url)
-
-    toast.success('Copied post link to clipboard!')
+    if (!isDesktop) {
+      if (navigator.share) {
+        navigator.share({
+          title: 'outfits.bio',
+          text: 'Check out this post on outfits.bio!',
+          url: url,
+        })
+          .catch(() => toast.error('Could not share'));
+      } else {
+        void navigator.clipboard.writeText(url)
+        toast.success('Copied post link to clipboard!')
+      }
+    } else {
+      void navigator.clipboard.writeText(url)
+      toast.success('Copied post link to clipboard!')
+    }
   }
 
   const [likeAnimation, setLikeAnimation] = useState<boolean>(false)
