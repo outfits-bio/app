@@ -29,10 +29,11 @@ import ReactButton from './react-button'
 import WishlistButton from './wishlist-button'
 
 export interface PostProps {
-  post: inferRouterOutputs<AppRouter>['post']['getLatestPosts']['posts'][number]
+	post: inferRouterOutputs<AppRouter>['post']['getLatestPosts']['posts'][number];
+	ref?: React.Ref<HTMLDivElement>;
 }
 
-export function Post({ post }: PostProps) {
+export function Post({ post, ref }: PostProps) {
   const params = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
@@ -143,7 +144,7 @@ export function Post({ post }: PostProps) {
     </div>
   ))
   return (
-    <div className="relative flex flex-col items-center w-full h-full max-w-sm max-h-[calc(100vh_-_112px)] gap-2 snap-start md:gap-4 sm:pr-[56px]">
+    <div className="relative flex flex-col items-center w-full h-full max-w-sm max-h-[calc(100vh_-_112px)] gap-2 snap-start md:gap-4 sm:pr-[56px]" ref={ref}>
       {/*<Link
         href={`/${post.user.username}`}
         className="items-center hidden w-full gap-2 px-4 font-clash sm:flex"
