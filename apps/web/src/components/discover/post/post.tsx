@@ -196,7 +196,7 @@ export function Post({ post }: PostProps) {
         <div className="flex flex-col gap-1.5">
           <Link
             href={`/${post.user.username}`}
-            className="flex items-center  font-clash"
+            className="flex items-center font-clash"
           >
             <Avatar
               image={post.user.image}
@@ -218,7 +218,7 @@ export function Post({ post }: PostProps) {
             centerItems
             shape={'circle'}
             iconLeft={<PiShareFatBold />}
-            className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent md:dark:text-white"
+            className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent sm:dark:text-white"
             onClick={() => handleShare(post.id)}
           />
         </div>

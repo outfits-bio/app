@@ -35,16 +35,14 @@ export function WishlistContent() {
         [isFetchingNextPage, isFetching, hasNextPage, fetchNextPage]
     );
 
-    return <div className="flex h-full">
+    return <div className="flex h-full w-full">
         {(queryPost && params.has('postId')) && <DiscoverPostModal post={queryPost} />}
-        <section className="grow flex flex-col gap-4 items-center pt-2 md:pt-4">
+        <section className="grow flex flex-col gap-4 items-center pt-2 md:pt-4 px-2">
 
             {/* Posts */}
-            <div className="flex flex-col items-center gap-3 overflow-y-scroll hide-scrollbar snap-mandatory snap-y scroll-smooth">
+            <div className="flex flex-col items-center gap-3 overflow-y-scroll hide-scrollbar snap-mandatory snap-y scroll-smooth w-full">
                 {posts ? posts.map((post, index) => {
-                    return <div ref={posts.length === index + 1 ? lastElementRef : null} key={post.id}>
-                        <Post post={post} />
-                    </div>
+                    return <Post post={post} ref={posts.length === index + 1 ? lastElementRef : null} key={post.id}/>
                 }) : null}
                 {((posts?.length ?? 0) === 0) && (
                     <div className='flex flex-col items-center justify-center font-clash py-2 px-4'>

@@ -54,7 +54,7 @@ export default function WishlistButton({ post }: PostProps) {
       variant={'outline-ghost'}
       centerItems
       shape={'circle'}
-      className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent md:dark:text-white"
+      className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent sm:dark:text-white"
       iconLeft={
         !addToWishlistloading &&
         !removeFromWishlistLoading &&
