@@ -1,7 +1,10 @@
 'use client'
 
 import { PostInfoModal } from '@/components/modals/post-info-modal'
+import { useMediaQuery } from '@/hooks/use-media-query.hook'
 import type { AppRouter } from '@/server/api/root'
+import { api } from '@/trpc/react'
+import { handleErrors } from '@/utils/handle-errors.util'
 import { formatImage } from '@/utils/image-src-format.util'
 import { getPostTypeName } from '@/utils/names.util'
 import type { inferRouterOutputs } from '@trpc/server'
@@ -9,11 +12,12 @@ import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import toast from 'react-hot-toast'
 import {
   PiDotsThreeBold,
   PiHammer,
+  PiHeartStraightFill,
   PiSealCheck,
   PiShareFatBold,
 } from 'react-icons/pi'
@@ -36,13 +40,16 @@ export function Post({ post }: PostProps) {
   const { data: session } = useSession()
 
   const user = session?.user
+  const isDesktop = useMediaQuery('(min-width: 768px)')
 
   const handleSetParams = () => {
-    const currentParams = new URLSearchParams(Array.from(params.entries()))
+    if (isDesktop) {
+      const currentParams = new URLSearchParams(Array.from(params.entries()))
 
-    currentParams.set('postId', post.id)
+      currentParams.set('postId', post.id)
 
-    router.push(`${pathname}?${currentParams.toString()}`)
+      router.push(`${pathname}?${currentParams.toString()}`)
+    } else return
   }
 
   const handleShare = (postId: string) => {
@@ -50,10 +57,36 @@ export function Post({ post }: PostProps) {
 
     const url = `${origin}${pathname}?postId=${postId}`
 
-    void navigator.clipboard.writeText(url)
-
-    toast.success('Copied post link to clipboard!')
+    if (navigator.share) {
+      navigator
+        .share({
+          title: 'outfits.bio',
+          text: 'Check out this post on outfits.bio!',
+          url: url,
+        })
+        .catch((error) => {
+          console.error('Error sharing:', error)
+        })
+    } else {
+      void navigator.clipboard.writeText(url)
+      toast.success('Copied post link to clipboard!')
+    }
   }
+
+  const [likeAnimation, setLikeAnimation] = useState<boolean>(false)
+  const ctx = api.useUtils()
+
+  const { mutate: toggleLikePost } = api.post.toggleLikePost.useMutation({
+    onSuccess: () => {
+      void ctx.post.getLatestPosts.refetch()
+      void ctx.post.getPostsAllTypes.refetch({ id: post.user.id })
+    },
+    onError: (e) =>
+      handleErrors({
+        e,
+        message: 'An error occurred while liking this post.',
+      }),
+  })
 
   const truncatedTagline =
     post.user.tagline &&
@@ -61,11 +94,11 @@ export function Post({ post }: PostProps) {
       ? `${post.user.tagline.slice(0, 20)}...`
       : post.user.tagline)
 
-  const AuthorDesc = memo(({ mobile }: { mobile?: boolean }) => (
+  const AuthorDesc = memo(() => (
     <div
-      className={`flex-col justify-center ${mobile ? 'flex sm:hidden absolute bottom-3 left-3' : 'hidden sm:flex'}`}
+      className={`flex-col justify-center flex absolute bottom-3 left-3 z-20`}
     >
-      <p className="flex items-center gap-1 font-medium text-white sm:text-black ">
+      <p className="flex items-center gap-1 font-medium text-white md:dark:text-white ">
         {post.user.username}{' '}
         {post.user.admin ? (
           <PiHammer className="w-4 h-4" />
@@ -77,7 +110,7 @@ export function Post({ post }: PostProps) {
       {(post._count.likes > 0 ||
         post._count.reactions > 0 ||
         post._count.wishlists > 0) && (
-        <p className="flex self-start gap-1 text-sm font-medium font-clash text-white/80 sm:text-secondary-text">
+        <p className="flex self-start gap-1 text-sm font-medium font-clash text-white/80">
           <PostInfoModal postId={post.id}>
             <span className="flex gap-1 cursor-pointer">
               <span className="font-bold">{post._count.likes}</span>{' '}
@@ -100,18 +133,18 @@ export function Post({ post }: PostProps) {
           )}
         </p>
       )}
-      <p className="inline text-sm text-stroke sm:text-secondary-text 2xs-h:hidden">
+      <p className="inline text-sm text-stroke 2xs-h:hidden">
         {truncatedTagline && `${truncatedTagline} - `}
         {getPostTypeName(post.type).toLowerCase()}
       </p>
-      <p className="hidden text-sm text-stroke sm:text-secondary-text 2xs-h:inline">
+      <p className="hidden text-sm text-stroke 2xs-h:inline">
         {getPostTypeName(post.type).toLowerCase()}
       </p>
     </div>
   ))
   return (
-    <div className="relative flex flex-col items-center w-full max-w-sm max-h-[calc(100vh_-_112px)] gap-2 snap-start sm:py-4 md:gap-4 md:mt-3">
-      <Link
+    <div className="relative flex flex-col items-center w-full max-w-sm max-h-[calc(100vh_-_112px)] gap-2 snap-start sm:pt-4 md:gap-4 md:mt-3 sm:pr-[56px]">
+      {/*<Link
         href={`/${post.user.username}`}
         className="items-center hidden w-full gap-2 px-4 font-clash sm:flex"
       >
@@ -121,14 +154,29 @@ export function Post({ post }: PostProps) {
           username={post.user.username}
           size={'sm'}
         />
-        <AuthorDesc />
-      </Link>
+          <AuthorDesc />
+      </Link>*/}
 
       <div
         onClick={handleSetParams}
-        className="relative cursor-pointer w-full aspect-[53/87] flex justify-center overflow-hidden "
+        onDoubleClick={() => {
+          setLikeAnimation(true)
+          if (navigator.vibrate) {
+            navigator.vibrate(200)
+          }
+          toggleLikePost({ id: post.id })
+        }}
+        className="relative md:cursor-pointer w-full aspect-[53/87] flex justify-center overflow-hidden "
         onKeyDown={handleSetParams}
       >
+        {likeAnimation && (
+          <div className="fixed inset-0 flex items-center justify-center text-white">
+            <PiHeartStraightFill
+              className="w-24 h-24 animate-like"
+              onAnimationEnd={() => setLikeAnimation(false)}
+            />
+          </div>
+        )}
         <Image
           src={formatImage(post.image, post.user.id)}
           className="object-cover !w-auto border border-stroke rounded-xl !static"
@@ -136,17 +184,17 @@ export function Post({ post }: PostProps) {
           alt={post.type}
           priority
         />
+        <div className="absolute bottom-0 w-full h-32 bg-gradient-to-b from-transparent to-black rounded-b-xl" />
       </div>
 
-      <div className="absolute bottom-0 w-full h-32 bg-gradient-to-b from-transparent to-black rounded-b-xl sm:hidden" />
+      <AuthorDesc />
 
-      <AuthorDesc mobile />
-
-      <div className="absolute flex flex-col items-center justify-between bottom-3 right-3 sm:static sm:flex-row sm:w-full dbs-h:absolute">
-        <div className="flex flex-col gap-1.5 sm:flex-row">
+      {/*  sm:static sm:flex-row sm:w-full dbs-h:absolute*/}
+      <div className="absolute flex flex-col items-center justify-between bottom-3 right-3 sm:right-0 sm:bottom-0">
+        <div className="flex flex-col gap-1.5">
           <Link
             href={`/${post.user.username}`}
-            className="flex items-center sm:hidden font-clash"
+            className="flex items-center  font-clash"
           >
             <Avatar
               image={post.user.image}
@@ -168,30 +216,23 @@ export function Post({ post }: PostProps) {
             centerItems
             shape={'circle'}
             iconLeft={<PiShareFatBold />}
-            className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent"
+            className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent md:dark:text-white"
             onClick={() => handleShare(post.id)}
           />
         </div>
 
-        <div className="block sm-h:hidden">
+        <div className="block">
           {user && (
             <PostMenu
               userIsProfileOwner={user.id === post?.user.id}
               button={
                 <>
                   <Button
-                    variant="ghost"
-                    centerItems
-                    shape={'circle'}
-                    iconLeft={<PiDotsThreeBold />}
-                    className="hidden sm:flex"
-                  />
-                  <Button
                     variant="outline"
                     centerItems
                     shape={'circle'}
                     iconLeft={<PiDotsThreeBold />}
-                    className="mt-1.5 flex sm:hidden text-white border border-white/50 bg-black/50"
+                    className="mt-1.5 flex text-white border border-white/50 bg-black/50 sm:border-stroke sm:text-black sm:bg-transparent"
                   />
                 </>
               }
