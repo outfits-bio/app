@@ -96,7 +96,7 @@ export function Post({ post }: PostProps) {
 
   const AuthorDesc = memo(() => (
     <div
-      className={`flex-col justify-center flex absolute bottom-3 left-3 z-20`}
+      className={`flex-col justify-center flex absolute bottom-3 left-3 z-10`}
     >
       <p className="flex items-center gap-1 font-medium text-white md:dark:text-white ">
         {post.user.username}{' '}
@@ -157,7 +157,7 @@ export function Post({ post }: PostProps) {
           <AuthorDesc />
       </Link>*/}
       <div
-        onClick={handleSetParams}
+
         onDoubleClick={() => {
           setLikeAnimation(true)
           if (navigator.vibrate) {
@@ -166,7 +166,6 @@ export function Post({ post }: PostProps) {
           toggleLikePost({ id: post.id })
         }}
         className="md:cursor-pointer w-full aspect-[53/87] flex justify-center overflow-hidden "
-        onKeyDown={handleSetParams}
       >
         <div className="relative w-auto aspect-[53/87] flex justify-center overflow-hidden">
           {likeAnimation && (
@@ -183,6 +182,8 @@ export function Post({ post }: PostProps) {
             fill
             alt={post.type}
             priority
+            onClick={handleSetParams}
+            onKeyDown={handleSetParams}
           />
           <div className="absolute bottom-0 w-full h-32 bg-gradient-to-b from-transparent to-black rounded-b-xl" />
 
