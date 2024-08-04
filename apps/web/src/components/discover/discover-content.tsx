@@ -7,12 +7,13 @@ import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { PiBookmarkSimpleBold, PiClockBold, PiFireBold } from 'react-icons/pi'
+import { PiBookmarkSimpleBold, PiCamera, PiClockBold, PiFireBold, PiHammer, PiHeart, PiSealCheck } from 'react-icons/pi'
 import { PostModal } from '../modals/post-modal'
 import { Button } from '../ui/Button'
 import { CategoryButton } from './category-button'
 import { Post } from './post/post'
 import { RegisterBanner } from './register-banner'
+import { Avatar } from '../ui/Avatar'
 
 export function DiscoverContent() {
     const params = useSearchParams()
@@ -52,6 +53,7 @@ export function DiscoverContent() {
     }
 
     const posts = data?.pages.flatMap((page) => page.posts)
+    const popularProfiles = api.user.getMostLikedProfiles.useQuery()
 
     const observer = useRef<IntersectionObserver>()
     const lastElementRef = useCallback(
@@ -208,22 +210,60 @@ export function DiscoverContent() {
                     </button>
                 </div>
 
-                {/* Posts */}
-                <div className="flex flex-col items-center w-full gap-3 pb-[59px] overflow-y-scroll hide-scrollbar snap-mandatory snap-y scroll-smooth md:pb-0">
-                    {posts
-                        ? posts.map((post, index) => {
-                            return (
-                                <div
-                                    ref={posts.length === index + 1 ? lastElementRef : null}
-                                    key={post.id}
-                                    className="flex justify-center w-full"
-                                >
-                                    <Post post={post} />
-                                </div>
-                            )
-                        })
-                        : null}
+                {/* Flex for Posts and Popular Profiles */}
+                <div className='flex w-full justify-between overflow-hidden'>
+                    {/* Posts */}
+                    <div className="flex flex-col items-center w-full gap-3 pb-[59px] overflow-y-scroll hide-scrollbar snap-mandatory snap-y scroll-smooth md:pb-0">
+                        {posts
+                            ? posts.map((post, index) => {
+                                return (
+                                    <div
+                                        ref={posts.length === index + 1 ? lastElementRef : null}
+                                        key={post.id}
+                                        className="flex justify-center w-full"
+                                    >
+                                        <Post post={post} />
+                                    </div>
+                                )
+                            })
+                            : null}
+                    </div>
+
+                    {/* Popular Profiles */}
+                    {popularProfiles.data &&
+                        <div className='hidden xl:flex flex-col gap-3 pt-[1rem]'>
+                            <h1 className='text-2xl font-bold font-clash'>Popular Profiles</h1>
+                            <div className='flex flex-wrap gap-3'>
+                                {popularProfiles.data?.map((user) => (
+                                    <Link href={`/${user?.username}`} key={user?.id ?? ""}>
+                                        <div className='bg-white dark:bg-black border border-stroke p-4 rounded-xl hover:bg-body dark:hover:bg-body cursor-pointer flex gap-2 w-full'>
+                                            <Avatar size={'sm'} image={user?.image} id={user?.id} username={user?.username} />
+
+                                            <div className='flex flex-col gap-1 text-nowrap'>
+                                                <h1 className='font-black flex gap-1 items-center'>
+                                                    <span>{user?.username}</span>
+                                                    {user?.admin ? <PiHammer className='w-4 h-4' /> : user?.verified && <PiSealCheck className='w-4 h-4' />}
+                                                </h1>
+
+                                                <div className='flex gap-2 items-center text-nowrap text-xs'>
+                                                    <span className='flex gap-1 items-center'>
+                                                        <PiCamera className='w-3 h-3' />
+                                                        <span>{user?.imageCount} Shots</span>
+                                                    </span>
+                                                    <span className='flex gap-1 items-center'>
+                                                        <PiHeart className='w-3 h-4' />
+                                                        <span>{user?.likeCount} Likes</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    }
                 </div>
+
                 <RegisterBanner />
             </section>
         </div>

@@ -77,6 +77,28 @@ export const profileRouter = createTRPCRouter({
       };
     }),
 
+  getMostLikedProfiles: publicProcedure
+    .query(async ({ ctx }) => {
+      const users = await ctx.prisma.user.findMany({
+        orderBy: {
+          likeCount: "desc",
+        },
+        select: {
+          id: true,
+          username: true,
+          tagline: true,
+          admin: true,
+          verified: true,
+          image: true,
+          imageCount: true,
+          likeCount: true,
+        },
+        take: 4,
+      });
+
+      return users;
+    }),
+
   getFollowersById: publicProcedure
     .input(getFollowersByIdSchema)
     .query(async ({ input, ctx }) => {
