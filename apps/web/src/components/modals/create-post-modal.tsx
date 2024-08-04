@@ -48,6 +48,7 @@ export function CreatePostModal() {
             ref2.current?.click();
             toast.success('Post created successfully');
             router.push(`/profile`);
+            handleCancel();
         }
     });
 

@@ -1,12 +1,11 @@
 import { PostType } from 'database';
-import React, { forwardRef } from 'react';
 import { PiBackpackBold, PiBaseballCapBold, PiCoatHangerBold, PiEyeglassesBold, PiPantsBold, PiShirtFoldedBold, PiSneakerBold, PiTShirtBold, PiWatchBold } from 'react-icons/pi';
 
 export interface PostTypeIconProps extends React.HTMLAttributes<HTMLDivElement> {
     type: PostType;
 }
 
-export const PostTypeIcon = forwardRef<HTMLDivElement, PostTypeIconProps>(({ className, type }) => {
+export const PostTypeIcon = ({ className, type }: PostTypeIconProps) => {
     switch (type) {
         case PostType.OUTFIT:
             return <PiCoatHangerBold className={className} />;
@@ -27,6 +26,6 @@ export const PostTypeIcon = forwardRef<HTMLDivElement, PostTypeIconProps>(({ cla
         case PostType.GLASSES:
             return <PiEyeglassesBold className={className} />;
     }
-});
+};
 
 PostTypeIcon.displayName = 'PostTypeIcon';

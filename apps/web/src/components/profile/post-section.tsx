@@ -90,14 +90,14 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
             </h2>}
 
             <div className={postsExist ? 'w-full overflow-scroll mb-5' : 'w-full overflow-scroll md:mb-5'}>
-                <div className="flex gap-4 min-w-max pb-1">
+                <div className="flex gap-3 flex-wrap pb-1 w-full">
                     {posts?.map((post, i) => (
                         <Link
                             href={`/${profileData?.username}?postId=${post.id}`}
                             onMouseEnter={() => setDeleteButton(post.id)}
                             onMouseLeave={() => setDeleteButton(null)}
                             key={post.id ?? `loading_${i}`}
-                            className="w-[126px] h-[206px] border border-border rounded-lg relative overflow-hidden dark:border-stroke">
+                            className="w-[calc(50%-6px)] md:w-[151px] aspect-[151/247] border border-border rounded-lg relative overflow-hidden dark:border-stroke">
 
                             {isLoading && i === 0 ?
                                 <div className='bg-hover w-full h-full flex items-center justify-center'>
@@ -132,7 +132,7 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
                             <button
                                 onClick={() => ref.current?.click()}
                                 type='submit'
-                                className='w-[126px] h-[206px] border hover:bg-hover border-border flex items-center justify-center font-bold flex-col text-sm rounded-lg'>
+                                className='w-[151px] h-[247px]  border hover:bg-hover border-border flex items-center justify-center font-bold flex-col text-sm rounded-lg'>
                                 <PiPlus className='w-12 h-12 text-secondary-text' />
                             </button>
                         </>}

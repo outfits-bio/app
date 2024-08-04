@@ -41,7 +41,7 @@ const config = {
         accent: 'var(--accent)',
         hover: 'var(--hover)',
 
-        border: 'hsl(var(--border))',
+        border: 'var(--stroke)',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         background: 'var(--body)',
@@ -67,8 +67,9 @@ const config = {
         //   foreground: "hsl(var(--accent-foreground))",
         // },
         popover: {
-          DEFAULT: 'hsl(var(--popover))',
+          DEFAULT: 'var(--body)',
           foreground: 'hsl(var(--popover-foreground))',
+          stroke: 'var(--stroke)',
         },
         card: {
           DEFAULT: 'hsl(var(--card))',

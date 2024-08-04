@@ -47,16 +47,26 @@ export const ProfileMenu = ({ userUrl, username, profileData, type, id, ...props
     }
 
     const handleShare = async () => {
-        await navigator.clipboard.writeText(userUrl);
-
-        toast.success('Copied profile link to clipboard!');
+        if (navigator.share) {
+            navigator.share({
+                title: 'outfits.bio',
+                text: 'Check out this profile on outfits.bio!',
+                url: userUrl,
+            })
+                .catch((error) => {
+                    console.error('Error sharing:', error);
+                });
+        } else {
+            void navigator.clipboard.writeText(userUrl)
+            toast.success('Copied profile link to clipboard!')
+        }
     }
 
     return <Popover {...props}>
         <PopoverTrigger>
             <Button variant='outline' shape={'square'} iconLeft={<PiDotsThree />} />
         </PopoverTrigger>
-        <PopoverContent className='w-fit'>
+        <PopoverContent className='w-fit mr-2 md:mr-0'>
             <div className="px-6 pb-2 space-y-1 select-none font-clash font-bold h-12 flex items-center gap-2">
                 {username}&apos;s profile
             </div>

@@ -57,22 +57,12 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
         onError: (e) => handleErrors({ e, message: 'An error occurred while deleting this post.' })
     });
 
-    const handleDeleteUserPost = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        if (!postId) {
-            toast.error('An error occurred while deleting this post.');
-            return;
-        }
-
-        ref2.current?.click();
-    }
-
     return (
         <Popover {...props}>
             <PopoverTrigger>
                 {button ?? <PiDotsThree className='w-5 h-5 text-white mt-1.5' />}
             </PopoverTrigger>
-            <PopoverContent className="space-y-1 w-fit">
+            <PopoverContent className="space-y-1 w-fit mr-2 md:mr-0">
                 {user && (
                     <div>
                         <ReportModal type='POST' id={postId} />
@@ -87,7 +77,7 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
                                 deletePost({ id: postId?.toString() ?? '' });
                             }}
                         >
-                            <Button variant={'ghost'} onClick={handleDeleteUserPost}>
+                            <Button variant={'ghost'}>
                                 <p>Delete</p>
                             </Button>
                         </DeleteModal>

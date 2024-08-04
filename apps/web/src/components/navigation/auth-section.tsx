@@ -48,15 +48,21 @@ export function AuthSection() {
         </>;
     }
     return <div className='items-center gap-4 hidden md:flex'>
-        {pathname !== '/' ? null : <Link href='/'>
-            <Button variant='outline-ghost' iconLeft={<PiCompass />}>Discover</Button>
-        </Link>}
+        {pathname !== '/' && (
+            <Link href='/'>
+                <Button variant='outline-ghost' iconLeft={<PiCompass />}>Discover</Button>
+            </Link>
+        )}
 
-        <Link href='/login'>
-            <Button variant='outline'>Login</Button>
-        </Link>
-        <Link href='/login'>
-            <Button variant='primary'>Create your profile</Button>
-        </Link>
+        {pathname !== '/login' && (
+            <>
+                <Link href='/login'>
+                    <Button variant='outline'>Login</Button>
+                </Link>
+                <Link href='/login'>
+                    <Button variant='primary'>Create your profile</Button>
+                </Link>
+            </>
+        )}
     </div>;
 }

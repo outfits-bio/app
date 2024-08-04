@@ -36,7 +36,7 @@ export function LikeButton({ post, variant = 'default' }: LikeButtonProps) {
         variant="outline-ghost"
         centerItems
         shape={'circle'}
-        className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent"
+        className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent md:dark:text-white"
         onClick={() => {
           setLikeAnimation(true)
           toggleLikePost({ id: post.id })
