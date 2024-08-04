@@ -231,7 +231,7 @@ export function DiscoverContent() {
 
                     {/* Popular Profiles */}
                     {popularProfiles.data &&
-                        <div className='hidden xl:flex flex-col gap-3 pt-[1rem]'>
+                        <div className='hidden xl:flex flex-col gap-3 pt-[1rem] h-fit'>
                             <h1 className='text-2xl font-bold font-clash'>Popular Profiles</h1>
                             <div className='flex flex-wrap gap-3'>
                                 {popularProfiles.data?.map((user) => (
