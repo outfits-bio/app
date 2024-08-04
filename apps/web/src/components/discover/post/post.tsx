@@ -133,11 +133,11 @@ export function Post({ post }: PostProps) {
           )}
         </p>
       )}
-      <p className="inline text-sm text-stroke 2xs-h:hidden">
+      <p className="inline text-sm text-stroke 2xs-h:hidden dark:text-white/75">
         {truncatedTagline && `${truncatedTagline} - `}
         {getPostTypeName(post.type).toLowerCase()}
       </p>
-      <p className="hidden text-sm text-stroke 2xs-h:inline">
+      <p className="hidden text-sm text-stroke 2xs-h:inline dark:text-white/75">
         {getPostTypeName(post.type).toLowerCase()}
       </p>
     </div>
@@ -233,7 +233,7 @@ export function Post({ post }: PostProps) {
                     centerItems
                     shape={'circle'}
                     iconLeft={<PiDotsThreeBold />}
-                    className="mt-1.5 flex text-white border border-white/50 bg-black/50 sm:border-stroke sm:text-black sm:bg-transparent"
+                    className="mt-1.5 flex text-white border border-white/50 bg-black/50 sm:border-stroke sm:text-black sm:bg-transparent dark:sm:text-white"
                   />
                 </>
               }
