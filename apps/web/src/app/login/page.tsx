@@ -38,11 +38,7 @@ export default async function LoginPage() {
           .
         </p>
       </div>
-      <div className='absolute inset-0 block -z-10' onLoad={() => {
-        if (navigator.vibrate) {
-          navigator.vibrate([200, 200, 200, 200]);
-        }
-      }}>
+      <div className='absolute inset-0 block -z-10'>
         {posts.map((post, i) => (
           <div
             key={i}
