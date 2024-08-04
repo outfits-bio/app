@@ -167,7 +167,7 @@ export function Post({ post }: PostProps) {
         }}
         className="md:cursor-pointer w-full aspect-[53/87] flex justify-center overflow-hidden "
       >
-        <div className="relative w-auto aspect-[53/87] flex justify-center overflow-hidden">
+        <div className="relative w-auto aspect-[53/87] flex justify-center overflow-hidden flex-grow">
           {likeAnimation && (
             <div className="fixed inset-0 flex items-center justify-center text-white">
               <PiHeartStraightFill
