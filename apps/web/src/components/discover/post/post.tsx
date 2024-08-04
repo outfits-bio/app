@@ -143,7 +143,7 @@ export function Post({ post }: PostProps) {
     </div>
   ))
   return (
-    <div className="relative flex flex-col items-center w-full max-w-sm max-h-[calc(100vh_-_112px)] gap-2 snap-start sm:pt-4 md:gap-4 md:mt-3 sm:pr-[56px]">
+    <div className="relative flex flex-col items-center w-full h-full max-w-sm max-h-[calc(100vh_-_112px)] gap-2 snap-start md:gap-4 sm:pr-[56px]">
       {/*<Link
         href={`/${post.user.username}`}
         className="items-center hidden w-full gap-2 px-4 font-clash sm:flex"
@@ -156,7 +156,6 @@ export function Post({ post }: PostProps) {
         />
           <AuthorDesc />
       </Link>*/}
-
       <div
         onClick={handleSetParams}
         onDoubleClick={() => {
@@ -166,28 +165,30 @@ export function Post({ post }: PostProps) {
           }
           toggleLikePost({ id: post.id })
         }}
-        className="relative md:cursor-pointer w-full aspect-[53/87] flex justify-center overflow-hidden "
+        className="md:cursor-pointer w-full aspect-[53/87] flex justify-center overflow-hidden "
         onKeyDown={handleSetParams}
       >
-        {likeAnimation && (
-          <div className="fixed inset-0 flex items-center justify-center text-white">
-            <PiHeartStraightFill
-              className="w-24 h-24 animate-like"
-              onAnimationEnd={() => setLikeAnimation(false)}
-            />
-          </div>
-        )}
-        <Image
-          src={formatImage(post.image, post.user.id)}
-          className="object-cover !w-auto border border-stroke rounded-xl !static"
-          fill
-          alt={post.type}
-          priority
-        />
-        <div className="absolute bottom-0 w-full h-32 bg-gradient-to-b from-transparent to-black rounded-b-xl" />
-      </div>
+        <div className="relative w-auto aspect-[53/87] flex justify-center overflow-hidden">
+          {likeAnimation && (
+            <div className="fixed inset-0 flex items-center justify-center text-white">
+              <PiHeartStraightFill
+                className="w-24 h-24 animate-like"
+                onAnimationEnd={() => setLikeAnimation(false)}
+              />
+            </div>
+          )}
+          <Image
+            src={formatImage(post.image, post.user.id)}
+            className="object-cover !w-auto border border-stroke rounded-xl !static"
+            fill
+            alt={post.type}
+            priority
+          />
+          <div className="absolute bottom-0 w-full h-32 bg-gradient-to-b from-transparent to-black rounded-b-xl" />
 
-      <AuthorDesc />
+          <AuthorDesc />
+        </div>
+      </div>
 
       {/*  sm:static sm:flex-row sm:w-full dbs-h:absolute*/}
       <div className="absolute flex flex-col items-center justify-between bottom-3 right-3 sm:right-0 sm:bottom-0">
