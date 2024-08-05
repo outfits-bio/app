@@ -1,0 +1,17 @@
+{
+  "extends": "@acme/tsconfig/base.json",
+  "compilerOptions": {
+    "paths": {
+      "@acme/db": [
+        "../db/src"
+      ]
+    }
+  },
+  "include": [
+    "src",
+    "*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

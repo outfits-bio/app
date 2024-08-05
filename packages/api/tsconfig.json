@@ -1,0 +1,24 @@
+{
+  "extends": "@acme/tsconfig/internal-package.json",
+  "compilerOptions": {
+    "paths": {
+      "@acme/db": [
+        "../db/src"
+      ],
+      "@acme/validators/*": [
+        "../../packages/validators/src/*"
+      ],
+      "@acme/utils/*": [
+        "../../packages/utils/src/*"
+      ]
+    },
+    "outDir": "dist",
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
