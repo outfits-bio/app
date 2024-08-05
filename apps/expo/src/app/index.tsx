@@ -12,8 +12,9 @@ function MobileAuth() {
 
   return (
     <>
-      <Text className="pb-2 text-center text-xl font-semibold text-white">
-        {user?.name ?? "Not logged in"}
+      <Text className="pb-2 text-center text-xl font-semibold text-black">
+        {user?.username ?? "Not logged in"}
+        {JSON.stringify(user, null, 2)}
       </Text>
       <Button
         onPress={() => (user ? signOut() : signInToDiscord())}
