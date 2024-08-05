@@ -44,7 +44,8 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
           priority
           src={formatAvatar(image, id)}
           alt={username ?? ''}
-          fill
+          width={size === 'jumbo' ? 300 : size === 'lg' ? 88 : size === 'md' ? 64 : size === 'sm' ? 48 : 32}
+          height={size === 'jumbo' ? 300 : size === 'lg' ? 88 : size === 'md' ? 64 : size === 'sm' ? 48 : 32}
           className="object-contain rounded-full"
         />
       </div>

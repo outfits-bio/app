@@ -31,9 +31,10 @@ import { useMediaQuery } from '~/hooks/use-media-query.hook'
 export interface PostProps {
   post: inferRouterOutputs<AppRouter>['post']['getLatestPosts']['posts'][number];
   ref?: React.Ref<HTMLDivElement>;
+  priority?: boolean;
 }
 
-export function Post({ post, ref }: PostProps) {
+export function Post({ post, ref, priority = false }: PostProps) {
   const params = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
@@ -182,7 +183,7 @@ export function Post({ post, ref }: PostProps) {
             className="object-cover !w-auto border border-stroke rounded-xl !static"
             fill
             alt={post.type}
-            priority
+            priority={priority}
             onClick={handleSetParams}
             onKeyDown={handleSetParams}
           />

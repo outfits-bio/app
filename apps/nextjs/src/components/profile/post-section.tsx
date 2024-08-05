@@ -119,23 +119,26 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
                     ))}
                     {(userIsProfileOwner) && <div key="upload-button" onDragEnter={handleDrag} className='relative hidden md:block'>
                         <input ref={ref} type="file" className='hidden' accept='image/*' onChange={handleChange} />
-                        {postsExist && <>
-                            {dragActive &&
-                                <div
-                                    className='absolute w-full h-full t-0 r-0 b-0 l-0'
-                                    onDragEnter={handleDrag}
-                                    onDragLeave={handleDrag}
-                                    onDragOver={handleDrag}
-                                    onDrop={handleDrop}
-                                />
-                            }
-                            <button
-                                onClick={() => ref.current?.click()}
-                                type='submit'
-                                className='w-[151px] h-[247px]  border hover:bg-hover border-border flex items-center justify-center font-bold flex-col text-sm rounded-lg'>
-                                <PiPlus className='w-12 h-12 text-secondary-text' />
-                            </button>
-                        </>}
+                        {postsExist && !loading && (
+                            <>
+                                {dragActive && (
+                                    <div
+                                        className='absolute w-full h-full t-0 r-0 b-0 l-0'
+                                        onDragEnter={handleDrag}
+                                        onDragLeave={handleDrag}
+                                        onDragOver={handleDrag}
+                                        onDrop={handleDrop}
+                                    />
+                                )}
+                                <button
+                                    onClick={() => ref.current?.click()}
+                                    type='submit'
+                                    className='w-[151px] h-[247px] border hover:bg-hover border-border flex items-center justify-center font-bold flex-col text-sm rounded-lg'
+                                >
+                                    <PiPlus className='w-12 h-12 text-secondary-text' />
+                                </button>
+                            </>
+                        )}
                     </div>}
                 </div>
             </div>

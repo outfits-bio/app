@@ -66,7 +66,7 @@ export const ReportModal = ({ type, id }: ReportModalProps) => {
 
                     <div className='flex w-full gap-2'>
                         <BaseModalClose>
-                            <Button variant='outline' centerItems>Cancel</Button>
+                            <Button variant='outline' centerItems type='button'>Cancel</Button>
                         </BaseModalClose>
                         <Button centerItems type='submit'>Report</Button>
                     </div>

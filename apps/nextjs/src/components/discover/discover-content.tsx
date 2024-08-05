@@ -222,7 +222,7 @@ export function DiscoverContent() {
                                         key={post.id}
                                         className="flex justify-center w-full"
                                     >
-                                        <Post post={post} />
+                                        <Post post={post} priority={index < 3} />
                                     </div>
                                 )
                             })

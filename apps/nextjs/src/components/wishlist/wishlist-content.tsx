@@ -44,9 +44,9 @@ export function WishlistContent() {
                 {posts ? posts.map((post, index) => {
                     return <Post post={post} ref={posts.length === index + 1 ? lastElementRef : null} key={post.id} />
                 }) : null}
-                {((posts?.length ?? 0) === 0) && (
+                {((posts?.length ?? 0) === 0 && !isFetching && !isFetchingNextPage) && (
                     <div className='flex flex-col items-center justify-center font-clash py-2 px-4'>
-                        <h3 className='text-center'>That&apos;s it, you don&apos;t haven&apos;t added any posts to your wishlist</h3>
+                        <h3 className='text-center'>That&apos;s it, you don&apos;t have any posts added to your wishlist</h3>
                     </div>
                 )}
             </div>
