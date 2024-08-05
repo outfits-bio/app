@@ -1,8 +1,6 @@
-"use client";
-
 import { Button } from "~/components/ui/Button";
-import { signOut } from '@acme/auth';
 import Link from 'next/link';
+import LogoutButton from "./signout-button";
 
 export function SettingsSidebar() {
     return (
@@ -22,7 +20,7 @@ export function SettingsSidebar() {
                     </Link>
                 </div>
                 <div className='flex flex-col gap-2 pt-2'>
-                    <Button variant={'ghost'} className='justify-start transition duration-300 ease-in-out' onClick={() => signOut({ redirect: true, redirectTo: '/' })}>Logout</Button>
+                    <LogoutButton />
                 </div>
             </div>
         </section>

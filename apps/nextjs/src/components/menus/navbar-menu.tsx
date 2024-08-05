@@ -1,6 +1,5 @@
 "use client";
 
-import { signOut } from '@acme/auth';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { toast } from 'react-hot-toast';
@@ -80,12 +79,13 @@ export const NavbarMenu = () => {
                     </Link>
                 </div>
                 <div>
-                    <Button
-                        variant='ghost'
-                        onClick={() => signOut()}
-                    >
-                        <p className='font-semibold' onClick={() => ref.current?.click()}>Logout</p>
-                    </Button>
+                    <Link href={'/api/auth/signout'}>
+                        <Button
+                            variant='ghost'
+                        >
+                            <p className='font-semibold' onClick={() => ref.current?.click()}>Logout</p>
+                        </Button>
+                    </Link>
                 </div>
             </div>
         </PopoverContent>
