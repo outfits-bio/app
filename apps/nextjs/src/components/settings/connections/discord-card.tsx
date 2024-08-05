@@ -6,9 +6,10 @@ import { toast } from 'react-hot-toast';
 import { handleErrors } from "@acme/utils/handle-errors.util";
 import { signIn } from '@acme/auth';
 import { PiLinkBreak } from 'react-icons/pi';
+import { ReactNode } from "react";
 
 
-export function DiscordCard() {
+export function DiscordCard(props: { children: ReactNode }) {
     const ctx = api.useUtils();
 
     const { data: accountsData } = api.user.getAccounts.useQuery(undefined, {
@@ -46,7 +47,7 @@ export function DiscordCard() {
                             <Button disabled>Connected</Button>
                         </>
                     ) : (
-                        <Button onClick={() => signIn('discord')}>Connect</Button>
+                        props.children
                     )}
                 </div>
             </div>

@@ -1,5 +1,6 @@
 import { auth } from "@acme/auth";
 import { redirect } from "next/navigation";
+import { AuthButtons } from "~/components/settings/auth-buttons";
 
 import { DiscordCard } from "~/components/settings/connections/discord-card";
 import { GoogleCard } from "~/components/settings/connections/google-card";
@@ -21,8 +22,12 @@ export default async function ConnectionsSettingsPage() {
                     <h1 className="font-clash font-bold text-3xl">Connections</h1>
                     <p>Manage your connections and plugins</p>
                 </div>
-                <GoogleCard />
-                <DiscordCard />
+                <GoogleCard>
+                    <AuthButtons provider="google" />
+                </GoogleCard>
+                <DiscordCard>
+                    <AuthButtons provider="discord" />
+                </DiscordCard>
                 <SpotifyStatusCard />
             </section>
         </div>
