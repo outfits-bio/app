@@ -1,7 +1,7 @@
 "use server";
 
 import { signIn } from "@acme/auth";
-import { Button } from "~/components/ui/button";
+import { Button } from "../ui/button";
 
 export async function AuthButtons(props: { provider: 'discord' | 'google' }) {
     return <form>
