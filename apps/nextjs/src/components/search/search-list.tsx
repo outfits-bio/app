@@ -32,7 +32,7 @@ export function SearchList() {
             {(users?.length ?? 0) > 0 ? users?.map((user) => (
                 <Link href={`/${user?.username}`} key={user?.id ?? ""}>
                     <div className='bg-white dark:bg-black border border-stroke p-4 rounded-xl hover:bg-body dark:hover:bg-body cursor-pointer flex gap-2'>
-                        <Avatar image={user?.image} id={user?.id} username={user?.username} />
+                        <Avatar size={'md'} image={user?.image} id={user?.id} username={user?.username} />
 
                         <div className='flex flex-col gap-1'>
                             <h1 className='font-black flex gap-1 items-center'>

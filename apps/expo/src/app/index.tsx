@@ -23,7 +23,6 @@ function MobileAuth() {
         color={"#5B65E9"}
       />
       <Text className="pb-2 text-center text-xl font-semibold text-black">
-        {user?.username ?? "Not logged in"}
         {JSON.stringify(user, null, 2)}
       </Text>
     </>
