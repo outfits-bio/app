@@ -9,8 +9,7 @@ import { Avatar } from '../ui/Avatar';
 import { Button } from '../ui/Button';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { useRef } from 'react';
-
-
+import { signOut } from 'next-auth/react';
 
 export const NavbarMenu = () => {
     const { data: session } = useSession();
@@ -27,7 +26,7 @@ export const NavbarMenu = () => {
     }
 
     return <Popover>
-        <PopoverTrigger asChild>
+        <PopoverTrigger>
             <Avatar ref={ref} size={'sm'} image={user.image} id={user.id} username={user.username} />
         </PopoverTrigger>
         <PopoverContent className='mr-6 w-fit'>
@@ -78,15 +77,12 @@ export const NavbarMenu = () => {
                         </Button>
                     </Link>
                 </div>
-                <div>
-                    <Link href={'/api/auth/signout'}>
-                        <Button
-                            variant='ghost'
-                        >
-                            <p className='font-semibold' onClick={() => ref.current?.click()}>Logout</p>
-                        </Button>
-                    </Link>
-                </div>
+                <Button
+                    variant='ghost'
+                    onClick={() => signOut()}
+                >
+                    <p className='font-semibold' onClick={() => ref.current?.click()}>Logout</p>
+                </Button>
             </div>
         </PopoverContent>
     </Popover>
