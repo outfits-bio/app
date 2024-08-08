@@ -230,15 +230,13 @@ export function Post({ post, ref, priority = false }: PostProps) {
             <PostMenu
               userIsProfileOwner={user.id === post?.user.id}
               button={
-                <>
-                  <Button
-                    variant="outline"
-                    centerItems
-                    shape={'circle'}
-                    iconLeft={<PiDotsThreeBold />}
-                    className="mt-1.5 flex text-white border border-white/50 bg-black/50 sm:border-stroke sm:text-black sm:bg-transparent dark:sm:text-white"
-                  />
-                </>
+                <Button
+                  variant="outline"
+                  centerItems
+                  shape={'circle'}
+                  iconLeft={<PiDotsThreeBold />}
+                  className="mt-1.5 flex text-white border border-white/50 bg-black/50 sm:border-stroke sm:text-black sm:bg-transparent dark:sm:text-white"
+                />
               }
               postId={post.id}
             />

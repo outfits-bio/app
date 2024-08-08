@@ -15,7 +15,7 @@ import { Post } from './post/post'
 import { RegisterBanner } from './register-banner'
 import { Avatar } from '../ui/Avatar'
 
-export function DiscoverContent() {
+export function DiscoverContent({ initialPosts, popularProfiles }: { initialPosts: any; popularProfiles: any }) {
     const params = useSearchParams()
     const router = useRouter()
     const pathname = usePathname()
@@ -33,7 +33,10 @@ export function DiscoverContent() {
                 category: activeCategory,
                 types: activePostTypes.length > 0 ? activePostTypes : undefined,
             },
-            { getNextPageParam: (lastPage) => lastPage.nextCursor }
+            {
+                getNextPageParam: (lastPage) => lastPage.nextCursor,
+                initialData: { pages: [initialPosts], pageParams: [undefined] },
+            }
         )
 
     const handleChangePostType = (type: PostType) => {
@@ -53,7 +56,9 @@ export function DiscoverContent() {
     }
 
     const posts = data?.pages.flatMap((page) => page.posts)
-    const popularProfiles = api.user.getMostLikedProfiles.useQuery()
+    const { data: popularProfilesData } = api.user.getMostLikedProfiles.useQuery(undefined, {
+        initialData: popularProfiles,
+    })
 
     const observer = useRef<IntersectionObserver>()
     const lastElementRef = useCallback(
@@ -230,13 +235,13 @@ export function DiscoverContent() {
                     </div>
 
                     {/* Popular Profiles */}
-                    {popularProfiles.data && (
+                    {popularProfilesData && (
                         <div className="hidden xl:flex flex-col gap-3 pt-[1rem] h-fit">
                             <h1 className="text-2xl font-bold font-clash">
                                 Popular Profiles
                             </h1>
                             <div className="flex flex-wrap gap-3">
-                                {popularProfiles.data?.map((user) => (
+                                {popularProfilesData?.map((user) => (
                                     <Link
                                         href={`/${user?.username}`}
                                         key={user?.id ?? ''}
