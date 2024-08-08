@@ -1,7 +1,7 @@
 import type { AddReactionInput } from '@acme/validators/post.schema'
 import { api } from '~/trpc/react'
 import { handleErrors } from '@acme/utils/handle-errors.util'
-import { Popover, Transition } from '@headlessui/react'
+import { Popover, Transition, PopoverButton } from '@headlessui/react'
 import { Fragment } from 'react'
 import { PiChatCircleBold } from 'react-icons/pi'
 import { Button } from '../../ui/Button'
@@ -58,7 +58,7 @@ export default function ReactButton({ post }: PostProps) {
 
   return (
     <Popover className="relative">
-      <Popover.Button>
+      <PopoverButton as="div">
         <Button
           variant={'outline-ghost'}
           centerItems
@@ -66,7 +66,7 @@ export default function ReactButton({ post }: PostProps) {
           iconLeft={<PiChatCircleBold />}
           className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent focus:outline-none sm:dark:text-white"
         />
-      </Popover.Button>
+      </PopoverButton>
       <Transition
         as={Fragment}
         enter="transition ease-out duration-200"

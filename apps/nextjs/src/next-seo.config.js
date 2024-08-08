@@ -1,7 +1,7 @@
 export const meta = {
   title: "outfits.bio",
   description:
-    "outfits is a virtual wardrobe where you can seamlessly share and explore outfits with your friends and viewers!",
+    "A virtual wardrobe where you can seamlessly share and explore outfits with your friends and viewers!",
   image: "https://outfits.bio/ogimage.png",
   url: "https://outfits.bio",
   og: {

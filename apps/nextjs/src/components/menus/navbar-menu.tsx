@@ -27,7 +27,7 @@ export const NavbarMenu = () => {
     }
 
     return <Popover>
-        <PopoverTrigger>
+        <PopoverTrigger asChild>
             <Avatar ref={ref} size={'sm'} image={user.image} id={user.id} username={user.username} />
         </PopoverTrigger>
         <PopoverContent className='mr-6 w-fit'>

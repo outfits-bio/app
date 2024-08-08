@@ -63,7 +63,7 @@ export const ProfileMenu = ({ userUrl, username, profileData, type, id, ...props
     }
 
     return <Popover {...props}>
-        <PopoverTrigger>
+        <PopoverTrigger asChild>
             <Button variant='outline' shape={'square'} iconLeft={<PiDotsThree />} />
         </PopoverTrigger>
         <PopoverContent className='w-fit mr-2 md:mr-0'>
