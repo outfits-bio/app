@@ -42,11 +42,11 @@ export function WishlistContent() {
             {/* Posts */}
             <div className="flex flex-col items-center gap-3 overflow-y-scroll hide-scrollbar snap-mandatory snap-y scroll-smooth w-full">
                 {posts ? posts.map((post, index) => {
-                    return <Post post={post} ref={posts.length === index + 1 ? lastElementRef : null} key={post.id} />
+                    return <Post post={post} ref={posts.length === index + 1 ? lastElementRef : null} key={post.id} priority={index < 3} />
                 }) : null}
-                {((posts?.length ?? 0) === 0 && !isFetching && !isFetchingNextPage) && (
-                    <div className='flex flex-col items-center justify-center font-clash py-2 px-4'>
-                        <h3 className='text-center'>That&apos;s it, you don&apos;t have any posts added to your wishlist</h3>
+                {posts?.length === 0 && (
+                    <div className='flex flex-col items-center justify-center font-clash py-2'>
+                        <h3 className='text-center'>You don&apos;t have any posts in your wishlist yet.</h3>
                     </div>
                 )}
             </div>
