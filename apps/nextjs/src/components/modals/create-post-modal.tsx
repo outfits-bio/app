@@ -78,7 +78,7 @@ export function CreatePostModal() {
     return (
         <BaseModal>
             <BaseModalTrigger ref={ref2}>
-                <Button className="px-3 md:px-6" iconLeft={<PiPlus />}><span className="hidden sm:inline">Post</span></Button>
+                <Button aria-label="Post Button" className="px-3 md:px-6" iconLeft={<PiPlus />}><span className="hidden sm:inline">Post</span></Button>
             </BaseModalTrigger>
             <BaseModalContent>
                 <BaseModalTitle>Create Post</BaseModalTitle>

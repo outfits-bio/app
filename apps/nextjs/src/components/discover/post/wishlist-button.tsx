@@ -55,6 +55,7 @@ export default function WishlistButton({ post }: PostProps) {
       centerItems
       shape={'circle'}
       className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent sm:dark:text-white"
+      aria-label="Wishlist Button"
       iconLeft={
         !addToWishlistPending &&
         !removeFromWishlistPending &&

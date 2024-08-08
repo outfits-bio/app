@@ -100,6 +100,7 @@ export function DiscoverContent({ initialPosts, popularProfiles }: { initialPost
                         onClick={() => handleChangeCategory('latest')}
                         className={`${activeCategory === 'latest' ? 'text-inherit border dark:border-stroke' : 'text-secondary-text'} w-1/2 py-2 font-medium font-clash flex gap-2 items-center justify-center hover:bg-stroke transition-colors duration-150 rounded-xl`}
                         type="button"
+                        aria-label="Latest"
                     >
                         <PiClockBold className="text-2xl" />
                         <p>Latest</p>
@@ -109,6 +110,7 @@ export function DiscoverContent({ initialPosts, popularProfiles }: { initialPost
                         onClick={() => handleChangeCategory('popular')}
                         className={`${activeCategory === 'popular' ? 'text-inherit border dark:border-stroke' : 'text-secondary-text'} w-1/2 py-2 font-medium font-clash flex gap-2 items-center justify-center hover:bg-stroke transition-colors duration-150 rounded-xl`}
                         type="button"
+                        aria-label="Popular Button"
                     >
                         <PiFireBold className="text-2xl" />
                         <p>Popular</p>

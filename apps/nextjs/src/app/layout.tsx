@@ -104,14 +104,15 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const isDev = process.env.NODE_ENV === 'development';
   const session = await auth();
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning={isDev}>
       <head>
         <meta name="apple-mobile-web-app-capable" content="yes" />
       </head>
-      <body className={`font-satoshi ${clash.variable} ${satoshi.variable} flex flex-col min-h-screen antialiased transition-colors duration-300`}>
+      <body suppressHydrationWarning={isDev} className={`font-satoshi ${clash.variable} ${satoshi.variable} flex flex-col min-h-screen antialiased transition-colors duration-300`}>
         <SessionProvider session={session}>
           <TRPCReactProvider cookies={cookies().toString()}>
             <ThemeProvider>

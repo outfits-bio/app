@@ -114,7 +114,7 @@ export function Post({ post, ref, priority = false }: PostProps) {
         post._count.wishlists > 0) && (
           <p className="flex self-start gap-1 text-sm font-medium font-clash text-white/80">
             <PostInfoModal postId={post.id}>
-              <span className="flex gap-1 cursor-pointer">
+              <span className="flex gap-1 cursor-pointer" aria-label="Likes Button">
                 <span className="font-bold">{post._count.likes}</span>{' '}
                 {post._count.likes === 1 ? ' like' : ' likes'}
                 {post._count.reactions || post._count.wishlists ? ', ' : ''}
@@ -185,6 +185,7 @@ export function Post({ post, ref, priority = false }: PostProps) {
             alt={post.type}
             priority={priority}
             onClick={handleSetParams}
+            loading={!priority ? 'lazy' : 'eager'}
             onKeyDown={handleSetParams}
           />
           <div className="absolute bottom-0 w-full h-32 bg-gradient-to-b from-transparent to-black rounded-b-xl" />
@@ -221,6 +222,7 @@ export function Post({ post, ref, priority = false }: PostProps) {
             shape={'circle'}
             iconLeft={<PiShareFatBold />}
             className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent sm:dark:text-white"
+            aria-label="Share Button"
             onClick={() => handleShare(post.id)}
           />
         </div>
@@ -235,6 +237,7 @@ export function Post({ post, ref, priority = false }: PostProps) {
                   centerItems
                   shape={'circle'}
                   iconLeft={<PiDotsThreeBold />}
+
                   className="mt-1.5 flex text-white border border-white/50 bg-black/50 sm:border-stroke sm:text-black sm:bg-transparent dark:sm:text-white"
                 />
               }

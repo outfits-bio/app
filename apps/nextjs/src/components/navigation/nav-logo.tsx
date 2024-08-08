@@ -20,12 +20,13 @@ export function NavLogo() {
       <>
         {pathname.startsWith('/settings/') && (
           <div className="flex md:hidden">
-            <Link href={'/settings'}>
+            <Link aria-label="Settings Button" href={'/settings'}>
               <PiArrowLeftBold className="w-5 h-5" />
             </Link>
           </div>
         )}
         <Link
+          aria-label="Home Button"
           href="/"
           className="flex items-center gap-2 hover:scale-[102%] active:scale-[99%]"
         >
@@ -42,12 +43,13 @@ export function NavLogo() {
     <>
       {pathname.startsWith('/settings/') && (
         <div className="flex md:hidden">
-          <Link href={'/settings'}>
+          <Link aria-label="Settings Button" href={'/settings'}>
             <PiArrowLeftBold className="w-5 h-5" />
           </Link>
         </div>
       )}
       <Link
+        aria-label="Home Button"
         href={'/'}
         className="flex items-center sm:gap-2 hover:scale-[102%] active:scale-[99%]"
       >

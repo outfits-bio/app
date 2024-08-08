@@ -39,8 +39,8 @@ export function AuthSection() {
                 <NavbarMenu />
             </div>
 
-            <Link href='/notifications' className='md:hidden relative'>
-                <Button className="h-8 w-8" variant='outline-ghost' shape={'circle'} iconLeft={iconComponent} />
+            <Link aria-label="Notifications Link" href='/notifications' className='md:hidden relative'>
+                <Button className="h-8 w-8" variant='outline-ghost' shape={'circle'} iconLeft={iconComponent} aria-label="Notifications Button" />
                 {hasNotifications ? <div className="absolute top-0 right-0 w-4 h-4 rounded-full bg-error text-white text-[9px] font-bold flex items-center justify-center">
                     {notificationsCount}
                 </div> : null}

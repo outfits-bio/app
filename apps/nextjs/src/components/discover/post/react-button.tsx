@@ -58,13 +58,14 @@ export default function ReactButton({ post }: PostProps) {
 
   return (
     <Popover className="relative">
-      <PopoverButton as="div">
+      <PopoverButton as="div" aria-label="React Button">
         <Button
           variant={'outline-ghost'}
           centerItems
           shape={'circle'}
           iconLeft={<PiChatCircleBold />}
           className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent focus:outline-none sm:dark:text-white"
+          aria-label="React Button"
         />
       </PopoverButton>
       <Transition
@@ -88,6 +89,7 @@ export default function ReactButton({ post }: PostProps) {
                 isLoading={reactionLoading('🔥')}
                 centerItems
                 shape={'circle'}
+                aria-label="Fire Button"
                 onClick={() => handleToggleReact('🔥')}
               >
                 {reactionLoading('🔥') ? '' : '🔥'}
@@ -101,6 +103,7 @@ export default function ReactButton({ post }: PostProps) {
                 isLoading={reactionLoading('❤️')}
                 centerItems
                 shape={'circle'}
+                aria-label="Heart Button"
                 onClick={() => handleToggleReact('❤️')}
               >
                 {reactionLoading('❤️') ? '' : '❤️'}

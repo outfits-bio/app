@@ -37,6 +37,7 @@ export function LikeButton({ post, variant = 'default' }: LikeButtonProps) {
         centerItems
         shape={'circle'}
         className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent sm:dark:text-white"
+        aria-label="Like Button"
         onClick={() => {
           setLikeAnimation(true)
           toggleLikePost({ id: post.id })
@@ -72,6 +73,7 @@ export function LikeButton({ post, variant = 'default' }: LikeButtonProps) {
       }}
       className="text-xl text-white"
       type="button"
+      aria-label="Like Button"
     >
       {post.authUserHasLiked ? (
         <PiHeartFill
