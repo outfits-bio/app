@@ -144,7 +144,7 @@ export function CreatePostModal() {
                         <div className='relative w-full'>
                             <Listbox value={type} onChange={setType}>
                                 <Listbox.Button className={"relative font-clash text-secondary-text font-semibold w-full cursor-pointer rounded-xl py-3 pl-6 pr-10 text-left border border-stroke"}>
-                                    <span className="block truncate">{getPostTypeName(type)}</span>
+                                    <span className="block truncate pr-6">{getPostTypeName(type)}</span>
                                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-6">
                                         <PiCaretDown
                                             className="h-5 w-5 text-gray-400"
