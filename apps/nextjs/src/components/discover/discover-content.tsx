@@ -121,25 +121,35 @@ export function DiscoverContent({ initialPosts, popularProfiles }: { initialPost
                         className="flex-col hidden h-full p-4 bg-white border-r dark:bg-black border-stroke md:flex"
                     >
                         <div className="flex gap-1 mb-2">
-                            <button
+                            <motion.button
                                 onClick={() => handleChangeCategory('latest')}
                                 className={`${activeCategory === 'latest' ? 'text-inherit border dark:border-stroke' : 'text-secondary-text'} w-1/2 py-2 font-medium font-clash flex gap-2 items-center justify-center hover:bg-stroke transition-colors duration-150 rounded-xl`}
                                 type="button"
                                 aria-label="Latest"
+                                animate={{
+                                    scale: activeCategory === 'latest' ? 1.05 : 1,
+                                    backgroundColor: activeCategory === 'latest' ? 'var(--color-stroke)' : 'transparent'
+                                }}
+                                transition={{ duration: 0.3 }}
                             >
                                 <PiClockBold className="text-2xl" />
                                 <p>Latest</p>
-                            </button>
+                            </motion.button>
 
-                            <button
+                            <motion.button
                                 onClick={() => handleChangeCategory('popular')}
                                 className={`${activeCategory === 'popular' ? 'text-inherit border dark:border-stroke' : 'text-secondary-text'} w-1/2 py-2 font-medium font-clash flex gap-2 items-center justify-center hover:bg-stroke transition-colors duration-150 rounded-xl`}
                                 type="button"
                                 aria-label="Popular Button"
+                                animate={{
+                                    scale: activeCategory === 'popular' ? 1.05 : 1,
+                                    backgroundColor: activeCategory === 'popular' ? 'var(--color-stroke)' : 'transparent'
+                                }}
+                                transition={{ duration: 0.3 }}
                             >
                                 <PiFireBold className="text-2xl" />
                                 <p>Popular</p>
-                            </button>
+                            </motion.button>
                         </div>
 
                         {/* Filter */}
