@@ -13,6 +13,8 @@ import type { Area } from "react-easy-crop";
 import Cropper from "react-easy-crop";
 import { PiCaretDown, PiPlus } from "react-icons/pi";
 import { Button } from "../ui/Button";
+import * as nsfwjs from 'nsfwjs';
+import toast from "react-hot-toast";
 
 interface Props {
     isOpen: boolean;
@@ -36,19 +38,23 @@ export function CropPostModal({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
     const [isCropped] = useState<boolean>(false);
     const ref = useRef<HTMLInputElement>(null);
 
+    const [isNSFW, setIsNSFW] = useState(false);
+    const [isChecking, setIsChecking] = useState(false);
+
     useEffect(() => {
         if (isCropped) {
             mutate({ type });
         }
     }, [isCropped]);
 
-    const { mutate } = api.post.createPost.useMutation({
+    const { mutate, isPending: isPosting } = api.post.createPost.useMutation({
         onError: (e) => handleErrors({ e, message: 'Failed to create post' }),
         onSuccess: async (result) => {
-            await axios.put(result.res, file);
+            if (file) {
+                await axios.put(result.res, file);
+            }
             await ctx.post.getPostsAllTypes.refetch();
-
-            setIsOpen(false);
+            toast.success('Post created successfully');
         }
     });
 
@@ -56,19 +62,56 @@ export function CropPostModal({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
         setCroppedAreaPixelsState(croppedAreaPixels);
     }, []);
 
-    const handleSubmit = useCallback(async () => {
+    const checkNSFW = useCallback(async (imageUrl: string): Promise<boolean> => {
         try {
-            const croppedImage = await getCroppedImg(fileUrl ?? "", croppedAreaPixelsState);
+            const img = new Image();
+            img.src = imageUrl;
+            await img.decode();
 
-            if (!croppedImage) return;
+            const model = await nsfwjs.load();
+            const predictions = await model.classify(img);
+
+            const nsfwScore = predictions.find((p: { className: string; }) => p.className === 'Porn' || p.className === 'Hentai')?.probability || 0;
+            return nsfwScore > 0.5; // Return true if NSFW, false otherwise
+        } catch (error) {
+            console.error('NSFW check failed:', error);
+            return false; // Assume safe in case of error
+        }
+    }, []);
+
+    const handleSubmit = useCallback(async () => {
+        if (!fileUrl || !croppedAreaPixelsState) {
+            toast.error('Please select and crop an image before posting.');
+            return;
+        }
+
+        setIsChecking(true);
+        try {
+            const croppedImage = await getCroppedImg(fileUrl, croppedAreaPixelsState);
+            if (!croppedImage) {
+                toast.error('Failed to crop image. Please try again.');
+                return;
+            }
+
+            // Check for NSFW content
+            const nsfwResult = await checkNSFW(croppedImage.fileUrl);
+
+            if (nsfwResult) {
+                toast.error('NSFW content detected. Please choose a different image.');
+                return;
+            }
 
             setFile(croppedImage.file);
             setFileUrl(croppedImage.fileUrl);
             setIsCropped(true);
+            setIsOpen(false);
         } catch (e) {
-            console.error(e)
+            console.error(e);
+            toast.error('An error occurred while processing the image.');
+        } finally {
+            setIsChecking(false);
         }
-    }, [croppedAreaPixelsState]);
+    }, [croppedAreaPixelsState, fileUrl, checkNSFW, mutate, type, setFile, setFileUrl, setIsCropped]);
 
     const handleCancel = useCallback(() => {
         setFile(null);
@@ -279,10 +322,13 @@ export function CropPostModal({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
                                 <Button centerItems onClick={handleCancel} disabled={!fileUrl} variant={'outline-ghost'} >
                                     Clear
                                 </Button>
-                                <Button centerItems onClick={handleSubmit} disabled={!fileUrl}>
-                                    Post
+                                <Button centerItems onClick={handleSubmit} disabled={!fileUrl || isChecking || isNSFW}>
+                                    {isChecking ? 'Checking...' : 'Post'}
                                 </Button>
                             </div>
+                            {isNSFW && (
+                                <p className="text-red-500 mt-2">NSFW content detected. Please choose a different image.</p>
+                            )}
                         </div>
                     </Dialog.Panel>
                 </Transition.Child>

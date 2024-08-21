@@ -16,6 +16,7 @@ import { Button } from "../ui/Button";
 import { BaseModal, BaseModalContent, BaseModalDescription, BaseModalTitle, BaseModalTrigger } from "./base-modal";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import * as nsfwjs from 'nsfwjs';
 
 export function CreatePostModal() {
     const ctx = api.useUtils();
@@ -27,12 +28,40 @@ export function CreatePostModal() {
     const [zoom, setZoom] = useState(1);
     const [croppedAreaPixelsState, setCroppedAreaPixelsState] = useState<Area | null>(null);
 
-    const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl } = useFileUpload();
+    const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, handlePaste, setFile, setFileUrl } = useFileUpload();
+
     const [isCropped, setIsCropped] = useState<boolean>(false);
 
     const ref = useRef<HTMLInputElement>(null);
     const ref2 = useRef<HTMLButtonElement>(null);
 
+    const [isNSFW, setIsNSFW] = useState(false);
+    const [isChecking, setIsChecking] = useState(false);
+
+    const checkNSFW = useCallback(async (imageUrl: string) => {
+        setIsChecking(true);
+        try {
+            const img = new Image();
+            img.src = imageUrl;
+            await img.decode();
+
+            const model = await nsfwjs.load();
+            const predictions = await model.classify(img);
+
+            const nsfwScore = predictions.find((p: { className: string; }) => p.className === 'Porn' || p.className === 'Hentai')?.probability || 0;
+            setIsNSFW(nsfwScore > 0.5); // Set a threshold, e.g., 50%
+        } catch (error) {
+            console.error('NSFW check failed:', error);
+        } finally {
+            setIsChecking(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (fileUrl) {
+            checkNSFW(fileUrl);
+        }
+    }, [fileUrl, checkNSFW]);
 
     useEffect(() => {
         if (isCropped) {
@@ -57,6 +86,11 @@ export function CreatePostModal() {
     }, []);
 
     const handleSubmit = useCallback(async () => {
+        if (isNSFW) {
+            toast.error('NSFW content detected. Please choose a different image.');
+            return;
+        }
+
         try {
             const croppedImage = await getCroppedImg(fileUrl ?? "", croppedAreaPixelsState);
 
@@ -68,7 +102,7 @@ export function CreatePostModal() {
         } catch (e) {
             console.error(e)
         }
-    }, [croppedAreaPixelsState]);
+    }, [croppedAreaPixelsState, isNSFW]);
 
     const handleCancel = useCallback(() => {
         setFile(null);
@@ -105,7 +139,11 @@ export function CreatePostModal() {
                                     onZoomChange={setZoom}
                                 />
                             ) : (
-                                <div onDragEnter={handleDrag} className='relative w-full h-full'>
+                                <div
+                                    onDragEnter={handleDrag}
+                                    onPaste={handlePaste}
+                                    className='relative w-full h-full'
+                                >
                                     <input ref={ref} type="file" className='hidden' accept='image/*' onChange={handleChange} />
                                     {dragActive && (
                                         <div
@@ -122,7 +160,7 @@ export function CreatePostModal() {
                                         className='w-full h-full bg-white dark:bg-black border hover:bg-stroke border-stroke gap-2 flex items-center justify-center font-bold flex-col text-sm rounded-xl'
                                     >
                                         <PiPlus className='w-8 h-8 text-secondary-text' />
-                                        <p className='text-secondary-text font-clash'>Upload Or Drop</p>
+                                        <p className='text-secondary-text font-clash'>Upload, Drop or Paste</p>
                                     </button>
                                 </div>
                             )}
@@ -155,8 +193,7 @@ export function CreatePostModal() {
                                 <Listbox.Options className="absolute mt-2 bg-white dark:bg-black max-h-60 w-full overflow-auto rounded-xl p-2 gap-2 shadow-lg border border-stroke font-clash font-semibold z-50">
                                     <Listbox.Option
                                         key={PostType.OUTFIT}
-                                        value={PostType.OUTFIT}
-                                        className={({ active }) =>
+                                        value={PostType.OUTFIT} className={({ active }) =>
                                             `relative cursor-pointer select-none rounded-xl py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
                                             }`
                                         }
@@ -263,10 +300,17 @@ export function CreatePostModal() {
                     <Button centerItems onClick={handleCancel} disabled={!fileUrl} variant={'outline-ghost'} >
                         Clear
                     </Button>
-                    <Button centerItems onClick={handleSubmit} disabled={!fileUrl}>
-                        Post
+                    <Button
+                        centerItems
+                        onClick={handleSubmit}
+                        disabled={!fileUrl || isChecking || isNSFW}
+                    >
+                        {isChecking ? 'Loading...' : 'Post'}
                     </Button>
                 </div>
+                {isNSFW && (
+                    <p className="text-red-500 mt-2">NSFW content detected. Please choose a different image.</p>
+                )}
             </BaseModalContent>
         </BaseModal>
     );

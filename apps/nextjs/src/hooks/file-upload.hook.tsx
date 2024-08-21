@@ -1,6 +1,6 @@
 "use client";
 
-import { type ChangeEvent, type DragEvent, useState } from 'react';
+import { type ChangeEvent, type DragEvent, useCallback, useState } from 'react';
 
 export const useFileUpload = () => {
     const [dragActive, setDragActive] = useState<boolean>(false);
@@ -33,6 +33,29 @@ export const useFileUpload = () => {
         setCropModalOpen(true);
     };
 
+    const handlePaste = useCallback((event: React.ClipboardEvent) => {
+        const items = event.clipboardData?.items;
+        if (items) {
+            for (let i = 0; i < items.length; i++) {
+                const item = items[i];
+                if (item?.type.indexOf('image') !== -1) {
+                    const blob = item?.getAsFile();
+                    if (blob) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            const result = e.target?.result;
+                            if (typeof result === 'string') {
+                                setFileUrl(result);
+                                setFile(blob);
+                            }
+                        };
+                        reader.readAsDataURL(blob);
+                    }
+                }
+            }
+        }
+    }, [setFile, setFileUrl]);
+
     /**
    * This opens the crop modal and sets the file and fileUrl
    * This only fires when the user clicks on the "Create new" button, not when the user drags and drops
@@ -49,5 +72,5 @@ export const useFileUpload = () => {
     };
 
 
-    return { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen };
+    return { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, handlePaste, setFile, setFileUrl, cropModalOpen, setCropModalOpen };
 }

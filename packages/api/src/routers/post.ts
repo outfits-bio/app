@@ -694,11 +694,6 @@ export const postRouter = createTRPCRouter({
     const orderDirection = Math.random() > 0.5 ? "asc" : "desc";
 
     const posts = await ctx.db.post.findMany({
-      where: {
-        type: {
-          in: ["OUTFIT"],
-        },
-      },
       select: {
         id: true,
         image: true,

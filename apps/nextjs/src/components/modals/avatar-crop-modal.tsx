@@ -1,10 +1,12 @@
 "use client";
 
 import { Dialog, Transition } from '@headlessui/react';
-import { type Dispatch, Fragment, type SetStateAction, useCallback, useState } from 'react';
+import { type Dispatch, Fragment, type SetStateAction, useCallback, useEffect, useState } from 'react';
 import Cropper, { type Area } from 'react-easy-crop';
 import { Button } from '../ui/Button';
 import getCroppedImg from '@acme/utils/crop-image.util';
+import * as nsfwjs from 'nsfwjs';
+import toast from 'react-hot-toast';
 
 interface Props {
     isOpen: boolean;
@@ -19,11 +21,44 @@ export const AvatarCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUr
     const [zoom, setZoom] = useState(1);
     const [croppedAreaPixelsState, setCroppedAreaPixelsState] = useState<Area | null>(null);
 
+    const [isNSFW, setIsNSFW] = useState(false);
+    const [isChecking, setIsChecking] = useState(false);
+
+    const checkNSFW = useCallback(async (imageUrl: string) => {
+        setIsChecking(true);
+        try {
+            const img = new Image();
+            img.src = imageUrl;
+            await img.decode();
+
+            const model = await nsfwjs.load();
+            const predictions = await model.classify(img);
+
+            const nsfwScore = predictions.find((p: { className: string; }) => p.className === 'Porn' || p.className === 'Hentai')?.probability || 0;
+            setIsNSFW(nsfwScore > 0.5); // Set a threshold, e.g., 50%
+        } catch (error) {
+            console.error('NSFW check failed:', error);
+        } finally {
+            setIsChecking(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (fileUrl) {
+            checkNSFW(fileUrl);
+        }
+    }, [fileUrl, checkNSFW]);
+
     const onCropComplete = useCallback((croppedArea: Area, croppedAreaPixels: Area) => {
         setCroppedAreaPixelsState(croppedAreaPixels)
     }, []);
 
     const handleClose = useCallback(async () => {
+        if (isNSFW) {
+            toast.error('NSFW content detected. Please choose a different image.');
+            return;
+        }
+
         try {
             const croppedImage = await getCroppedImg(fileUrl ?? "", croppedAreaPixelsState);
 
@@ -83,8 +118,11 @@ export const AvatarCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUr
 
                                 <div className='flex w-full justify-between items-center mt-4 gap-2'>
                                     <Button variant={'outline'} centerItems onClick={() => setIsOpen(false)}>Cancel</Button>
-                                    <Button centerItems onClick={handleClose}>Save</Button>
+                                    <Button centerItems onClick={handleClose} disabled={isNSFW || isChecking}>{isChecking ? 'Loading...' : 'Save'}</Button>
                                 </div>
+                                {isNSFW && (
+                                    <p className="text-red-500 mt-2">NSFW content detected. Please choose a different image.</p>
+                                )}
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>

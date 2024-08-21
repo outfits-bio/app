@@ -14,10 +14,11 @@ import { useFileUpload } from "~/hooks/file-upload.hook";
 import { AvatarCropModal } from "~/components/modals/avatar-crop-modal";
 import { PiSubtract } from "react-icons/pi";
 import Image from "next/image";
+import * as nsfwjs from 'nsfwjs';
 
 export function AvatarCard() {
     const { data: session, update } = useSession();
-    const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
+    const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, handlePaste, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [loading, setLoading] = useState<boolean>(false);
     const ref = useRef<HTMLInputElement>(null);
@@ -59,7 +60,29 @@ export function AvatarCard() {
         setLoading(true);
         console.log("file", file);
         if (file) {
-            setImage();
+            try {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                await img.decode();
+
+                const model = await nsfwjs.load();
+                const predictions = await model.classify(img);
+
+                const nsfwScore = predictions.find((p: { className: string; }) => p.className === 'Porn' || p.className === 'Hentai')?.probability || 0;
+
+                if (nsfwScore > 0.5) {
+                    toast.error('NSFW content detected. Please choose a different image.');
+                    setLoading(false);
+                    return;
+                }
+
+                setImage();
+            } catch (error) {
+                console.error('NSFW check failed:', error);
+                toast.error('Failed to process image. Please try again.');
+                setLoading(false);
+                return;
+            }
         }
         setLoading(false);
     };
@@ -96,6 +119,7 @@ export function AvatarCard() {
                                     type="file"
                                     className="hidden"
                                     onChange={handleChange}
+                                    onPaste={handlePaste}
                                     accept='image/*'
                                 />
                                 {(file) ? (
@@ -117,7 +141,7 @@ export function AvatarCard() {
                                         />
                                     ) : (
                                         <div className="cursor-pointer text-center p-4">
-                                            Drag and drop or click to upload
+                                            Drag and drop, paste or click to upload
                                         </div>
                                     )
                                 )}
@@ -135,7 +159,7 @@ export function AvatarCard() {
                 <div className="flex items-center gap-3 flex-wrap md:flex-nowrap">
                     <Button variant="ghost" onClick={() => deleteImage()}>Remove</Button>
                     <Button variant='outline' centerItems iconLeft={<PiSubtract />} type='button' onClick={() => setCropModalOpen(true)}>Edit/Crop</Button>
-                    <Button onClick={handleSubmit(handleFormSubmit)}>Save</Button>
+                    <Button onClick={handleSubmit(handleFormSubmit)} disabled={loading}>Save</Button>
                 </div>
             </div>
         </div>
