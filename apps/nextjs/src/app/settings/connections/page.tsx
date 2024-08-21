@@ -17,7 +17,7 @@ export default async function ConnectionsSettingsPage() {
     return (
         <div className="flex">
             <SettingsSidebar />
-            <section className="grow flex flex-col gap-4 pt-2 md:pt-4 px-2 py-8 h-full max-w-full">
+            <section className="grow flex flex-col gap-4 pt-2 md:pt-4 md:p-8 px-2 py-8 h-full max-w-full">
                 <div>
                     <h1 className="font-clash font-bold text-3xl">Connections</h1>
                     <p>Manage your connections and plugins</p>
