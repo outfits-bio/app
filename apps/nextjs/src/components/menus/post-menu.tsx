@@ -7,12 +7,12 @@ import { handleErrors } from '@acme/utils/handle-errors.util';
 import { useRouter } from "next/navigation";
 import { useSession } from 'next-auth/react';
 import toast from 'react-hot-toast';
-import { PiDotsThree } from 'react-icons/pi';
+import { forwardRef, useRef } from 'react';
 import { ReportModal } from '../modals/report-modal';
 import { Button } from '../ui/Button';
 import { DeleteModal } from '../modals/delete-modal';
-import { useRef } from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { PiDotsThree } from 'react-icons/pi';
 
 interface PostMenuProps {
     userIsProfileOwner: boolean;
@@ -20,9 +20,17 @@ interface PostMenuProps {
     postId?: string;
 }
 
+// Create a forwardRef wrapper for the PiDotsThree icon
+const ForwardedPiDotsThree = forwardRef<HTMLButtonElement, React.ComponentProps<typeof PiDotsThree>>((props, ref) => (
+    <button ref={ref} onClick={(e) => e.stopPropagation()}>
+        <PiDotsThree {...props} />
+    </button>
+));
+
+ForwardedPiDotsThree.displayName = 'ForwardedPiDotsThree';
+
 export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostMenuProps) => {
     const ref = useRef<HTMLButtonElement>(null);
-    const ref2 = useRef<HTMLButtonElement>(null);
     const router = useRouter();
 
     const { data: session } = useSession();
@@ -60,9 +68,9 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
     return (
         <Popover {...props}>
             <PopoverTrigger asChild>
-                {button ?? <PiDotsThree className='w-5 h-5 text-white mt-1.5' />}
+                {button ?? <ForwardedPiDotsThree className='w-5 h-5 text-white mt-1.5' />}
             </PopoverTrigger>
-            <PopoverContent className="space-y-1 w-fit mr-2 md:mr-0">
+            <PopoverContent className="space-y-1 w-fit mr-2 md:mr-0" onClick={(e) => e.stopPropagation()}>
                 {user && (
                     <div>
                         <ReportModal type='POST' id={postId} />
@@ -86,7 +94,7 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
                 {user?.admin && (
                     <div>
                         <DeleteModal
-                            ref2={ref2}
+                            ref={ref}
                             post
                             admin
                             deleteFn={() => {
@@ -101,6 +109,6 @@ export const PostMenu = ({ userIsProfileOwner, button, postId, ...props }: PostM
                     </div>
                 )}
             </PopoverContent>
-        </Popover >
+        </Popover>
     );
 }
