@@ -26,6 +26,9 @@ export function DiscoverContent({ initialPosts, popularProfiles }: { initialPost
     const [isFilterOpen, setIsFilterOpen] = useState(true)
     const [isSidebarOpen, setIsSidebarOpen] = useState(true)
     const [isLoaded, setIsLoaded] = useState(false)
+    const [activeCategory, setActiveCategory] = useState<'latest' | 'popular'>(
+        params.get('category') === 'popular' ? 'popular' : 'latest'
+    )
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -35,10 +38,12 @@ export function DiscoverContent({ initialPosts, popularProfiles }: { initialPost
         }
     }, [])
 
-    const activeCategory =
-        params.get('category') === 'popular' ? 'popular' : 'latest'
+    useEffect(() => {
+        const category = params.get('category')
+        setActiveCategory(category === 'popular' ? 'popular' : 'latest')
+    }, [params])
 
-    const { data, isFetchingNextPage, isFetching, hasNextPage, fetchNextPage } =
+    const { data, isFetchingNextPage, isFetching, hasNextPage, fetchNextPage, refetch } =
         api.post.getLatestPosts.useInfiniteQuery(
             {
                 category: activeCategory,
@@ -50,6 +55,10 @@ export function DiscoverContent({ initialPosts, popularProfiles }: { initialPost
             }
         )
 
+    useEffect(() => {
+        void refetch()
+    }, [activeCategory, activePostTypes, refetch])
+
     const handleChangePostType = (type: PostType) => {
         if (activePostTypes.includes(type)) {
             setActivePostTypes(activePostTypes.filter((t) => t !== type))
@@ -60,10 +69,9 @@ export function DiscoverContent({ initialPosts, popularProfiles }: { initialPost
 
     const handleChangeCategory = (category: 'latest' | 'popular') => {
         const currentParams = new URLSearchParams(Array.from(params.entries()))
-
         currentParams.set('category', category)
-
         router.push(`${pathname}?${currentParams.toString()}`)
+        setActiveCategory(category)
     }
 
     const posts = data?.pages.flatMap((page) => page.posts)
