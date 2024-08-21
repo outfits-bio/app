@@ -209,11 +209,13 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                         </Button>
                     </Link>
 
-                    <div className='grow'>
+                    <div className='hidden md:block md:grow'>
                         <Button variant='outline' iconLeft={<PiShareFat />} centerItems onClick={handleShare}>
                             Share
                         </Button>
                     </div>
+
+                    <Button className="md:hidden" variant='outline' iconLeft={<PiShareFat />} centerItems shape='square' onClick={handleShare} />
                     <Link href='/generate' className='sm:hidden'>
                         <Button variant='outline' shape="square" iconLeft={<PiDresser />} centerItems />
                     </Link>
