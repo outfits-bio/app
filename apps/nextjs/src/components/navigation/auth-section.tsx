@@ -4,7 +4,7 @@ import { api } from "~/trpc/react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { PiBellSimple, PiBellSimpleFill, PiCompass, PiPlus } from "react-icons/pi";
+import { PiBellSimple, PiBellSimpleFill, PiCompass, PiDresser, PiPlus } from "react-icons/pi";
 import { NavbarMenu } from "../menus/navbar-menu";
 import { NotificationsMenu } from "../menus/notifications-menu";
 import dynamic from 'next/dynamic';
@@ -34,6 +34,13 @@ export function AuthSection() {
                 {pathname !== '/' && <Link href='/'>
                     <Button variant={'outline-ghost'} shape={'square'} iconLeft={<PiCompass />} />
                 </Link>}
+
+                <Link href='/generate'>
+                    <Button variant={'outline-ghost'} shape={'square'} iconLeft={<PiDresser />}>
+                        {/* className="text-nowrap w-fit px-4" */}
+                        {/* Generate */}
+                    </Button>
+                </Link>
 
                 <NotificationsMenu />
                 <NavbarMenu />

@@ -9,6 +9,7 @@ import { TRPCError } from "@trpc/server";
 import axios from "axios";
 import { NotificationType } from "@acme/db";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import { z } from "zod";
 
 export const profileRouter = createTRPCRouter({
   profileExists: publicProcedure
@@ -323,5 +324,80 @@ export const profileRouter = createTRPCRouter({
       } catch (error) {
         return null;
       }
+    }),
+
+  generateOutfit: protectedProcedure
+    .mutation(async ({ ctx }) => {
+      const postTypes = [
+        "HOODIE",
+        "SHIRT",
+        "PANTS",
+        "SHOES",
+        "WATCH",
+        "GLASSES",
+        "HEADWEAR",
+        "JEWELRY"
+      ] as const;
+
+      const outfitPieces = await Promise.all(
+        postTypes.map(async (type) => {
+          const postsCount = await ctx.db.post.count({
+            where: {
+              userId: ctx.session.user.id,
+              type: type,
+            },
+          });
+
+          if (postsCount === 0) return null;
+
+          const randomSkip = Math.floor(Math.random() * postsCount);
+
+          const post = await ctx.db.post.findFirst({
+            where: {
+              userId: ctx.session.user.id,
+              type: type,
+            },
+            select: {
+              id: true,
+              image: true,
+              type: true,
+            },
+            skip: randomSkip,
+          });
+          return post;
+        })
+      );
+
+      return outfitPieces.filter((piece): piece is NonNullable<typeof piece> => piece !== null);
+    }),
+
+  regeneratePiece: protectedProcedure
+    .input(z.object({ type: z.enum(["HOODIE", "SHIRT", "PANTS", "SHOES", "WATCH", "GLASSES", "HEADWEAR", "JEWELRY"]) }))
+    .mutation(async ({ ctx, input }) => {
+      const postsCount = await ctx.db.post.count({
+        where: {
+          userId: ctx.session.user.id,
+          type: input.type,
+        },
+      });
+
+      if (postsCount === 0) return null;
+
+      const randomSkip = Math.floor(Math.random() * postsCount);
+
+      const newPiece = await ctx.db.post.findFirst({
+        where: {
+          userId: ctx.session.user.id,
+          type: input.type,
+        },
+        select: {
+          id: true,
+          image: true,
+          type: true,
+        },
+        skip: randomSkip,
+      });
+
+      return newPiece;
     }),
 });

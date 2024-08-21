@@ -12,6 +12,8 @@ export const validateUsername = (username: string) => {
     "settings",
     "onboarding",
     "profile",
+    "generate",
+    "generate",
     "[username]",
     "discover",
     "notifications",
@@ -33,6 +35,7 @@ export const validateUsername = (username: string) => {
     "kofi",
     // Authentic People
     "jecta",
+    "jeremybosma",
     // General
   );
 
