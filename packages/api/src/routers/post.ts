@@ -126,7 +126,6 @@ export const postRouter = createTRPCRouter({
   toggleLikePost: protectedProcedure
     .input(toggleLikePostSchema)
     .mutation(async ({ input, ctx }) => {
-      // like profile, or unlike if already liked
       const { id } = input;
 
       const post = await ctx.db.post.findUnique({
@@ -192,7 +191,8 @@ export const postRouter = createTRPCRouter({
           },
         });
 
-        if (post.userId === ctx.session.user.id) {
+        // Only create a notification if the post is not owned by the current user
+        if (post.userId !== ctx.session.user.id) {
           const notification = ctx.db.notification.create({
             data: {
               type: NotificationType.POST_LIKE,
