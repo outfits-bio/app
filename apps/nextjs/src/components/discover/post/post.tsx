@@ -90,11 +90,18 @@ export function Post({ post, ref, priority = false }: PostProps) {
       }),
   })
 
-  const truncatedTagline =
-    post.user.tagline &&
-    (post.user.tagline.length > 20
-      ? `${post.user.tagline.slice(0, 20)}...`
-      : post.user.tagline)
+  const truncateTagline = (tagline: string) => {
+    if (!tagline) return '';
+    const words = tagline.split(/\s+/);
+    let truncated = '';
+    for (let word of words) {
+      if ((truncated + word).length > 20) break;
+      truncated += (truncated ? ' ' : '') + word;
+    }
+    return truncated.length < tagline.length ? truncated + '...' : truncated;
+  }
+
+  const truncatedTagline = truncateTagline(post.user.tagline || '');
 
   const AuthorDesc = memo(() => (
     <div
@@ -136,7 +143,21 @@ export function Post({ post, ref, priority = false }: PostProps) {
           </p>
         )}
       <p className="inline text-sm text-stroke 2xs-h:hidden dark:text-white/75">
-        {truncatedTagline && `${truncatedTagline} - `}
+        {truncatedTagline && (
+          <>
+            {truncatedTagline.split(/(@\w+)/).map((part, index) => {
+              if (part.startsWith('@')) {
+                return (
+                  <Link key={index} href={`/${part.substring(1)}`}>
+                    <strong>{part}</strong>
+                  </Link>
+                );
+              }
+              return part;
+            })}
+            {' - '}
+          </>
+        )}
         {getPostTypeName(post.type).toLowerCase()}
       </p>
       <p className="hidden text-sm text-stroke 2xs-h:inline dark:text-white/75">

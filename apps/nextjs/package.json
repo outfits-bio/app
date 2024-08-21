@@ -22,6 +22,7 @@
     "@headlessui/react": "^2.1.2",
     "@headlessui/tailwindcss": "^0.2.1",
     "@radix-ui/react-dialog": "^1.1.1",
+    "@radix-ui/react-hover-card": "^1.1.1",
     "@radix-ui/react-popover": "^1.1.1",
     "@t3-oss/env-nextjs": "^0.10.1",
     "@tailwindcss/typography": "^0.5.13",

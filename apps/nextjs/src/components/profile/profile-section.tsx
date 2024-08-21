@@ -18,6 +18,7 @@ import { Button } from "../ui/Button";
 import { ProfileMenu } from "../menus/profile-menu";
 import { SpotifySetupModal } from "../modals/spotify-setup-modal";
 import { FollowersModal } from "../modals/followers-modal";
+import { HoverCard } from "@radix-ui/react-hover-card";
 
 interface Props {
     profileData?: RouterOutputs['user']['getProfile'];
@@ -112,7 +113,21 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                             </div>
                         </h1>
 
-                        {profileData?.tagline && profileData?.tagline.length > 0 && <p className={`grow`}>{profileData?.tagline}</p>}
+                        {profileData?.tagline && profileData?.tagline.length > 0 && (
+                            <p className={`grow`}>
+                                {profileData.tagline.split(/(@\w+)/).map((part, index) => {
+                                    if (part.startsWith('@')) {
+                                        const linkText = part.substring(1);
+                                        return (
+                                            <Link href={`/${linkText}`}>
+                                                <strong>{part}</strong>
+                                            </Link>
+                                        );
+                                    }
+                                    return part;
+                                })}
+                            </p>
+                        )}
 
                         <div className='flex gap-4 text-sm md:text-base'>
                             <p className={`flex items-center gap-1`}>
