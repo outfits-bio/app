@@ -29,7 +29,7 @@ const satoshi = localFont({
 export const metadata: Metadata = {
   title: {
     template: 'outfits.bio - %s',
-    default: meta.title, // a default is required when creating a template
+    default: meta.title,
   },
   description: meta.description,
   openGraph: {
@@ -111,6 +111,8 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning={isDev}>
       <head>
         <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
       </head>
       <body suppressHydrationWarning={isDev} className={`font-satoshi ${clash.variable} ${satoshi.variable} flex flex-col min-h-screen antialiased transition-colors duration-300`}>
         <SessionProvider session={session}>
