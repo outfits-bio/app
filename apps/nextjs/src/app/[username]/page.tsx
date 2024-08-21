@@ -10,7 +10,6 @@ export async function generateMetadata({ params }: { params: { username: string 
         return {
             title: `${profileData.username}`,
             description: profileData.tagline || `Check out ${profileData.username}'s profile on outfits.bio`,
-            themeColor: "#ff6200",
             openGraph: {
                 images: [`/api/og/${params.username}`],
             },

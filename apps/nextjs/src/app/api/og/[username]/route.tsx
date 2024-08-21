@@ -27,9 +27,9 @@ export async function GET(request: Request, { params }: { params: { username: st
                         height="400"
                         src={formatAvatar(profileData.image, profileData.id)}
                         style={{
-                            borderRadius: 100,
+                            borderRadius: "100%",
                             border: '1px solid #eeeeee',
-                            boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.30)',
+                            boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.50)',
                         }}
                     />
                 </div>
