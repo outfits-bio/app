@@ -7,7 +7,7 @@ import { intlFormatDistance } from 'date-fns';
 import Link from 'next/link';
 import { PiSpinnerGap, PiX } from 'react-icons/pi';
 import { Avatar } from '../ui/Avatar';
-
+import { useSession } from "next-auth/react";
 
 interface NotificationCardProps {
     notification: RouterOutputs['notifications']['getNotifications'][number];
@@ -24,6 +24,12 @@ const RelativeDate = ({ date }: { date: Date }) => {
 }
 
 export function NotificationCard({ notification, refetch }: NotificationCardProps) {
+    const { data: session } = useSession();
+
+    if (session?.user?.id === notification.user?.id) {
+        return null;
+    }
+
     let href: string;
 
     switch (notification.type) {

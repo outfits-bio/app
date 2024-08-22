@@ -21,6 +21,10 @@ export function NotificationsMenu() {
             setVisibleCount((prev) => prev + 5);
         };
 
+        const filteredNotifications = notifications?.filter(
+            notification => notification.user?.id !== session.user.id
+        ) ?? [];
+
         return (
             <Popover>
                 <PopoverTrigger className="focus:outline-none w-fit h-fit">
@@ -37,16 +41,16 @@ export function NotificationsMenu() {
                 <PopoverContent className="min-w-fit absolute right-1 rounded-xl divide-stroke mt-1 border border-stroke shadow-dropdown p-4 max-h-[438px] overflow-auto">
                     <div className="flex flex-col w-full sm:w-[400px] gap-2 font-clash py-2">
                         <h1 className="font-bold text-xl pt-0">Your Inbox</h1>
-                        {notifications?.slice(0, visibleCount).map((notification, index) => (
+                        {filteredNotifications.slice(0, visibleCount).map((notification, index) => (
                             <NotificationCard key={index} notification={notification} refetch={refetch} />
                         )) ?? <></>}
                         <div className='flex flex-col items-center justify-center font-clash pt-2'>
-                            {notifications && notifications.length > visibleCount && (
+                            {filteredNotifications.length > visibleCount && (
                                 <Button onClick={loadMoreNotifications} variant="outline">
                                     Load more
                                 </Button>
                             )}
-                            {((notifications?.length ?? 0) === 0) && (
+                            {filteredNotifications.length === 0 && (
                                 <div className='flex flex-col items-center justify-center font-clash py-2'>
                                     <h3 className='text-center'>That&apos;s it, you don&apos;t have any notifications</h3>
                                 </div>
