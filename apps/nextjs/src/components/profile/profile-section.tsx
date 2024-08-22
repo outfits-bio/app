@@ -178,7 +178,7 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                 </div>}
 
 
-                {!isCurrentUser && !profileData?.username?.toLowerCase().includes(data?.user.username?.toLowerCase() ?? '') && <div className='w-full flex items-center justify-between gap-4'>
+                {!isCurrentUser && profileData?.username?.toLowerCase() !== data?.user.username?.toLowerCase() && <div className='w-full flex items-center justify-between gap-4'>
                     <div className='grow'>
                         <Button
                             accent
