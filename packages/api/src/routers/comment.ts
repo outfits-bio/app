@@ -140,35 +140,46 @@ export const commentRouter = createTRPCRouter({
             return reply
         }),
 
-    likeComment: protectedProcedure
+    toggleLikeComment: protectedProcedure
         .input(z.object({ commentId: z.string() }))
         .mutation(async ({ ctx, input }) => {
-            const comment = await ctx.db.comment.findUnique({
-                where: { id: input.commentId },
-                select: { userId: true, postId: true },
-            })
+            const { commentId } = input;
 
-            if (!comment) {
-                throw new TRPCError({ code: 'NOT_FOUND', message: 'Comment not found' })
+            const existingLike = await ctx.db.commentLike.findUnique({
+                where: {
+                    userId_commentId: {
+                        userId: ctx.session.user.id,
+                        commentId: commentId,
+                    },
+                },
+            });
+
+            if (existingLike) {
+                // Unlike
+                await ctx.db.commentLike.delete({
+                    where: { id: existingLike.id },
+                });
+            } else {
+                // Like
+                await ctx.db.commentLike.create({
+                    data: {
+                        userId: ctx.session.user.id,
+                        commentId: commentId,
+                    },
+                });
             }
 
-            const like = await ctx.db.commentLike.create({
-                data: {
-                    commentId: input.commentId,
-                    userId: ctx.session.user.id,
-                },
-            })
+            // Get the updated like count
+            const updatedComment = await ctx.db.comment.findUnique({
+                where: { id: commentId },
+                include: { _count: { select: { likes: true } } },
+            });
 
-            await ctx.db.notification.create({
-                data: {
-                    type: NotificationType.COMMENT_LIKE,
-                    targetUserId: comment.userId,
-                    userId: ctx.session.user.id,
-                    postId: comment.postId,
-                },
-            })
-
-            return like
+            return {
+                success: true,
+                likeCount: updatedComment?._count.likes ?? 0,
+                isLiked: !existingLike,
+            };
         }),
 
     editComment: protectedProcedure

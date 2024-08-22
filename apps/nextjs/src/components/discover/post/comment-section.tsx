@@ -77,21 +77,21 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
     const ctx = api.useUtils()
     const { data: session } = useSession()
 
-    const { data: replies } = api.comment.getReplies.useQuery(
-        { commentId: comment.id },
-        { enabled: showReplies }
-    )
+    const [isLiked, setIsLiked] = useState(false)
+    const [localLikeCount, setLocalLikeCount] = useState(comment.likeCount)
+
+    const { mutate: toggleLikeComment } = api.comment.toggleLikeComment.useMutation({
+        onSuccess: (data) => {
+            setIsLiked(data.isLiked)
+            setLocalLikeCount(data.likeCount)
+            void ctx.comment.getComments.invalidate({ postId })
+        },
+    })
 
     const { mutate: addReply } = api.comment.addReply.useMutation({
         onSuccess: () => {
             setReplyText('')
             void ctx.comment.getReplies.invalidate({ commentId: comment.id })
-        },
-    })
-
-    const { mutate: likeComment } = api.comment.likeComment.useMutation({
-        onSuccess: () => {
-            void ctx.comment.getComments.invalidate({ postId })
         },
     })
 
@@ -107,6 +107,11 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
             void ctx.comment.getComments.invalidate({ postId })
         },
     })
+
+    const { data: replies } = api.comment.getReplies.useQuery(
+        { commentId: comment.id },
+        { enabled: showReplies }
+    )
 
     const handleSubmitReply = () => {
         if (replyText.trim()) {
@@ -125,6 +130,10 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
     const handleDeleteComment = () => {
         toast.success('Comment deleted')
         deleteComment({ commentId: comment.id })
+    }
+
+    const handleToggleLike = () => {
+        toggleLikeComment({ commentId: comment.id })
     }
 
     return (
@@ -156,8 +165,8 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
                         <p>{comment.content}</p>
                     )}
                     <div className="mt-1 text-sm text-gray-500">
-                        <button onClick={() => likeComment({ commentId: comment.id })}>
-                            Like ({comment.likeCount})
+                        <button onClick={handleToggleLike}>
+                            {isLiked ? 'Unlike' : 'Like'} ({localLikeCount})
                         </button>
                         <button onClick={() => setShowReplies(!showReplies)} className="ml-2">
                             {showReplies ? 'Hide replies' : 'View replies'} ({comment.replyCount})
@@ -177,7 +186,7 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
             </div>
             {showReplies && (
                 <div className="ml-8 mt-2">
-                    {replies?.map((reply) => (
+                    {replies?.map((reply: CommentType) => (
                         <Comment key={reply.id} comment={reply} postId={postId} />
                     ))}
                     <div className="mt-2 flex">
