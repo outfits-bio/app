@@ -86,8 +86,10 @@ model User {
   notifications     Notification[] @relation("Notifications")
   sentNotifications Notification[] @relation("SentNotifications")
 
-  lanyardEnabled Boolean @default(false)
-  hideLanyard    Boolean @default(false)
+  lanyardEnabled Boolean       @default(false)
+  hideLanyard    Boolean       @default(false)
+  Comment        Comment[]
+  CommentLike    CommentLike[]
 }
 
 model Link {
@@ -118,6 +120,7 @@ model Post {
   likeCount     Int            @default(0)
   wishlists     User[]         @relation("Wishlists")
   reactions     Reaction[]
+  Comment       Comment[]
 
   @@index([userId])
 }
@@ -175,12 +178,47 @@ model Reaction {
   @@index([postId])
 }
 
+model Comment {
+  id        String        @id @default(cuid())
+  content   String
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  userId    String
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId    String
+  post      Post          @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parentId  String?
+  parent    Comment?      @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  replies   Comment[]     @relation("CommentReplies")
+  likes     CommentLike[]
+
+  @@index([userId])
+  @@index([postId])
+  @@index([parentId])
+}
+
+model CommentLike {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  commentId String
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, commentId])
+  @@index([userId])
+  @@index([commentId])
+}
+
 enum NotificationType {
   PROFILE_LIKE
   POST_LIKE
   POST_REACTION
   POST_WISHLIST
   OTHER
+  POST_COMMENT
+  COMMENT_REPLY
+  COMMENT_LIKE
 }
 
 enum PostType {
