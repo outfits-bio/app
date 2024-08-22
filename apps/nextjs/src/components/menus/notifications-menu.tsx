@@ -27,13 +27,12 @@ export function NotificationsMenu() {
 
         return (
             <Popover>
-                <PopoverTrigger className="focus:outline-none w-fit h-fit">
+                <PopoverTrigger className="focus:outline-none w-fit h-fit relative">
                     <div className="font-semibold font-clash self-stretch h-12 py-2 gap-3 flex items-center border border-stroke hover:bg-hover disabled:bg-hover transform transition duration-100 ease-in-out active:scale-[99%] rounded-full px-2 w-12 justify-center text-2xl">
                         <div><PiBellSimple /></div>
-                        {/* <div className="ui-not-open:hidden"><PiBellSimpleFill /></div> */}
                     </div>
                     {hasNotifications ? (
-                        <div className="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-error text-white text-[9px] font-bold flex items-center justify-center md:hidden">
+                        <div className="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-error text-white text-[9px] font-bold flex items-center justify-center translate-x-1/4 translate-y-1/4">
                             {notificationsCount}
                         </div>
                     ) : null}
