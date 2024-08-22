@@ -298,7 +298,19 @@ export const postRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       const { id } = input;
 
-      const wishlist = await ctx.db.user.update({
+      const post = await ctx.db.post.findUnique({
+        where: { id },
+        select: { userId: true },
+      });
+
+      if (!post) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Post not found",
+        });
+      }
+
+      const wishlist = ctx.db.user.update({
         where: {
           id: ctx.session.user.id,
         },
@@ -314,7 +326,35 @@ export const postRouter = createTRPCRouter({
         },
       });
 
-      return wishlist;
+      // Only create a notification if the post is not owned by the current user
+      if (post.userId !== ctx.session.user.id) {
+        const notification = ctx.db.notification.create({
+          data: {
+            type: NotificationType.POST_WISHLIST,
+            targetUser: {
+              connect: {
+                id: post.userId,
+              },
+            },
+            post: {
+              connect: {
+                id,
+              },
+            },
+            user: {
+              connect: {
+                id: ctx.session.user.id,
+              },
+            },
+          },
+        });
+
+        await ctx.db.$transaction([wishlist, notification]);
+      } else {
+        await ctx.db.$transaction([wishlist]);
+      }
+
+      return true;
     }),
 
   removeFromWishlist: protectedProcedure

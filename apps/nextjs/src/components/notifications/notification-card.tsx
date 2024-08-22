@@ -42,6 +42,9 @@ export function NotificationCard({ notification, refetch }: NotificationCardProp
         case 'POST_REACTION':
             href = `/${notification.user?.username}`;
             break;
+        case 'POST_WISHLIST':
+            href = `/${notification.user?.username}`;
+            break;
         case 'OTHER':
             href = `/${notification.link}`;
             break;
@@ -77,6 +80,10 @@ export function NotificationCard({ notification, refetch }: NotificationCardProp
                 {notification.type === 'POST_REACTION' && <>
                     <span className="font-bold">{notification.user?.username}</span>
                     <span> reacted to your post with {notification.message}</span>
+                </>}
+                {notification.type === 'POST_WISHLIST' && <>
+                    <span className="font-bold">{notification.user?.username}</span>
+                    <span> added your post to their wishlist </span>
                 </>}
                 {notification.type === 'OTHER' && <>
                     <span> {notification.message} </span>

@@ -179,6 +179,7 @@ enum NotificationType {
   PROFILE_LIKE
   POST_LIKE
   POST_REACTION
+  POST_WISHLIST
   OTHER
 }
 
