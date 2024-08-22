@@ -1,7 +1,24 @@
 import { z } from 'zod'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 import { TRPCError } from '@trpc/server'
-import { NotificationType } from '@acme/db'
+import { NotificationType, PrismaClient } from '@acme/db'
+
+async function deleteCommentAndReplies(prisma: PrismaClient, commentId: string) {
+    const comment = await prisma.comment.findUnique({
+        where: { id: commentId },
+        include: { replies: true },
+    })
+
+    if (!comment) return
+
+    // Recursively delete all replies
+    for (const reply of comment.replies) {
+        await deleteCommentAndReplies(prisma, reply.id)
+    }
+
+    // Delete the comment itself
+    await prisma.comment.delete({ where: { id: commentId } })
+}
 
 export const commentRouter = createTRPCRouter({
     getComments: protectedProcedure
@@ -177,7 +194,7 @@ export const commentRouter = createTRPCRouter({
         .mutation(async ({ ctx, input }) => {
             const comment = await ctx.db.comment.findUnique({
                 where: { id: input.commentId },
-                select: { userId: true, postId: true },
+                include: { replies: true },
             })
 
             if (!comment) {
@@ -188,9 +205,8 @@ export const commentRouter = createTRPCRouter({
                 throw new TRPCError({ code: 'FORBIDDEN', message: 'You can only delete your own comments' })
             }
 
-            await ctx.db.comment.delete({
-                where: { id: input.commentId },
-            })
+            // Delete all replies recursively
+            await deleteCommentAndReplies(ctx.db, input.commentId)
 
             return { success: true }
         }),
