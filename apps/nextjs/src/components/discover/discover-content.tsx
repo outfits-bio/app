@@ -7,7 +7,7 @@ import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { PiBookmarkSimpleBold, PiCamera, PiClockBold, PiFireBold, PiHammer, PiHeart, PiSealCheck, PiSidebar } from 'react-icons/pi'
+import { PiBookmarkSimpleBold, PiCamera, PiClockBold, PiFadersHorizontal, PiFireBold, PiHammer, PiHeart, PiOption, PiSealCheck, PiSidebar } from 'react-icons/pi'
 import { PostModal } from '../modals/post-modal'
 import { Button } from '../ui/Button'
 import { CategoryButton } from './category-button'
@@ -15,6 +15,7 @@ import { Post } from './post/post'
 import { RegisterBanner } from './register-banner'
 import { Avatar } from '../ui/Avatar'
 import { motion, AnimatePresence } from 'framer-motion'
+import { BaseModal, BaseModalContent, BaseModalHeader, BaseModalTitle, BaseModalTrigger } from '../modals/base-modal'
 
 export function DiscoverContent({ initialPosts, popularProfiles }: { initialPosts: any; popularProfiles: any }) {
     const params = useSearchParams()
@@ -249,9 +250,9 @@ export function DiscoverContent({ initialPosts, popularProfiles }: { initialPost
                     <button
                         onClick={() => handleChangeCategory('latest')}
                         className={cn(
-                            'py-1.5 font-medium font-clash flex gap-2 items-center justify-center transition-colors duration-150 rounded-xl',
+                            'max-w-fit py-1.5 font-medium font-clash flex gap-2 items-center justify-center transition-colors duration-150 rounded-xl',
                             activeCategory === 'latest'
-                                ? 'text-inherit border dark:border-stroke w-full'
+                                ? 'text-inherit border dark:border-stroke w-full px-3'
                                 : 'text-secondary-text px-3'
                         )}
                         type="button"
@@ -269,9 +270,9 @@ export function DiscoverContent({ initialPosts, popularProfiles }: { initialPost
                     <button
                         onClick={() => handleChangeCategory('popular')}
                         className={cn(
-                            'py-1.5 font-medium font-clash flex gap-2 items-center justify-center transition-colors duration-150 rounded-xl',
+                            'max-w-fit py-1.5 font-medium font-clash flex gap-2 items-center justify-center transition-colors duration-150 rounded-xl',
                             activeCategory === 'popular'
-                                ? 'text-inherit border dark:border-stroke w-full'
+                                ? 'text-inherit border dark:border-stroke w-full px-3'
                                 : 'text-secondary-text px-3'
                         )}
                         type="button"
@@ -285,6 +286,29 @@ export function DiscoverContent({ initialPosts, popularProfiles }: { initialPost
                             Popular
                         </p>
                     </button>
+
+                    <BaseModal>
+                        <BaseModalTrigger>
+                            <button className='max-w-fit py-1.5 font-medium font-clash flex gap-2 items-center justify-center transition-colors duration-150 rounded-xl'>
+                                <PiFadersHorizontal className='text-2xl' />
+                            </button>
+                        </BaseModalTrigger>
+                        <BaseModalContent>
+                            <BaseModalHeader>
+                                <BaseModalTitle>Filter</BaseModalTitle>
+                            </BaseModalHeader>
+                            <div className='flex flex-col gap-2'>
+                                {Object.values(PostType).map((type) => (
+                                    <CategoryButton
+                                        key={type}
+                                        activePostTypes={activePostTypes}
+                                        handleChangePostType={handleChangePostType}
+                                        type={type}
+                                    />
+                                ))}
+                            </div>
+                        </BaseModalContent>
+                    </BaseModal>
                 </div>
 
                 {/* Flex for Posts and Popular Profiles */}
