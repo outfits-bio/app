@@ -23,7 +23,7 @@ export function DiscoverContent({ initialPosts, popularProfiles }: { initialPost
     const pathname = usePathname()
     const { data: session } = useSession()
 
-    const [activePostTypes, setActivePostTypes] = useState<PostType[]>([])
+    const [activePostTypes, setActivePostTypes] = useState<PostType[]>(["OUTFIT"])
     const [isFilterOpen, setIsFilterOpen] = useState(true)
     const [isSidebarOpen, setIsSidebarOpen] = useState(true)
     const [isLoaded, setIsLoaded] = useState(false)
