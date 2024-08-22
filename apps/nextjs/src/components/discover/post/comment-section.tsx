@@ -4,12 +4,14 @@ import { Avatar } from '../../ui/Avatar'
 import { Button } from '../../ui/Button'
 import type { PostProps } from './post'
 import { useSession } from 'next-auth/react'
+import toast from 'react-hot-toast'
 
 type CommentType = {
     id: string
     content: string
     userId: string
     user: {
+        id: string
         image: string | null
         username: string | null
     }
@@ -120,15 +122,19 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
     }
 
     const handleDeleteComment = () => {
-        if (window.confirm('Are you sure you want to delete this comment?')) {
-            deleteComment({ commentId: comment.id })
-        }
+        toast.success('Comment deleted')
+        deleteComment({ commentId: comment.id })
     }
 
     return (
         <div className="mb-4">
             <div className="flex items-start">
-                <Avatar image={comment.user.image} username={comment.user.username} size="xs" />
+                <Avatar
+                    image={comment.user.image}
+                    id={comment.user.id}
+                    username={comment.user.username}
+                    size="xs"
+                />
                 <div className="ml-2 flex-grow">
                     <p className="font-bold">{comment.user.username}</p>
                     {isEditing ? (

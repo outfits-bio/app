@@ -65,7 +65,13 @@ export const commentRouter = createTRPCRouter({
                 where: { parentId: input.commentId },
                 orderBy: { createdAt: 'asc' },
                 include: {
-                    user: true,
+                    user: {
+                        select: {
+                            id: true,
+                            username: true,
+                            image: true,
+                        },
+                    },
                     _count: { select: { replies: true, likes: true } },
                 },
             })
