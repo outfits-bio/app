@@ -5,6 +5,7 @@ import { Button } from '../../ui/Button'
 import type { PostProps } from './post'
 import { useSession } from 'next-auth/react'
 import toast from 'react-hot-toast'
+import { PiFloppyDisk, PiPaperPlaneRight } from 'react-icons/pi'
 
 type CommentType = {
     id: string
@@ -58,10 +59,10 @@ export function CommentSection({ post }: PostProps) {
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
                     placeholder="Add a comment..."
-                    className="flex-grow"
+                    className="pl-3 flex-grow rounded-md border border-stroke mr-2"
                 />
-                <Button onClick={handleSubmitComment} className="ml-2">
-                    Post
+                <Button onClick={handleSubmitComment} className="max-w-fit px-3">
+                    <PiPaperPlaneRight className='text-xl' />
                 </Button>
             </div>
         </div>
@@ -142,12 +143,12 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
                             <input
                                 value={editText}
                                 onChange={(e) => setEditText(e.target.value)}
-                                className="flex-grow"
+                                className="pl-3 flex-grow rounded-md border border-stroke mr-2"
                             />
-                            <Button onClick={handleEditComment} className="ml-2">
-                                Save
+                            <Button onClick={handleEditComment} className="max-w-fit px-3">
+                                <PiFloppyDisk className='text-xl' />
                             </Button>
-                            <Button onClick={() => setIsEditing(false)} className="ml-2">
+                            <Button onClick={() => setIsEditing(false)} className="ml-2 w-fit">
                                 Cancel
                             </Button>
                         </div>
@@ -184,10 +185,10 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
                             value={replyText}
                             onChange={(e) => setReplyText(e.target.value)}
                             placeholder="Reply to this comment..."
-                            className="flex-grow"
+                            className="pl-3 flex-grow rounded-md border border-stroke mr-2"
                         />
-                        <Button onClick={handleSubmitReply} className="ml-2">
-                            Reply
+                        <Button onClick={handleSubmitReply} className="max-w-fit px-3">
+                            <PiPaperPlaneRight className='text-xl' />
                         </Button>
                     </div>
                 </div>
