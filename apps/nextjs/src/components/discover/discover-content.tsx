@@ -332,49 +332,34 @@ export function DiscoverContent({ initialPosts, popularProfiles }: { initialPost
 
                     {/* Popular Profiles */}
                     {popularProfilesData && (
-                        <div className="hidden xl:flex flex-col gap-3 pt-[1rem] h-fit">
-                            <h1 className="text-2xl font-bold font-clash">
-                                Popular Profiles
-                            </h1>
-                            <div className="flex flex-wrap gap-3">
+                        <div className="hidden xl:flex flex-col gap-3 pt-[1rem] h-fit w-80 mr-8">
+                            <h2 className="text-sm font-semibold text-secondary-text">
+                                Suggested for you
+                            </h2>
+                            <div className="flex flex-col gap-3">
                                 {popularProfilesData?.map((user) => (
-                                    <Link
-                                        href={`/${user?.username}`}
-                                        key={user?.id ?? ''}
-                                    >
-                                        <div className="bg-white dark:bg-black border border-stroke p-4 rounded-xl hover:bg-body dark:hover:bg-body cursor-pointer flex gap-2 w-full">
+                                    <div key={user?.id ?? ''} className="flex items-center justify-between">
+                                        <Link href={`/${user?.username}`} className="flex items-center gap-3">
                                             <Avatar
                                                 size={'sm'}
                                                 image={user?.image}
                                                 id={user?.id}
                                                 username={user?.username}
                                             />
-
-                                            <div className="flex flex-col gap-1 text-nowrap">
-                                                <h1 className="font-black flex gap-1 items-center">
-                                                    <span>{user?.username}</span>
-                                                    {user?.admin ? (
-                                                        <PiHammer className="w-4 h-4" />
-                                                    ) : (
-                                                        user?.verified && (
-                                                            <PiSealCheck className="w-4 h-4" />
-                                                        )
-                                                    )}
-                                                </h1>
-
-                                                <div className="flex gap-2 items-center text-nowrap text-xs">
-                                                    <span className="flex gap-1 items-center">
-                                                        <PiCamera className="w-3 h-3" />
-                                                        <span>{user?.imageCount} Shots</span>
-                                                    </span>
-                                                    <span className="flex gap-1 items-center">
-                                                        <PiHeart className="w-3 h-4" />
-                                                        <span>{user?.likeCount} Likes</span>
-                                                    </span>
-                                                </div>
+                                            <div className="flex flex-col">
+                                                <span className="font-semibold text-sm text-black dark:text-white">{user?.username}</span>
+                                                <span className="text-xs text-secondary-text text-nowrap">
+                                                    {user?.imageCount} Shots · {user?.likeCount} Likes
+                                                </span>
                                             </div>
-                                        </div>
-                                    </Link>
+                                        </Link>
+                                        <Link
+                                            href={`/${user?.username}`}
+                                            className="text-sm font-semibold text-orange-accent text-center p-0 ml-5 cursor-pointer"
+                                        >
+                                            View
+                                        </Link>
+                                    </div>
                                 ))}
                             </div>
                         </div>
