@@ -6,8 +6,8 @@ import webpush from 'web-push';
 
 // Set VAPID keys
 webpush.setVapidDetails(
-  'mailto:jectaunscripted@gmail.com',
-  process.env.VAPID_PUBLIC_KEY ?? '',
+  'mailto:your-email@example.com',
+  process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? '',
   process.env.VAPID_PRIVATE_KEY ?? ''
 );
 

@@ -22,22 +22,40 @@ export default function NotificationsPage() {
     const subscribeToPushNotifications = api.notifications.subscribeToPushNotifications.useMutation();
 
     const subscribeUser = async () => {
-        const registration = await navigator.serviceWorker.ready;
-        const subscription = await registration.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
-        });
+        try {
+            const registration = await navigator.serviceWorker.ready;
+            const subscription = await registration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+            });
 
-        const subscriptionData = {
-            endpoint: subscription.endpoint,
-            keys: {
-                p256dh: subscription.toJSON().keys?.p256dh ?? '',
-                auth: subscription.toJSON().keys?.auth ?? '',
-            },
-        };
+            const subscriptionData = {
+                endpoint: subscription.endpoint,
+                keys: {
+                    p256dh: subscription.toJSON().keys?.p256dh ?? '',
+                    auth: subscription.toJSON().keys?.auth ?? '',
+                },
+            };
 
-        await subscribeToPushNotifications.mutateAsync({ subscription: subscriptionData });
+            const result = await subscribeToPushNotifications.mutateAsync({ subscription: subscriptionData });
+            console.log('Subscription saved:', result);
+        } catch (error) {
+            console.error('Error subscribing to push notifications:', error);
+        }
     };
+
+    useEffect(() => {
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').then(
+                function (registration) {
+                    console.log('Service worker registration succeeded:', registration);
+                },
+                function (error) {
+                    console.log('Service worker registration failed:', error);
+                }
+            );
+        }
+    }, []);
 
     useEffect(() => {
         if (session) {

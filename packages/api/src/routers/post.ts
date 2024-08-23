@@ -230,18 +230,25 @@ export const postRouter = createTRPCRouter({
             where: { userId: post.userId },
           });
 
+          console.log('Subscriptions found:', subscriptions.length);
+
           const payload = JSON.stringify({
             title: 'outfits.bio',
             body: `${ctx.session.user.username} liked your post`,
           });
 
-          subscriptions.forEach((subscription) => {
+          for (const subscription of subscriptions) {
             const pushSubscription: webpush.PushSubscription = {
               endpoint: subscription.endpoint,
               keys: subscription.keys as { p256dh: string; auth: string },
             };
-            sendPushNotification(pushSubscription, payload);
-          });
+            try {
+              await sendPushNotification(pushSubscription, payload);
+              console.log('Push notification sent successfully');
+            } catch (error) {
+              console.error('Error sending push notification:', error);
+            }
+          }
         } else {
           await ctx.db.$transaction([like]);
         }
