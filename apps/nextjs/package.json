@@ -3,9 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@9.7.1",
   "scripts": {
-    "build": "pnpm with-env next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
+    "build": "pnpm with-env next build",
     "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "pnpm with-env next dev",
     "format": "prettier --check . --ignore-path ../../.gitignore",

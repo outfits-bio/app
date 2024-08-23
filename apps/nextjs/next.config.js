@@ -52,8 +52,6 @@ const config = {
 
   // Use SWC for faster compilation
   swcMinify: true,
-
-  output: "standalone",
 };
 
 export default config;
