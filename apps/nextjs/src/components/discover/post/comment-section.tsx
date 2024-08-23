@@ -6,6 +6,7 @@ import type { PostProps } from './post'
 import { useSession } from 'next-auth/react'
 import toast from 'react-hot-toast'
 import { PiFloppyDisk, PiPaperPlaneRight } from 'react-icons/pi'
+import Link from 'next/link'
 
 type CommentType = {
     id: string
@@ -182,7 +183,19 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
                             </Button>
                         </div>
                     ) : (
-                        <p>{comment.content}</p>
+                        <p>
+                            {comment.content.split(/(@\w+)/).map((part, index) => {
+                                if (part.startsWith('@')) {
+                                    const linkText = part.substring(1);
+                                    return (
+                                        <Link href={`/${linkText}`}>
+                                            <strong>{part}</strong>
+                                        </Link>
+                                    );
+                                }
+                                return part;
+                            })}
+                        </p>
                     )}
                     <div className="mt-1 text-sm text-gray-500">
                         <button onClick={handleToggleLike}>
