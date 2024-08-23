@@ -1,5 +1,6 @@
 import webpush from 'web-push';
 
+webpush.setGCMAPIKey('103953800507');
 webpush.setVapidDetails(
     'mailto:support@outfits.bio',
     process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? '',
