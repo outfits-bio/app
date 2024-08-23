@@ -13,6 +13,9 @@ import {
 import { usePathname } from "next/navigation";
 import dynamic from 'next/dynamic';
 import { Button } from "../ui/Button";
+import { api } from "~/trpc/react";
+import { useEffect } from "react";
+import { useMediaQuery } from "~/hooks/use-media-query.hook";
 
 const CreatePostModal = dynamic(() => import('../modals/create-post-modal').then(mod => mod.CreatePostModal), {
     loading: () => <Button className="px-3 md:px-6" iconLeft={<PiPlus />}><span className="hidden sm:inline">Post</span></Button>,
@@ -22,6 +25,63 @@ const CreatePostModal = dynamic(() => import('../modals/create-post-modal').then
 export function MobileNav() {
     const { data: session } = useSession();
     const pathname = usePathname();
+
+    const subscribeToPushNotifications = api.notifications.subscribeToPushNotifications.useMutation();
+
+    const subscribeUser = async () => {
+        try {
+            const registration = await navigator.serviceWorker.ready;
+            const subscription = await registration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+            });
+
+            const subscriptionData = {
+                endpoint: subscription.endpoint,
+                keys: {
+                    p256dh: subscription.toJSON().keys?.p256dh ?? '',
+                    auth: subscription.toJSON().keys?.auth ?? '',
+                },
+            };
+
+            const result = await subscribeToPushNotifications.mutateAsync({ subscription: subscriptionData });
+            console.log('Subscription saved:', result);
+        } catch (error) {
+            console.error('Error subscribing to push notifications:', error);
+        }
+    };
+
+    useEffect(() => {
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').then(
+                function (registration) {
+                    console.log('Service worker registration succeeded:', registration);
+                },
+                function (error) {
+                    console.log('Service worker registration failed:', error);
+                }
+            );
+        }
+    }, []);
+
+    const isDesktop = useMediaQuery("(min-width: 768px)");
+
+    useEffect(() => {
+        if (isDesktop) {
+            return;
+        }
+        else if (session && typeof window !== 'undefined' && 'Notification' in window) {
+            if (Notification.permission === 'default') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        subscribeUser();
+                    }
+                });
+            } else if (Notification.permission === 'granted') {
+                subscribeUser();
+            }
+        }
+    }, [session]);
 
     if (pathname !== '/login' && pathname !== '/onboarding') {
         return (

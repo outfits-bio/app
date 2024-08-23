@@ -18,6 +18,7 @@ export const sendPushNotification = async (subscription: webpush.PushSubscriptio
 };
 
 const notificationCooldowns = new Map<string, number>();
+const lastNotificationKeys = new Map<string, string>();
 const COOLDOWN_PERIOD = 60000;
 
 const debouncedSendNotification = debounce(async (userId: string, body: string, ctx: any) => {
@@ -46,6 +47,13 @@ export const sendPushNotificationToUser = async (userId: string, body: string, c
         return;
     }
 
+    const lastKey = lastNotificationKeys.get(userId);
+    if (lastKey === cooldownKey) {
+        console.log('Same notification as last one, skipping');
+        return;
+    }
+
     notificationCooldowns.set(cooldownKey, currentTime);
+    lastNotificationKeys.set(userId, cooldownKey);
     debouncedSendNotification(userId, body, ctx);
 };
