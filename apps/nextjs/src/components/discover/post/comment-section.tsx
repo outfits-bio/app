@@ -87,7 +87,7 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
             setLocalLikeCount(data.likeCount)
             void ctx.comment.getComments.invalidate({ postId })
 
-            sendPushNotificationToUser(comment.userId, 'outfits.bio', `${session?.user.username} liked your comment`, comment.id);
+            sendPushNotificationToUser(comment.userId, 'outfits.bio', `${session?.user.username} liked your comment`, ctx);
         },
     })
 
@@ -96,7 +96,7 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
             setReplyText('')
             void ctx.comment.getReplies.invalidate({ commentId: comment.id })
 
-            sendPushNotificationToUser(comment.userId, 'outfits.bio', `${session?.user.username} replied to your comment`, comment.id);
+            sendPushNotificationToUser(comment.userId, 'outfits.bio', `${session?.user.username} replied to your comment`, ctx);
         },
     })
 

@@ -18,7 +18,6 @@ import { Button } from "../ui/Button";
 import { ProfileMenu } from "../menus/profile-menu";
 import { SpotifySetupModal } from "../modals/spotify-setup-modal";
 import { FollowersModal } from "../modals/followers-modal";
-import { HoverCard } from "@radix-ui/react-hover-card";
 import { sendPushNotificationToUser } from "@acme/api/services/pushNotificationService";
 
 interface Props {

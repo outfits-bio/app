@@ -28,7 +28,7 @@ export function LikeButton({ post, variant = 'default' }: LikeButtonProps) {
           post.user.id,
           'outfits.bio',
           `${session?.user.username} liked your post`,
-          post.id
+          ctx
         );
       },
       onError: (e) =>
