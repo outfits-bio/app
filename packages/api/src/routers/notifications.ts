@@ -5,10 +5,14 @@ import { z } from 'zod';
 import webpush from 'web-push';
 
 // Set VAPID keys
+if (!process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || !process.env.VAPID_PRIVATE_KEY) {
+  throw new Error('VAPID keys are not set in environment variables');
+}
+
 webpush.setVapidDetails(
   'mailto:your-email@example.com',
-  process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? '',
-  process.env.VAPID_PRIVATE_KEY ?? ''
+  process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+  process.env.VAPID_PRIVATE_KEY
 );
 
 // Function to send push notification
