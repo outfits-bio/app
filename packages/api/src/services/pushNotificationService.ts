@@ -2,7 +2,7 @@ import webpush from 'web-push';
 
 // Set VAPID keys (move this to a more appropriate place if needed)
 webpush.setVapidDetails(
-    'mailto:your-email@example.com',
+    'https://outfits.bio',
     process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? '',
     process.env.VAPID_PRIVATE_KEY ?? ''
 );

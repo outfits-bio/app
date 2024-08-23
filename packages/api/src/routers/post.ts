@@ -214,14 +214,6 @@ export const postRouter = createTRPCRouter({
               },
             },
           });
-
-          // Send push notification
-          await sendPushNotificationToUser(
-            post.userId,
-            'outfits.bio',
-            `${ctx.session.user.username} liked your post`,
-            ctx
-          );
         }
       }
 

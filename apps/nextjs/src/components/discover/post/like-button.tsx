@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { PiHeartBold, PiHeartFill } from 'react-icons/pi'
 import { Button } from '../../ui/Button'
 import type { PostProps } from './post'
+import { sendPushNotificationToUser } from '../../../../../../packages/api/src/services/pushNotificationService'
 
 export interface LikeButtonProps extends PostProps {
   variant?: 'default' | 'ghost'
@@ -22,6 +23,13 @@ export function LikeButton({ post, variant = 'default' }: LikeButtonProps) {
       onSuccess: () => {
         void ctx.post.getLatestPosts.refetch()
         void ctx.post.getPostsAllTypes.refetch({ id: post.user.id })
+
+        sendPushNotificationToUser(
+          post.user.id,
+          'outfits.bio',
+          `${session?.user.username} liked your post`,
+          post.id
+        );
       },
       onError: (e) =>
         handleErrors({

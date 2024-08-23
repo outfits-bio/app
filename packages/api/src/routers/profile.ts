@@ -10,7 +10,6 @@ import axios from "axios";
 import { NotificationType } from "@acme/db";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { z } from "zod";
-import { sendPushNotificationToUser } from '../services/pushNotificationService';
 
 export const profileRouter = createTRPCRouter({
   profileExists: publicProcedure
@@ -201,16 +200,6 @@ export const profileRouter = createTRPCRouter({
         });
 
         const [res] = await ctx.db.$transaction([like, notification]);
-
-        // Send push notification
-        if (id !== ctx.session.user.id) {
-          await sendPushNotificationToUser(
-            id,
-            'outfits.bio',
-            `${ctx.session.user.username} liked your profile`,
-            ctx
-          );
-        }
 
         likeData = res;
       } catch (error) {
