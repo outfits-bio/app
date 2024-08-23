@@ -6,6 +6,7 @@ import type { PostProps } from './post'
 import { useSession } from 'next-auth/react'
 import toast from 'react-hot-toast'
 import { PiFloppyDisk, PiPaperPlaneRight } from 'react-icons/pi'
+import { sendPushNotificationToUser } from '../../../../../../packages/api/src/services/pushNotificationService'
 
 type CommentType = {
     id: string
@@ -85,6 +86,8 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
             setIsLiked(data.isLiked)
             setLocalLikeCount(data.likeCount)
             void ctx.comment.getComments.invalidate({ postId })
+
+            sendPushNotificationToUser(comment.userId, 'outfits.bio', `${session?.user.username} liked your comment`, comment.id);
         },
     })
 
@@ -92,6 +95,8 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
         onSuccess: () => {
             setReplyText('')
             void ctx.comment.getReplies.invalidate({ commentId: comment.id })
+
+            sendPushNotificationToUser(comment.userId, 'outfits.bio', `${session?.user.username} replied to your comment`, comment.id);
         },
     })
 
@@ -113,18 +118,10 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
         { enabled: showReplies }
     )
 
-    const sendNotification = api.notifications.sendPushNotification.useMutation();
 
     const handleSubmitReply = async () => {
         if (replyText.trim()) {
             addReply({ commentId: comment.id, content: replyText })
-
-            // Send push notification
-            sendNotification.mutate({
-                userId: comment.userId,
-                title: 'outfits.bio',
-                body: `${session?.user.username} replied to your comment`,
-            });
         }
     }
 

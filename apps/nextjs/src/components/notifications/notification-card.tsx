@@ -8,7 +8,6 @@ import Link from 'next/link';
 import { PiSpinnerGap, PiX } from 'react-icons/pi';
 import { Avatar } from '../ui/Avatar';
 import { useSession } from "next-auth/react";
-import { urlBase64ToUint8Array } from '~/utils/base64-utils';
 import { useEffect } from 'react';
 
 interface NotificationCardProps {
@@ -89,18 +88,6 @@ export function NotificationCard({ notification, refetch }: NotificationCardProp
             console.log('Subscription saved:', result);
         } catch (error) {
             console.error('Error subscribing to push notifications:', error);
-        }
-    };
-
-    const sendNotification = api.notifications.sendPushNotification.useMutation();
-
-    const handleSendNotification = () => {
-        if (notification.user?.id) {
-            sendNotification.mutate({
-                userId: notification.user.id,
-                title: 'outfits.bio',
-                body: `${notification.user?.username} ${notification.message}`,
-            });
         }
     };
 
