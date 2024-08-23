@@ -8,16 +8,29 @@ import Link from 'next/link';
 import { PiSpinnerGap, PiX } from 'react-icons/pi';
 import { Avatar } from '../ui/Avatar';
 import { useSession } from "next-auth/react";
-import webpush from 'web-push';
+import { urlBase64ToUint8Array } from '~/utils/base64-utils';
 
 interface NotificationCardProps {
     notification: RouterOutputs['notifications']['getNotifications'][number];
     refetch?: () => void;
 }
 
-const sendPushNotification = async (subscription: webpush.PushSubscription, payload: string) => {
+const sendPushNotification = async (subscription: PushSubscription, payload: string) => {
     try {
-        await webpush.sendNotification(subscription, payload);
+        const response = await fetch('/api/send-push-notification', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                subscription,
+                payload,
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to send push notification');
+        }
     } catch (error) {
         console.error('Error sending push notification:', error);
     }
@@ -86,12 +99,25 @@ export function NotificationCard({ notification, refetch }: NotificationCardProp
                 body: `${notification.user?.username} ${notification.message}`,
             });
 
-            subscriptions.forEach((subscription) => {
-                const pushSubscription: webpush.PushSubscription = {
+            subscriptions.forEach(async (subscription) => {
+                const pushSubscription: PushSubscription = {
                     endpoint: subscription.endpoint,
-                    keys: subscription.keys as { p256dh: string; auth: string },
+                    getKey: (name: PushEncryptionKeyName) => {
+                        const keys = subscription.keys as Record<string, string>;
+                        return new TextEncoder().encode(keys[name] ?? '').buffer;
+                    },
+                    toJSON: () => ({
+                        endpoint: subscription.endpoint,
+                        keys: subscription.keys as Record<string, string>
+                    }),
+                    unsubscribe: async () => false,
+                    expirationTime: null,
+                    options: {
+                        applicationServerKey: null,
+                        userVisibleOnly: true
+                    }
                 };
-                sendPushNotification(pushSubscription, payload);
+                await sendPushNotification(pushSubscription, payload);
             });
         }
     };
