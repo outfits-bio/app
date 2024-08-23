@@ -85,6 +85,10 @@ export function NotificationCard({ notification, refetch }: NotificationCardProp
                     <span className="font-bold">{notification.user?.username}</span>
                     <span> added your post to their wishlist </span>
                 </>}
+                {notification.type === 'POST_COMMENT' && <>
+                    <span className="font-bold">{notification.user?.username}</span>
+                    <span> left a comment on your post </span>
+                </>}
                 {notification.type === 'OTHER' && <>
                     <span> {notification.message} </span>
                 </>}
