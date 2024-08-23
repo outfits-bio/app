@@ -153,7 +153,10 @@ export const postRouter = createTRPCRouter({
           message: "Invalid post!",
         });
 
+      let isLiked = false;
+
       if (post.likes.length) {
+        // Unlike
         await ctx.db.post.update({
           where: {
             id,
@@ -168,12 +171,10 @@ export const postRouter = createTRPCRouter({
               },
             },
           },
-          select: {
-            id: true,
-          },
         });
       } else {
-        const like = ctx.db.post.update({
+        // Like
+        await ctx.db.post.update({
           where: {
             id,
           },
@@ -187,14 +188,13 @@ export const postRouter = createTRPCRouter({
               },
             },
           },
-          select: {
-            userId: true,
-          },
         });
 
-        // Only create a notification if the post is not owned by the current user
+        isLiked = true;
+
+        // Only create notification and send push notification when liking
         if (post.userId !== ctx.session.user.id) {
-          const notification = ctx.db.notification.create({
+          await ctx.db.notification.create({
             data: {
               type: NotificationType.POST_LIKE,
               targetUser: {
@@ -202,20 +202,18 @@ export const postRouter = createTRPCRouter({
                   id: post.userId,
                 },
               },
-              post: {
-                connect: {
-                  id,
-                },
-              },
               user: {
                 connect: {
                   id: ctx.session.user.id,
                 },
               },
+              post: {
+                connect: {
+                  id: post.id,
+                },
+              },
             },
           });
-
-          await ctx.db.$transaction([like, notification]);
 
           // Send push notification
           await sendPushNotificationToUser(
@@ -224,12 +222,13 @@ export const postRouter = createTRPCRouter({
             `${ctx.session.user.username} liked your post`,
             ctx
           );
-        } else {
-          await ctx.db.$transaction([like]);
         }
       }
 
-      return true;
+      return {
+        success: true,
+        isLiked,
+      };
     }),
 
   addReaction: protectedProcedure
