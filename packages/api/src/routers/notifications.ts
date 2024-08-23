@@ -144,4 +144,12 @@ export const notificationsRouter = createTRPCRouter({
 
       return true;
     }),
+  getSubscriptions: protectedProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const subscriptions = await ctx.db.subscription.findMany({
+        where: { userId: input.userId },
+      });
+      return subscriptions;
+    }),
 });

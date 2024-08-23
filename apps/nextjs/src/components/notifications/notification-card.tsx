@@ -8,11 +8,20 @@ import Link from 'next/link';
 import { PiSpinnerGap, PiX } from 'react-icons/pi';
 import { Avatar } from '../ui/Avatar';
 import { useSession } from "next-auth/react";
+import webpush from 'web-push';
 
 interface NotificationCardProps {
     notification: RouterOutputs['notifications']['getNotifications'][number];
     refetch?: () => void;
 }
+
+const sendPushNotification = async (subscription: webpush.PushSubscription, payload: string) => {
+    try {
+        await webpush.sendNotification(subscription, payload);
+    } catch (error) {
+        console.error('Error sending push notification:', error);
+    }
+};
 
 const RelativeDate = ({ date }: { date: Date }) => {
     const timeString = intlFormatDistance(date, Date.now(), {
@@ -64,6 +73,30 @@ export function NotificationCard({ notification, refetch }: NotificationCardProp
         },
         onError: (e) => handleErrors({ e, message: 'Failed to delete notification' })
     });
+
+    const { data: subscriptions } = api.notifications.getSubscriptions.useQuery({
+        userId: notification.user?.id ?? '',
+    });
+
+    // Send push notification
+    const sendNotification = async () => {
+        if (subscriptions) {
+            const payload = JSON.stringify({
+                title: 'outfits.bio',
+                body: `${notification.user?.username} ${notification.message}`,
+            });
+
+            subscriptions.forEach((subscription) => {
+                const pushSubscription: webpush.PushSubscription = {
+                    endpoint: subscription.endpoint,
+                    keys: subscription.keys as { p256dh: string; auth: string },
+                };
+                sendPushNotification(pushSubscription, payload);
+            });
+        }
+    };
+
+    sendNotification();
 
     return <div className='w-full rounded-xl px-4 py-2 flex items-center justify-between hover:bg-white dark:hover:bg-black'>
         <Link href={href} className='flex items-center gap-3'>

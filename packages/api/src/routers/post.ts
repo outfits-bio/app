@@ -16,8 +16,17 @@ import { TRPCError } from "@trpc/server";
 import { NotificationType, PostType } from "@acme/db";
 import type { Prisma } from "@acme/db";
 import { z } from "zod";
+import webpush from 'web-push';
 
 import { deleteImage, generatePresignedUrl } from "@acme/utils/image.util";
+
+const sendPushNotification = async (subscription: webpush.PushSubscription, payload: string) => {
+  try {
+    await webpush.sendNotification(subscription, payload);
+  } catch (error) {
+    console.error('Error sending push notification:', error);
+  }
+};
 
 export const postTypeSchema = z.object({
   type: z.nativeEnum(PostType),
@@ -215,6 +224,24 @@ export const postRouter = createTRPCRouter({
           });
 
           await ctx.db.$transaction([like, notification]);
+
+          // Send push notification
+          const subscriptions = await ctx.db.subscription.findMany({
+            where: { userId: post.userId },
+          });
+
+          const payload = JSON.stringify({
+            title: 'outfits.bio',
+            body: `${ctx.session.user.username} liked your post`,
+          });
+
+          subscriptions.forEach((subscription) => {
+            const pushSubscription: webpush.PushSubscription = {
+              endpoint: subscription.endpoint,
+              keys: subscription.keys as { p256dh: string; auth: string },
+            };
+            sendPushNotification(pushSubscription, payload);
+          });
         } else {
           await ctx.db.$transaction([like]);
         }
@@ -350,6 +377,24 @@ export const postRouter = createTRPCRouter({
         });
 
         await ctx.db.$transaction([wishlist, notification]);
+
+        // Send push notification
+        const subscriptions = await ctx.db.subscription.findMany({
+          where: { userId: post.userId },
+        });
+
+        const payload = JSON.stringify({
+          title: 'outfits.bio',
+          body: `${ctx.session.user.username} added your post to their wishlist`,
+        });
+
+        subscriptions.forEach((subscription) => {
+          const pushSubscription: webpush.PushSubscription = {
+            endpoint: subscription.endpoint,
+            keys: subscription.keys as { p256dh: string; auth: string },
+          };
+          sendPushNotification(pushSubscription, payload);
+        });
       } else {
         await ctx.db.$transaction([wishlist]);
       }

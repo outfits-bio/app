@@ -6,6 +6,7 @@ import type { PostProps } from './post'
 import { useSession } from 'next-auth/react'
 import toast from 'react-hot-toast'
 import { PiFloppyDisk, PiPaperPlaneRight } from 'react-icons/pi'
+import webpush from 'web-push';
 
 type CommentType = {
     id: string
@@ -19,6 +20,14 @@ type CommentType = {
     likeCount: number
     replyCount: number
 }
+
+const sendPushNotification = async (subscription: webpush.PushSubscription, payload: string) => {
+    try {
+        await webpush.sendNotification(subscription, payload);
+    } catch (error) {
+        console.error('Error sending push notification:', error);
+    }
+};
 
 export function CommentSection({ post }: PostProps) {
     const [commentText, setCommentText] = useState('')
@@ -113,9 +122,27 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
         { enabled: showReplies }
     )
 
-    const handleSubmitReply = () => {
+    const handleSubmitReply = async () => {
         if (replyText.trim()) {
             addReply({ commentId: comment.id, content: replyText })
+
+            // Send push notification
+            const subscriptions = await api.notifications.getSubscriptions.useQuery({
+                userId: comment.userId
+            });
+
+            const payload = JSON.stringify({
+                title: 'outfits.bio',
+                body: `${session?.user.username} replied to your comment`,
+            });
+
+            subscriptions.data?.forEach((subscription) => {
+                const pushSubscription: webpush.PushSubscription = {
+                    endpoint: subscription.endpoint,
+                    keys: subscription.keys as { p256dh: string; auth: string },
+                };
+                sendPushNotification(pushSubscription, payload);
+            });
         }
     }
 
