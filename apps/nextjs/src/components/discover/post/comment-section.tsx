@@ -6,7 +6,6 @@ import type { PostProps } from './post'
 import { useSession } from 'next-auth/react'
 import toast from 'react-hot-toast'
 import { PiFloppyDisk, PiPaperPlaneRight } from 'react-icons/pi'
-import { sendPushNotificationToUser } from '@acme/api/services/pushNotificationService'
 
 type CommentType = {
     id: string
@@ -24,16 +23,24 @@ type CommentType = {
 export function CommentSection({ post }: PostProps) {
     const [commentText, setCommentText] = useState('')
     const ctx = api.useUtils()
+    const { data: session } = useSession()
 
     const { data: comments, fetchNextPage, hasNextPage } = api.comment.getComments.useInfiniteQuery(
         { postId: post.id },
         { getNextPageParam: (lastPage) => lastPage.nextCursor }
     )
 
+    const { mutate: sendPushNotification } = api.notifications.sendPushNotification.useMutation();
+
     const { mutate: addComment } = api.comment.addComment.useMutation({
         onSuccess: () => {
             setCommentText('')
             void ctx.comment.getComments.invalidate({ postId: post.id })
+
+            sendPushNotification({
+                userId: post.user.id,
+                body: `${session?.user.username} replied to your post`,
+            });
         },
     })
 
@@ -80,6 +87,7 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
 
     const [isLiked, setIsLiked] = useState(false)
     const [localLikeCount, setLocalLikeCount] = useState(comment.likeCount)
+    const { mutate: sendPushNotification } = api.notifications.sendPushNotification.useMutation();
 
     const { mutate: toggleLikeComment } = api.comment.toggleLikeComment.useMutation({
         onSuccess: (data) => {
@@ -87,7 +95,10 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
             setLocalLikeCount(data.likeCount)
             void ctx.comment.getComments.invalidate({ postId })
 
-            sendPushNotificationToUser(comment.userId, `${session?.user.username} liked your comment`, ctx);
+            sendPushNotification({
+                userId: comment.userId,
+                body: `${session?.user.username} liked your comment`,
+            });
         },
     })
 
@@ -96,7 +107,10 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
             setReplyText('')
             void ctx.comment.getReplies.invalidate({ commentId: comment.id })
 
-            sendPushNotificationToUser(comment.userId, `${session?.user.username} replied to your comment`, ctx);
+            sendPushNotification({
+                userId: comment.userId,
+                body: `${session?.user.username} replied to your comment`,
+            });
         },
     })
 

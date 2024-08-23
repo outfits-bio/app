@@ -4,12 +4,12 @@ import { useSession } from 'next-auth/react'
 import { PiBookmarkSimpleBold, PiBookmarkSimpleFill } from 'react-icons/pi'
 import { Button } from '../../ui/Button'
 import type { PostProps } from './post'
-import { sendPushNotificationToUser } from '@acme/api/services/pushNotificationService'
 
 export default function WishlistButton({ post }: PostProps) {
   const { data: session } = useSession()
 
   const ctx = api.useUtils()
+  const { mutate: sendPushNotification } = api.notifications.sendPushNotification.useMutation();
 
   const { mutate: addToWishlist, isPending: addToWishlistPending } =
     api.post.addToWishlist.useMutation({
@@ -18,11 +18,11 @@ export default function WishlistButton({ post }: PostProps) {
         void ctx.post.getPostsAllTypes.refetch({ id: post.user.id })
         void ctx.post.getWishlist.refetch()
 
-        sendPushNotificationToUser(
-          post.user.id,
-          `${session?.user.username} liked your post`,
-          ctx
-        );
+        sendPushNotification({
+          userId: post.user.id,
+          body: `${session?.user.username} added your post to their wishlist`,
+        });
+
       },
       onError: (e) =>
         handleErrors({

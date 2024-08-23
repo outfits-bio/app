@@ -5,7 +5,6 @@ import { useState } from 'react'
 import { PiHeartBold, PiHeartFill } from 'react-icons/pi'
 import { Button } from '../../ui/Button'
 import type { PostProps } from './post'
-import { sendPushNotificationToUser } from '@acme/api/services/pushNotificationService'
 
 export interface LikeButtonProps extends PostProps {
   variant?: 'default' | 'ghost'
@@ -17,6 +16,7 @@ export function LikeButton({ post, variant = 'default' }: LikeButtonProps) {
   const [likeAnimation, setLikeAnimation] = useState<boolean>(false)
 
   const ctx = api.useUtils()
+  const { mutate: sendPushNotification } = api.notifications.sendPushNotification.useMutation();
 
   const { mutate: toggleLikePost, isPending: toggleLikePostPending } =
     api.post.toggleLikePost.useMutation({
@@ -24,16 +24,15 @@ export function LikeButton({ post, variant = 'default' }: LikeButtonProps) {
         void ctx.post.getLatestPosts.refetch()
         void ctx.post.getPostsAllTypes.refetch({ id: post.user.id })
 
-        sendPushNotificationToUser(
-          post.user.id,
-          `${session?.user.username} liked your post`,
-          ctx
-        );
+        sendPushNotification({
+          userId: post.user.id,
+          body: `${session?.user.username} liked your post`,
+        });
       },
       onError: (e) =>
         handleErrors({
           e,
-          message: 'An error occurred while liking this post.',
+          message: 'An error occurred while liking this post.' + e,
         }),
     })
 
