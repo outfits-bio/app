@@ -20,7 +20,6 @@ export default function WishlistButton({ post }: PostProps) {
 
         sendPushNotificationToUser(
           post.user.id,
-          'outfits.bio',
           `${session?.user.username} liked your post`,
           ctx
         );

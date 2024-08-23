@@ -16,12 +16,12 @@ export const sendPushNotification = async (subscription: webpush.PushSubscriptio
     }
 };
 
-export const sendPushNotificationToUser = async (userId: string, title: string, body: string, ctx: any) => {
+export const sendPushNotificationToUser = async (userId: string, body: string, ctx: any) => {
     const subscriptions = await ctx.db.subscription.findMany({
         where: { userId: userId },
     });
 
-    const payload = JSON.stringify({ title, body });
+    const payload = JSON.stringify({ title: 'outfits.bio', body });
 
     for (const subscription of subscriptions) {
         const pushSubscription: webpush.PushSubscription = {

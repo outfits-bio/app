@@ -26,7 +26,6 @@ export function LikeButton({ post, variant = 'default' }: LikeButtonProps) {
 
         sendPushNotificationToUser(
           post.user.id,
-          'outfits.bio',
           `${session?.user.username} liked your post`,
           ctx
         );

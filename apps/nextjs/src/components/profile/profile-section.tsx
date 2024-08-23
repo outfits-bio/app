@@ -57,7 +57,6 @@ export const ProfileCard = ({ profileData, username }: Props) => {
         onSettled: async () => {
             sendPushNotificationToUser(
                 profileData?.id ?? '',
-                'outfits.bio',
                 `${data?.user.username} liked your profile`,
                 ctx
             );
