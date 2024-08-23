@@ -52,7 +52,7 @@ export function NotificationsMenu() {
 
         useEffect(() => {
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/sw.js').then(
+                navigator.serviceWorker.register('/sw.js', { scope: '/' }).then(
                     function (registration) {
                         console.log('Service worker registration succeeded:', registration);
                     },
