@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react'
 import { PiBookmarkSimpleBold, PiBookmarkSimpleFill } from 'react-icons/pi'
 import { Button } from '../../ui/Button'
 import type { PostProps } from './post'
+import { sendPushNotificationToUser } from '@acme/api/services/pushNotificationService'
 
 export default function WishlistButton({ post }: PostProps) {
   const { data: session } = useSession()
@@ -16,6 +17,13 @@ export default function WishlistButton({ post }: PostProps) {
         void ctx.post.getLatestPosts.refetch()
         void ctx.post.getPostsAllTypes.refetch({ id: post.user.id })
         void ctx.post.getWishlist.refetch()
+
+        sendPushNotificationToUser(
+          post.user.id,
+          'outfits.bio',
+          `${session?.user.username} liked your post`,
+          ctx
+        );
       },
       onError: (e) =>
         handleErrors({
