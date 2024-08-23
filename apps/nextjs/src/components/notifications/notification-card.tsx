@@ -9,6 +9,7 @@ import { PiSpinnerGap, PiX } from 'react-icons/pi';
 import { Avatar } from '../ui/Avatar';
 import { useSession } from "next-auth/react";
 import { urlBase64ToUint8Array } from '~/utils/base64-utils';
+import { useEffect } from 'react';
 
 interface NotificationCardProps {
     notification: RouterOutputs['notifications']['getNotifications'][number];
@@ -66,6 +67,31 @@ export function NotificationCard({ notification, refetch }: NotificationCardProp
         onError: (e) => handleErrors({ e, message: 'Failed to delete notification' })
     });
 
+    const subscribeToPushNotifications = api.notifications.subscribeToPushNotifications.useMutation();
+
+    const subscribeUser = async () => {
+        try {
+            const registration = await navigator.serviceWorker.ready;
+            const subscription = await registration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+            });
+
+            const subscriptionData = {
+                endpoint: subscription.endpoint,
+                keys: {
+                    p256dh: subscription.toJSON().keys?.p256dh ?? '',
+                    auth: subscription.toJSON().keys?.auth ?? '',
+                },
+            };
+
+            const result = await subscribeToPushNotifications.mutateAsync({ subscription: subscriptionData });
+            console.log('Subscription saved:', result);
+        } catch (error) {
+            console.error('Error subscribing to push notifications:', error);
+        }
+    };
+
     const sendNotification = api.notifications.sendPushNotification.useMutation();
 
     const handleSendNotification = () => {
@@ -77,6 +103,33 @@ export function NotificationCard({ notification, refetch }: NotificationCardProp
             });
         }
     };
+
+    useEffect(() => {
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').then(
+                function (registration) {
+                    console.log('Service worker registration succeeded:', registration);
+                },
+                function (error) {
+                    console.log('Service worker registration failed:', error);
+                }
+            );
+        }
+    }, []);
+
+    useEffect(() => {
+        if (session && typeof window !== 'undefined' && 'Notification' in window) {
+            if (Notification.permission === 'default') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        subscribeUser();
+                    }
+                });
+            } else if (Notification.permission === 'granted') {
+                subscribeUser();
+            }
+        }
+    }, [session]);
 
     return <div className='w-full rounded-xl px-4 py-2 flex items-center justify-between hover:bg-white dark:hover:bg-black'>
         <Link href={href} className='flex items-center gap-3'>
