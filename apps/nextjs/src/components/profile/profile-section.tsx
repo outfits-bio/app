@@ -56,13 +56,10 @@ export const ProfileCard = ({ profileData, username }: Props) => {
             return previousProfileData;
         },
         onSettled: async () => {
-            const updatedProfileData = ctx.user.getProfile.getData({ username });
-            if (updatedProfileData && updatedProfileData.authUserHasLiked) {
-                sendPushNotification({
-                    userId: profileData?.id ?? '',
-                    body: `${data?.user.username} liked your profile`,
-                });
-            }
+            sendPushNotification({
+                userId: profileData?.id ?? '',
+                body: `${data?.user.username} liked your profile`,
+            });
 
             await ctx.user.getProfile.refetch({ username });
             router.refresh();
