@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react";
-import { Button } from "../../ui/Button"
+import { Button } from "../../../components/ui/Button"
 import { api } from "~/trpc/react";
 import { useForm } from "react-hook-form";
 import {

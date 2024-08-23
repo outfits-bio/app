@@ -2,9 +2,9 @@ import { auth } from "@acme/auth";
 import { redirect } from "next/navigation";
 import { AuthButtons } from "~/components/settings/auth-buttons";
 
-import { DiscordCard } from "~/components/settings/connections/discord-card";
-import { GoogleCard } from "~/components/settings/connections/google-card";
-import { SpotifyStatusCard } from "~/components/settings/connections/spotify-status-card";
+import { DiscordCard } from "~/app/settings/connections/discord-card";
+import { GoogleCard } from "~/app/settings/connections/google-card";
+import { SpotifyStatusCard } from "~/app/settings/connections/spotify-status-card";
 import { SettingsSidebar } from "~/components/settings/settings-sidebar";
 
 export default async function ConnectionsSettingsPage() {

@@ -1,8 +1,8 @@
 import { auth } from "@acme/auth";
 import { redirect } from "next/navigation";
 
-import { AccentCard } from "~/components/settings/appearance/accent-card";
-import { ThemeCard } from "~/components/settings/appearance/theme-card";
+import { AccentCard } from "~/app/settings/appearance/accent-card";
+import { ThemeCard } from "~/app/settings/appearance/theme-card";
 import { SettingsSidebar } from "~/components/settings/settings-sidebar";
 
 export default async function AppearanceSettingsPage() {

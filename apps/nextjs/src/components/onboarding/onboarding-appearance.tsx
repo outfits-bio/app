@@ -3,8 +3,8 @@
 import { useTheme } from "next-themes";
 import { PiArrowLeft, PiArrowRight } from "react-icons/pi";
 import { Button } from "../ui/Button";
-import { ThemeCard } from "../settings/appearance/theme-card";
-import { AccentCard } from "../settings/appearance/accent-card";
+import { ThemeCard } from "../../app/settings/appearance/theme-card";
+import { AccentCard } from "../../app/settings/appearance/accent-card";
 import Link from "next/link";
 
 interface OnboardingStartSectionProps {

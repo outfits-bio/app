@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "../../ui/Button"
+import { Button } from "../../../components/ui/Button"
 import { api } from "~/trpc/react";
 import { toast } from 'react-hot-toast';
 import { handleErrors } from "@acme/utils/handle-errors.util";
