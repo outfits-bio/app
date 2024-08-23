@@ -86,10 +86,11 @@ model User {
   notifications     Notification[] @relation("Notifications")
   sentNotifications Notification[] @relation("SentNotifications")
 
-  lanyardEnabled Boolean       @default(false)
-  hideLanyard    Boolean       @default(false)
+  lanyardEnabled Boolean        @default(false)
+  hideLanyard    Boolean        @default(false)
   Comment        Comment[]
   CommentLike    CommentLike[]
+  Subscription   Subscription[]
 }
 
 model Link {
@@ -208,6 +209,16 @@ model CommentLike {
   @@unique([userId, commentId])
   @@index([userId])
   @@index([commentId])
+}
+
+model Subscription {
+  id       String @id @default(cuid())
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  endpoint String
+  keys     Json
+
+  @@index([userId])
 }
 
 enum NotificationType {

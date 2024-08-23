@@ -1,6 +1,24 @@
 import { deleteNotificationSchema } from "@acme/validators/notification.schema";
 import { TRPCError } from "@trpc/server";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { z } from 'zod';
+import webpush from 'web-push';
+
+// Set VAPID keys
+webpush.setVapidDetails(
+  'mailto:jectaunscripted@gmail.com',
+  process.env.VAPID_PUBLIC_KEY ?? '',
+  process.env.VAPID_PRIVATE_KEY ?? ''
+);
+
+// Function to send push notification
+const sendPushNotification = async (subscription: webpush.PushSubscription, payload: string) => {
+  try {
+    await webpush.sendNotification(subscription, payload);
+  } catch (error) {
+    console.error('Error sending push notification:', error);
+  }
+};
 
 export const notificationsRouter = createTRPCRouter({
   getNotifications: protectedProcedure.query(async ({ ctx }) => {
@@ -45,6 +63,24 @@ export const notificationsRouter = createTRPCRouter({
 
     const [res] = await ctx.db.$transaction([notifications, update]);
 
+    // Send push notifications
+    const subscriptions = await ctx.db.subscription.findMany({
+      where: { userId: ctx.session.user.id },
+    });
+
+    const payload = JSON.stringify({
+      title: 'outfits.bio',
+      body: 'You have a new notification',
+    });
+
+    subscriptions.forEach((subscription) => {
+      const pushSubscription: webpush.PushSubscription = {
+        endpoint: subscription.endpoint,
+        keys: subscription.keys as { p256dh: string; auth: string },
+      };
+      sendPushNotification(pushSubscription, payload);
+    });
+
     return res;
   }),
   deleteNotification: protectedProcedure
@@ -87,4 +123,25 @@ export const notificationsRouter = createTRPCRouter({
 
     return count;
   }),
+  subscribeToPushNotifications: protectedProcedure
+    .input(z.object({
+      subscription: z.object({
+        endpoint: z.string(),
+        keys: z.object({
+          p256dh: z.string(),
+          auth: z.string(),
+        }),
+      }),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.subscription.create({
+        data: {
+          userId: ctx.session.user.id,
+          endpoint: input.subscription.endpoint,
+          keys: input.subscription.keys,
+        },
+      });
+
+      return true;
+    }),
 });

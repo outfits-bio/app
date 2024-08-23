@@ -2,7 +2,7 @@
 
 import { api } from "~/trpc/react";
 import { NotificationCard } from "~/components/notifications/notification-card";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "~/components/ui/Button";
 import { useSession } from "next-auth/react";
 
@@ -18,6 +18,40 @@ export default function NotificationsPage() {
     const filteredNotifications = notifications?.filter(
         notification => notification.user?.id !== session?.user?.id
     ) ?? [];
+
+    const subscribeToPushNotifications = api.notifications.subscribeToPushNotifications.useMutation();
+
+    const subscribeUser = async () => {
+        const registration = await navigator.serviceWorker.ready;
+        const subscription = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+        });
+
+        const subscriptionData = {
+            endpoint: subscription.endpoint,
+            keys: {
+                p256dh: subscription.toJSON().keys?.p256dh ?? '',
+                auth: subscription.toJSON().keys?.auth ?? '',
+            },
+        };
+
+        await subscribeToPushNotifications.mutateAsync({ subscription: subscriptionData });
+    };
+
+    useEffect(() => {
+        if (session) {
+            if (Notification.permission === 'default') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        subscribeUser();
+                    }
+                });
+            } else if (Notification.permission === 'granted') {
+                subscribeUser();
+            }
+        } else return;
+    }, []);
 
     return (
         <div className='w-screen flex h-full justify-center'>
