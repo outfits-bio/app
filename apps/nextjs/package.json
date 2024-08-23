@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@9.7.1",
   "scripts": {
-    "build": "pnpm with-env next build",
+    "build": "pnpm with-env next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
     "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "pnpm with-env next dev",
     "format": "prettier --check . --ignore-path ../../.gitignore",
@@ -17,7 +18,6 @@
     "@acme/api": "workspace:*",
     "@acme/auth": "workspace:*",
     "@acme/db": "workspace:*",
-    "@acme/ui": "workspace:*",
     "@acme/validators": "workspace:*",
     "@headlessui/react": "^2.1.2",
     "@headlessui/tailwindcss": "^0.2.1",
