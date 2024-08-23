@@ -15,27 +15,6 @@ interface NotificationCardProps {
     refetch?: () => void;
 }
 
-const sendPushNotification = async (subscription: PushSubscription, payload: string) => {
-    try {
-        const response = await fetch('/api/send-push-notification', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                subscription,
-                payload,
-            }),
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to send push notification');
-        }
-    } catch (error) {
-        console.error('Error sending push notification:', error);
-    }
-};
-
 const RelativeDate = ({ date }: { date: Date }) => {
     const timeString = intlFormatDistance(date, Date.now(), {
         style: 'narrow',
@@ -87,42 +66,17 @@ export function NotificationCard({ notification, refetch }: NotificationCardProp
         onError: (e) => handleErrors({ e, message: 'Failed to delete notification' })
     });
 
-    const { data: subscriptions } = api.notifications.getSubscriptions.useQuery({
-        userId: notification.user?.id ?? '',
-    });
+    const sendNotification = api.notifications.sendPushNotification.useMutation();
 
-    // Send push notification
-    const sendNotification = async () => {
-        if (subscriptions) {
-            const payload = JSON.stringify({
+    const handleSendNotification = () => {
+        if (notification.user?.id) {
+            sendNotification.mutate({
+                userId: notification.user.id,
                 title: 'outfits.bio',
                 body: `${notification.user?.username} ${notification.message}`,
             });
-
-            subscriptions.forEach(async (subscription) => {
-                const pushSubscription: PushSubscription = {
-                    endpoint: subscription.endpoint,
-                    getKey: (name: PushEncryptionKeyName) => {
-                        const keys = subscription.keys as Record<string, string>;
-                        return new TextEncoder().encode(keys[name] ?? '').buffer;
-                    },
-                    toJSON: () => ({
-                        endpoint: subscription.endpoint,
-                        keys: subscription.keys as Record<string, string>
-                    }),
-                    unsubscribe: async () => false,
-                    expirationTime: null,
-                    options: {
-                        applicationServerKey: null,
-                        userVisibleOnly: true
-                    }
-                };
-                await sendPushNotification(pushSubscription, payload);
-            });
         }
     };
-
-    sendNotification();
 
     return <div className='w-full rounded-xl px-4 py-2 flex items-center justify-between hover:bg-white dark:hover:bg-black'>
         <Link href={href} className='flex items-center gap-3'>

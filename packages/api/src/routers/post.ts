@@ -16,17 +16,9 @@ import { TRPCError } from "@trpc/server";
 import { NotificationType, PostType } from "@acme/db";
 import type { Prisma } from "@acme/db";
 import { z } from "zod";
-import webpush from 'web-push';
+import { sendPushNotificationToUser } from '../services/pushNotificationService';
 
 import { deleteImage, generatePresignedUrl } from "@acme/utils/image.util";
-
-const sendPushNotification = async (subscription: webpush.PushSubscription, payload: string) => {
-  try {
-    await webpush.sendNotification(subscription, payload);
-  } catch (error) {
-    console.error('Error sending push notification:', error);
-  }
-};
 
 export const postTypeSchema = z.object({
   type: z.nativeEnum(PostType),
@@ -226,29 +218,12 @@ export const postRouter = createTRPCRouter({
           await ctx.db.$transaction([like, notification]);
 
           // Send push notification
-          const subscriptions = await ctx.db.subscription.findMany({
-            where: { userId: post.userId },
-          });
-
-          console.log('Subscriptions found:', subscriptions.length);
-
-          const payload = JSON.stringify({
-            title: 'outfits.bio',
-            body: `${ctx.session.user.username} liked your post`,
-          });
-
-          for (const subscription of subscriptions) {
-            const pushSubscription: webpush.PushSubscription = {
-              endpoint: subscription.endpoint,
-              keys: subscription.keys as { p256dh: string; auth: string },
-            };
-            try {
-              await sendPushNotification(pushSubscription, payload);
-              console.log('Push notification sent successfully');
-            } catch (error) {
-              console.error('Error sending push notification:', error);
-            }
-          }
+          await sendPushNotificationToUser(
+            post.userId,
+            'outfits.bio',
+            `${ctx.session.user.username} liked your post`,
+            ctx
+          );
         } else {
           await ctx.db.$transaction([like]);
         }
@@ -305,6 +280,13 @@ export const postRouter = createTRPCRouter({
           id: true,
         },
       });
+
+      await sendPushNotificationToUser(
+        reaction.post.userId,
+        'outfits.bio',
+        `${ctx.session.user.username} reacted to your post with ${emoji}`,
+        ctx
+      );
 
       return !!notification.id;
     }),
@@ -386,22 +368,12 @@ export const postRouter = createTRPCRouter({
         await ctx.db.$transaction([wishlist, notification]);
 
         // Send push notification
-        const subscriptions = await ctx.db.subscription.findMany({
-          where: { userId: post.userId },
-        });
-
-        const payload = JSON.stringify({
-          title: 'outfits.bio',
-          body: `${ctx.session.user.username} added your post to their wishlist`,
-        });
-
-        subscriptions.forEach((subscription) => {
-          const pushSubscription: webpush.PushSubscription = {
-            endpoint: subscription.endpoint,
-            keys: subscription.keys as { p256dh: string; auth: string },
-          };
-          sendPushNotification(pushSubscription, payload);
-        });
+        await sendPushNotificationToUser(
+          post.userId,
+          'outfits.bio',
+          `${ctx.session.user.username} added your post to their wishlist`,
+          ctx
+        );
       } else {
         await ctx.db.$transaction([wishlist]);
       }

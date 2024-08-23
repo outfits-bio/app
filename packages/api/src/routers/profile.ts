@@ -10,15 +10,7 @@ import axios from "axios";
 import { NotificationType } from "@acme/db";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { z } from "zod";
-import webpush from 'web-push';
-
-const sendPushNotification = async (subscription: webpush.PushSubscription, payload: string) => {
-  try {
-    await webpush.sendNotification(subscription, payload);
-  } catch (error) {
-    console.error('Error sending push notification:', error);
-  }
-};
+import { sendPushNotificationToUser } from '../services/pushNotificationService';
 
 export const profileRouter = createTRPCRouter({
   profileExists: publicProcedure
@@ -211,22 +203,14 @@ export const profileRouter = createTRPCRouter({
         const [res] = await ctx.db.$transaction([like, notification]);
 
         // Send push notification
-        const subscriptions = await ctx.db.subscription.findMany({
-          where: { userId: id },
-        });
-
-        const payload = JSON.stringify({
-          title: 'outfits.bio',
-          body: `${ctx.session.user.username} liked your profile`,
-        });
-
-        subscriptions.forEach((subscription) => {
-          const pushSubscription: webpush.PushSubscription = {
-            endpoint: subscription.endpoint,
-            keys: subscription.keys as { p256dh: string; auth: string },
-          };
-          sendPushNotification(pushSubscription, payload);
-        });
+        if (id !== ctx.session.user.id) {
+          await sendPushNotificationToUser(
+            id,
+            'outfits.bio',
+            `${ctx.session.user.username} liked your profile`,
+            ctx
+          );
+        }
 
         likeData = res;
       } catch (error) {

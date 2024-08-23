@@ -2,23 +2,7 @@ import { deleteNotificationSchema } from "@acme/validators/notification.schema";
 import { TRPCError } from "@trpc/server";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { z } from 'zod';
-import webpush from 'web-push';
-
-// Set VAPID keys
-webpush.setVapidDetails(
-  'mailto:your-email@example.com',
-  process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? '',
-  process.env.VAPID_PRIVATE_KEY ?? ''
-);
-
-// Function to send push notification
-const sendPushNotification = async (subscription: webpush.PushSubscription, payload: string) => {
-  try {
-    await webpush.sendNotification(subscription, payload);
-  } catch (error) {
-    console.error('Error sending push notification:', error);
-  }
-};
+import { sendPushNotificationToUser } from '../services/pushNotificationService';
 
 export const notificationsRouter = createTRPCRouter({
   getNotifications: protectedProcedure.query(async ({ ctx }) => {
@@ -64,22 +48,7 @@ export const notificationsRouter = createTRPCRouter({
     const [res] = await ctx.db.$transaction([notifications, update]);
 
     // Send push notifications
-    const subscriptions = await ctx.db.subscription.findMany({
-      where: { userId: ctx.session.user.id },
-    });
-
-    const payload = JSON.stringify({
-      title: 'outfits.bio',
-      body: 'You have a new notification',
-    });
-
-    subscriptions.forEach((subscription) => {
-      const pushSubscription: webpush.PushSubscription = {
-        endpoint: subscription.endpoint,
-        keys: subscription.keys as { p256dh: string; auth: string },
-      };
-      sendPushNotification(pushSubscription, payload);
-    });
+    await sendPushNotificationToUser(ctx.session.user.id, 'outfits.bio', 'You have a new notification', ctx);
 
     return res;
   }),
@@ -151,5 +120,15 @@ export const notificationsRouter = createTRPCRouter({
         where: { userId: input.userId },
       });
       return subscriptions;
+    }),
+  sendPushNotification: protectedProcedure
+    .input(z.object({
+      userId: z.string(),
+      title: z.string(),
+      body: z.string(),
+    }))
+    .mutation(async ({ input, ctx }) => {
+      await sendPushNotificationToUser(input.userId, input.title, input.body, ctx);
+      return true;
     }),
 });
