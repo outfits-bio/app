@@ -16,7 +16,6 @@ import { TRPCError } from "@trpc/server";
 import { NotificationType, PostType } from "@acme/db";
 import type { Prisma } from "@acme/db";
 import { z } from "zod";
-import { sendPushNotificationToUser } from '../services/pushNotificationService';
 
 import { deleteImage, generatePresignedUrl } from "@acme/utils/image.util";
 
@@ -272,13 +271,6 @@ export const postRouter = createTRPCRouter({
         },
       });
 
-      await sendPushNotificationToUser(
-        reaction.post.userId,
-        'outfits.bio',
-        `${ctx.session.user.username} reacted to your post with ${emoji}`,
-        ctx
-      );
-
       return !!notification.id;
     }),
 
@@ -358,13 +350,6 @@ export const postRouter = createTRPCRouter({
 
         await ctx.db.$transaction([wishlist, notification]);
 
-        // Send push notification
-        await sendPushNotificationToUser(
-          post.userId,
-          'outfits.bio',
-          `${ctx.session.user.username} added your post to their wishlist`,
-          ctx
-        );
       } else {
         await ctx.db.$transaction([wishlist]);
       }
