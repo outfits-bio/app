@@ -1,4 +1,5 @@
 import webpush from 'web-push';
+import { debounce } from 'lodash';
 
 webpush.setGCMAPIKey('103953800507');
 webpush.setVapidDetails(
@@ -16,7 +17,10 @@ export const sendPushNotification = async (subscription: webpush.PushSubscriptio
     }
 };
 
-export const sendPushNotificationToUser = async (userId: string, body: string, ctx: any) => {
+const notificationCooldowns = new Map<string, number>();
+const COOLDOWN_PERIOD = 60000;
+
+const debouncedSendNotification = debounce(async (userId: string, body: string, ctx: any) => {
     const subscriptions = await ctx.db.subscription.findMany({
         where: { userId: userId },
     });
@@ -30,4 +34,18 @@ export const sendPushNotificationToUser = async (userId: string, body: string, c
         };
         await sendPushNotification(pushSubscription, payload);
     }
+}, 1000);
+
+export const sendPushNotificationToUser = async (userId: string, body: string, ctx: any) => {
+    const cooldownKey = `${userId}:${body}`;
+    const lastNotificationTime = notificationCooldowns.get(cooldownKey) || 0;
+    const currentTime = Date.now();
+
+    if (currentTime - lastNotificationTime < COOLDOWN_PERIOD) {
+        console.log('Notification on cooldown, skipping');
+        return;
+    }
+
+    notificationCooldowns.set(cooldownKey, currentTime);
+    debouncedSendNotification(userId, body, ctx);
 };
