@@ -6,7 +6,7 @@ import type { PostProps } from './post'
 import { useSession } from 'next-auth/react'
 import toast from 'react-hot-toast'
 import { PiFloppyDisk, PiPaperPlaneRight } from 'react-icons/pi'
-import { sendPushNotificationToUser } from '../../../../../../packages/api/src/services/pushNotificationService'
+import { sendPushNotificationToUser } from '@acme/api/services/pushNotificationService'
 
 type CommentType = {
     id: string

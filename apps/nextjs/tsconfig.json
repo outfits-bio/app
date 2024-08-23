@@ -26,6 +26,9 @@
       ],
       "@acme/utils/*": [
         "../../packages/utils/src/*"
+      ],
+      "@acme/api/services/*": [
+        "../../packages/api/src/services/*"
       ]
     },
     "plugins": [

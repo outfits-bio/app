@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { PiHeartBold, PiHeartFill } from 'react-icons/pi'
 import { Button } from '../../ui/Button'
 import type { PostProps } from './post'
-import { sendPushNotificationToUser } from '../../../../../../packages/api/src/services/pushNotificationService'
+import { sendPushNotificationToUser } from '@acme/api/services/pushNotificationService'
 
 export interface LikeButtonProps extends PostProps {
   variant?: 'default' | 'ghost'
