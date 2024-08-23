@@ -24,10 +24,12 @@ export function LikeButton({ post, variant = 'default' }: LikeButtonProps) {
         void ctx.post.getLatestPosts.refetch()
         void ctx.post.getPostsAllTypes.refetch({ id: post.user.id })
 
-        sendPushNotification({
-          userId: post.user.id,
-          body: `${session?.user.username} liked your post`,
-        });
+        if (!post.authUserHasLiked) {
+          sendPushNotification({
+            userId: post.user.id,
+            body: `${session?.user.username} liked your post`,
+          });
+        }
       },
       onError: (e) =>
         handleErrors({
