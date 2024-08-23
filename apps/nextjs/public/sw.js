@@ -1,13 +1,19 @@
 self.addEventListener('push', event => {
-    const data = event.data.json();
-    const options = {
-        body: data.body,
-        icon: '/icon-192x192.png',
-    };
+    if (event.data) {
+        try {
+            const data = event.data.json();
+            const options = {
+                body: data.body,
+                icon: '/icon-192x192.png',
+            };
 
-    event.waitUntil(
-        self.registration.showNotification(data.title, options)
-    );
+            event.waitUntil(
+                self.registration.showNotification(data.title, options)
+            );
+        } catch (error) {
+            console.error('Error processing push event:', error);
+        }
+    }
 });
 
 self.addEventListener('notificationclick', event => {

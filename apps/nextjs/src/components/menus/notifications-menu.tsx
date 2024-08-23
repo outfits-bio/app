@@ -64,7 +64,7 @@ export function NotificationsMenu() {
         }, []);
 
         useEffect(() => {
-            if (session) {
+            if (session && typeof window !== 'undefined' && 'Notification' in window) {
                 if (Notification.permission === 'default') {
                     Notification.requestPermission().then(permission => {
                         if (permission === 'granted') {
@@ -74,8 +74,8 @@ export function NotificationsMenu() {
                 } else if (Notification.permission === 'granted') {
                     subscribeUser();
                 }
-            } else return;
-        }, []);
+            }
+        }, [session]);
 
         return (
             <Popover>

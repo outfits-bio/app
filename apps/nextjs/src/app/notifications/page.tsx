@@ -58,7 +58,7 @@ export default function NotificationsPage() {
     }, []);
 
     useEffect(() => {
-        if (session) {
+        if (session && typeof window !== 'undefined' && 'Notification' in window) {
             if (Notification.permission === 'default') {
                 Notification.requestPermission().then(permission => {
                     if (permission === 'granted') {
@@ -68,8 +68,8 @@ export default function NotificationsPage() {
             } else if (Notification.permission === 'granted') {
                 subscribeUser();
             }
-        } else return;
-    }, []);
+        }
+    }, [session]);
 
     return (
         <div className='w-screen flex h-full justify-center'>
