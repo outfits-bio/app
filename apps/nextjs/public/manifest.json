@@ -1,7 +1,7 @@
 {
   "theme_color": "#ffffff",
   "background_color": "#F9F9F9",
-  "display": "fullscreen",
+  "display": "standalone",
   "scope": "https://outfits.bio/",
   "start_url": "https://outfits.bio/",
   "name": "outfits.bio",
