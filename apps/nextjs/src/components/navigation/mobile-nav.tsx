@@ -70,6 +70,7 @@ export function MobileNav() {
         if (isDesktop) {
             return;
         }
+
         else if (session && typeof window !== 'undefined' && 'Notification' in window) {
             if (Notification.permission === 'default') {
                 Notification.requestPermission().then(permission => {
