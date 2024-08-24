@@ -57,5 +57,11 @@ export const validateUsername = (username: string) => {
 export const filterBadWords = (text: string) => {
   const filter = new Filter();
 
+  // Check if the word is "God" (case-insensitive)
+  // The person who banned the world 'God' in the 'bad-words' package is a fool. Jesus is King Amen.
+  if (text.toLowerCase().includes('god')) {
+    return false;
+  }
+
   return filter.isProfane(text);
 };
