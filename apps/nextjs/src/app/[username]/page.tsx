@@ -1,3 +1,5 @@
+"use server";
+
 import { api } from "~/trpc/server";
 import { notFound } from "next/navigation";
 import { Posts } from "~/components/profile/posts";
@@ -30,7 +32,7 @@ export default async function ProfilePage({ params }: { params: { username: stri
         return <div className='flex flex-col md:flex-row w-screen h-full gap-4 pr-4 md:gap-20 lg:gap-36 overflow-y-scroll md:overflow-y-auto'>
             <ProfileCard profileData={profileData} username={params.username} />
 
-            <Posts profileData={profileData} />
+            <Posts username={params.username} />
         </div>
     } catch (error) {
         notFound();
