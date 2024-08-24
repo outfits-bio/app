@@ -600,6 +600,7 @@ export const postRouter = createTRPCRouter({
           type: true,
           featured: true,
           likeCount: true,
+          createdAt: true,
           user: {
             select: {
               image: true,

@@ -116,6 +116,32 @@ export function Post({ post, ref, priority = false }: PostProps) {
         )}
       </p>
 
+      <p className='self-start text-sm font-medium font-clash text-white/80'>
+        {(() => {
+          const now = new Date();
+          const createdAt = new Date(post.createdAt);
+          const diffInMinutes = Math.floor((now.getTime() - createdAt.getTime()) / (1000 * 60));
+          const diffInHours = Math.floor(diffInMinutes / 60);
+          const diffInDays = Math.floor(diffInHours / 24);
+          const diffInWeeks = Math.floor(diffInDays / 7);
+          const diffInMonths = (now.getFullYear() - createdAt.getFullYear()) * 12 + now.getMonth() - createdAt.getMonth();
+
+          if (diffInMinutes < 60) {
+            return `${diffInMinutes} minute${diffInMinutes !== 1 ? 's' : ''} ago`;
+          } else if (diffInHours < 24) {
+            return `${diffInHours} hour${diffInHours !== 1 ? 's' : ''} ago`;
+          } else if (diffInDays < 7) {
+            return `${diffInDays} day${diffInDays !== 1 ? 's' : ''} ago`;
+          } else if (diffInWeeks < 4) {
+            return `${diffInWeeks} week${diffInWeeks !== 1 ? 's' : ''} ago`;
+          } else if (diffInMonths < 1) {
+            return createdAt.toLocaleDateString();
+          } else {
+            return createdAt.toLocaleDateString();
+          }
+        })()}
+      </p>
+
       {(post._count.likes > 0 ||
         post._count.reactions > 0 ||
         post._count.wishlists > 0) && (

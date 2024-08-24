@@ -12,6 +12,7 @@ type CommentType = {
     id: string
     content: string
     userId: string
+    createdAt: Date
     user: {
         id: string
         image: string | null
@@ -214,6 +215,31 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
                                 </button>
                             </>
                         )}
+                        <button className="ml-2 cursor-default">
+                            {(() => {
+                                const now = new Date();
+                                const createdAt = new Date(comment.createdAt);
+                                const diffInMinutes = Math.floor((now.getTime() - createdAt.getTime()) / (1000 * 60));
+                                const diffInHours = Math.floor(diffInMinutes / 60);
+                                const diffInDays = Math.floor(diffInHours / 24);
+                                const diffInWeeks = Math.floor(diffInDays / 7);
+                                const diffInMonths = (now.getFullYear() - createdAt.getFullYear()) * 12 + now.getMonth() - createdAt.getMonth();
+
+                                if (diffInMinutes < 60) {
+                                    return `${diffInMinutes} minute${diffInMinutes !== 1 ? 's' : ''} ago`;
+                                } else if (diffInHours < 24) {
+                                    return `${diffInHours} hour${diffInHours !== 1 ? 's' : ''} ago`;
+                                } else if (diffInDays < 7) {
+                                    return `${diffInDays} day${diffInDays !== 1 ? 's' : ''} ago`;
+                                } else if (diffInWeeks < 4) {
+                                    return `${diffInWeeks} week${diffInWeeks !== 1 ? 's' : ''} ago`;
+                                } else if (diffInMonths < 1) {
+                                    return createdAt.toLocaleDateString();
+                                } else {
+                                    return createdAt.toLocaleDateString();
+                                }
+                            })()}
+                        </button>
                     </div>
                 </div>
             </div>
