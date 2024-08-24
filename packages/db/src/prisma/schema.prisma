@@ -1,0 +1,227 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model User {
+  id                String         @id @default(cuid())
+  tagline           String?
+  username          String?        @unique
+  email             String?        @unique
+  emailVerified     DateTime?
+  image             String?
+  onboarded         Boolean        @default(false)
+  verified          Boolean        @default(false)
+  admin             Boolean        @default(false)
+  outfitPostCount   Int            @default(0)
+  hoodiePostCount   Int            @default(0)
+  shirtPostCount    Int            @default(0)
+  pantsPostCount    Int            @default(0)
+  shoesPostCount    Int            @default(0)
+  watchPostCount    Int            @default(0)
+  headwearPostCount Int            @default(0)
+  jewelryPostCount  Int            @default(0)
+  glassesPostCount  Int            @default(0)
+  imageCount        Int            @default(0)
+  likeCount         Int            @default(0)
+  lanyardEnabled    Boolean        @default(false)
+  hideLanyard       Boolean        @default(false)
+  accounts          Account[]
+  sessions          Session[]
+  links             Link[]
+  posts             Post[]
+  likedPosts        Post[]         @relation("PostLikes")
+  postReactions     Reaction[]
+  wishlistedPosts   Post[]         @relation("Wishlists")
+  likedBy           User[]         @relation("Likes")
+  liked             User[]         @relation("Likes")
+  createdReports    Report[]
+  reports           Report[]       @relation("ReportedUser")
+  notifications     Notification[] @relation("Notifications")
+  sentNotifications Notification[] @relation("SentNotifications")
+}
+
+model Link {
+  id     String   @id @default(cuid())
+  type   LinkType
+  url    String
+  userId String
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Post {
+  id            String         @id @default(cuid())
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  userId        String
+  featured      Boolean        @default(false)
+  type          PostType
+  image         String?
+  likeCount     Int            @default(0)
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reports       Report[]       @relation("ReportedPost")
+  notifications Notification[] @relation("Notifications")
+  likes         User[]         @relation("PostLikes")
+  wishlists     User[]         @relation("Wishlists")
+  reactions     Reaction[]
+
+  @@index([userId])
+}
+
+model Report {
+  id             String     @id @default(cuid())
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  creatorId      String
+  reason         String
+  resolved       Boolean    @default(false)
+  type           ReportType
+  reportedUserId String?
+  reportedPostId String?
+  creator        User       @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  reportedUser   User?      @relation("ReportedUser", fields: [reportedUserId], references: [id], onDelete: Cascade)
+  reportedPost   Post?      @relation("ReportedPost", fields: [reportedPostId], references: [id], onDelete: Cascade)
+
+  @@index([creatorId])
+  @@index([reportedPostId])
+  @@index([reportedUserId])
+}
+
+model Notification {
+  id           String           @id @default(cuid())
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  targetUserId String
+  type         NotificationType
+  read         Boolean          @default(false)
+  postId       String?
+  userId       String?
+  message      String?
+  link         String?
+  targetUser   User             @relation("Notifications", fields: [targetUserId], references: [id], onDelete: Cascade)
+  post         Post?            @relation("Notifications", fields: [postId], references: [id], onDelete: Cascade)
+  user         User?            @relation("SentNotifications", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([targetUserId])
+  @@index([postId])
+  @@index([userId])
+}
+
+model Reaction {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  postId    String
+  content   String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([postId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Likes {
+  A String
+  B String
+
+  @@unique([A, B], map: "_Likes_AB_unique")
+  @@index([B], map: "_Likes_B_index")
+  @@map("_Likes")
+}
+
+model PostLikes {
+  A String
+  B String
+
+  @@unique([A, B], map: "_PostLikes_AB_unique")
+  @@index([B], map: "_PostLikes_B_index")
+  @@map("_PostLikes")
+}
+
+model Wishlists {
+  A String
+  B String
+
+  @@unique([A, B], map: "_Wishlists_AB_unique")
+  @@index([B], map: "_Wishlists_B_index")
+  @@map("_Wishlists")
+}
+
+enum NotificationType {
+  PROFILE_LIKE
+  POST_LIKE
+  POST_REACTION
+  OTHER
+}
+
+enum PostType {
+  OUTFIT
+  HOODIE
+  SHIRT
+  PANTS
+  SHOES
+  WATCH
+  HEADWEAR
+  JEWELRY
+  GLASSES
+}
+
+enum LinkType {
+  INSTAGRAM
+  TWITTER
+  YOUTUBE
+  TIKTOK
+  DISCORD
+  WEBSITE
+  GITHUB
+}
+
+enum ReportType {
+  USER
+  POST
+}

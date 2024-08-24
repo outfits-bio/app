@@ -11,7 +11,7 @@
   },
   "license": "MIT",
   "prisma": {
-    "schema": "./src/schema.prisma"
+    "schema": "./src/prisma/schema.prisma"
   },
   "scripts": {
     "clean": "rm -rf .turbo dist node_modules",
@@ -19,6 +19,7 @@
     "lint": "eslint",
     "generate": "pnpm with-env prisma generate",
     "push": "pnpm with-env prisma db push --skip-generate",
+    "pull": "pnpm with-env prisma db pull",
     "studio": "pnpm with-env prisma studio --port 5556",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "with-env": "dotenv -e ../../.env --",
