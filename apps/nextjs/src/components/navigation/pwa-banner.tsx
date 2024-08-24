@@ -41,7 +41,7 @@ export function PwaBanner() {
 
     if (isIOS && !isStandalone && showBanner) {
         return (
-            <div className="z-50 justify-between flex-col h-screen w-screen bg-white dark:bg-black text-black dark:text-white flex py-10 items-center px-6 text-center overflow-y-auto">
+            <section className="z-50 justify-between flex-col h-screen w-screen bg-white dark:bg-black text-black dark:text-white flex py-10 items-center px-6 text-center overflow-hidden">
 
                 <div className="flex flex-col gap-1 items-center">
                     <Image src="/apple-touch-icon.png" alt="Outfits.bio logo" width={100} height={100} loading="eager" priority />
@@ -61,7 +61,7 @@ export function PwaBanner() {
                     <PiCaretDownBold className=" text-[#007AFF] w-6 h-6" />
                 </div>
 
-            </div>
+            </section>
         )
     } else {
         return null;
