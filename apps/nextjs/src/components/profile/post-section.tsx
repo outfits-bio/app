@@ -35,7 +35,12 @@ export const PostSection = ({ profileData, postsData, type, loading }: PostSecti
      */
     useEffect(() => {
         if (isCropped) {
-            mutate({ type });
+            mutate({
+                type,
+                caption: '',
+                tags: [],
+                productLink: ''
+            });
             setIsCropped(false);
         }
     }, [isCropped]);

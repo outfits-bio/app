@@ -33,7 +33,7 @@ interface Props {
     setFile: Dispatch<SetStateAction<File | Blob | null>>;
     setIsCropped: (isCropped: boolean) => void;
     type: PostType;
-    setType: Dispatch<SetStateAction<PostType>>;
+    setType?: Dispatch<SetStateAction<PostType>>;
 }
 
 export function CropPostModal({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl, setIsCropped, type, setType }: Props) {
@@ -54,13 +54,6 @@ export function CropPostModal({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
     const [caption, setCaption] = useState('');
     const [tags, setTags] = useState<string[]>([]);
     const [productLink, setProductLink] = useState('');
-
-    useEffect(() => {
-        if (isCropped) {
-            // Remove this mutation call
-            // mutate({ type, caption, tags, productLink });
-        }
-    }, [isCropped]);
 
     const { mutate, isPending: isPosting } = api.post.createPost.useMutation({
         onError: (e) => handleErrors({ e, message: 'Failed to create post' }),
@@ -109,13 +102,16 @@ export function CropPostModal({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
             setFile(croppedImage.file);
             setFileUrl(croppedImage.fileUrl);
             setIsCropped(true);
+            if (isCropped) {
+                await mutate({ type, caption, tags, productLink });
+            }
 
-            // Only call mutate here
-            mutate({ type, caption, tags, productLink });
+            setIsOpen(false);
+            toast.success('Post created successfully');
         } catch (e) {
             console.error(e)
         }
-    }, [croppedAreaPixelsState, isNSFW, caption, tags, productLink, type, mutate]);
+    }, [croppedAreaPixelsState, isNSFW, caption, tags, productLink, type]);
 
     const handleCancel = useCallback(() => {
         setFile(null);
