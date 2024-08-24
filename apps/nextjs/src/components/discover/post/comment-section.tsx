@@ -57,13 +57,21 @@ export function CommentSection({ post }: PostProps) {
     return (
         <div className="flex flex-col h-[500px]">
             <div className="flex-grow overflow-y-auto">
-                {comments?.pages.map((page) =>
-                    page.comments.map((comment) => (
-                        <Comment key={comment.id} comment={comment} postId={post.id} />
-                    ))
-                )}
-                {hasNextPage && (
-                    <Button onClick={() => fetchNextPage()}>Load more comments</Button>
+                {comments?.pages[0]?.comments.length === 0 ? (
+                    <div className="flex items-center justify-center h-full text-gray-500">
+                        <p>It's kinda empty here, start the conversation.</p>
+                    </div>
+                ) : (
+                    <>
+                        {comments?.pages.map((page) =>
+                            page.comments.map((comment) => (
+                                <Comment key={comment.id} comment={comment} postId={post.id} />
+                            ))
+                        )}
+                        {hasNextPage && (
+                            <Button onClick={() => fetchNextPage()}>Load more comments</Button>
+                        )}
+                    </>
                 )}
             </div>
             <div className="mt-4 flex">
