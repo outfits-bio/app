@@ -1,12 +1,13 @@
 {
   "theme_color": "#ffffff",
   "background_color": "#F9F9F9",
-  "display": "fullscreen",
+  "display": "standalone",
   "scope": "https://outfits.bio/",
   "start_url": "https://outfits.bio/",
   "name": "outfits.bio",
   "short_name": "outfits.bio",
   "description": "Your wardrobe in the cloud, share and inspire your followers",
+  "gcm_sender_id": "103953800507",
   "icons": [
     {
       "src": "/icon-192x192.png",

@@ -5,6 +5,7 @@ import { authRouter } from "./routers/auth";
 import { adminRouter } from "./routers/admin";
 import { notificationsRouter } from "./routers/notifications";
 import { postRouter } from "./routers/post";
+import { commentRouter } from "./routers/comment";
 import { createTRPCRouter, mergeRouters } from "./trpc";
 
 const userRouters = mergeRouters(userRouter, profileRouter);
@@ -13,6 +14,7 @@ export const appRouter = createTRPCRouter({
   user: userRouters,
   auth: authRouter,
   post: postRouter,
+  comment: commentRouter,
   report: reportRouter,
   admin: adminRouter,
   notifications: notificationsRouter,

@@ -9,6 +9,7 @@ export default function WishlistButton({ post }: PostProps) {
   const { data: session } = useSession()
 
   const ctx = api.useUtils()
+  const { mutate: sendPushNotification } = api.notifications.sendPushNotification.useMutation();
 
   const { mutate: addToWishlist, isPending: addToWishlistPending } =
     api.post.addToWishlist.useMutation({
@@ -16,6 +17,12 @@ export default function WishlistButton({ post }: PostProps) {
         void ctx.post.getLatestPosts.refetch()
         void ctx.post.getPostsAllTypes.refetch({ id: post.user.id })
         void ctx.post.getWishlist.refetch()
+
+        sendPushNotification({
+          userId: post.user.id,
+          body: `${session?.user.username} added your post to their wishlist`,
+        });
+
       },
       onError: (e) =>
         handleErrors({

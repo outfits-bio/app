@@ -5,18 +5,27 @@ import { api } from "~/trpc/react";
 import getCroppedImg from "@acme/utils/crop-image.util";
 import { handleErrors } from "@acme/utils/handle-errors.util";
 import { getPostTypeName } from "@acme/utils/names.util";
-import { Listbox } from '@headlessui/react';
 import axios from "axios";
 import { PostType } from "@acme/db";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Area } from "react-easy-crop";
 import Cropper from "react-easy-crop";
-import { PiCaretDown, PiPlus } from "react-icons/pi";
+import { PiPlus } from "react-icons/pi";
 import { Button } from "../ui/Button";
 import { BaseModal, BaseModalContent, BaseModalDescription, BaseModalTitle, BaseModalTrigger } from "./base-modal";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import * as nsfwjs from 'nsfwjs';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "../ui/select"
+import { UserTagInput } from '../ui/user-tag-input';
+import { Textarea } from "../ui/textarea";
+import { Input } from "../ui/input";
 
 export function CreatePostModal() {
     const ctx = api.useUtils();
@@ -37,6 +46,10 @@ export function CreatePostModal() {
 
     const [isNSFW, setIsNSFW] = useState(false);
     const [isChecking, setIsChecking] = useState(false);
+
+    const [caption, setCaption] = useState('');
+    const [tags, setTags] = useState<string[]>([]);
+    const [productLink, setProductLink] = useState('');
 
     const checkNSFW = useCallback(async (imageUrl: string) => {
         setIsChecking(true);
@@ -63,12 +76,6 @@ export function CreatePostModal() {
         }
     }, [fileUrl, checkNSFW]);
 
-    useEffect(() => {
-        if (isCropped) {
-            mutate({ type });
-        }
-    }, [isCropped]);
-
     const { mutate } = api.post.createPost.useMutation({
         onError: (e) => handleErrors({ e, message: 'Failed to create post' }),
         onSuccess: async (result) => {
@@ -77,7 +84,7 @@ export function CreatePostModal() {
             ref2.current?.click();
             toast.success('Post created successfully');
             router.push(`/profile`);
-            handleCancel();
+            resetForm();
         }
     });
 
@@ -99,14 +106,26 @@ export function CreatePostModal() {
             setFile(croppedImage.file);
             setFileUrl(croppedImage.fileUrl);
             setIsCropped(true);
+
+            mutate({ type, caption, tags, productLink });
         } catch (e) {
             console.error(e)
         }
-    }, [croppedAreaPixelsState, isNSFW]);
+    }, [croppedAreaPixelsState, isNSFW, caption, tags, productLink, type, mutate]);
 
-    const handleCancel = useCallback(() => {
+    const resetForm = useCallback(() => {
         setFile(null);
         setFileUrl(null);
+        setType("OUTFIT");
+        setCaption('');
+        setTags([]);
+        setProductLink('');
+        setCrop({ x: 0, y: 0 });
+        setRotation(0);
+        setZoom(1);
+        setCroppedAreaPixelsState(null);
+        setIsCropped(false);
+        setIsNSFW(false);
     }, [setFile, setFileUrl]);
 
     return (
@@ -120,7 +139,7 @@ export function CreatePostModal() {
                     Upload an image of your clothes to share with the community.
                 </BaseModalDescription>
 
-                <div className="flex flex-wrap gap-3 justify-center mt-1 md:mt-0 mb-3">
+                <div className="flex flex-wrap md:flex-nowrap gap-3 justify-center mt-1 md:mt-0 mb-3 overflow-y-scroll">
                     <div className="flex flex-col gap-3">
                         <div className='relative w-[244.4px] h-[400px]'>
                             {fileUrl ? (
@@ -144,7 +163,7 @@ export function CreatePostModal() {
                                     onPaste={handlePaste}
                                     className='relative w-full h-full'
                                 >
-                                    <input ref={ref} type="file" className='hidden' accept='image/*' onChange={handleChange} />
+                                    <Input ref={ref} type="file" className='hidden' accept='image/*' onChange={handleChange} />
                                     {dragActive && (
                                         <div
                                             className='absolute w-full h-full t-0 r-0 b-0 l-0'
@@ -165,7 +184,7 @@ export function CreatePostModal() {
                                 </div>
                             )}
                         </div>
-                        <input
+                        <Input
                             type='range'
                             value={zoom}
                             step={0.1}
@@ -180,130 +199,53 @@ export function CreatePostModal() {
                     <div className="flex flex-col gap-3 w-full md:w-fit">
                         <h1 className="font-clash font-bold text-xl pt-0">Post Details</h1>
                         <div className='relative w-full'>
-                            <Listbox value={type} onChange={setType}>
-                                <Listbox.Button className={"relative font-clash text-secondary-text font-semibold w-full cursor-pointer rounded-xl py-3 pl-6 pr-10 text-left border border-stroke"}>
-                                    <span className="block truncate pr-6">{getPostTypeName(type)}</span>
-                                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-6">
-                                        <PiCaretDown
-                                            className="h-5 w-5 text-gray-400"
-                                            aria-hidden="true"
-                                        />
-                                    </span>
-                                </Listbox.Button>
-                                <Listbox.Options className="absolute mt-2 bg-white dark:bg-black max-h-60 w-full overflow-auto rounded-xl p-2 gap-2 shadow-lg border border-stroke font-clash font-semibold z-50">
-                                    <Listbox.Option
-                                        key={PostType.OUTFIT}
-                                        value={PostType.OUTFIT} className={({ active }) =>
-                                            `relative cursor-pointer select-none rounded-xl py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
-                                            }`
-                                        }
-
-                                    >
-                                        {getPostTypeName("OUTFIT")}
-                                    </Listbox.Option>
-
-                                    <Listbox.Option
-                                        key={PostType.HEADWEAR}
-                                        value={PostType.HEADWEAR}
-                                        className={({ active }) =>
-                                            `relative cursor-pointer select-none rounded-xl py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
-                                            }`
-                                        }
-
-                                    >
-                                        {getPostTypeName("HEADWEAR")}
-                                    </Listbox.Option>
-
-                                    <Listbox.Option
-                                        key={PostType.SHOES}
-                                        value={PostType.SHOES}
-                                        className={({ active }) =>
-                                            `relative cursor-pointer select-none rounded-xl py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
-                                            }`
-                                        }
-                                    >
-                                        {getPostTypeName("SHOES")}
-                                    </Listbox.Option>
-
-                                    <Listbox.Option
-                                        key={PostType.HOODIE}
-                                        value={PostType.HOODIE}
-                                        className={({ active }) =>
-                                            `relative cursor-pointer select-none rounded-xl py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
-                                            }`
-                                        }
-                                    >
-                                        {getPostTypeName("HOODIE")}
-                                    </Listbox.Option>
-
-                                    <Listbox.Option
-                                        key={PostType.PANTS}
-                                        value={PostType.PANTS}
-                                        className={({ active }) =>
-                                            `relative cursor-pointer select-none rounded-xl py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
-                                            }`
-                                        }
-                                    >
-                                        {getPostTypeName("PANTS")}
-                                    </Listbox.Option>
-
-                                    <Listbox.Option
-                                        key={PostType.SHIRT}
-                                        value={PostType.SHIRT}
-                                        className={({ active }) =>
-                                            `relative cursor-pointer select-none rounded-xl py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
-                                            }`
-                                        }
-                                    >
-                                        {getPostTypeName("SHIRT")}
-                                    </Listbox.Option>
-
-                                    <Listbox.Option
-                                        key={PostType.WATCH}
-                                        value={PostType.WATCH}
-                                        className={({ active }) =>
-                                            `relative cursor-pointer select-none rounded-xl py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
-                                            }`
-                                        }
-                                    >
-                                        {getPostTypeName("WATCH")}
-                                    </Listbox.Option>
-
-                                    <Listbox.Option
-                                        key={PostType.GLASSES}
-                                        value={PostType.GLASSES}
-                                        className={({ active }) =>
-                                            `relative cursor-pointer select-none rounded-xl py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
-                                            }`
-                                        }
-                                    >
-                                        {getPostTypeName("GLASSES")}
-                                    </Listbox.Option>
-
-                                    <Listbox.Option
-                                        key={PostType.JEWELRY}
-                                        value={PostType.JEWELRY}
-                                        className={({ active }) =>
-                                            `relative cursor-pointer select-none rounded-xl py-2 px-4 ${active ? 'bg-hover' : 'text-secondary-text'
-                                            }`
-                                        }
-                                    >
-                                        {getPostTypeName("JEWELRY")}
-                                    </Listbox.Option>
-                                </Listbox.Options>
-                            </Listbox>
+                            <Select value={type} onValueChange={(value) => setType(value as PostType)}>
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Select a post type" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value={PostType.OUTFIT}>{getPostTypeName("OUTFIT")}</SelectItem>
+                                    <SelectItem value={PostType.HEADWEAR}>{getPostTypeName("HEADWEAR")}</SelectItem>
+                                    <SelectItem value={PostType.SHOES}>{getPostTypeName("SHOES")}</SelectItem>
+                                    <SelectItem value={PostType.HOODIE}>{getPostTypeName("HOODIE")}</SelectItem>
+                                    <SelectItem value={PostType.PANTS}>{getPostTypeName("PANTS")}</SelectItem>
+                                    <SelectItem value={PostType.SHIRT}>{getPostTypeName("SHIRT")}</SelectItem>
+                                    <SelectItem value={PostType.WATCH}>{getPostTypeName("WATCH")}</SelectItem>
+                                    <SelectItem value={PostType.GLASSES}>{getPostTypeName("GLASSES")}</SelectItem>
+                                    <SelectItem value={PostType.JEWELRY}>{getPostTypeName("JEWELRY")}</SelectItem>
+                                </SelectContent>
+                            </Select>
                         </div>
+                        <Textarea
+                            placeholder="Write a caption..."
+                            value={caption}
+                            onChange={(e) => setCaption(e.target.value)}
+                            className="w-full border border-gray-300 rounded px-2 py-1"
+                        />
+                        <UserTagInput
+                            value={tags}
+                            onChange={setTags}
+                            placeholder="Tag people..."
+                        />
+                        <Input
+                            type="url"
+                            placeholder="Product link (optional)"
+                            value={productLink}
+                            onChange={(e) => setProductLink(e.target.value)}
+                            className="w-full border border-gray-300 rounded px-2 py-1"
+                        />
                     </div>
                 </div>
 
                 <div className='w-full flex gap-2 items-center'>
-                    <Button centerItems onClick={handleCancel} disabled={!fileUrl} variant={'outline-ghost'} >
+                    <Button centerItems onClick={resetForm} disabled={!fileUrl} variant={'outline-ghost'} >
                         Clear
                     </Button>
                     <Button
                         centerItems
                         onClick={handleSubmit}
                         disabled={!fileUrl || isChecking || isNSFW}
+                        className="disabled:cursor-not-allowed disabled:opacity-75"
                     >
                         {isChecking ? 'Loading...' : 'Post'}
                     </Button>

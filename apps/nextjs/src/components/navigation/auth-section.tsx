@@ -6,12 +6,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { PiBellSimple, PiBellSimpleFill, PiCompass, PiDresser, PiPlus } from "react-icons/pi";
 import { NavbarMenu } from "../menus/navbar-menu";
-import { NotificationsMenu } from "../menus/notifications-menu";
 import dynamic from 'next/dynamic';
 import { Button } from "../ui/Button";
 
 const CreatePostModal = dynamic(() => import('../modals/create-post-modal').then(mod => mod.CreatePostModal), {
     loading: () => <Button className="px-3 md:px-6" iconLeft={<PiPlus />}><span className="hidden sm:inline">Post</span></Button>,
+    ssr: false
+});
+
+const NotificationsMenu = dynamic(() => import('../menus/notifications-menu').then(mod => mod.NotificationsMenu), {
+    loading: () => <div className="font-semibold font-clash self-stretch h-12 py-2 gap-3 flex items-center border border-stroke hover:bg-hover disabled:bg-hover transform transition duration-100 ease-in-out active:scale-[99%] rounded-full px-2 w-12 justify-center text-2xl"><div><PiBellSimple /></div></div>,
     ssr: false
 });
 

@@ -21,6 +21,9 @@ import { deleteImage, generatePresignedUrl } from "@acme/utils/image.util";
 
 export const postTypeSchema = z.object({
   type: z.nativeEnum(PostType),
+  tags: z.array(z.string()),
+  caption: z.string().max(40),
+  productLink: z.string(),
 });
 
 export const idSchema = z.object({
@@ -37,6 +40,9 @@ export const postRouter = createTRPCRouter({
 
       const post = await ctx.db.post.create({
         data: {
+          tags: input.tags,
+          caption: input.caption,
+          productLink: input.productLink,
           type: input.type,
           user: {
             connect: {
@@ -46,6 +52,9 @@ export const postRouter = createTRPCRouter({
           image: id,
         },
         select: {
+          tags: true,
+          caption: true,
+          productLink: true,
           createdAt: true,
           type: true,
           id: true,
@@ -84,6 +93,38 @@ export const postRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       const { id } = input;
 
+      // First, delete all comments and their replies
+      const comments = await ctx.db.comment.findMany({
+        where: { postId: id },
+        include: { replies: true },
+      });
+
+      for (const comment of comments) {
+        // Delete replies recursively
+        const deleteReplies = async (replyId: string) => {
+          const replies = await ctx.db.comment.findMany({
+            where: { parentId: replyId },
+            include: { replies: true },
+          });
+
+          for (const reply of replies) {
+            await deleteReplies(reply.id);
+          }
+
+          // Use deleteMany instead of delete to avoid errors if the comment was already deleted
+          await ctx.db.comment.deleteMany({ where: { id: replyId } });
+        };
+
+        // Delete all replies of the comment
+        for (const reply of comment.replies) {
+          await deleteReplies(reply.id);
+        }
+
+        // Delete the comment itself
+        await ctx.db.comment.deleteMany({ where: { id: comment.id } });
+      }
+
+      // Now delete the post
       const post = await ctx.db.post.delete({
         where: {
           id,
@@ -152,7 +193,10 @@ export const postRouter = createTRPCRouter({
           message: "Invalid post!",
         });
 
+      let isLiked = false;
+
       if (post.likes.length) {
+        // Unlike
         await ctx.db.post.update({
           where: {
             id,
@@ -167,12 +211,10 @@ export const postRouter = createTRPCRouter({
               },
             },
           },
-          select: {
-            id: true,
-          },
         });
       } else {
-        const like = ctx.db.post.update({
+        // Like
+        await ctx.db.post.update({
           where: {
             id,
           },
@@ -186,14 +228,13 @@ export const postRouter = createTRPCRouter({
               },
             },
           },
-          select: {
-            userId: true,
-          },
         });
 
-        // Only create a notification if the post is not owned by the current user
+        isLiked = true;
+
+        // Only create notification and send push notification when liking
         if (post.userId !== ctx.session.user.id) {
-          const notification = ctx.db.notification.create({
+          await ctx.db.notification.create({
             data: {
               type: NotificationType.POST_LIKE,
               targetUser: {
@@ -201,26 +242,25 @@ export const postRouter = createTRPCRouter({
                   id: post.userId,
                 },
               },
-              post: {
-                connect: {
-                  id,
-                },
-              },
               user: {
                 connect: {
                   id: ctx.session.user.id,
                 },
               },
+              post: {
+                connect: {
+                  id: post.id,
+                },
+              },
             },
           });
-
-          await ctx.db.$transaction([like, notification]);
-        } else {
-          await ctx.db.$transaction([like]);
         }
       }
 
-      return true;
+      return {
+        success: true,
+        isLiked,
+      };
     }),
 
   addReaction: protectedProcedure
@@ -298,7 +338,19 @@ export const postRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       const { id } = input;
 
-      const wishlist = await ctx.db.user.update({
+      const post = await ctx.db.post.findUnique({
+        where: { id },
+        select: { userId: true },
+      });
+
+      if (!post) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Post not found",
+        });
+      }
+
+      const wishlist = ctx.db.user.update({
         where: {
           id: ctx.session.user.id,
         },
@@ -314,7 +366,36 @@ export const postRouter = createTRPCRouter({
         },
       });
 
-      return wishlist;
+      // Only create a notification if the post is not owned by the current user
+      if (post.userId !== ctx.session.user.id) {
+        const notification = ctx.db.notification.create({
+          data: {
+            type: NotificationType.POST_WISHLIST,
+            targetUser: {
+              connect: {
+                id: post.userId,
+              },
+            },
+            post: {
+              connect: {
+                id,
+              },
+            },
+            user: {
+              connect: {
+                id: ctx.session.user.id,
+              },
+            },
+          },
+        });
+
+        await ctx.db.$transaction([wishlist, notification]);
+
+      } else {
+        await ctx.db.$transaction([wishlist]);
+      }
+
+      return true;
     }),
 
   removeFromWishlist: protectedProcedure
@@ -560,6 +641,10 @@ export const postRouter = createTRPCRouter({
           type: true,
           featured: true,
           likeCount: true,
+          createdAt: true,
+          tags: true,
+          caption: true,
+          productLink: true,
           user: {
             select: {
               image: true,

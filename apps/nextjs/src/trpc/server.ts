@@ -1,5 +1,4 @@
 import { cache } from "react";
-import { headers } from "next/headers";
 import { createHydrationHelpers } from "@trpc/react-query/rsc";
 
 import type { AppRouter } from "@acme/api";
@@ -13,12 +12,21 @@ import { createQueryClient } from "./query-client";
  * handling a tRPC call from a React Server Component.
  */
 const createContext = cache(async () => {
-  const heads = new Headers(headers());
-  heads.set("x-trpc-source", "rsc");
+  let headers;
+  if (typeof window === 'undefined') {
+    // Server-side
+    const { headers: nextHeaders } = await import('next/headers');
+    headers = new Headers(nextHeaders());
+    headers.set("x-trpc-source", "rsc");
+  } else {
+    // Client-side
+    headers = new Headers();
+    headers.set("x-trpc-source", "client");
+  }
 
   return createTRPCContext({
     session: await auth(),
-    headers: heads,
+    headers,
   });
 });
 

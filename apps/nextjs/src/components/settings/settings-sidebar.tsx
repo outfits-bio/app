@@ -18,6 +18,10 @@ export function SettingsSidebar() {
                     <Link href='/settings/appearance'>
                         <Button variant='ghost' className='justify-start transition duration-300 ease-in-out'>Appearance</Button>
                     </Link>
+
+                    <Link href='/settings/notifications'>
+                        <Button variant='ghost' className='justify-start transition duration-300 ease-in-out'>Notifications</Button>
+                    </Link>
                 </div>
                 <div className='flex flex-col gap-2 pt-2'>
                     <LogoutButton />

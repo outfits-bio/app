@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { api } from "~/trpc/react";
-import { Button } from "../../ui/Button"
+import { Button } from "../../../components/ui/Button"
 import toast from "react-hot-toast";
 import { handleErrors } from '@acme/utils/handle-errors.util';
 import { DeleteModal } from "~/components/modals/delete-modal";

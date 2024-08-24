@@ -18,7 +18,6 @@ import { Button } from "../ui/Button";
 import { ProfileMenu } from "../menus/profile-menu";
 import { SpotifySetupModal } from "../modals/spotify-setup-modal";
 import { FollowersModal } from "../modals/followers-modal";
-import { HoverCard } from "@radix-ui/react-hover-card";
 
 interface Props {
     profileData?: RouterOutputs['user']['getProfile'];
@@ -38,6 +37,8 @@ export const ProfileCard = ({ profileData, username }: Props) => {
 
     const { data: lanyardData } = api.user.getLanyardStatus.useQuery({ username });
 
+    const { mutate: sendPushNotification } = api.notifications.sendPushNotification.useMutation();
+
     const { mutate, isPending } = api.user.likeProfile.useMutation({
         onMutate: async () => {
             await ctx.user.getProfile.cancel({ username });
@@ -55,6 +56,11 @@ export const ProfileCard = ({ profileData, username }: Props) => {
             return previousProfileData;
         },
         onSettled: async () => {
+            sendPushNotification({
+                userId: profileData?.id ?? '',
+                body: `${data?.user.username} liked your profile`,
+            });
+
             await ctx.user.getProfile.refetch({ username });
             router.refresh();
         },
@@ -178,7 +184,7 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                 </div>}
 
 
-                {!isCurrentUser && !profileData?.username?.toLowerCase().includes(data?.user.username?.toLowerCase() ?? '') && <div className='w-full flex items-center justify-between gap-4'>
+                {!isCurrentUser && profileData?.username?.toLowerCase() !== data?.user.username?.toLowerCase() && <div className='w-full flex items-center justify-between gap-4'>
                     <div className='grow'>
                         <Button
                             accent

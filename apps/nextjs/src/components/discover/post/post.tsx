@@ -19,6 +19,8 @@ import {
   PiHeartStraightFill,
   PiSealCheck,
   PiShareFatBold,
+  PiLink,
+  PiLinkBold,
 } from 'react-icons/pi'
 import { PostMenu } from '../../menus/post-menu'
 import { Avatar } from '../../ui/Avatar'
@@ -27,6 +29,7 @@ import { LikeButton } from './like-button'
 import ReactButton from './react-button'
 import WishlistButton from './wishlist-button'
 import { useMediaQuery } from '~/hooks/use-media-query.hook'
+import { ProductLinkModal } from '../../modals/product-link-modal'
 
 export interface PostProps {
   post: inferRouterOutputs<AppRouter>['post']['getLatestPosts']['posts'][number];
@@ -105,7 +108,7 @@ export function Post({ post, ref, priority = false }: PostProps) {
 
   const AuthorDesc = memo(() => (
     <div
-      className={`flex-col justify-center flex absolute bottom-3 left-3 z-10`}
+      className={`flex-col justify-center flex absolute bottom-3 left-3 z-10 max-w-[calc(100%-24px)]`}
     >
       <p className="flex items-center gap-1 font-medium text-white md:dark:text-white ">
         {post.user.username}{' '}
@@ -116,16 +119,69 @@ export function Post({ post, ref, priority = false }: PostProps) {
         )}
       </p>
 
+      <p className='self-start text-sm font-medium font-clash text-white/80'>
+        {(() => {
+          const now = new Date();
+          const createdAt = new Date(post.createdAt);
+          const diffInMinutes = Math.floor((now.getTime() - createdAt.getTime()) / (1000 * 60));
+          const diffInHours = Math.floor(diffInMinutes / 60);
+          const diffInDays = Math.floor(diffInHours / 24);
+          const diffInWeeks = Math.floor(diffInDays / 7);
+          const diffInMonths = (now.getFullYear() - createdAt.getFullYear()) * 12 + now.getMonth() - createdAt.getMonth();
+
+          if (diffInMinutes < 60) {
+            return `${diffInMinutes} minute${diffInMinutes !== 1 ? 's' : ''} ago`;
+          } else if (diffInHours < 24) {
+            return `${diffInHours} hour${diffInHours !== 1 ? 's' : ''} ago`;
+          } else if (diffInDays < 7) {
+            return `${diffInDays} day${diffInDays !== 1 ? 's' : ''} ago`;
+          } else if (diffInWeeks < 4) {
+            return `${diffInWeeks} week${diffInWeeks !== 1 ? 's' : ''} ago`;
+          } else if (diffInMonths < 1) {
+            return createdAt.toLocaleDateString();
+          } else {
+            return createdAt.toLocaleDateString();
+          }
+        })()}
+      </p>
+
+      {/* Caption and tags */}
+      {post.caption && (
+        <p className="inline text-sm text-stroke 2xs-h:hidden dark:text-white/75 break-words">
+          {post.caption.split(/(@\w+)/).map((part, index) => {
+            if (part.startsWith('@')) {
+              return (
+                <Link key={index} href={`/${part.substring(1)}`}>
+                  <strong>{part}</strong>
+                </Link>
+              );
+            }
+            return part;
+          })}
+        </p>
+      )}
+      {post.tags && post.tags.length > 0 && (
+        <p className="text-sm text-white break-words">
+          {post.tags.map((tag, index) => (
+            <Link key={index} href={`/${tag.slice(1)}`} className="mr-2 font-bold">
+              @{tag}
+            </Link>
+          ))}
+        </p>
+      )}
+
       {(post._count.likes > 0 ||
         post._count.reactions > 0 ||
         post._count.wishlists > 0) && (
           <p className="flex self-start gap-1 text-sm font-medium font-clash text-white/80">
             <PostInfoModal postId={post.id}>
-              <span className="flex gap-1 cursor-pointer" aria-label="Likes Button">
-                <span className="font-bold">{post._count.likes}</span>{' '}
-                {post._count.likes === 1 ? ' like' : ' likes'}
-                {post._count.reactions || post._count.wishlists ? ', ' : ''}
-              </span>
+              {post._count.likes > 0 && (
+                <span className="flex gap-1 cursor-pointer" aria-label="Likes Button">
+                  <span className="font-bold">{post._count.likes}</span>{' '}
+                  {post._count.likes === 1 ? ' like' : ' likes'}
+                  {post._count.reactions || post._count.wishlists ? ', ' : ''}
+                </span>
+              )}
             </PostInfoModal>
             {post._count.reactions > 0 && (
               <span className="flex gap-1">
@@ -142,7 +198,8 @@ export function Post({ post, ref, priority = false }: PostProps) {
             )}
           </p>
         )}
-      <p className="inline text-sm text-stroke 2xs-h:hidden dark:text-white/75">
+
+      <p className="inline text-sm text-stroke 2xs-h:hidden dark:text-white/75 break-words">
         {truncatedTagline && (
           <>
             {truncatedTagline.split(/(@\w+)/).map((part, index) => {
@@ -236,6 +293,19 @@ export function Post({ post, ref, priority = false }: PostProps) {
           <ReactButton post={post} />
 
           <WishlistButton post={post} />
+
+          {post.productLink && (
+            <ProductLinkModal link={post.productLink}>
+              <Button
+                variant="outline-ghost"
+                centerItems
+                shape={'circle'}
+                iconLeft={<PiLinkBold />}
+                className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent sm:dark:text-white"
+                aria-label="Product Link Button"
+              />
+            </ProductLinkModal>
+          )}
 
           <Button
             variant="outline-ghost"

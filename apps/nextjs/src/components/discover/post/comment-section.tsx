@@ -1,0 +1,266 @@
+import { useState } from 'react'
+import { api } from '~/trpc/react'
+import { Avatar } from '../../ui/Avatar'
+import { Button } from '../../ui/Button'
+import type { PostProps } from './post'
+import { useSession } from 'next-auth/react'
+import toast from 'react-hot-toast'
+import { PiFloppyDisk, PiPaperPlaneRight } from 'react-icons/pi'
+import Link from 'next/link'
+
+type CommentType = {
+    id: string
+    content: string
+    userId: string
+    createdAt: Date
+    user: {
+        id: string
+        image: string | null
+        username: string | null
+    }
+    likeCount: number
+    replyCount: number
+}
+
+export function CommentSection({ post }: PostProps) {
+    const [commentText, setCommentText] = useState('')
+    const ctx = api.useUtils()
+    const { data: session } = useSession()
+
+    const { data: comments, fetchNextPage, hasNextPage } = api.comment.getComments.useInfiniteQuery(
+        { postId: post.id },
+        { getNextPageParam: (lastPage) => lastPage.nextCursor }
+    )
+
+    const { mutate: sendPushNotification } = api.notifications.sendPushNotification.useMutation();
+
+    const { mutate: addComment } = api.comment.addComment.useMutation({
+        onSuccess: () => {
+            setCommentText('')
+            void ctx.comment.getComments.invalidate({ postId: post.id })
+
+            sendPushNotification({
+                userId: post.user.id,
+                body: `${session?.user.username} replied to your post`,
+            });
+        },
+    })
+
+    const handleSubmitComment = () => {
+        if (commentText.trim()) {
+            addComment({ postId: post.id, content: commentText })
+        }
+    }
+
+    return (
+        <div className="flex flex-col h-[500px]">
+            <div className="flex-grow overflow-y-auto">
+                {comments?.pages.map((page) =>
+                    page.comments.map((comment) => (
+                        <Comment key={comment.id} comment={comment} postId={post.id} />
+                    ))
+                )}
+                {hasNextPage && (
+                    <Button onClick={() => fetchNextPage()}>Load more comments</Button>
+                )}
+            </div>
+            <div className="mt-4 flex">
+                <input
+                    value={commentText}
+                    onChange={(e) => setCommentText(e.target.value)}
+                    placeholder="Add a comment..."
+                    className="pl-3 flex-grow rounded-md border border-stroke mr-2"
+                />
+                <Button onClick={handleSubmitComment} className="max-w-fit px-3">
+                    <PiPaperPlaneRight className='text-xl' />
+                </Button>
+            </div>
+        </div>
+    )
+}
+
+function Comment({ comment, postId }: { comment: CommentType; postId: string }) {
+    const [replyText, setReplyText] = useState('')
+    const [showReplies, setShowReplies] = useState(false)
+    const [isEditing, setIsEditing] = useState(false)
+    const [editText, setEditText] = useState(comment.content)
+    const ctx = api.useUtils()
+    const { data: session } = useSession()
+
+    const [isLiked, setIsLiked] = useState(false)
+    const [localLikeCount, setLocalLikeCount] = useState(comment.likeCount)
+    const { mutate: sendPushNotification } = api.notifications.sendPushNotification.useMutation();
+
+    const { mutate: toggleLikeComment } = api.comment.toggleLikeComment.useMutation({
+        onSuccess: (data) => {
+            setIsLiked(data.isLiked)
+            setLocalLikeCount(data.likeCount)
+            void ctx.comment.getComments.invalidate({ postId })
+
+            sendPushNotification({
+                userId: comment.userId,
+                body: `${session?.user.username} liked your comment`,
+            });
+        },
+    })
+
+    const { mutate: addReply } = api.comment.addReply.useMutation({
+        onSuccess: () => {
+            setReplyText('')
+            void ctx.comment.getReplies.invalidate({ commentId: comment.id })
+
+            sendPushNotification({
+                userId: comment.userId,
+                body: `${session?.user.username} replied to your comment`,
+            });
+        },
+    })
+
+    const { mutate: editComment } = api.comment.editComment.useMutation({
+        onSuccess: () => {
+            setIsEditing(false)
+            void ctx.comment.getComments.invalidate({ postId })
+        },
+    })
+
+    const { mutate: deleteComment } = api.comment.deleteComment.useMutation({
+        onSuccess: () => {
+            void ctx.comment.getComments.invalidate({ postId })
+        },
+    })
+
+    const { data: replies } = api.comment.getReplies.useQuery(
+        { commentId: comment.id },
+        { enabled: showReplies }
+    )
+
+
+    const handleSubmitReply = async () => {
+        if (replyText.trim()) {
+            addReply({ commentId: comment.id, content: replyText })
+        }
+    }
+
+    const handleEditComment = () => {
+        if (editText.trim() && editText !== comment.content) {
+            editComment({ commentId: comment.id, content: editText })
+        } else {
+            setIsEditing(false)
+        }
+    }
+
+    const handleDeleteComment = () => {
+        toast.success('Comment deleted')
+        deleteComment({ commentId: comment.id })
+    }
+
+    const handleToggleLike = () => {
+        toggleLikeComment({ commentId: comment.id })
+    }
+
+    return (
+        <div className="mb-4">
+            <div className="flex items-start">
+                <Avatar
+                    image={comment.user.image}
+                    id={comment.user.id}
+                    username={comment.user.username}
+                    size="xs"
+                />
+                <div className="ml-2 flex-grow">
+                    <p className="font-bold">{comment.user.username}</p>
+                    {isEditing ? (
+                        <div className="flex">
+                            <input
+                                value={editText}
+                                onChange={(e) => setEditText(e.target.value)}
+                                className="pl-3 flex-grow rounded-md border border-stroke mr-2"
+                            />
+                            <Button onClick={handleEditComment} className="max-w-fit px-3">
+                                <PiFloppyDisk className='text-xl' />
+                            </Button>
+                            <Button onClick={() => setIsEditing(false)} className="ml-2 w-fit">
+                                Cancel
+                            </Button>
+                        </div>
+                    ) : (
+                        <p>
+                            {comment.content.split(/(@\w+)/).map((part, index) => {
+                                if (part.startsWith('@')) {
+                                    const linkText = part.substring(1);
+                                    return (
+                                        <Link href={`/${linkText}`}>
+                                            <strong>{part}</strong>
+                                        </Link>
+                                    );
+                                }
+                                return part;
+                            })}
+                        </p>
+                    )}
+                    <div className="mt-1 text-sm text-gray-500">
+                        <button onClick={handleToggleLike}>
+                            {isLiked ? 'Unlike' : 'Like'} ({localLikeCount})
+                        </button>
+                        <button onClick={() => setShowReplies(!showReplies)} className="ml-2">
+                            {showReplies ? 'Hide replies' : 'View replies'} ({comment.replyCount})
+                        </button>
+                        {comment.userId === session?.user.id && (
+                            <>
+                                <button onClick={() => setIsEditing(true)} className="ml-2">
+                                    Edit
+                                </button>
+                                <button onClick={handleDeleteComment} className="ml-2">
+                                    Delete
+                                </button>
+                            </>
+                        )}
+                        <button className="ml-2 cursor-default">
+                            {(() => {
+                                const now = new Date();
+                                const createdAt = new Date(comment.createdAt);
+                                const diffInMinutes = Math.floor((now.getTime() - createdAt.getTime()) / (1000 * 60));
+                                const diffInHours = Math.floor(diffInMinutes / 60);
+                                const diffInDays = Math.floor(diffInHours / 24);
+                                const diffInWeeks = Math.floor(diffInDays / 7);
+                                const diffInMonths = (now.getFullYear() - createdAt.getFullYear()) * 12 + now.getMonth() - createdAt.getMonth();
+
+                                if (diffInMinutes < 60) {
+                                    return `${diffInMinutes} minute${diffInMinutes !== 1 ? 's' : ''} ago`;
+                                } else if (diffInHours < 24) {
+                                    return `${diffInHours} hour${diffInHours !== 1 ? 's' : ''} ago`;
+                                } else if (diffInDays < 7) {
+                                    return `${diffInDays} day${diffInDays !== 1 ? 's' : ''} ago`;
+                                } else if (diffInWeeks < 4) {
+                                    return `${diffInWeeks} week${diffInWeeks !== 1 ? 's' : ''} ago`;
+                                } else if (diffInMonths < 1) {
+                                    return createdAt.toLocaleDateString();
+                                } else {
+                                    return createdAt.toLocaleDateString();
+                                }
+                            })()}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {showReplies && (
+                <div className="ml-8 mt-2">
+                    {replies?.map((reply: CommentType) => (
+                        <Comment key={reply.id} comment={reply} postId={postId} />
+                    ))}
+                    <div className="mt-2 flex">
+                        <input
+                            value={replyText}
+                            onChange={(e) => setReplyText(e.target.value)}
+                            placeholder="Reply to this comment..."
+                            className="pl-3 flex-grow rounded-md border border-stroke mr-2"
+                        />
+                        <Button onClick={handleSubmitReply} className="max-w-fit px-3">
+                            <PiPaperPlaneRight className='text-xl' />
+                        </Button>
+                    </div>
+                </div>
+            )}
+        </div>
+    )
+}

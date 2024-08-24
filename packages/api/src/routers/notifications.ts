@@ -1,6 +1,8 @@
 import { deleteNotificationSchema } from "@acme/validators/notification.schema";
 import { TRPCError } from "@trpc/server";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { z } from 'zod';
+import { sendPushNotificationToUser } from '../services/pushNotificationService';
 
 export const notificationsRouter = createTRPCRouter({
   getNotifications: protectedProcedure.query(async ({ ctx }) => {
@@ -87,4 +89,42 @@ export const notificationsRouter = createTRPCRouter({
 
     return count;
   }),
+  subscribeToPushNotifications: protectedProcedure
+    .input(z.object({
+      subscription: z.object({
+        endpoint: z.string(),
+        keys: z.object({
+          p256dh: z.string(),
+          auth: z.string(),
+        }),
+      }),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.subscription.create({
+        data: {
+          userId: ctx.session.user.id,
+          endpoint: input.subscription.endpoint,
+          keys: input.subscription.keys,
+        },
+      });
+
+      return true;
+    }),
+  getSubscriptions: protectedProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const subscriptions = await ctx.db.subscription.findMany({
+        where: { userId: input.userId },
+      });
+      return subscriptions;
+    }),
+  sendPushNotification: protectedProcedure
+    .input(z.object({
+      userId: z.string(),
+      body: z.string(),
+    }))
+    .mutation(async ({ input, ctx }) => {
+      await sendPushNotificationToUser(input.userId, input.body, ctx);
+      return true;
+    }),
 });

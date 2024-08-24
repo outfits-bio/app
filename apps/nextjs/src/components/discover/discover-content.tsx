@@ -16,6 +16,7 @@ import { RegisterBanner } from './register-banner'
 import { Avatar } from '../ui/Avatar'
 import { motion, AnimatePresence } from 'framer-motion'
 import { BaseModal, BaseModalContent, BaseModalHeader, BaseModalTitle, BaseModalTrigger } from '../modals/base-modal'
+import { PopularProfiles } from './popular-profiles'
 
 export function DiscoverContent({ initialPosts, popularProfiles }: { initialPosts: any; popularProfiles: any }) {
     const params = useSearchParams()
@@ -23,7 +24,7 @@ export function DiscoverContent({ initialPosts, popularProfiles }: { initialPost
     const pathname = usePathname()
     const { data: session } = useSession()
 
-    const [activePostTypes, setActivePostTypes] = useState<PostType[]>([])
+    const [activePostTypes, setActivePostTypes] = useState<PostType[]>(["OUTFIT"])
     const [isFilterOpen, setIsFilterOpen] = useState(true)
     const [isSidebarOpen, setIsSidebarOpen] = useState(true)
     const [isLoaded, setIsLoaded] = useState(false)
@@ -330,55 +331,12 @@ export function DiscoverContent({ initialPosts, popularProfiles }: { initialPost
                             : null}
                     </div>
 
+
+
                     {/* Popular Profiles */}
-                    {popularProfilesData && (
-                        <div className="hidden xl:flex flex-col gap-3 pt-[1rem] h-fit">
-                            <h1 className="text-2xl font-bold font-clash">
-                                Popular Profiles
-                            </h1>
-                            <div className="flex flex-wrap gap-3">
-                                {popularProfilesData?.map((user) => (
-                                    <Link
-                                        href={`/${user?.username}`}
-                                        key={user?.id ?? ''}
-                                    >
-                                        <div className="bg-white dark:bg-black border border-stroke p-4 rounded-xl hover:bg-body dark:hover:bg-body cursor-pointer flex gap-2 w-full">
-                                            <Avatar
-                                                size={'sm'}
-                                                image={user?.image}
-                                                id={user?.id}
-                                                username={user?.username}
-                                            />
-
-                                            <div className="flex flex-col gap-1 text-nowrap">
-                                                <h1 className="font-black flex gap-1 items-center">
-                                                    <span>{user?.username}</span>
-                                                    {user?.admin ? (
-                                                        <PiHammer className="w-4 h-4" />
-                                                    ) : (
-                                                        user?.verified && (
-                                                            <PiSealCheck className="w-4 h-4" />
-                                                        )
-                                                    )}
-                                                </h1>
-
-                                                <div className="flex gap-2 items-center text-nowrap text-xs">
-                                                    <span className="flex gap-1 items-center">
-                                                        <PiCamera className="w-3 h-3" />
-                                                        <span>{user?.imageCount} Shots</span>
-                                                    </span>
-                                                    <span className="flex gap-1 items-center">
-                                                        <PiHeart className="w-3 h-4" />
-                                                        <span>{user?.likeCount} Likes</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Link>
-                                ))}
-                            </div>
-                        </div>
-                    )}
+                    <div className="hidden xl:flex w-80 mr-8">
+                        <PopularProfiles />
+                    </div>
                 </div>
 
                 <RegisterBanner />

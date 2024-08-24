@@ -16,17 +16,23 @@ export function LikeButton({ post, variant = 'default' }: LikeButtonProps) {
   const [likeAnimation, setLikeAnimation] = useState<boolean>(false)
 
   const ctx = api.useUtils()
+  const { mutate: sendPushNotification } = api.notifications.sendPushNotification.useMutation();
 
   const { mutate: toggleLikePost, isPending: toggleLikePostPending } =
     api.post.toggleLikePost.useMutation({
       onSuccess: () => {
         void ctx.post.getLatestPosts.refetch()
         void ctx.post.getPostsAllTypes.refetch({ id: post.user.id })
+
+        sendPushNotification({
+          userId: post.user.id,
+          body: `${session?.user.username} liked your post`,
+        });
       },
       onError: (e) =>
         handleErrors({
           e,
-          message: 'An error occurred while liking this post.',
+          message: 'An error occurred while liking this post.' + e,
         }),
     })
 

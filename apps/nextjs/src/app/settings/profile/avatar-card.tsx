@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { Button } from "../../ui/Button"
-import { Avatar } from "../../ui/Avatar"
+import { Button } from "../../../components/ui/Button"
+import { Avatar } from "../../../components/ui/Avatar"
 import { toast } from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import axios from 'axios';

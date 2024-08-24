@@ -8,7 +8,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { handleErrors } from '@acme/utils/handle-errors.util';
 import toast from "react-hot-toast";
-import { Button } from "../../ui/Button"
+import { Button } from "../../../components/ui/Button"
 import { PiDiscordLogo, PiGithubLogo, PiInstagramLogo, PiLinkSimple, PiPlus, PiTiktokLogo, PiTrash, PiTwitterLogo, PiYoutubeLogo } from "react-icons/pi";
 import { LinkType } from "@acme/db";
 
