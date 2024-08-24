@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import Image from "next/image";
 
 export function PwaBanner() {
-    const [isIOS, setIsIOS] = useState(true);
+    const [isIOS, setIsIOS] = useState(false);
     const [isStandalone, setIsStandalone] = useState(false);
 
     useEffect(() => {
