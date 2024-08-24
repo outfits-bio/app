@@ -212,7 +212,7 @@ export const userRouter = createTRPCRouter({
       if (tagline && filterBadWords(tagline))
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: "Invalid tagline",
+          message: "Tagline contains bad words",
         });
 
       try {

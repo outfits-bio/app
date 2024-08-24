@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react'
 import toast from 'react-hot-toast'
 import { PiFloppyDisk, PiPaperPlaneRight } from 'react-icons/pi'
 import Link from 'next/link'
+import { handleErrors } from '@acme/utils/handle-errors.util'
 
 type CommentType = {
     id: string
@@ -44,6 +45,7 @@ export function CommentSection({ post }: PostProps) {
                 body: `${session?.user.username} replied to your post`,
             });
         },
+        onError: (e) => handleErrors({ e, message: "Failed to add comment!" })
     })
 
     const handleSubmitComment = () => {
@@ -114,6 +116,7 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
                 body: `${session?.user.username} replied to your comment`,
             });
         },
+        onError: (e) => handleErrors({ e, message: "Failed to add reply!" })
     })
 
     const { mutate: editComment } = api.comment.editComment.useMutation({
@@ -121,6 +124,7 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
             setIsEditing(false)
             void ctx.comment.getComments.invalidate({ postId })
         },
+        onError: (e) => handleErrors({ e, message: "Failed to edit comment!" })
     })
 
     const { mutate: deleteComment } = api.comment.deleteComment.useMutation({

@@ -92,7 +92,7 @@ export const DiscoverPostModal = ({ post }: DiscoverPostModalProps) => {
                                     </Link>
 
                                     <div className='flex items-center gap-4'>
-                                        {data?.user && <LikeButton variant='ghost' post={post} />}
+                                        {/* {data?.user && <LikeButton variant='ghost' post={post} />} */}
 
                                         {data?.user && <PostMenu
                                             userIsProfileOwner={userIsProfileOwner}

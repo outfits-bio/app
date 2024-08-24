@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 import { TRPCError } from '@trpc/server'
 import { NotificationType, PrismaClient } from '@acme/db'
+import { filterBadWords } from '../../../utils/src/username.util'
 
 async function deleteCommentAndReplies(prisma: PrismaClient, commentId: string) {
     const comment = await prisma.comment.findUnique({
@@ -86,6 +87,13 @@ export const commentRouter = createTRPCRouter({
     addComment: protectedProcedure
         .input(z.object({ postId: z.string(), content: z.string() }))
         .mutation(async ({ ctx, input }) => {
+            if (filterBadWords(input.content)) {
+                throw new TRPCError({
+                    code: "BAD_REQUEST",
+                    message: "Comment contains bad words",
+                });
+            }
+
             const comment = await ctx.db.comment.create({
                 data: {
                     content: input.content,
@@ -110,6 +118,13 @@ export const commentRouter = createTRPCRouter({
     addReply: protectedProcedure
         .input(z.object({ commentId: z.string(), content: z.string() }))
         .mutation(async ({ ctx, input }) => {
+            if (filterBadWords(input.content)) {
+                throw new TRPCError({
+                    code: "BAD_REQUEST",
+                    message: "Reply contains bad words",
+                });
+            }
+
             const parentComment = await ctx.db.comment.findUnique({
                 where: { id: input.commentId },
                 select: { userId: true, postId: true },
@@ -185,6 +200,13 @@ export const commentRouter = createTRPCRouter({
     editComment: protectedProcedure
         .input(z.object({ commentId: z.string(), content: z.string() }))
         .mutation(async ({ ctx, input }) => {
+            if (filterBadWords(input.content)) {
+                throw new TRPCError({
+                    code: "BAD_REQUEST",
+                    message: "Comment contains bad words",
+                });
+            }
+
             const comment = await ctx.db.comment.findUnique({
                 where: { id: input.commentId },
                 select: { userId: true },

@@ -18,6 +18,7 @@ import type { Prisma } from "@acme/db";
 import { z } from "zod";
 
 import { deleteImage, generatePresignedUrl } from "@acme/utils/image.util";
+import { filterBadWords } from "../../../utils/src/username.util";
 
 export const postTypeSchema = z.object({
   type: z.nativeEnum(PostType),
@@ -37,6 +38,12 @@ export const postRouter = createTRPCRouter({
     .input(postTypeSchema)
     .mutation(async ({ input, ctx }) => {
       const { id, url } = await generatePresignedUrl(ctx.session.user.id);
+
+      if (input.caption && filterBadWords(input.caption))
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Caption contains bad words",
+        });
 
       const post = await ctx.db.post.create({
         data: {
@@ -564,6 +571,10 @@ export const postRouter = createTRPCRouter({
           type: true,
           featured: true,
           likeCount: true,
+          createdAt: true,
+          caption: true,
+          tags: true,
+          productLink: true,
           user: {
             select: {
               image: true,
