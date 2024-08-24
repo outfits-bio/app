@@ -23,6 +23,9 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../ui/select"
+import { UserTagInput } from '../ui/user-tag-input';
+import { Textarea } from "../ui/textarea";
+import { Input } from "../ui/input";
 
 export function CreatePostModal() {
     const ctx = api.useUtils();
@@ -43,6 +46,10 @@ export function CreatePostModal() {
 
     const [isNSFW, setIsNSFW] = useState(false);
     const [isChecking, setIsChecking] = useState(false);
+
+    const [caption, setCaption] = useState('');
+    const [tags, setTags] = useState<string[]>([]);
+    const [productLink, setProductLink] = useState('');
 
     const checkNSFW = useCallback(async (imageUrl: string) => {
         setIsChecking(true);
@@ -71,7 +78,13 @@ export function CreatePostModal() {
 
     useEffect(() => {
         if (isCropped) {
-            mutate({ type });
+            // Remove this mutation call
+            // mutate({
+            //     type,
+            //     caption: "",
+            //     tags: [],
+            //     productLink: ""
+            // });
         }
     }, [isCropped]);
 
@@ -105,10 +118,13 @@ export function CreatePostModal() {
             setFile(croppedImage.file);
             setFileUrl(croppedImage.fileUrl);
             setIsCropped(true);
+
+            // Only call mutate here
+            mutate({ type, caption, tags, productLink });
         } catch (e) {
             console.error(e)
         }
-    }, [croppedAreaPixelsState, isNSFW]);
+    }, [croppedAreaPixelsState, isNSFW, caption, tags, productLink, type, mutate]);
 
     const handleCancel = useCallback(() => {
         setFile(null);
@@ -126,7 +142,7 @@ export function CreatePostModal() {
                     Upload an image of your clothes to share with the community.
                 </BaseModalDescription>
 
-                <div className="flex flex-wrap gap-3 justify-center mt-1 md:mt-0 mb-3">
+                <div className="flex flex-wrap md:flex-nowrap gap-3 justify-center mt-1 md:mt-0 mb-3 overflow-y-scroll">
                     <div className="flex flex-col gap-3">
                         <div className='relative w-[244.4px] h-[400px]'>
                             {fileUrl ? (
@@ -150,7 +166,7 @@ export function CreatePostModal() {
                                     onPaste={handlePaste}
                                     className='relative w-full h-full'
                                 >
-                                    <input ref={ref} type="file" className='hidden' accept='image/*' onChange={handleChange} />
+                                    <Input ref={ref} type="file" className='hidden' accept='image/*' onChange={handleChange} />
                                     {dragActive && (
                                         <div
                                             className='absolute w-full h-full t-0 r-0 b-0 l-0'
@@ -171,7 +187,7 @@ export function CreatePostModal() {
                                 </div>
                             )}
                         </div>
-                        <input
+                        <Input
                             type='range'
                             value={zoom}
                             step={0.1}
@@ -203,6 +219,24 @@ export function CreatePostModal() {
                                 </SelectContent>
                             </Select>
                         </div>
+                        <Textarea
+                            placeholder="Write a caption..."
+                            value={caption}
+                            onChange={(e) => setCaption(e.target.value)}
+                            className="w-full border border-gray-300 rounded px-2 py-1"
+                        />
+                        <UserTagInput
+                            value={tags}
+                            onChange={setTags}
+                            placeholder="Tag people..."
+                        />
+                        <Input
+                            type="url"
+                            placeholder="Product link (optional)"
+                            value={productLink}
+                            onChange={(e) => setProductLink(e.target.value)}
+                            className="w-full border border-gray-300 rounded px-2 py-1"
+                        />
                     </div>
                 </div>
 
@@ -214,6 +248,7 @@ export function CreatePostModal() {
                         centerItems
                         onClick={handleSubmit}
                         disabled={!fileUrl || isChecking || isNSFW}
+                        className="disabled:cursor-not-allowed disabled:opacity-75"
                     >
                         {isChecking ? 'Loading...' : 'Post'}
                     </Button>

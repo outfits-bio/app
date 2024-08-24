@@ -83,7 +83,7 @@ export const BaseModalContent = ({ children, className }: BaseModalProps) => {
         return <DialogContent>{children}</DialogContent>;
     } else {
         return (
-            <DrawerContent className={"px-4 outline-none p-mobile " + className}>
+            <DrawerContent className={"max-h-screen px-4 outline-none p-mobile " + className}>
                 {children}
             </DrawerContent>
         );

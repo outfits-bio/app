@@ -400,4 +400,21 @@ export const profileRouter = createTRPCRouter({
 
       return newPiece;
     }),
+
+  searchUsers: publicProcedure
+    .input(z.object({ query: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const { query } = input;
+
+      const users = await ctx.db.user.findMany({
+        where: {
+          username: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
+      });
+
+      return users;
+    }),
 });

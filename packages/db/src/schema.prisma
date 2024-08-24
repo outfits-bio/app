@@ -112,6 +112,10 @@ model Post {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   featured  Boolean  @default(false)
 
+  caption     String?
+  tags        String[]
+  productLink String?
+
   type  PostType
   image String?
 

@@ -21,6 +21,9 @@ import { deleteImage, generatePresignedUrl } from "@acme/utils/image.util";
 
 export const postTypeSchema = z.object({
   type: z.nativeEnum(PostType),
+  tags: z.array(z.string()),
+  caption: z.string().max(40),
+  productLink: z.string(),
 });
 
 export const idSchema = z.object({
@@ -37,6 +40,9 @@ export const postRouter = createTRPCRouter({
 
       const post = await ctx.db.post.create({
         data: {
+          tags: input.tags,
+          caption: input.caption,
+          productLink: input.productLink,
           type: input.type,
           user: {
             connect: {
@@ -46,6 +52,9 @@ export const postRouter = createTRPCRouter({
           image: id,
         },
         select: {
+          tags: true,
+          caption: true,
+          productLink: true,
           createdAt: true,
           type: true,
           id: true,
@@ -601,6 +610,9 @@ export const postRouter = createTRPCRouter({
           featured: true,
           likeCount: true,
           createdAt: true,
+          tags: true,
+          caption: true,
+          productLink: true,
           user: {
             select: {
               image: true,

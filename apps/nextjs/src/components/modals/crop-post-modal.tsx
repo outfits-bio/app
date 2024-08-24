@@ -22,6 +22,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../ui/select"
+import { UserTagInput } from '../ui/user-tag-input';
+import { Input } from "../ui/input";
 
 interface Props {
     isOpen: boolean;
@@ -49,9 +51,14 @@ export function CropPostModal({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
     const [isNSFW, setIsNSFW] = useState(false);
     const [isChecking, setIsChecking] = useState(false);
 
+    const [caption, setCaption] = useState('');
+    const [tags, setTags] = useState<string[]>([]);
+    const [productLink, setProductLink] = useState('');
+
     useEffect(() => {
         if (isCropped) {
-            mutate({ type });
+            // Remove this mutation call
+            // mutate({ type, caption, tags, productLink });
         }
     }, [isCropped]);
 
@@ -63,6 +70,7 @@ export function CropPostModal({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
             }
             await ctx.post.getPostsAllTypes.refetch();
             toast.success('Post created successfully');
+            setIsOpen(false);  // Close the modal after successful post
         }
     });
 
@@ -88,38 +96,26 @@ export function CropPostModal({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
     }, []);
 
     const handleSubmit = useCallback(async () => {
-        if (!fileUrl || !croppedAreaPixelsState) {
-            toast.error('Please select and crop an image before posting.');
+        if (isNSFW) {
+            toast.error('NSFW content detected. Please choose a different image.');
             return;
         }
 
-        setIsChecking(true);
         try {
-            const croppedImage = await getCroppedImg(fileUrl, croppedAreaPixelsState);
-            if (!croppedImage) {
-                toast.error('Failed to crop image. Please try again.');
-                return;
-            }
+            const croppedImage = await getCroppedImg(fileUrl ?? "", croppedAreaPixelsState);
 
-            // Check for NSFW content
-            const nsfwResult = await checkNSFW(croppedImage.fileUrl);
-
-            if (nsfwResult) {
-                toast.error('NSFW content detected. Please choose a different image.');
-                return;
-            }
+            if (!croppedImage) return;
 
             setFile(croppedImage.file);
             setFileUrl(croppedImage.fileUrl);
             setIsCropped(true);
-            setIsOpen(false);
+
+            // Only call mutate here
+            mutate({ type, caption, tags, productLink });
         } catch (e) {
-            console.error(e);
-            toast.error('An error occurred while processing the image.');
-        } finally {
-            setIsChecking(false);
+            console.error(e)
         }
-    }, [croppedAreaPixelsState, fileUrl, checkNSFW, mutate, type, setFile, setFileUrl, setIsCropped]);
+    }, [croppedAreaPixelsState, isNSFW, caption, tags, productLink, type, mutate]);
 
     const handleCancel = useCallback(() => {
         setFile(null);
@@ -177,7 +173,7 @@ export function CropPostModal({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
                                     />
                                 ) : (
                                     <div onDragEnter={handleDrag} className='relative w-full h-full'>
-                                        <input ref={ref} type="file" className='hidden' accept='image/*' onChange={handleChange} />
+                                        <Input ref={ref} type="file" className='hidden' accept='image/*' onChange={handleChange} />
                                         {dragActive && (
                                             <div
                                                 className='absolute w-full h-full t-0 r-0 b-0 l-0'
@@ -198,7 +194,7 @@ export function CropPostModal({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
                                     </div>
                                 )}
                             </div>
-                            <input
+                            <Input
                                 type='range'
                                 value={zoom}
                                 step={0.1}
@@ -229,12 +225,32 @@ export function CropPostModal({ isOpen, setIsOpen, fileUrl, setFile, setFileUrl,
                                     </SelectContent>
                                 </Select>
                             </div>
-
+                            <textarea
+                                placeholder="Write a caption..."
+                                value={caption}
+                                onChange={(e) => setCaption(e.target.value)}
+                                className="w-full border border-gray-300 rounded px-2 py-1"
+                            />
+                            <UserTagInput
+                                value={tags}
+                                onChange={setTags}
+                                placeholder="Tag people..."
+                            />
+                            <Input
+                                type="url"
+                                placeholder="Product link (optional)"
+                                value={productLink}
+                                onChange={(e) => setProductLink(e.target.value)}
+                                className="w-full border border-gray-300 rounded px-2 py-1"
+                            />
                             <div className='w-full flex gap-2 items-center'>
                                 <Button centerItems onClick={handleCancel} disabled={!fileUrl} variant={'outline-ghost'} >
                                     Clear
                                 </Button>
-                                <Button centerItems onClick={handleSubmit} disabled={!fileUrl || isChecking || isNSFW}>
+                                <Button
+                                    centerItems
+                                    className="disabled:cursor-not-allowed disabled:opacity-75"
+                                    onClick={handleSubmit} disabled={!fileUrl || isChecking || isNSFW}>
                                     {isChecking ? 'Checking...' : 'Post'}
                                 </Button>
                             </div>
