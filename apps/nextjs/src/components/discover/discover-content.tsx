@@ -186,7 +186,7 @@ export function DiscoverContent({ initialPosts, popularProfiles }: { initialPost
                                 </Button>
                                 {isFilterOpen && (
                                     <div className="w-full bg-white dark:bg-black border border-stroke border-t-0 rounded-xl rounded-t-none">
-                                        <div className="flex flex-col gap-2 p-4 max-h-[50vh] overflow-y-auto">
+                                        <div className="flex flex-col gap-2 p-4 max-h-[50vh] overflow-y-auto overflow-x-hidden">
                                             {Object.values(PostType).map((type) => (
                                                 <CategoryButton
                                                     key={type}
