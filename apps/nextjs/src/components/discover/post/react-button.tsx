@@ -1,8 +1,3 @@
-import type { AddReactionInput } from '@acme/validators/post.schema'
-import { api } from '~/trpc/react'
-import { handleErrors } from '@acme/utils/handle-errors.util'
-import { Popover, Transition, PopoverButton } from '@headlessui/react'
-import { Fragment } from 'react'
 import { PiChatCircleBold } from 'react-icons/pi'
 import { Button } from '../../ui/Button'
 import type { PostProps } from './post'
