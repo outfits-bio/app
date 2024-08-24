@@ -1,6 +1,5 @@
 import { SearchBar } from '../search/search-bar/with-popover'
 import { AuthSection } from './auth-section'
-import { MobileMenu } from './mobile-menu'
 import { NavLogo } from './nav-logo'
 
 export function Navbar() {
@@ -10,7 +9,6 @@ export function Navbar() {
         <NavLogo />
         <SearchBar />
         <AuthSection />
-        <MobileMenu />
       </div>
     </nav>
   )
