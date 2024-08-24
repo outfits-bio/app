@@ -93,6 +93,38 @@ export const postRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       const { id } = input;
 
+      // First, delete all comments and their replies
+      const comments = await ctx.db.comment.findMany({
+        where: { postId: id },
+        include: { replies: true },
+      });
+
+      for (const comment of comments) {
+        // Delete replies recursively
+        const deleteReplies = async (replyId: string) => {
+          const replies = await ctx.db.comment.findMany({
+            where: { parentId: replyId },
+            include: { replies: true },
+          });
+
+          for (const reply of replies) {
+            await deleteReplies(reply.id);
+          }
+
+          // Use deleteMany instead of delete to avoid errors if the comment was already deleted
+          await ctx.db.comment.deleteMany({ where: { id: replyId } });
+        };
+
+        // Delete all replies of the comment
+        for (const reply of comment.replies) {
+          await deleteReplies(reply.id);
+        }
+
+        // Delete the comment itself
+        await ctx.db.comment.deleteMany({ where: { id: comment.id } });
+      }
+
+      // Now delete the post
       const post = await ctx.db.post.delete({
         where: {
           id,
