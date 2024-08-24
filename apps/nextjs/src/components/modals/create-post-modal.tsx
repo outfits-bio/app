@@ -76,18 +76,6 @@ export function CreatePostModal() {
         }
     }, [fileUrl, checkNSFW]);
 
-    useEffect(() => {
-        if (isCropped) {
-            // Remove this mutation call
-            // mutate({
-            //     type,
-            //     caption: "",
-            //     tags: [],
-            //     productLink: ""
-            // });
-        }
-    }, [isCropped]);
-
     const { mutate } = api.post.createPost.useMutation({
         onError: (e) => handleErrors({ e, message: 'Failed to create post' }),
         onSuccess: async (result) => {
@@ -96,7 +84,7 @@ export function CreatePostModal() {
             ref2.current?.click();
             toast.success('Post created successfully');
             router.push(`/profile`);
-            handleCancel();
+            resetForm();
         }
     });
 
@@ -119,16 +107,25 @@ export function CreatePostModal() {
             setFileUrl(croppedImage.fileUrl);
             setIsCropped(true);
 
-            // Only call mutate here
             mutate({ type, caption, tags, productLink });
         } catch (e) {
             console.error(e)
         }
     }, [croppedAreaPixelsState, isNSFW, caption, tags, productLink, type, mutate]);
 
-    const handleCancel = useCallback(() => {
+    const resetForm = useCallback(() => {
         setFile(null);
         setFileUrl(null);
+        setType("OUTFIT");
+        setCaption('');
+        setTags([]);
+        setProductLink('');
+        setCrop({ x: 0, y: 0 });
+        setRotation(0);
+        setZoom(1);
+        setCroppedAreaPixelsState(null);
+        setIsCropped(false);
+        setIsNSFW(false);
     }, [setFile, setFileUrl]);
 
     return (
@@ -241,7 +238,7 @@ export function CreatePostModal() {
                 </div>
 
                 <div className='w-full flex gap-2 items-center'>
-                    <Button centerItems onClick={handleCancel} disabled={!fileUrl} variant={'outline-ghost'} >
+                    <Button centerItems onClick={resetForm} disabled={!fileUrl} variant={'outline-ghost'} >
                         Clear
                     </Button>
                     <Button
