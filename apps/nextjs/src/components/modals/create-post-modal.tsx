@@ -217,15 +217,15 @@ export function CreatePostModal() {
                             </Select>
                         </div>
                         <Textarea
-                            placeholder="Write a caption..."
+                            placeholder="Write a caption... (optional)"
                             value={caption}
                             onChange={(e) => setCaption(e.target.value)}
-                            className="w-full border border-gray-300 rounded px-2 py-1"
+                            className="w-full border border-gray-300 rounded px-2 py-1 resize-none"
                         />
                         <UserTagInput
                             value={tags}
                             onChange={setTags}
-                            placeholder="Tag people..."
+                            placeholder="Tag people... (optional)"
                         />
                         <Input
                             type="url"
