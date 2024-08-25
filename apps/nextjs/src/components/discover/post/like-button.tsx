@@ -53,7 +53,7 @@ export function LikeButton({ post, variant = 'default' }: LikeButtonProps) {
             <PiHeartFill
               onAnimationEnd={() => setLikeAnimation(false)}
               className={
-                likeAnimation ? 'animate-like fill-black dark:fill-white' : ''
+                likeAnimation ? 'animate-like fill-white dark:fill-black' : ''
               }
             />
           ) : (
@@ -61,7 +61,7 @@ export function LikeButton({ post, variant = 'default' }: LikeButtonProps) {
               onAnimationEnd={() => setLikeAnimation(false)}
               className={
                 likeAnimation
-                  ? 'animate-like-end fill-black dark:fill-white'
+                  ? 'animate-like-end fill-white dark:fill-black'
                   : ''
               }
             />
