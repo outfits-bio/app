@@ -7,7 +7,7 @@ import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { PiBookmarkSimpleBold, PiCamera, PiClockBold, PiFadersHorizontal, PiFireBold, PiHammer, PiHeart, PiOption, PiSealCheck, PiSidebar } from 'react-icons/pi'
+import { PiBookmarkSimpleBold, PiCamera, PiClockBold, PiFadersHorizontal, PiFireBold, PiHammer, PiHeart, PiNewspaper, PiOption, PiSealCheck, PiSidebar } from 'react-icons/pi'
 import { PostModal } from '../modals/post-modal'
 import { Button } from '../ui/Button'
 import { CategoryButton } from './category-button'
@@ -214,7 +214,7 @@ export function DiscoverContent({ initialPosts, popularProfiles }: { initialPost
                                     </Button>
                                 </Link>
                             )}
-                            <div className=''>
+                            <div>
                                 <Button
                                     variant={'ghost'}
                                     iconLeft={<PiSidebar />}

@@ -58,6 +58,15 @@ export const NavbarMenu = () => {
                     </Link>
                 </div>
                 <div>
+                    <Link href={'/changelog'} onClick={() => ref.current?.click()}>
+                        <Button
+                            variant='ghost'
+                        >
+                            <p className='font-semibold'>Changelog</p>
+                        </Button>
+                    </Link>
+                </div>
+                <div>
                     <Link href={'/settings/profile'} onClick={() => ref.current?.click()}>
                         <Button
                             variant='ghost'

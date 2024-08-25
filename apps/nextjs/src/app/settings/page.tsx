@@ -32,6 +32,9 @@ export default async function SettingsPage() {
             </div>
 
             <div className='flex flex-col gap-2 pt-2'>
+                <Link href='/changelog'>
+                    <Button variant='ghost' className='justify-start transition duration-300 ease-in-out'>Changelog</Button>
+                </Link>
                 <LogoutButton />
             </div>
         </div>
