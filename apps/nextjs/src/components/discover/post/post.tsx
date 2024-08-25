@@ -163,7 +163,7 @@ export function Post({ post, ref, priority = false }: PostProps) {
       {post.tags && post.tags.length > 0 && (
         <p className="text-sm text-white break-words">
           {post.tags.map((tag, index) => (
-            <Link key={index} href={`/${tag.slice(1)}`} className="mr-2 font-bold">
+            <Link key={index} href={`/${tag}`} className="mr-2 font-bold">
               @{tag}
             </Link>
           ))}
