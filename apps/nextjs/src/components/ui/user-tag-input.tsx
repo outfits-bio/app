@@ -62,7 +62,7 @@ export function UserTagInput({ value, onChange, placeholder }: UserTagInputProps
     return (
         <div className="flex flex-wrap gap-2">
             {value.map(tag => (
-                <span key={tag} className="bg-gray-200 px-2 py-1 rounded-full text-sm">
+                <span key={tag} className="bg-gray-200 px-2 py-1 rounded-full text-sm items-center flex">
                     {tag}
                     <button onClick={() => removeTag(tag)} className="ml-2 text-red-500"><PiX /></button>
                 </span>
