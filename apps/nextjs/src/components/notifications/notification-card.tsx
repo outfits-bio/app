@@ -34,15 +34,12 @@ export function NotificationCard({ notification, refetch }: NotificationCardProp
 
     switch (notification.type) {
         case 'PROFILE_LIKE':
-            href = `/${notification.user?.username}`;
-            break;
         case 'POST_LIKE':
-            href = `/${notification.user?.username}`;
-            break;
         case 'POST_REACTION':
-            href = `/${notification.user?.username}`;
-            break;
         case 'POST_WISHLIST':
+        case 'POST_COMMENT':
+        case 'COMMENT_REPLY':
+        case 'COMMENT_LIKE':
             href = `/${notification.user?.username}`;
             break;
         case 'OTHER':
@@ -88,6 +85,14 @@ export function NotificationCard({ notification, refetch }: NotificationCardProp
                 {notification.type === 'POST_COMMENT' && <>
                     <span className="font-bold">{notification.user?.username}</span>
                     <span> left a comment on your post </span>
+                </>}
+                {notification.type === 'COMMENT_REPLY' && <>
+                    <span className="font-bold">{notification.user?.username}</span>
+                    <span> replied to your comment </span>
+                </>}
+                {notification.type === 'COMMENT_LIKE' && <>
+                    <span className="font-bold">{notification.user?.username}</span>
+                    <span> liked your comment </span>
                 </>}
                 {notification.type === 'OTHER' && <>
                     <span> {notification.message} </span>
