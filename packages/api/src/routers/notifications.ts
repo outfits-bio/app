@@ -124,6 +124,10 @@ export const notificationsRouter = createTRPCRouter({
       body: z.string(),
     }))
     .mutation(async ({ input, ctx }) => {
+      if (input.userId === ctx.session.user.id) {
+        return;
+      }
+
       await sendPushNotificationToUser(input.userId, input.body, ctx);
       return true;
     }),
