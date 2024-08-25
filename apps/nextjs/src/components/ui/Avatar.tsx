@@ -10,6 +10,7 @@ const variants = cva(
   {
     variants: {
       size: {
+        xxs: 'w-6 h-6',
         xs: 'w-[32px] h-[32px]',
         // sm: 'w-[46px] h-[46px]',
         sm: 'w-12 h-12',

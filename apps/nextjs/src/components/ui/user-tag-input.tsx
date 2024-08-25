@@ -3,6 +3,7 @@ import { api } from '~/trpc/react';
 import { Input } from './input';
 import { PiX } from 'react-icons/pi';
 import Image from 'next/image';
+import { Avatar } from './Avatar';
 
 interface UserTagInputProps {
     value: string[];
@@ -12,7 +13,7 @@ interface UserTagInputProps {
 
 export function UserTagInput({ value, onChange, placeholder }: UserTagInputProps) {
     const [input, setInput] = useState('');
-    const [suggestions, setSuggestions] = useState<Array<{ username: string; image: string | null }>>([]);
+    const [suggestions, setSuggestions] = useState<Array<{ username: string; image: string | null; id: string }>>([]);
 
     const { data: users, refetch } = api.user.searchUsers.useQuery(
         { query: input },
@@ -31,6 +32,7 @@ export function UserTagInput({ value, onChange, placeholder }: UserTagInputProps
         if (users) {
             setSuggestions(users.map((user) => ({
                 username: user.username ?? '',
+                id: user.id,
                 image: user.image
             })).filter(user => user.username));
         }
@@ -87,13 +89,7 @@ export function UserTagInput({ value, onChange, placeholder }: UserTagInputProps
                                 className="px-2 py-1 hover:bg-gray-100 cursor-pointer flex items-center"
                             >
                                 {suggestion.image && (
-                                    <Image
-                                        src={suggestion.image}
-                                        alt={`${suggestion.username}'s profile`}
-                                        width={24}
-                                        height={24}
-                                        className="rounded-full mr-2"
-                                    />
+                                    <Avatar className='mr-2' size='xxs' image={suggestion.image} id={suggestion.id} username={suggestion.username} />
                                 )}
                                 {suggestion.username}
                             </li>
