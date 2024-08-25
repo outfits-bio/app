@@ -23,7 +23,7 @@ export const PostSection = ({ profileData, postsData, type }: PostSectionProps) 
                 <span><span className='font-semibold'>{getPostTypeCount(type, profileData)}</span> {getPostTypeName(type)}</span>
             </h2>
 
-            <div className='w-full overflow-scroll mb-5'>
+            <div className='w-full mb-5'>
                 <div className="flex gap-3 flex-wrap pb-1 w-full">
                     {posts?.map((post, i) => (
                         <Link
