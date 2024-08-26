@@ -110,40 +110,42 @@ export function Post({ post, ref, priority = false }: PostProps) {
     <div
       className={`flex-col justify-center flex absolute bottom-3 left-3 z-10 max-w-[calc(100%-24px)]`}
     >
-      <p className="flex items-center gap-1 font-medium text-white md:dark:text-white ">
-        {post.user.username}{' '}
-        {post.user.admin ? (
-          <PiHammer className="w-4 h-4" />
-        ) : (
-          post.user.verified && <PiSealCheck className="w-4 h-4" />
-        )}
-      </p>
+      <div className='flex gap-2 items-center'>
+        <p className="flex items-center gap-1 font-medium text-white md:dark:text-white ">
+          {post.user.username}{' '}
+          {post.user.admin ? (
+            <PiHammer className="w-4 h-4" />
+          ) : (
+            post.user.verified && <PiSealCheck className="w-4 h-4" />
+          )}
+        </p>
 
-      <p className='self-start text-sm font-medium font-clash text-white/80'>
-        {(() => {
-          const now = new Date();
-          const createdAt = new Date(post.createdAt);
-          const diffInMinutes = Math.floor((now.getTime() - createdAt.getTime()) / (1000 * 60));
-          const diffInHours = Math.floor(diffInMinutes / 60);
-          const diffInDays = Math.floor(diffInHours / 24);
-          const diffInWeeks = Math.floor(diffInDays / 7);
-          const diffInMonths = (now.getFullYear() - createdAt.getFullYear()) * 12 + now.getMonth() - createdAt.getMonth();
+        <p className='text-sm font-medium font-clash text-white/80'>
+          {(() => {
+            const now = new Date();
+            const createdAt = new Date(post.createdAt);
+            const diffInMinutes = Math.floor((now.getTime() - createdAt.getTime()) / (1000 * 60));
+            const diffInHours = Math.floor(diffInMinutes / 60);
+            const diffInDays = Math.floor(diffInHours / 24);
+            const diffInWeeks = Math.floor(diffInDays / 7);
+            const diffInMonths = (now.getFullYear() - createdAt.getFullYear()) * 12 + now.getMonth() - createdAt.getMonth();
 
-          if (diffInMinutes < 60) {
-            return `${diffInMinutes} minute${diffInMinutes !== 1 ? 's' : ''} ago`;
-          } else if (diffInHours < 24) {
-            return `${diffInHours} hour${diffInHours !== 1 ? 's' : ''} ago`;
-          } else if (diffInDays < 7) {
-            return `${diffInDays} day${diffInDays !== 1 ? 's' : ''} ago`;
-          } else if (diffInWeeks < 4) {
-            return `${diffInWeeks} week${diffInWeeks !== 1 ? 's' : ''} ago`;
-          } else if (diffInMonths < 1) {
-            return createdAt.toLocaleDateString();
-          } else {
-            return createdAt.toLocaleDateString();
-          }
-        })()}
-      </p>
+            if (diffInMinutes < 60) {
+              return `${diffInMinutes} minute${diffInMinutes !== 1 ? 's' : ''} ago`;
+            } else if (diffInHours < 24) {
+              return `${diffInHours} hour${diffInHours !== 1 ? 's' : ''} ago`;
+            } else if (diffInDays < 7) {
+              return `${diffInDays} day${diffInDays !== 1 ? 's' : ''} ago`;
+            } else if (diffInWeeks < 4) {
+              return `${diffInWeeks} week${diffInWeeks !== 1 ? 's' : ''} ago`;
+            } else if (diffInMonths < 1) {
+              return createdAt.toLocaleDateString();
+            } else {
+              return createdAt.toLocaleDateString();
+            }
+          })()}
+        </p>
+      </div>
 
       {/* Caption and tags */}
       {post.caption && (
@@ -169,35 +171,6 @@ export function Post({ post, ref, priority = false }: PostProps) {
           ))}
         </p>
       )}
-
-      {(post._count.likes > 0 ||
-        post._count.Comment > 0 ||
-        post._count.wishlists > 0) && (
-          <p className="flex self-start gap-1 text-sm font-medium font-clash text-white/80">
-            <PostInfoModal postId={post.id}>
-              {post._count.likes > 0 && (
-                <span className="flex gap-1 cursor-pointer" aria-label="Likes Button">
-                  <span className="font-bold">{post._count.likes}</span>{' '}
-                  {post._count.likes === 1 ? ' like' : ' likes'}
-                  {post._count.Comment || post._count.wishlists ? ', ' : ''}
-                </span>
-              )}
-            </PostInfoModal>
-            {post._count.Comment > 0 && (
-              <span className="flex gap-1">
-                <span className="font-bold">{post._count.Comment}</span>{' '}
-                {post._count.Comment === 1 ? ' comment' : ' comments'}
-                {post._count.wishlists ? ', ' : ''}
-              </span>
-            )}
-            {post._count.wishlists > 0 && (
-              <span className="flex gap-1">
-                <span className="font-bold">{post._count.wishlists}</span>{' '}
-                {post._count.wishlists === 1 ? ' wishlist' : ' wishlists'}
-              </span>
-            )}
-          </p>
-        )}
 
       <p className="inline text-sm text-stroke 2xs-h:hidden dark:text-white/75 break-words">
         {truncatedTagline && (
@@ -288,11 +261,23 @@ export function Post({ post, ref, priority = false }: PostProps) {
             />
           </Link>
 
-          <LikeButton post={post} />
+          <LikeButton post={post}>
+            {post._count.likes > 0 && (
+              <span className="text-[10px] md:text-black text-white">{post._count.likes}</span>
+            )}
+          </LikeButton>
 
-          <ReactButton post={post} />
+          <ReactButton post={post}>
+            {post._count.Comment > 0 && (
+              <span className="text-[10px] md:text-black text-white">{post._count.Comment}</span>
+            )}
+          </ReactButton>
 
-          <WishlistButton post={post} />
+          <WishlistButton post={post}>
+            {post._count.wishlists > 0 && (
+              <span className="text-[10px] md:text-black text-white">{post._count.wishlists}</span>
+            )}
+          </WishlistButton>
 
           {post.productLink && (
             <ProductLinkModal link={post.productLink}>
@@ -300,7 +285,7 @@ export function Post({ post, ref, priority = false }: PostProps) {
                 variant="outline-ghost"
                 centerItems
                 shape={'circle'}
-                iconLeft={<PiLinkBold />}
+                iconLeft={<PiLinkBold className="w-5 h-5" />}
                 className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent sm:dark:text-white"
                 aria-label="Product Link Button"
               />
@@ -311,7 +296,7 @@ export function Post({ post, ref, priority = false }: PostProps) {
             variant="outline-ghost"
             centerItems
             shape={'circle'}
-            iconLeft={<PiShareFatBold />}
+            iconLeft={<PiShareFatBold className="w-5 h-5" />}
             className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent sm:dark:text-white"
             aria-label="Share Button"
             onClick={() => handleShare(post.id)}

@@ -10,7 +10,7 @@ export interface LikeButtonProps extends PostProps {
   variant?: 'default' | 'ghost'
 }
 
-export function LikeButton({ post, variant = 'default' }: LikeButtonProps) {
+export function LikeButton({ post, children }: LikeButtonProps & { children?: React.ReactNode }) {
   const { data: session } = useSession()
 
   const [likeAnimation, setLikeAnimation] = useState<boolean>(false)
@@ -36,62 +36,24 @@ export function LikeButton({ post, variant = 'default' }: LikeButtonProps) {
         }),
     })
 
-  if (variant === 'default')
-    return (
-      <Button
-        variant="outline-ghost"
-        centerItems
-        shape={'circle'}
-        className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent sm:dark:text-white"
-        aria-label="Like Button"
-        onClick={() => {
-          setLikeAnimation(true)
-          toggleLikePost({ id: post.id })
-        }}
-        iconLeft={
-          post.authUserHasLiked && session?.user ? (
-            <PiHeartFill
-              onAnimationEnd={() => setLikeAnimation(false)}
-              className={
-                likeAnimation ? 'animate-like fill-white dark:fill-black' : ''
-              }
-            />
-          ) : (
-            <PiHeartBold
-              onAnimationEnd={() => setLikeAnimation(false)}
-              className={
-                likeAnimation
-                  ? 'animate-like-end fill-white dark:fill-black'
-                  : ''
-              }
-            />
-          )
-        }
-        disabled={toggleLikePostPending}
-      />
-    )
+  const isLiked = post.authUserHasLiked && session?.user
+
+  const handleLike = () => {
+    setLikeAnimation(true)
+    toggleLikePost({ id: post.id })
+  }
 
   return (
-    <button
-      onClick={() => {
-        setLikeAnimation(true)
-        toggleLikePost({ id: post.id })
-      }}
-      className="text-xl text-white"
-      type="button"
+    <Button
+      variant={'outline-ghost'}
+      centerItems
+      shape={'circle'}
+      iconLeft={isLiked ? <PiHeartFill /> : <PiHeartBold />}
+      className="text-white flex-col gap-0 border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent focus:outline-none sm:dark:text-white"
+      onClick={handleLike}
       aria-label="Like Button"
     >
-      {post.authUserHasLiked ? (
-        <PiHeartFill
-          onAnimationEnd={() => setLikeAnimation(false)}
-          className={likeAnimation ? 'animate-unlike fill-white' : ''}
-        />
-      ) : (
-        <PiHeartBold
-          onAnimationEnd={() => setLikeAnimation(false)}
-          className={likeAnimation ? 'animate-unlike-end fill-white' : ''}
-        />
-      )}
-    </button>
+      {children}
+    </Button>
   )
 }

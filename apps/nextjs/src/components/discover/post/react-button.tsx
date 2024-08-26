@@ -4,7 +4,7 @@ import type { PostProps } from './post'
 import { BaseModal, BaseModalContent, BaseModalTrigger } from '../../modals/base-modal'
 import { CommentSection } from './comment-section'
 
-export default function ReactButton({ post }: PostProps) {
+export default function ReactButton({ post, children }: PostProps & { children?: React.ReactNode }) {
   return (
     <BaseModal>
       <BaseModalTrigger>
@@ -13,9 +13,11 @@ export default function ReactButton({ post }: PostProps) {
           centerItems
           shape={'circle'}
           iconLeft={<PiChatCircleBold />}
-          className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent focus:outline-none sm:dark:text-white"
+          className="flex-col gap-0 text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent focus:outline-none sm:dark:text-white"
           aria-label="Comment Button"
-        />
+        >
+          {children}
+        </Button>
       </BaseModalTrigger>
       <BaseModalContent>
         <CommentSection post={post} />

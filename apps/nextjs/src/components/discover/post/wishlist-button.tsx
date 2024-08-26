@@ -5,7 +5,7 @@ import { PiBookmarkSimpleBold, PiBookmarkSimpleFill } from 'react-icons/pi'
 import { Button } from '../../ui/Button'
 import type { PostProps } from './post'
 
-export default function WishlistButton({ post }: PostProps) {
+export default function WishlistButton({ post, children }: PostProps & { children?: React.ReactNode }) {
   const { data: session } = useSession()
 
   const ctx = api.useUtils()
@@ -61,7 +61,7 @@ export default function WishlistButton({ post }: PostProps) {
       variant={'outline-ghost'}
       centerItems
       shape={'circle'}
-      className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent sm:dark:text-white"
+      className="text-white flex-col gap-0 border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent sm:dark:text-white"
       aria-label="Wishlist Button"
       iconLeft={
         !addToWishlistPending &&
@@ -74,6 +74,8 @@ export default function WishlistButton({ post }: PostProps) {
       }
       onClick={handleToggleWishlist}
       isLoading={addToWishlistPending || removeFromWishlistPending}
-    />
+    >
+      {children}
+    </Button>
   )
 }
