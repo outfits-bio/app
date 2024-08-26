@@ -92,6 +92,7 @@ export function CommentSection({ post }: PostProps) {
 function Comment({ comment, postId }: { comment: CommentType; postId: string }) {
     const [replyText, setReplyText] = useState('')
     const [showReplies, setShowReplies] = useState(false)
+    const [showReplyInput, setShowReplyInput] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
     const [editText, setEditText] = useState(comment.content)
     const ctx = api.useUtils()
@@ -117,6 +118,7 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
     const { mutate: addReply } = api.comment.addReply.useMutation({
         onSuccess: () => {
             setReplyText('')
+            setShowReplyInput(false)
             void ctx.comment.getReplies.invalidate({ commentId: comment.id })
 
             sendPushNotification({
@@ -201,7 +203,7 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
                                 if (part.startsWith('@')) {
                                     const linkText = part.substring(1);
                                     return (
-                                        <Link href={`/${linkText}`}>
+                                        <Link key={index} href={`/${linkText}`}>
                                             <strong>{part}</strong>
                                         </Link>
                                     );
@@ -212,8 +214,13 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
                     )}
                     <div className="mt-1 text-sm text-gray-500 flex items-center justify-between">
                         <div>
-                            <button onClick={() => setShowReplies(!showReplies)} className="mr-2">
-                                {showReplies ? 'Hide replies' : 'View replies'} ({comment.replyCount})
+                            {comment.replyCount > 0 && (
+                                <button onClick={() => setShowReplies(!showReplies)} className="mr-2">
+                                    {showReplies ? 'Hide replies' : 'View replies'} ({comment.replyCount})
+                                </button>
+                            )}
+                            <button onClick={() => setShowReplyInput(!showReplyInput)} className="mr-2">
+                                Reply
                             </button>
                             {comment.userId === session?.user.id && (
                                 <>
@@ -258,22 +265,24 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
                     </div>
                 </div>
             </div>
+            {showReplyInput && (
+                <div className="mt-2 ml-8 flex">
+                    <input
+                        value={replyText}
+                        onChange={(e) => setReplyText(e.target.value)}
+                        placeholder="Reply to this comment..."
+                        className="pl-3 flex-grow rounded-md border border-stroke mr-2"
+                    />
+                    <Button onClick={handleSubmitReply} className="max-w-fit px-3">
+                        <PiPaperPlaneRight className='text-xl' />
+                    </Button>
+                </div>
+            )}
             {showReplies && (
                 <div className="ml-8 mt-2">
                     {replies?.map((reply: CommentType) => (
                         <Comment key={reply.id} comment={reply} postId={postId} />
                     ))}
-                    <div className="mt-2 flex">
-                        <input
-                            value={replyText}
-                            onChange={(e) => setReplyText(e.target.value)}
-                            placeholder="Reply to this comment..."
-                            className="pl-3 flex-grow rounded-md border border-stroke mr-2"
-                        />
-                        <Button onClick={handleSubmitReply} className="max-w-fit px-3">
-                            <PiPaperPlaneRight className='text-xl' />
-                        </Button>
-                    </div>
                 </div>
             )}
         </div>
