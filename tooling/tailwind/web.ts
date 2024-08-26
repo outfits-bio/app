@@ -54,7 +54,13 @@ export default {
           '100%': { transform: 'translateY(-400%)' },
         },
         like: {
-          '100%': { transform: 'scale(1.2)' },
+          '0%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.3)' },
+          '100%': { transform: 'scale(1)' },
+        },
+        'like-color': {
+          '0%': { color: 'inherit' },
+          '100%': { color: '#ff6200' },
         },
       },
       animation: {
@@ -63,7 +69,8 @@ export default {
         ping: 'ping 200ms ease-in-out',
         'spin-words': 'spin-words 10s infinite',
         'spin-cd': 'spin 30s linear infinite',
-        like: 'like .6s ease-in-out',
+        like: 'like 0.45s cubic-bezier(0.17, 0.89, 0.32, 1.49), like-color 0.3s ease-in-out',
+        'like-longer': 'like 1.5s cubic-bezier(0.17, 0.89, 0.32, 1.49), like-color 0.6s ease-in-out',
       },
     },
   },

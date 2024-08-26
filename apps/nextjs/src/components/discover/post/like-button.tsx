@@ -48,7 +48,7 @@ export function LikeButton({ post, children }: LikeButtonProps & { children?: Re
       variant={'outline-ghost'}
       centerItems
       shape={'circle'}
-      iconLeft={isLiked ? <PiHeartFill /> : <PiHeartBold />}
+      iconLeft={isLiked ? <PiHeartFill className={likeAnimation ? 'animate-like' : ''} /> : <PiHeartBold />}
       className="text-white flex-col gap-0 border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent focus:outline-none sm:dark:text-white"
       onClick={handleLike}
       aria-label="Like Button"
