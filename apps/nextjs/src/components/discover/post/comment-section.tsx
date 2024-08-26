@@ -120,6 +120,8 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
             setReplyText('')
             setShowReplyInput(false)
             void ctx.comment.getReplies.invalidate({ commentId: comment.id })
+            // Add this line to update the comment count
+            void ctx.comment.getComments.invalidate({ postId })
 
             sendPushNotification({
                 userId: comment.userId,
@@ -130,9 +132,15 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
     })
 
     const { mutate: editComment } = api.comment.editComment.useMutation({
-        onSuccess: () => {
+        onSuccess: (updatedComment) => {
             setIsEditing(false)
             void ctx.comment.getComments.invalidate({ postId })
+            // Update the parent comment's replies if this is a subcomment
+            if (comment.replyCount === 0) {
+                void ctx.comment.getReplies.invalidate({ commentId: comment.id })
+            }
+            // Update the local comment state
+            Object.assign(comment, updatedComment)
         },
         onError: (e) => handleErrors({ e, message: "Failed to edit comment!" })
     })
@@ -140,6 +148,17 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
     const { mutate: deleteComment } = api.comment.deleteComment.useMutation({
         onSuccess: () => {
             void ctx.comment.getComments.invalidate({ postId })
+            // Update the parent comment's replies if this is a subcomment
+            if (comment.replyCount === 0) {
+                void ctx.comment.getReplies.invalidate({ commentId: comment.id })
+            }
+            // Remove the comment from the local state
+            if (replies) {
+                const index = replies.findIndex(reply => reply.id === comment.id)
+                if (index !== -1) {
+                    replies.splice(index, 1)
+                }
+            }
         },
     })
 
