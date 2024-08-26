@@ -5,7 +5,7 @@ import { Button } from '../../ui/Button'
 import type { PostProps } from './post'
 import { useSession } from 'next-auth/react'
 import toast from 'react-hot-toast'
-import { PiFloppyDisk, PiPaperPlaneRight } from 'react-icons/pi'
+import { PiFloppyDisk, PiPaperPlaneRight, PiHeart, PiHeartFill } from 'react-icons/pi'
 import Link from 'next/link'
 import { handleErrors } from '@acme/utils/handle-errors.util'
 
@@ -210,47 +210,50 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
                             })}
                         </p>
                     )}
-                    <div className="mt-1 text-sm text-gray-500">
-                        <button onClick={handleToggleLike}>
-                            {isLiked ? 'Unlike' : 'Like'} ({localLikeCount})
-                        </button>
-                        <button onClick={() => setShowReplies(!showReplies)} className="ml-2">
-                            {showReplies ? 'Hide replies' : 'View replies'} ({comment.replyCount})
-                        </button>
-                        {comment.userId === session?.user.id && (
-                            <>
-                                <button onClick={() => setIsEditing(true)} className="ml-2">
-                                    Edit
-                                </button>
-                                <button onClick={handleDeleteComment} className="ml-2">
-                                    Delete
-                                </button>
-                            </>
-                        )}
-                        <button className="ml-2 cursor-default">
-                            {(() => {
-                                const now = new Date();
-                                const createdAt = new Date(comment.createdAt);
-                                const diffInMinutes = Math.floor((now.getTime() - createdAt.getTime()) / (1000 * 60));
-                                const diffInHours = Math.floor(diffInMinutes / 60);
-                                const diffInDays = Math.floor(diffInHours / 24);
-                                const diffInWeeks = Math.floor(diffInDays / 7);
-                                const diffInMonths = (now.getFullYear() - createdAt.getFullYear()) * 12 + now.getMonth() - createdAt.getMonth();
+                    <div className="mt-1 text-sm text-gray-500 flex items-center justify-between">
+                        <div>
+                            <button onClick={() => setShowReplies(!showReplies)} className="mr-2">
+                                {showReplies ? 'Hide replies' : 'View replies'} ({comment.replyCount})
+                            </button>
+                            {comment.userId === session?.user.id && (
+                                <>
+                                    <button onClick={() => setIsEditing(true)} className="mr-2">
+                                        Edit
+                                    </button>
+                                    <button onClick={handleDeleteComment} className="mr-2">
+                                        Delete
+                                    </button>
+                                </>
+                            )}
+                            <span className="cursor-default">
+                                {(() => {
+                                    const now = new Date();
+                                    const createdAt = new Date(comment.createdAt);
+                                    const diffInMinutes = Math.floor((now.getTime() - createdAt.getTime()) / (1000 * 60));
+                                    const diffInHours = Math.floor(diffInMinutes / 60);
+                                    const diffInDays = Math.floor(diffInHours / 24);
+                                    const diffInWeeks = Math.floor(diffInDays / 7);
+                                    const diffInMonths = (now.getFullYear() - createdAt.getFullYear()) * 12 + now.getMonth() - createdAt.getMonth();
 
-                                if (diffInMinutes < 60) {
-                                    return `${diffInMinutes} minute${diffInMinutes !== 1 ? 's' : ''} ago`;
-                                } else if (diffInHours < 24) {
-                                    return `${diffInHours} hour${diffInHours !== 1 ? 's' : ''} ago`;
-                                } else if (diffInDays < 7) {
-                                    return `${diffInDays} day${diffInDays !== 1 ? 's' : ''} ago`;
-                                } else if (diffInWeeks < 4) {
-                                    return `${diffInWeeks} week${diffInWeeks !== 1 ? 's' : ''} ago`;
-                                } else if (diffInMonths < 1) {
-                                    return createdAt.toLocaleDateString();
-                                } else {
-                                    return createdAt.toLocaleDateString();
-                                }
-                            })()}
+                                    if (diffInMinutes < 60) {
+                                        return `${diffInMinutes} minute${diffInMinutes !== 1 ? 's' : ''} ago`;
+                                    } else if (diffInHours < 24) {
+                                        return `${diffInHours} hour${diffInHours !== 1 ? 's' : ''} ago`;
+                                    } else if (diffInDays < 7) {
+                                        return `${diffInDays} day${diffInDays !== 1 ? 's' : ''} ago`;
+                                    } else if (diffInWeeks < 4) {
+                                        return `${diffInWeeks} week${diffInWeeks !== 1 ? 's' : ''} ago`;
+                                    } else if (diffInMonths < 1) {
+                                        return createdAt.toLocaleDateString();
+                                    } else {
+                                        return createdAt.toLocaleDateString();
+                                    }
+                                })()}
+                            </span>
+                        </div>
+                        <button onClick={handleToggleLike} className="flex items-center">
+                            {isLiked ? <PiHeartFill className="text-red-500" /> : <PiHeart />}
+                            <span className="ml-1">{localLikeCount}</span>
                         </button>
                     </div>
                 </div>
