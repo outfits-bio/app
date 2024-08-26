@@ -668,7 +668,7 @@ export const postRouter = createTRPCRouter({
           },
           _count: {
             select: {
-              reactions: true,
+              Comment: true,
               likes: true,
               wishlists: true,
             },
@@ -689,7 +689,7 @@ export const postRouter = createTRPCRouter({
               id: true,
             },
           },
-          reactions: {
+          Comment: {
             where: {
               userId: ctx.session?.user.id,
             },

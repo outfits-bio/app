@@ -171,7 +171,7 @@ export function Post({ post, ref, priority = false }: PostProps) {
       )}
 
       {(post._count.likes > 0 ||
-        post._count.reactions > 0 ||
+        post._count.Comment > 0 ||
         post._count.wishlists > 0) && (
           <p className="flex self-start gap-1 text-sm font-medium font-clash text-white/80">
             <PostInfoModal postId={post.id}>
@@ -179,14 +179,14 @@ export function Post({ post, ref, priority = false }: PostProps) {
                 <span className="flex gap-1 cursor-pointer" aria-label="Likes Button">
                   <span className="font-bold">{post._count.likes}</span>{' '}
                   {post._count.likes === 1 ? ' like' : ' likes'}
-                  {post._count.reactions || post._count.wishlists ? ', ' : ''}
+                  {post._count.Comment || post._count.wishlists ? ', ' : ''}
                 </span>
               )}
             </PostInfoModal>
-            {post._count.reactions > 0 && (
+            {post._count.Comment > 0 && (
               <span className="flex gap-1">
-                <span className="font-bold">{post._count.reactions}</span>{' '}
-                {post._count.reactions === 1 ? ' reaction' : ' reactions'}
+                <span className="font-bold">{post._count.Comment}</span>{' '}
+                {post._count.Comment === 1 ? ' comment' : ' comments'}
                 {post._count.wishlists ? ', ' : ''}
               </span>
             )}
