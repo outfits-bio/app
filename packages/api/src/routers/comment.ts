@@ -229,7 +229,7 @@ export const commentRouter = createTRPCRouter({
         }),
 
     deleteComment: protectedProcedure
-        .input(z.object({ commentId: z.string() }))
+        .input(z.object({ commentId: z.string(), postOwnerId: z.string() }))
         .mutation(async ({ ctx, input }) => {
             const comment = await ctx.db.comment.findUnique({
                 where: { id: input.commentId },
@@ -240,8 +240,8 @@ export const commentRouter = createTRPCRouter({
                 throw new TRPCError({ code: 'NOT_FOUND', message: 'Comment not found' })
             }
 
-            if (comment.userId !== ctx.session.user.id) {
-                throw new TRPCError({ code: 'FORBIDDEN', message: 'You can only delete your own comments' })
+            if (comment.userId !== ctx.session.user.id && ctx.session.user.id !== input.postOwnerId && !ctx.session.user.admin) {
+                throw new TRPCError({ code: 'FORBIDDEN', message: 'You can only delete your own comments or comments on your own posts' })
             }
 
             // Delete all replies recursively

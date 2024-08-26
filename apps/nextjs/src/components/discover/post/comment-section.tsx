@@ -152,14 +152,9 @@ function Comment({ comment, postId, postOwnerId }: { comment: CommentType; postI
             if (comment.replyCount === 0) {
                 void ctx.comment.getReplies.invalidate({ commentId: comment.id })
             }
-            // Remove the comment from the local state
-            if (replies) {
-                const index = replies.findIndex(reply => reply.id === comment.id)
-                if (index !== -1) {
-                    replies.splice(index, 1)
-                }
-            }
+            toast.success('Comment deleted')
         },
+        onError: (e) => handleErrors({ e, message: "Failed to delete comment!" })
     })
 
     const { data: replies } = api.comment.getReplies.useQuery(
@@ -183,8 +178,7 @@ function Comment({ comment, postId, postOwnerId }: { comment: CommentType; postI
     }
 
     const handleDeleteComment = () => {
-        toast.success('Comment deleted')
-        deleteComment({ commentId: comment.id })
+        deleteComment({ commentId: comment.id, postOwnerId: postOwnerId })
     }
 
     const handleToggleLike = () => {
