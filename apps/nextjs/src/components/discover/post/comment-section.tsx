@@ -65,7 +65,7 @@ export function CommentSection({ post }: PostProps) {
                     <>
                         {comments?.pages.map((page) =>
                             page.comments.map((comment) => (
-                                <Comment key={comment.id} comment={comment} postId={post.id} />
+                                <Comment key={comment.id} comment={comment} postId={post.id} postOwnerId={post.user.id} />
                             ))
                         )}
                         {hasNextPage && (
@@ -89,7 +89,7 @@ export function CommentSection({ post }: PostProps) {
     )
 }
 
-function Comment({ comment, postId }: { comment: CommentType; postId: string }) {
+function Comment({ comment, postId, postOwnerId }: { comment: CommentType; postId: string; postOwnerId: string }) {
     const [replyText, setReplyText] = useState('')
     const [showReplies, setShowReplies] = useState(false)
     const [showReplyInput, setShowReplyInput] = useState(false)
@@ -191,6 +191,8 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
         toggleLikeComment({ commentId: comment.id })
     }
 
+    const canDeleteComment = session?.user.id === comment.userId || session?.user.admin || session?.user.id === postOwnerId
+
     return (
         <div className="mb-4">
             <div className="flex items-start">
@@ -242,14 +244,14 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
                                 Reply
                             </button>
                             {comment.userId === session?.user.id && (
-                                <>
-                                    <button onClick={() => setIsEditing(true)} className="mr-2">
-                                        Edit
-                                    </button>
-                                    <button onClick={handleDeleteComment} className="mr-2">
-                                        Delete
-                                    </button>
-                                </>
+                                <button onClick={() => setIsEditing(true)} className="mr-2">
+                                    Edit
+                                </button>
+                            )}
+                            {canDeleteComment && (
+                                <button onClick={handleDeleteComment} className="mr-2">
+                                    Delete
+                                </button>
                             )}
                             <span className="cursor-default">
                                 {(() => {
@@ -300,7 +302,7 @@ function Comment({ comment, postId }: { comment: CommentType; postId: string }) 
             {showReplies && (
                 <div className="ml-8 mt-2">
                     {replies?.map((reply: CommentType) => (
-                        <Comment key={reply.id} comment={reply} postId={postId} />
+                        <Comment key={reply.id} comment={reply} postId={postId} postOwnerId={postOwnerId} />
                     ))}
                 </div>
             )}
