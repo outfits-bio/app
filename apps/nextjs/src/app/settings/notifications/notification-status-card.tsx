@@ -42,6 +42,15 @@ export function NotificationStatusCard() {
             const subscription = await registration.pushManager.getSubscription();
             if (subscription) {
                 await subscription.unsubscribe();
+                await subscribeToPushNotifications.mutateAsync({
+                    subscription: {
+                        keys: {
+                            p256dh: '',
+                            auth: ''
+                        },
+                        endpoint: ''
+                    }
+                });
                 console.log('User unsubscribed');
             }
             setNotificationsEnabled(false);
