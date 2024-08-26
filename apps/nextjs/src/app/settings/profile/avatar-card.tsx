@@ -16,10 +16,9 @@ import { PiSubtract } from "react-icons/pi";
 import Image from "next/image";
 import * as nsfwjs from 'nsfwjs';
 
-export function AvatarCard() {
-    const { data: session, update } = useSession();
+export function AvatarCard({ session }: { session: any }) {
+    const { data: sessionData, update } = useSession();
     const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, handlePaste, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [loading, setLoading] = useState<boolean>(false);
     const ref = useRef<HTMLInputElement>(null);
 
@@ -27,11 +26,11 @@ export function AvatarCard() {
     const { handleSubmit } = useForm();
 
     useEffect(() => {
-        if (!session?.user) return;
-        setFileUrl(formatAvatar(session.user.image, session.user.id));
+        if (!sessionData?.user) return;
+        setFileUrl(formatAvatar(sessionData.user.image, sessionData.user.id));
     }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        , [session]);
+        , [sessionData]);
 
     /**
    * This creates a presigned url for the image and then uploads the image to the presigned url
@@ -101,7 +100,7 @@ export function AvatarCard() {
                     <p>Take your best shot because your avatar is how you will appear on most of the website.</p>
                 </div>
                 <form onChange={handleFormChange} onSubmit={handleSubmit(handleFormSubmit)}>
-                    {session ? (
+                    {sessionData ? (
                         <div>
                             <div className='rounded-full h-44 w-44 flex items-center justify-center border dark:border-stroke' onClick={() => ref.current?.click()}>
                                 {dragActive &&

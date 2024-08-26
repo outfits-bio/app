@@ -12,11 +12,10 @@ import { useSession } from 'next-auth/react';
 import toast from "react-hot-toast";
 
 
-export function TaglineCard() {
-    const { data: session } = useSession();
-    const { data: tagline } = api.user.getProfile.useQuery({ username: session?.user?.username ?? '' });
+export function TaglineCard({ session }: { session: any }) {
+    const { data: taglineData } = api.user.getProfile.useQuery({ username: session?.user?.username ?? '' });
 
-    const { register, handleSubmit, formState: { errors }, } = useForm<EditProfileInput>({
+    const { register, handleSubmit, formState: { errors } } = useForm<EditProfileInput>({
         resolver: zodResolver(editProfileSchema),
     });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -55,7 +54,7 @@ export function TaglineCard() {
                             {...register('tagline', { maxLength: 200 })}
                             className="flex rounded-lg items-center gap-4 p-3 py-4 flex-1 self-stretch"
                             placeholder="I enjoy linking my outfits."
-                            defaultValue={tagline?.tagline ?? ''}
+                            defaultValue={taglineData?.tagline ?? ''}
                         />
                         {errors.tagline && <p className="text-red-500 text-sm">{errors.tagline.message}</p>}
                     </div>

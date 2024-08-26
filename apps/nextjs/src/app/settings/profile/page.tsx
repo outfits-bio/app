@@ -1,12 +1,15 @@
 import { auth } from "@acme/auth";
 import { redirect } from "next/navigation";
-
-import { AvatarCard } from "~/app/settings/profile/avatar-card";
-import { DeleteAccountCard } from "~/app/settings/profile/delete-account-card";
-import { LinksCard } from "~/app/settings/profile/links-card";
-import { TaglineCard } from "~/app/settings/profile/tagline-card";
-import { UsernameCard } from "~/app/settings/profile/username-card";
+import { api } from "~/trpc/server";
+import { AvatarCard } from "./avatar-card";
+import { DeleteAccountCard } from "./delete-account-card";
+import { LinksCard } from "./links-card";
+import { TaglineCard } from "./tagline-card";
+import { UsernameCard } from "./username-card";
 import { SettingsSidebar } from "~/components/settings/settings-sidebar";
+import { memo } from 'react';
+
+const MemoizedDeleteAccountCard = memo(DeleteAccountCard);
 
 export default async function ProfileSettingsPage() {
     const session = await auth();
@@ -14,6 +17,8 @@ export default async function ProfileSettingsPage() {
     if (!session?.user) {
         redirect('/login');
     }
+    const userData = await api.user.getMe();
+    const tagline = await api.user.getProfile({ username: session.user.username ?? '' });
 
     return (
         <div className="flex">
@@ -23,13 +28,12 @@ export default async function ProfileSettingsPage() {
                     <h1 className="font-clash font-bold text-3xl">Profile</h1>
                     <p>Edit and manage your profile.</p>
                 </div>
-                <AvatarCard />
-                <UsernameCard />
-                <TaglineCard />
+                <AvatarCard session={session} />
+                <UsernameCard session={session} />
+                <TaglineCard session={session} />
                 <LinksCard />
-                <DeleteAccountCard />
+                <MemoizedDeleteAccountCard />
             </section>
         </div>
     )
 }
-

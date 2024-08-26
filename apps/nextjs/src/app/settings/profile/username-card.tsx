@@ -11,8 +11,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import toast from "react-hot-toast";
 import { handleErrors } from '@acme/utils/handle-errors.util';
 
-export function UsernameCard() {
-    const { data: session, update } = useSession();
+export function UsernameCard({ session }: { session: any }) {
+    const { data: sessionData, update } = useSession();
     const { register, handleSubmit, formState: { errors }, setError, clearErrors } = useForm<EditProfileInput>({
         resolver: zodResolver(editProfileSchema),
     });
@@ -30,7 +30,7 @@ export function UsernameCard() {
     const handleFormSubmit = ({ username }: EditProfileInput) => {
         setLoading(true);
 
-        if (username === session?.user?.username) {
+        if (username === sessionData?.user?.username) {
             setError("username", {
                 type: "manual",
                 message: "Your new username must be different from your current username."
@@ -60,7 +60,7 @@ export function UsernameCard() {
                     </div>
                     <div className="flex justify-between items-center self-stretch border dark:border-stroke rounded-lg">
                         <div className="flex p-3 items-center gap-10 rounded-l-lg self-stretch bg-gray-100 dark:bg-neutral-900">outfits.bio/</div>
-                        <input {...register("username", { maxLength: 24 })} className="flex items-center gap-4 p-3 py-4 flex-1 rounded-r-lg self-stretch" placeholder={session?.user?.username ?? "username"} defaultValue={session?.user?.username} />
+                        <input {...register("username", { maxLength: 24 })} className="flex items-center gap-4 p-3 py-4 flex-1 rounded-r-lg self-stretch" placeholder={sessionData?.user?.username ?? "username"} defaultValue={sessionData?.user?.username} />
                     </div>
                     <div>{errors.username && <p className="text-red-500 text-sm">{errors.username.message}</p>}</div>
                 </div>
