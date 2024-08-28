@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
     },
     userInfo: {
         flexDirection: 'row',
-        alignItems: 'center',
     },
     username: {
         color: 'white',
