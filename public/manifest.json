@@ -2,12 +2,27 @@
   "theme_color": "#ffffff",
   "background_color": "#F9F9F9",
   "display": "standalone",
+  "display_override": "standalone",
+  "orientation": "portrait",
   "scope": "https://outfits.bio/",
   "start_url": "https://outfits.bio/",
   "name": "outfits.bio",
   "short_name": "outfits.bio",
   "description": "Your wardrobe in the cloud, share and inspire your followers",
   "gcm_sender_id": "103953800507",
+  "shortcuts": [
+    {
+      "name": "Profile",
+      "url": "/profile",
+      "description": "Quickly go to your profile."
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+outfitsbio",
+      "url": "/search=%s"
+    }
+  ],
   "icons": [
     {
       "src": "/icon-192x192.png",
