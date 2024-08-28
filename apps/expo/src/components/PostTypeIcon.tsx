@@ -18,5 +18,5 @@ export function PostTypeIcon({ type }: PostTypeIconProps) {
             iconName = 'help-outline';
     }
 
-    return <Ionicons name={iconName} size={24} color="black" />;
+    return <Ionicons name={iconName as keyof typeof Ionicons.glyphMap} size={24} color="black" />;
 }

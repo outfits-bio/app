@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 import { PostType } from '@acme/db';
 import { getPostTypeName } from "~/utils/names.util";
-import { PostTypeIcon } from "./PostTypeIcon";
+import { PostTypeIcon } from "../PostTypeIcon";
 
 interface CategoryButtonProps {
     activePostTypes: PostType[];

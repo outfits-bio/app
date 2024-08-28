@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-export function WishlistButton({ post }) {
+export function WishlistButton({ post }: { post: any }) {
     const handleWishlist = () => {
         // Implement wishlist functionality
     };
