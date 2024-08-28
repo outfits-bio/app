@@ -1,7 +1,7 @@
 "use client";
 
 import { api } from '@/trpc/react';
-import type { RouterOutputs } from '@/api';
+import type { RouterOutputs } from '@/trpc/shared';
 import { handleErrors } from '@/utils/handle-errors.util';
 import { intlFormatDistance } from 'date-fns';
 import Link from 'next/link';

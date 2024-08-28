@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import type { api } from "@/trpc/react";
-import type { RouterOutputs } from "@/api";
+import type { RouterOutputs } from "@/trpc/shared";
 import { handleErrors } from "@/utils/handle-errors.util";
 import { type Post, PostType } from "database";
 import { PiBackpack, PiBaseballCap, PiBaseballCapBold, PiCoatHanger, PiCoatHangerBold, PiEyeglasses, PiEyeglassesBold, PiHoodieBold, PiPants, PiPantsBold, PiShirtFolded, PiSneaker, PiSneakerBold, PiTShirt, PiTShirtBold } from "react-icons/pi";
@@ -143,7 +143,7 @@ export const onMutate = async (
 
     ctx.post.getPostsAllTypes.setData({ id: userId ?? "" }, updateData as any);
 
-    return { prevData };
+    return { prevData: prevData as PartialPost[] | undefined };
 };
 
 /**

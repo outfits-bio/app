@@ -8,7 +8,7 @@ import { BaseModal, BaseModalClose, BaseModalContent, BaseModalDescription, Base
 import { Button } from '../ui/Button';
 
 import { type EditUserInput, editUserSchema } from '@/schemas/admin.schema';
-import type { AppRouter } from '@/api';
+import type { AppRouter } from '@/server/api/root';
 import { api } from "@/trpc/react";
 import { handleErrors } from '@/utils/handle-errors.util';
 import { useRef } from 'react';

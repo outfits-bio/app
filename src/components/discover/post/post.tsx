@@ -2,8 +2,7 @@
 
 import { api } from '@/trpc/react'
 import { handleErrors } from '@/utils/handle-errors.util'
-import { PostInfoModal } from '@/components/modals/post-info-modal'
-import type { AppRouter } from '@/api'
+import type { AppRouter } from '@/server/api/root'
 import { formatImage } from '@/utils/image-src-format.util'
 import { getPostTypeName } from '@/utils/names.util'
 import type { inferRouterOutputs } from '@trpc/server'
