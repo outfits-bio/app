@@ -7,7 +7,7 @@
     "build": "next build",
     "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "next dev",
-    "format": "prettier --check . --ignore-path .gitignore",
+    "format": "prettier --write . --ignore-path .gitignore",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore",
     "start": "next start",
     "typecheck": "tsc --noEmit",

@@ -8,32 +8,50 @@ import { AccentCard } from "../../app/settings/appearance/accent-card";
 import Link from "next/link";
 
 interface OnboardingStartSectionProps {
-    setOnboardingStarted: React.Dispatch<React.SetStateAction<number>>;
-    onboardingStarted: number;
-    username?: string;
+  setOnboardingStarted: React.Dispatch<React.SetStateAction<number>>;
+  onboardingStarted: number;
+  username?: string;
 }
 
-export const OnboardingAppearance = ({ setOnboardingStarted, onboardingStarted }: OnboardingStartSectionProps) => {
-    // const [createFirstPostModalOpen, setCreateFirstPostModalOpen] = useState(false);
+export const OnboardingAppearance = ({
+  setOnboardingStarted,
+  onboardingStarted,
+}: OnboardingStartSectionProps) => {
+  // const [createFirstPostModalOpen, setCreateFirstPostModalOpen] = useState(false);
 
-    const { theme } = useTheme();
+  const { theme } = useTheme();
 
-    if (onboardingStarted === 2) return <div className="w-screen md:w-auto p-4">
+  if (onboardingStarted === 2)
+    return (
+      <div className="w-screen md:w-auto p-4">
         {/* {createFirstPostModalOpen && <CropPostModal isOpen={createFirstPostModalOpen} setIsOpen={setCreateFirstPostModalOpen} />} */}
         <div className="flex flex-col gap-4">
-            <ThemeCard />
+          <ThemeCard />
         </div>
 
-        {theme !== 'dark' && <div className="flex flex-col gap-4">
+        {theme !== "dark" && (
+          <div className="flex flex-col gap-4">
             <AccentCard />
-        </div>}
+          </div>
+        )}
 
+        <div className="flex gap-2 mt-4">
+          <Button
+            variant="outline"
+            iconLeft={<PiArrowLeft />}
+            onClick={() => setOnboardingStarted(1)}
+            centerItems
+          >
+            Back
+          </Button>
+          <Link href="/">
+            <Button type="submit" iconRight={<PiArrowRight />} centerItems>
+              Continue
+            </Button>
+          </Link>
 
-        <div className='flex gap-2 mt-4'>
-            <Button variant='outline' iconLeft={<PiArrowLeft />} onClick={() => setOnboardingStarted(1)} centerItems>Back</Button>
-            <Link href='/'><Button type='submit' iconRight={<PiArrowRight />} centerItems>Continue</Button></Link>
-
-            {/* <Button type='submit' iconRight={<PiArrowRight />} centerItems onClick={() => setCreateFirstPostModalOpen(true)}>Continue</Button> */}
+          {/* <Button type='submit' iconRight={<PiArrowRight />} centerItems onClick={() => setCreateFirstPostModalOpen(true)}>Continue</Button> */}
         </div>
-    </div>
-}
+      </div>
+    );
+};

@@ -1,8 +1,8 @@
 import { deleteNotificationSchema } from "@/schemas/notification.schema";
 import { TRPCError } from "@trpc/server";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
-import { z } from 'zod';
-import { sendPushNotificationToUser } from '../services/pushNotificationService';
+import { z } from "zod";
+import { sendPushNotificationToUser } from "../services/pushNotificationService";
 
 export const notificationsRouter = createTRPCRouter({
   getNotifications: protectedProcedure.query(async ({ ctx }) => {
@@ -90,15 +90,17 @@ export const notificationsRouter = createTRPCRouter({
     return count;
   }),
   subscribeToPushNotifications: protectedProcedure
-    .input(z.object({
-      subscription: z.object({
-        endpoint: z.string(),
-        keys: z.object({
-          p256dh: z.string(),
-          auth: z.string(),
+    .input(
+      z.object({
+        subscription: z.object({
+          endpoint: z.string(),
+          keys: z.object({
+            p256dh: z.string(),
+            auth: z.string(),
+          }),
         }),
       }),
-    }))
+    )
     .mutation(async ({ ctx, input }) => {
       await ctx.prisma.subscription.create({
         data: {
@@ -119,10 +121,12 @@ export const notificationsRouter = createTRPCRouter({
       return subscriptions;
     }),
   sendPushNotification: protectedProcedure
-    .input(z.object({
-      userId: z.string(),
-      body: z.string(),
-    }))
+    .input(
+      z.object({
+        userId: z.string(),
+        body: z.string(),
+      }),
+    )
     .mutation(async ({ input, ctx }) => {
       if (input.userId === ctx.session.user.id) {
         return;

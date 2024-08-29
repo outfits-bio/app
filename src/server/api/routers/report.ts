@@ -39,8 +39,9 @@ export const reportRouter = createTRPCRouter({
           embeds: [
             {
               title: "Report",
-              description: `**Type:** ${type}\n**Reason:** ${reason}\n**Offender:** [${report.username
-                }](https://outfits.bio/${encodeURI(report.username ?? "")})`,
+              description: `**Type:** ${type}\n**Reason:** ${reason}\n**Offender:** [${
+                report.username
+              }](https://outfits.bio/${encodeURI(report.username ?? "")})`,
               color: 0xff0000,
             },
           ],
@@ -77,10 +78,11 @@ export const reportRouter = createTRPCRouter({
           embeds: [
             {
               title: "Report",
-              description: `**Type:** ${type}\n**Reason:** ${reason}\n**Offender:** [${report.user.username
-                }](https://outfits.bio/${encodeURI(
-                  report.user.username ?? "",
-                )}?postId=${id})`,
+              description: `**Type:** ${type}\n**Reason:** ${reason}\n**Offender:** [${
+                report.user.username
+              }](https://outfits.bio/${encodeURI(
+                report.user.username ?? "",
+              )}?postId=${id})`,
               color: 0xff0000,
               image: {
                 url: formatImage(report.image, report.userId),
@@ -127,8 +129,9 @@ export const reportRouter = createTRPCRouter({
       await axios.post(process.env.DISCORD_BUG_WEBHOOK_URL ?? "", {
         username: "Bug Reports Bot",
         avatar_url: "",
-        content: `New bug report from [${ctx.session.user.username ?? "Unknown User"
-          }](https://outfits.bio/${encodeURI(ctx.session.user.username ?? "")})`,
+        content: `New bug report from [${
+          ctx.session.user.username ?? "Unknown User"
+        }](https://outfits.bio/${encodeURI(ctx.session.user.username ?? "")})`,
         embeds: [
           {
             title: "Bug Report",
@@ -149,8 +152,9 @@ export const reportRouter = createTRPCRouter({
       await axios.post(process.env.DISCORD_FEEDBACK_WEBHOOK_URL ?? "", {
         username: "Feedback Bot",
         avatar_url: "",
-        content: `New feedback from [${ctx.session.user.username ?? "Unknown User"
-          }](https://outfits.bio/${encodeURI(ctx.session.user.username ?? "")})`,
+        content: `New feedback from [${
+          ctx.session.user.username ?? "Unknown User"
+        }](https://outfits.bio/${encodeURI(ctx.session.user.username ?? "")})`,
         embeds: [
           {
             title: "Feedback",

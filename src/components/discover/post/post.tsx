@@ -1,17 +1,17 @@
-'use client'
+"use client";
 
-import { api } from '@/trpc/react'
-import { handleErrors } from '@/utils/handle-errors.util'
-import type { AppRouter } from '@/server/api/root'
-import { formatImage } from '@/utils/image-src-format.util'
-import { getPostTypeName } from '@/utils/names.util'
-import type { inferRouterOutputs } from '@trpc/server'
-import { useSession } from 'next-auth/react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { memo, useState } from 'react'
-import toast from 'react-hot-toast'
+import { api } from "@/trpc/react";
+import { handleErrors } from "@/utils/handle-errors.util";
+import type { AppRouter } from "@/server/api/root";
+import { formatImage } from "@/utils/image-src-format.util";
+import { getPostTypeName } from "@/utils/names.util";
+import type { inferRouterOutputs } from "@trpc/server";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { memo, useState } from "react";
+import toast from "react-hot-toast";
 import {
   PiDotsThreeBold,
   PiHammer,
@@ -19,98 +19,98 @@ import {
   PiSealCheck,
   PiShareFatBold,
   PiLinkBold,
-} from 'react-icons/pi'
-import { PostMenu } from '../../menus/post-menu'
-import { Avatar } from '../../ui/Avatar'
-import { Button } from '../../ui/Button'
-import { LikeButton } from './like-button'
-import ReactButton from './react-button'
-import WishlistButton from './wishlist-button'
-import { useMediaQuery } from '@/hooks/use-media-query.hook'
-import { ProductLinkModal } from '../../modals/product-link-modal'
+} from "react-icons/pi";
+import { PostMenu } from "../../menus/post-menu";
+import { Avatar } from "../../ui/Avatar";
+import { Button } from "../../ui/Button";
+import { LikeButton } from "./like-button";
+import ReactButton from "./react-button";
+import WishlistButton from "./wishlist-button";
+import { useMediaQuery } from "@/hooks/use-media-query.hook";
+import { ProductLinkModal } from "../../modals/product-link-modal";
 
 export interface PostProps {
-  post: inferRouterOutputs<AppRouter>['post']['getLatestPosts']['posts'][number];
+  post: inferRouterOutputs<AppRouter>["post"]["getLatestPosts"]["posts"][number];
   ref?: React.Ref<HTMLDivElement>;
   priority?: boolean;
 }
 
 export function Post({ post, ref, priority = false }: PostProps) {
-  const params = useSearchParams()
-  const router = useRouter()
-  const pathname = usePathname()
+  const params = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
 
-  const { data: session } = useSession()
+  const { data: session } = useSession();
 
-  const user = session?.user
-  const isDesktop = useMediaQuery('(min-width: 768px)')
+  const user = session?.user;
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const handleSetParams = () => {
     if (isDesktop) {
-      const currentParams = new URLSearchParams(Array.from(params.entries()))
+      const currentParams = new URLSearchParams(Array.from(params.entries()));
 
-      currentParams.set('postId', post.id)
+      currentParams.set("postId", post.id);
 
-      router.push(`${pathname}?${currentParams.toString()}`)
-    } else return
-  }
+      router.push(`${pathname}?${currentParams.toString()}`);
+    } else return;
+  };
 
   const handleShare = (postId: string) => {
-    const origin = window.location.origin
+    const origin = window.location.origin;
 
-    const url = `${origin}${pathname}?postId=${postId}`
+    const url = `${origin}${pathname}?postId=${postId}`;
 
     if (navigator.share) {
       navigator
         .share({
-          title: 'outfits.bio',
-          text: 'Check out this post on outfits.bio!',
+          title: "outfits.bio",
+          text: "Check out this post on outfits.bio!",
           url: url,
         })
         .catch((error) => {
-          console.error('Error sharing:', error)
-        })
+          console.error("Error sharing:", error);
+        });
     } else {
-      void navigator.clipboard.writeText(url)
-      toast.success('Copied post link to clipboard!')
+      void navigator.clipboard.writeText(url);
+      toast.success("Copied post link to clipboard!");
     }
-  }
+  };
 
-  const [likeAnimation, setLikeAnimation] = useState<boolean>(false)
-  const ctx = api.useUtils()
+  const [likeAnimation, setLikeAnimation] = useState<boolean>(false);
+  const ctx = api.useUtils();
 
   const { mutate: toggleLikePost } = api.post.toggleLikePost.useMutation({
     onSuccess: () => {
-      void ctx.post.getLatestPosts.refetch()
-      void ctx.post.getPostsAllTypes.refetch({ id: post.user.id })
+      void ctx.post.getLatestPosts.refetch();
+      void ctx.post.getPostsAllTypes.refetch({ id: post.user.id });
     },
     onError: (e) =>
       handleErrors({
         e,
-        message: 'An error occurred while liking this post.',
+        message: "An error occurred while liking this post.",
       }),
-  })
+  });
 
   const truncateTagline = (tagline: string) => {
-    if (!tagline) return '';
+    if (!tagline) return "";
     const words = tagline.split(/\s+/);
-    let truncated = '';
+    let truncated = "";
     for (const word of words) {
       if ((truncated + word).length > 20) break;
-      truncated += (truncated ? ' ' : '') + word;
+      truncated += (truncated ? " " : "") + word;
     }
-    return truncated.length < tagline.length ? truncated + '...' : truncated;
-  }
+    return truncated.length < tagline.length ? truncated + "..." : truncated;
+  };
 
-  const truncatedTagline = truncateTagline(post.user.tagline ?? '');
+  const truncatedTagline = truncateTagline(post.user.tagline ?? "");
 
   const AuthorDesc = memo(() => (
     <div
       className={`flex-col justify-center flex absolute bottom-3 left-3 z-10 max-w-[calc(100%-24px)]`}
     >
-      <div className='flex gap-2 items-center'>
+      <div className="flex gap-2 items-center">
         <p className="flex items-center gap-1 font-medium text-white md:dark:text-white ">
-          {post.user.username}{' '}
+          {post.user.username}{" "}
           {post.user.admin ? (
             <PiHammer className="w-4 h-4" />
           ) : (
@@ -118,24 +118,29 @@ export function Post({ post, ref, priority = false }: PostProps) {
           )}
         </p>
 
-        <p className='text-sm font-medium font-clash text-white/80'>
+        <p className="text-sm font-medium font-clash text-white/80">
           {(() => {
             const now = new Date();
             const createdAt = new Date(post.createdAt);
-            const diffInMinutes = Math.floor((now.getTime() - createdAt.getTime()) / (1000 * 60));
+            const diffInMinutes = Math.floor(
+              (now.getTime() - createdAt.getTime()) / (1000 * 60),
+            );
             const diffInHours = Math.floor(diffInMinutes / 60);
             const diffInDays = Math.floor(diffInHours / 24);
             const diffInWeeks = Math.floor(diffInDays / 7);
-            const diffInMonths = (now.getFullYear() - createdAt.getFullYear()) * 12 + now.getMonth() - createdAt.getMonth();
+            const diffInMonths =
+              (now.getFullYear() - createdAt.getFullYear()) * 12 +
+              now.getMonth() -
+              createdAt.getMonth();
 
             if (diffInMinutes < 60) {
-              return `${diffInMinutes} minute${diffInMinutes !== 1 ? 's' : ''} ago`;
+              return `${diffInMinutes} minute${diffInMinutes !== 1 ? "s" : ""} ago`;
             } else if (diffInHours < 24) {
-              return `${diffInHours} hour${diffInHours !== 1 ? 's' : ''} ago`;
+              return `${diffInHours} hour${diffInHours !== 1 ? "s" : ""} ago`;
             } else if (diffInDays < 7) {
-              return `${diffInDays} day${diffInDays !== 1 ? 's' : ''} ago`;
+              return `${diffInDays} day${diffInDays !== 1 ? "s" : ""} ago`;
             } else if (diffInWeeks < 4) {
-              return `${diffInWeeks} week${diffInWeeks !== 1 ? 's' : ''} ago`;
+              return `${diffInWeeks} week${diffInWeeks !== 1 ? "s" : ""} ago`;
             } else if (diffInMonths < 1) {
               return createdAt.toLocaleDateString();
             } else {
@@ -149,7 +154,7 @@ export function Post({ post, ref, priority = false }: PostProps) {
       {post.caption && (
         <p className="inline text-sm text-stroke 2xs-h:hidden dark:text-white/75 break-words">
           {post.caption.split(/(@\w+)/).map((part, index) => {
-            if (part.startsWith('@')) {
+            if (part.startsWith("@")) {
               return (
                 <Link key={index} href={`/${part.substring(1)}`}>
                   <strong>{part}</strong>
@@ -174,7 +179,7 @@ export function Post({ post, ref, priority = false }: PostProps) {
         {truncatedTagline && (
           <>
             {truncatedTagline.split(/(@\w+)/).map((part, index) => {
-              if (part.startsWith('@')) {
+              if (part.startsWith("@")) {
                 return (
                   <Link key={index} href={`/${part.substring(1)}`}>
                     <strong>{part}</strong>
@@ -183,7 +188,7 @@ export function Post({ post, ref, priority = false }: PostProps) {
               }
               return part;
             })}
-            {' - '}
+            {" - "}
           </>
         )}
         {getPostTypeName(post.type).toLowerCase()}
@@ -192,9 +197,12 @@ export function Post({ post, ref, priority = false }: PostProps) {
         {getPostTypeName(post.type).toLowerCase()}
       </p>
     </div>
-  ))
+  ));
   return (
-    <div className="relative flex flex-col items-center w-full h-full max-w-sm max-h-[calc(100vh_-_112px)] gap-2 snap-start md:gap-4 sm:pr-[56px]" ref={ref}>
+    <div
+      className="relative flex flex-col items-center w-full h-full max-w-sm max-h-[calc(100vh_-_112px)] gap-2 snap-start md:gap-4 sm:pr-[56px]"
+      ref={ref}
+    >
       {/*<Link
         href={`/${post.user.username}`}
         className="items-center hidden w-full gap-2 px-4 font-clash sm:flex"
@@ -208,13 +216,12 @@ export function Post({ post, ref, priority = false }: PostProps) {
           <AuthorDesc />
       </Link>*/}
       <div
-
         onDoubleClick={() => {
-          setLikeAnimation(true)
+          setLikeAnimation(true);
           if (navigator.vibrate) {
-            navigator.vibrate(200)
+            navigator.vibrate(200);
           }
-          toggleLikePost({ id: post.id })
+          toggleLikePost({ id: post.id });
         }}
         className="md:cursor-pointer w-full aspect-[53/87] flex justify-center overflow-hidden "
       >
@@ -234,7 +241,7 @@ export function Post({ post, ref, priority = false }: PostProps) {
             alt={post.type}
             priority={priority}
             onClick={handleSetParams}
-            loading={!priority ? 'lazy' : 'eager'}
+            loading={!priority ? "lazy" : "eager"}
             onKeyDown={handleSetParams}
           />
           <div className="absolute bottom-0 w-full h-32 bg-gradient-to-b from-transparent to-black rounded-b-xl" />
@@ -254,26 +261,32 @@ export function Post({ post, ref, priority = false }: PostProps) {
               image={post.user.image}
               id={post.user.id}
               username={post.user.username}
-              size={'sm'}
+              size={"sm"}
               className="border-0"
             />
           </Link>
 
           <LikeButton post={post}>
             {post._count.likes > 0 && (
-              <span className="text-[10px] md:text-black text-white">{post._count.likes}</span>
+              <span className="text-[10px] md:text-black text-white">
+                {post._count.likes}
+              </span>
             )}
           </LikeButton>
 
           <ReactButton post={post}>
             {post._count.Comment > 0 && (
-              <span className="text-[10px] md:text-black text-white">{post._count.Comment}</span>
+              <span className="text-[10px] md:text-black text-white">
+                {post._count.Comment}
+              </span>
             )}
           </ReactButton>
 
           <WishlistButton post={post}>
             {post._count.wishlists > 0 && (
-              <span className="text-[10px] md:text-black text-white">{post._count.wishlists}</span>
+              <span className="text-[10px] md:text-black text-white">
+                {post._count.wishlists}
+              </span>
             )}
           </WishlistButton>
 
@@ -282,7 +295,7 @@ export function Post({ post, ref, priority = false }: PostProps) {
               <Button
                 variant="outline-ghost"
                 centerItems
-                shape={'circle'}
+                shape={"circle"}
                 iconLeft={<PiLinkBold className="w-5 h-5" />}
                 className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent sm:dark:text-white"
                 aria-label="Product Link Button"
@@ -293,7 +306,7 @@ export function Post({ post, ref, priority = false }: PostProps) {
           <Button
             variant="outline-ghost"
             centerItems
-            shape={'circle'}
+            shape={"circle"}
             iconLeft={<PiShareFatBold className="w-5 h-5" />}
             className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent sm:dark:text-white"
             aria-label="Share Button"
@@ -309,9 +322,8 @@ export function Post({ post, ref, priority = false }: PostProps) {
                 <Button
                   variant="outline"
                   centerItems
-                  shape={'circle'}
+                  shape={"circle"}
                   iconLeft={<PiDotsThreeBold />}
-
                   className="mt-1.5 flex text-white border border-white/50 bg-black/50 sm:border-stroke sm:text-black sm:bg-transparent dark:sm:text-white"
                 />
               }
@@ -321,5 +333,5 @@ export function Post({ post, ref, priority = false }: PostProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }

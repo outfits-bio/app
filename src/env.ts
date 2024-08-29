@@ -26,7 +26,7 @@ export const env = createEnv({
         : z.string().min(1).optional(),
     NODE_ENV: z.enum(["development", "production"]).optional(),
     VAPID_PUBLIC_KEY: z.string().min(1).optional(),
-    VAPID_PRIVATE_KEY: z.string().min(1).optional()
+    VAPID_PRIVATE_KEY: z.string().min(1).optional(),
   },
 
   /**

@@ -3,16 +3,16 @@ import { Onboarding } from "@/components/onboarding/onboarding";
 import { getServerAuthSession } from "@/server/auth";
 
 export default async function OnboardingPage() {
-    const session = await getServerAuthSession();
+  const session = await getServerAuthSession();
 
-    if (!session?.user) {
-        redirect('/login');
-    } else {
-        if (session.user.onboarded) {
-            redirect(`/${session.user.username}`);
-        }
-        return <Onboarding session={session} username={session.user.username} />;
+  if (!session?.user) {
+    redirect("/login");
+  } else {
+    if (session.user.onboarded) {
+      redirect(`/${session.user.username}`);
     }
+    return <Onboarding session={session} username={session.user.username} />;
+  }
 
-    return null;
-};
+  return null;
+}

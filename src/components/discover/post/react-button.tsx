@@ -1,17 +1,24 @@
-import { PiChatCircleBold } from 'react-icons/pi'
-import { Button } from '../../ui/Button'
-import type { PostProps } from './post'
-import { BaseModal, BaseModalContent, BaseModalTrigger } from '../../modals/base-modal'
-import { CommentSection } from './comment-section'
+import { PiChatCircleBold } from "react-icons/pi";
+import { Button } from "../../ui/Button";
+import type { PostProps } from "./post";
+import {
+  BaseModal,
+  BaseModalContent,
+  BaseModalTrigger,
+} from "../../modals/base-modal";
+import { CommentSection } from "./comment-section";
 
-export default function ReactButton({ post, children }: PostProps & { children?: React.ReactNode }) {
+export default function ReactButton({
+  post,
+  children,
+}: PostProps & { children?: React.ReactNode }) {
   return (
     <BaseModal>
       <BaseModalTrigger>
         <Button
-          variant={'outline-ghost'}
+          variant={"outline-ghost"}
           centerItems
-          shape={'circle'}
+          shape={"circle"}
           iconLeft={<PiChatCircleBold />}
           className="flex-col gap-0 text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent focus:outline-none sm:dark:text-white"
           aria-label="Comment Button"
@@ -23,5 +30,5 @@ export default function ReactButton({ post, children }: PostProps & { children?:
         <CommentSection post={post} />
       </BaseModalContent>
     </BaseModal>
-  )
+  );
 }

@@ -7,11 +7,7 @@ import {
   toggleLikePostSchema,
 } from "@/schemas/post.schema";
 import { getPostsSchema, paginatedSchema } from "@/schemas/user.schema";
-import {
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import { NotificationType, PostType } from "database";
 import type { Prisma } from "database";
@@ -397,7 +393,6 @@ export const postRouter = createTRPCRouter({
         });
 
         await ctx.prisma.$transaction([wishlist, notification]);
-
       } else {
         await ctx.prisma.$transaction([wishlist]);
       }
@@ -593,7 +588,13 @@ export const postRouter = createTRPCRouter({
             },
           },
           likes: {
-            select: { id: true, username: true, image: true, verified: true, admin: true },
+            select: {
+              id: true,
+              username: true,
+              image: true,
+              verified: true,
+              admin: true,
+            },
           },
           wishlists: {
             where: {
@@ -812,7 +813,9 @@ export const postRouter = createTRPCRouter({
       },
     });
 
-    const uniquePosts = Array.from(new Set(posts.map(post => post.id))).map(id => posts.find(post => post.id === id));
+    const uniquePosts = Array.from(new Set(posts.map((post) => post.id))).map(
+      (id) => posts.find((post) => post.id === id),
+    );
 
     return uniquePosts;
   }),

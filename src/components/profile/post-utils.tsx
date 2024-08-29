@@ -6,17 +6,32 @@ import type { api } from "@/trpc/react";
 import type { RouterOutputs } from "@/trpc/shared";
 import { handleErrors } from "@/utils/handle-errors.util";
 import { type Post, PostType } from "database";
-import { PiBackpack, PiBaseballCap, PiBaseballCapBold, PiCoatHanger, PiCoatHangerBold, PiEyeglasses, PiEyeglassesBold, PiHoodieBold, PiPants, PiPantsBold, PiShirtFolded, PiSneaker, PiSneakerBold, PiTShirt, PiTShirtBold } from "react-icons/pi";
+import {
+  PiBackpack,
+  PiBaseballCap,
+  PiBaseballCapBold,
+  PiCoatHanger,
+  PiCoatHangerBold,
+  PiEyeglasses,
+  PiEyeglassesBold,
+  PiHoodieBold,
+  PiPants,
+  PiPantsBold,
+  PiShirtFolded,
+  PiSneaker,
+  PiSneakerBold,
+  PiTShirt,
+  PiTShirtBold,
+} from "react-icons/pi";
 
 type PartialPost = Omit<Omit<Post, "userId">, "updatedAt">;
 type Context = ReturnType<(typeof api)["useUtils"]>;
 
-
 export interface PostSectionProps {
-    profileData?: RouterOutputs["user"]["getProfile"];
-    postsData?: RouterOutputs["post"]["getPostsAllTypes"];
-    type: PostType;
-    loading: boolean;
+  profileData?: RouterOutputs["user"]["getProfile"];
+  postsData?: RouterOutputs["post"]["getPostsAllTypes"];
+  type: PostType;
+  loading: boolean;
 }
 
 /**
@@ -25,26 +40,26 @@ export interface PostSectionProps {
  * @returns string
  */
 export const getPostTypeName = (type: PostType): string => {
-    switch (type) {
-        case PostType.OUTFIT:
-            return "Outfits";
-        case PostType.HOODIE:
-            return "Outerwear";
-        case PostType.SHIRT:
-            return "Tops";
-        case PostType.PANTS:
-            return "Bottoms";
-        case PostType.SHOES:
-            return "Footwear";
-        case PostType.WATCH:
-            return "Accessories";
-        case PostType.GLASSES:
-            return "Glasses";
-        case PostType.HEADWEAR:
-            return "Headwear";
-        case PostType.JEWELRY:
-            return "Jewelry";
-    }
+  switch (type) {
+    case PostType.OUTFIT:
+      return "Outfits";
+    case PostType.HOODIE:
+      return "Outerwear";
+    case PostType.SHIRT:
+      return "Tops";
+    case PostType.PANTS:
+      return "Bottoms";
+    case PostType.SHOES:
+      return "Footwear";
+    case PostType.WATCH:
+      return "Accessories";
+    case PostType.GLASSES:
+      return "Glasses";
+    case PostType.HEADWEAR:
+      return "Headwear";
+    case PostType.JEWELRY:
+      return "Jewelry";
+  }
 };
 
 /**
@@ -54,76 +69,76 @@ export const getPostTypeName = (type: PostType): string => {
  * @returns number
  */
 export const getPostTypeCount = (
-    type: PostType,
-    profileData?: RouterOutputs["user"]["getProfile"]
+  type: PostType,
+  profileData?: RouterOutputs["user"]["getProfile"],
 ): React.ReactNode => {
-    switch (type) {
-        case PostType.OUTFIT:
-            return profileData?.outfitPostCount ?? 0;
-        case PostType.HOODIE:
-            return profileData?.hoodiePostCount ?? 0;
-        case PostType.SHIRT:
-            return profileData?.shirtPostCount ?? 0;
-        case PostType.PANTS:
-            return profileData?.pantsPostCount ?? 0;
-        case PostType.SHOES:
-            return profileData?.shoesPostCount ?? 0;
-        case PostType.WATCH:
-            return profileData?.watchPostCount ?? 0;
-        case PostType.GLASSES:
-            return profileData?.glassesPostCount ?? 0;
-        case PostType.HEADWEAR:
-            return profileData?.headwearPostCount ?? 0;
-        case PostType.JEWELRY:
-            return profileData?.jewelryPostCount ?? 0;
-    }
+  switch (type) {
+    case PostType.OUTFIT:
+      return profileData?.outfitPostCount ?? 0;
+    case PostType.HOODIE:
+      return profileData?.hoodiePostCount ?? 0;
+    case PostType.SHIRT:
+      return profileData?.shirtPostCount ?? 0;
+    case PostType.PANTS:
+      return profileData?.pantsPostCount ?? 0;
+    case PostType.SHOES:
+      return profileData?.shoesPostCount ?? 0;
+    case PostType.WATCH:
+      return profileData?.watchPostCount ?? 0;
+    case PostType.GLASSES:
+      return profileData?.glassesPostCount ?? 0;
+    case PostType.HEADWEAR:
+      return profileData?.headwearPostCount ?? 0;
+    case PostType.JEWELRY:
+      return profileData?.jewelryPostCount ?? 0;
+  }
 };
 
 export const getPostTypeIcon = (type: PostType): React.ReactNode => {
-    switch (type) {
-        case PostType.OUTFIT:
-            return <PiCoatHanger className='md:w-12 md:h-12 w-8 h-8' />
-        case PostType.HOODIE:
-            return <PiShirtFolded className='md:w-12 md:h-12 w-8 h-8' />
-        case PostType.SHIRT:
-            return <PiTShirt className='md:w-12 md:h-12 w-8 h-8' />
-        case PostType.PANTS:
-            return <PiPants className='md:w-12 md:h-12 w-8 h-8' />
-        case PostType.SHOES:
-            return <PiSneaker className='md:w-12 md:h-12 w-8 h-8' />
-        case PostType.WATCH:
-            return <PiBackpack className='md:w-12 md:h-12 w-8 h-8' />
-        case PostType.GLASSES:
-            return <PiEyeglasses className='md:w-12 md:h-12 w-8 h-8' />
-        case PostType.HEADWEAR:
-            return <PiBaseballCap className='md:w-12 md:h-12 w-8 h-8' />
-        case PostType.JEWELRY:
-            return <PiTShirt className='md:w-12 md:h-12 w-8 h-8' />
-    }
+  switch (type) {
+    case PostType.OUTFIT:
+      return <PiCoatHanger className="md:w-12 md:h-12 w-8 h-8" />;
+    case PostType.HOODIE:
+      return <PiShirtFolded className="md:w-12 md:h-12 w-8 h-8" />;
+    case PostType.SHIRT:
+      return <PiTShirt className="md:w-12 md:h-12 w-8 h-8" />;
+    case PostType.PANTS:
+      return <PiPants className="md:w-12 md:h-12 w-8 h-8" />;
+    case PostType.SHOES:
+      return <PiSneaker className="md:w-12 md:h-12 w-8 h-8" />;
+    case PostType.WATCH:
+      return <PiBackpack className="md:w-12 md:h-12 w-8 h-8" />;
+    case PostType.GLASSES:
+      return <PiEyeglasses className="md:w-12 md:h-12 w-8 h-8" />;
+    case PostType.HEADWEAR:
+      return <PiBaseballCap className="md:w-12 md:h-12 w-8 h-8" />;
+    case PostType.JEWELRY:
+      return <PiTShirt className="md:w-12 md:h-12 w-8 h-8" />;
+  }
 };
 
 export const getPostTypeIconSmall = (type: PostType): React.ReactNode => {
-    switch (type) {
-        case PostType.OUTFIT:
-            return <PiCoatHangerBold className='w-6 h-6' />
-        case PostType.HOODIE:
-            return <PiHoodieBold className='w-6 h-6' />
-        case PostType.SHIRT:
-            return <PiTShirtBold className='w-6 h-6' />
-        case PostType.PANTS:
-            return <PiPantsBold className='w-6 h-6' />
-        case PostType.SHOES:
-            return <PiSneakerBold className='w-6 h-6' />
-        case PostType.WATCH:
-            return <PiTShirtBold className='w-6 h-6' />
-        case PostType.GLASSES:
-            return <PiEyeglassesBold className='w-6 h-6' />
-        case PostType.HEADWEAR:
-            return <PiBaseballCapBold className='w-6 h-6' />
-        case PostType.JEWELRY:
-            return <PiTShirtBold className='w-6 h-6' />
-    }
-}
+  switch (type) {
+    case PostType.OUTFIT:
+      return <PiCoatHangerBold className="w-6 h-6" />;
+    case PostType.HOODIE:
+      return <PiHoodieBold className="w-6 h-6" />;
+    case PostType.SHIRT:
+      return <PiTShirtBold className="w-6 h-6" />;
+    case PostType.PANTS:
+      return <PiPantsBold className="w-6 h-6" />;
+    case PostType.SHOES:
+      return <PiSneakerBold className="w-6 h-6" />;
+    case PostType.WATCH:
+      return <PiTShirtBold className="w-6 h-6" />;
+    case PostType.GLASSES:
+      return <PiEyeglassesBold className="w-6 h-6" />;
+    case PostType.HEADWEAR:
+      return <PiBaseballCapBold className="w-6 h-6" />;
+    case PostType.JEWELRY:
+      return <PiTShirtBold className="w-6 h-6" />;
+  }
+};
 
 /**
  * Optimistically updates the previously fetched array of posts using the updateData function
@@ -133,17 +148,17 @@ export const getPostTypeIconSmall = (type: PostType): React.ReactNode => {
  * @returns { prevData: PartialPost[] | undefined }
  */
 export const onMutate = async (
-    ctx: Context,
-    updateData: (old: PartialPost[] | undefined) => PartialPost[] | undefined,
-    userId?: string
+  ctx: Context,
+  updateData: (old: PartialPost[] | undefined) => PartialPost[] | undefined,
+  userId?: string,
 ): Promise<{ prevData: PartialPost[] | undefined }> => {
-    await ctx.post.getPostsAllTypes.refetch();
+  await ctx.post.getPostsAllTypes.refetch();
 
-    const prevData = ctx.post.getPostsAllTypes.getData();
+  const prevData = ctx.post.getPostsAllTypes.getData();
 
-    ctx.post.getPostsAllTypes.setData({ id: userId ?? "" }, updateData as any);
+  ctx.post.getPostsAllTypes.setData({ id: userId ?? "" }, updateData as any);
 
-    return { prevData: prevData as PartialPost[] | undefined };
+  return { prevData: prevData as PartialPost[] | undefined };
 };
 
 /**
@@ -156,14 +171,14 @@ export const onMutate = async (
  * @returns void
  */
 export const onError = async (
-    ctx: Context,
-    err: any,
-    context: any,
-    message: string,
-    userId?: string
+  ctx: Context,
+  err: any,
+  context: any,
+  message: string,
+  userId?: string,
 ) => {
-    ctx.post.getPostsAllTypes.setData({ id: userId ?? "" }, context.prevData);
-    handleErrors({ e: err, message });
+  ctx.post.getPostsAllTypes.setData({ id: userId ?? "" }, context.prevData);
+  handleErrors({ e: err, message });
 };
 
 /**
@@ -173,6 +188,6 @@ export const onError = async (
  * @returns void
  */
 export const onSettled = async (ctx: Context, username?: string | null) => {
-    void ctx.post.getPostsAllTypes.refetch();
-    void ctx.user.getProfile.refetch({ username: username ?? "" });
+  void ctx.post.getPostsAllTypes.refetch();
+  void ctx.user.getProfile.refetch({ username: username ?? "" });
 };

@@ -1,6 +1,6 @@
-import { SearchBar } from '../search/search-bar/with-popover'
-import { AuthSection } from './auth-section'
-import { NavLogo } from './nav-logo'
+import { SearchBar } from "../search/search-bar/with-popover";
+import { AuthSection } from "./auth-section";
+import { NavLogo } from "./nav-logo";
 
 export function Navbar() {
   return (
@@ -11,5 +11,5 @@ export function Navbar() {
         <AuthSection />
       </div>
     </nav>
-  )
+  );
 }

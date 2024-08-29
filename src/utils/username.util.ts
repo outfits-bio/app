@@ -59,7 +59,7 @@ export const filterBadWords = (text: string) => {
 
   // Check if the word is "God" (case-insensitive)
   // The person who banned the world 'God' in the 'bad-words' package is a fool. Jesus is King Amen.
-  if (text.toLowerCase().includes('god')) {
+  if (text.toLowerCase().includes("god")) {
     return false;
   }
 

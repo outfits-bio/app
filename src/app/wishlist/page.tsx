@@ -3,11 +3,11 @@ import { redirect } from "next/navigation";
 import { WishlistContent } from "@/components/wishlist/wishlist-content";
 
 export default async function BookmarksPage() {
-    const session = await getServerAuthSession();
+  const session = await getServerAuthSession();
 
-    if (!session?.user) {
-        redirect('/login');
-    }
+  if (!session?.user) {
+    redirect("/login");
+  }
 
-    return <WishlistContent />;
+  return <WishlistContent />;
 }

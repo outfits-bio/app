@@ -79,27 +79,26 @@ export const profileRouter = createTRPCRouter({
       };
     }),
 
-  getMostLikedProfiles: publicProcedure
-    .query(async ({ ctx }) => {
-      const users = await ctx.prisma.user.findMany({
-        orderBy: {
-          likeCount: "desc",
-        },
-        select: {
-          id: true,
-          username: true,
-          tagline: true,
-          admin: true,
-          verified: true,
-          image: true,
-          imageCount: true,
-          likeCount: true,
-        },
-        take: 4,
-      });
+  getMostLikedProfiles: publicProcedure.query(async ({ ctx }) => {
+    const users = await ctx.prisma.user.findMany({
+      orderBy: {
+        likeCount: "desc",
+      },
+      select: {
+        id: true,
+        username: true,
+        tagline: true,
+        admin: true,
+        verified: true,
+        image: true,
+        imageCount: true,
+        likeCount: true,
+      },
+      take: 4,
+    });
 
-      return users;
-    }),
+    return users;
+  }),
 
   getFollowersById: publicProcedure
     .input(getFollowersByIdSchema)
@@ -129,7 +128,13 @@ export const profileRouter = createTRPCRouter({
           verified: true,
           admin: true,
           likedBy: {
-            select: { id: true, username: true, image: true, verified: true, admin: true },
+            select: {
+              id: true,
+              username: true,
+              image: true,
+              verified: true,
+              admin: true,
+            },
           },
           links: true,
           lanyardEnabled: true,
@@ -327,53 +332,67 @@ export const profileRouter = createTRPCRouter({
       }
     }),
 
-  generateOutfit: protectedProcedure
-    .mutation(async ({ ctx }) => {
-      const postTypes = [
-        "HOODIE",
-        "SHIRT",
-        "PANTS",
-        "SHOES",
-        "WATCH",
-        "GLASSES",
-        "HEADWEAR",
-        "JEWELRY"
-      ] as const;
+  generateOutfit: protectedProcedure.mutation(async ({ ctx }) => {
+    const postTypes = [
+      "HOODIE",
+      "SHIRT",
+      "PANTS",
+      "SHOES",
+      "WATCH",
+      "GLASSES",
+      "HEADWEAR",
+      "JEWELRY",
+    ] as const;
 
-      const outfitPieces = await Promise.all(
-        postTypes.map(async (type) => {
-          const postsCount = await ctx.prisma.post.count({
-            where: {
-              userId: ctx.session.user.id,
-              type: type,
-            },
-          });
+    const outfitPieces = await Promise.all(
+      postTypes.map(async (type) => {
+        const postsCount = await ctx.prisma.post.count({
+          where: {
+            userId: ctx.session.user.id,
+            type: type,
+          },
+        });
 
-          if (postsCount === 0) return null;
+        if (postsCount === 0) return null;
 
-          const randomSkip = Math.floor(Math.random() * postsCount);
+        const randomSkip = Math.floor(Math.random() * postsCount);
 
-          const post = await ctx.prisma.post.findFirst({
-            where: {
-              userId: ctx.session.user.id,
-              type: type,
-            },
-            select: {
-              id: true,
-              image: true,
-              type: true,
-            },
-            skip: randomSkip,
-          });
-          return post;
-        })
-      );
+        const post = await ctx.prisma.post.findFirst({
+          where: {
+            userId: ctx.session.user.id,
+            type: type,
+          },
+          select: {
+            id: true,
+            image: true,
+            type: true,
+          },
+          skip: randomSkip,
+        });
+        return post;
+      }),
+    );
 
-      return outfitPieces.filter((piece): piece is NonNullable<typeof piece> => piece !== null);
-    }),
+    return outfitPieces.filter(
+      (piece): piece is NonNullable<typeof piece> => piece !== null,
+    );
+  }),
 
   regeneratePiece: protectedProcedure
-    .input(z.object({ type: z.enum(["HOODIE", "SHIRT", "PANTS", "SHOES", "WATCH", "GLASSES", "HEADWEAR", "JEWELRY"]) }))
+    .input(
+      z.object({
+        type: z.enum([
+          "HOODIE",
+          "SHIRT",
+          "PANTS",
+          "SHOES",
+          "WATCH",
+          "GLASSES",
+          "HEADWEAR",
+          "JEWELRY",
+        ]),
+      }),
+    )
     .mutation(async ({ ctx, input }) => {
       const postsCount = await ctx.prisma.post.count({
         where: {
