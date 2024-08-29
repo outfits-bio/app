@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -36,76 +37,95 @@ export async function GET(
             height: "100%",
             width: "100%",
             display: "flex",
-            paddingTop: "25px",
-            paddingLeft: "25px",
-            alignItems: "flex-start",
-            justifyContent: "space-between",
+            alignItems: "center",
+            justifyContent: "center",
             backgroundColor: "white",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
+          {posts.length === 0 ? (
             <img
               width="300"
               height="300"
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
               src={formatAvatar(profileData.image, profileData.id)}
               style={{
                 borderRadius: "100%",
                 border: "2px solid #eeeeee",
               }}
             />
+          ) : (
             <div
               style={{
+                height: "100%",
+                width: "100%",
                 display: "flex",
-                flexDirection: "column",
-                gap: "0px",
-                margin: "0px",
+                paddingTop: "25px",
+                paddingLeft: "25px",
+                alignItems: "flex-start",
+                justifyContent: "space-between",
               }}
             >
-              <p style={{ fontFamily: "Clash", fontSize: "36px" }}>
-                {profileData.username}
-              </p>
-              {/* <p style={{ fontFamily: 'sans-serif' }}>{profileData.tagline}</p> */}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <img
+                  width="300"
+                  height="300"
+                  src={formatAvatar(profileData.image, profileData.id)}
+                  style={{
+                    borderRadius: "100%",
+                    border: "2px solid #eeeeee",
+                  }}
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0px",
+                    margin: "0px",
+                  }}
+                >
+                  <p style={{ fontFamily: "Clash", fontSize: "36px" }}>
+                    {profileData.username}
+                  </p>
+                </div>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "flex-end",
+                  maxWidth: "800px",
+                  paddingRight: "25px",
+                  gap: "10px",
+                  overflow: "hidden",
+                }}
+              >
+                {posts
+                  .slice(0, 8)
+                  .map(
+                    (
+                      post: { image: string | undefined },
+                      index: Key | null | undefined,
+                    ) => (
+                      <img
+                        key={index}
+                        width="149"
+                        height="245"
+                        src={formatImage(post.image, profileData.id)}
+                        style={{
+                          objectFit: "cover",
+                          borderRadius: "10px",
+                          border: "1px solid #eeeeee",
+                        }}
+                      />
+                    ),
+                  )}
+              </div>
             </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "flex-end",
-              maxWidth: "800px",
-              paddingRight: "25px",
-              gap: "10px",
-              overflow: "hidden",
-            }}
-          >
-            {posts
-              .slice(0, 8)
-              .map(
-                (
-                  post: { image: string | undefined },
-                  index: Key | null | undefined,
-                ) => (
-                  <img
-                    key={index}
-                    width="149"
-                    height="245"
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                    src={formatImage(post.image, profileData.id)}
-                    style={{
-                      objectFit: "cover",
-                      borderRadius: "10px",
-                      border: "1px solid #eeeeee",
-                    }}
-                  />
-                ),
-              )}
-          </div>
+          )}
         </div>
       ),
       {
