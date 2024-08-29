@@ -18,7 +18,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { BaseModal, BaseModalContent, BaseModalHeader, BaseModalTitle, BaseModalTrigger } from '../modals/base-modal'
 import { PopularProfiles } from './popular-profiles'
 
-export function DiscoverContent({ initialPosts, popularProfiles }: { initialPosts: any; popularProfiles: any }) {
+export function DiscoverContent({ initialPosts }: { initialPosts: any; }) {
     const params = useSearchParams()
     const router = useRouter()
     const pathname = usePathname()
@@ -77,9 +77,6 @@ export function DiscoverContent({ initialPosts, popularProfiles }: { initialPost
     }
 
     const posts = data?.pages.flatMap((page) => page.posts)
-    const { data: popularProfilesData } = api.user.getMostLikedProfiles.useQuery(undefined, {
-        initialData: popularProfiles,
-    })
 
     const observer = useRef<IntersectionObserver>()
     const lastElementRef = useCallback(

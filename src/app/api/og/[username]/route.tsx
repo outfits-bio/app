@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { formatAvatar, formatImage } from '@/utils/image-src-format.util';
-import { Key } from 'react';
+import { type Key } from 'react';
 
 export const runtime = 'edge';
 
@@ -64,7 +64,7 @@ export async function GET(request: Request, { params }: { params: { username: st
                             overflow: 'hidden',
                         }}
                     >
-                        {posts.slice(0, 12).map((post: { image: string | undefined; }, index: Key | null | undefined) => (
+                        {posts.slice(0, 8).map((post: { image: string | undefined; }, index: Key | null | undefined) => (
                             <img
                                 key={index}
                                 width="149"

@@ -10,6 +10,7 @@ export async function generateMetadata({ params }: { params: { username: string 
     try {
         const profileData = await api.user.getProfile({ username: params.username });
         return {
+            metadataBase: new URL('https://outfits.bio'),
             title: `${profileData.username}`,
             description: profileData.tagline || `Check out ${profileData.username}'s profile on outfits.bio`,
             openGraph: {
