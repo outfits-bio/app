@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 /** @type {import("eslint").Linter.Config} */
 const config = {
   parser: "@typescript-eslint/parser",
@@ -34,4 +36,5 @@ const config = {
   },
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 module.exports = config;
