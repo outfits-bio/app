@@ -15,6 +15,7 @@ import { AvatarCropModal } from "@/components/modals/avatar-crop-modal";
 // import { PiSubtract } from "react-icons/pi";
 import Image from "next/image";
 import * as nsfwjs from "nsfwjs";
+import { Input } from "@/components/ui/input";
 
 export function AvatarCard() {
   const { data: sessionData, update } = useSession();
@@ -159,7 +160,7 @@ export function AvatarCard() {
                   />
                 )}
 
-                <input
+                <Input
                   ref={ref}
                   id="avatar"
                   type="file"

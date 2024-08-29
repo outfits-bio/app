@@ -19,6 +19,7 @@ import {
   PiYoutubeLogo,
 } from "react-icons/pi";
 import { LinkType } from "database";
+import { Input } from "@/components/ui/input";
 
 export function LinksCard() {
   const {
@@ -124,7 +125,7 @@ export function LinksCard() {
         <form className="" onSubmit={handleSubmitLink(handleFormSubmitLink)}>
           {userData?.links && userData?.links?.length < 6 && (
             <div className="flex gap-2">
-              <input
+              <Input
                 id="link"
                 type="text"
                 placeholder="https://example.com"

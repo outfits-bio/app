@@ -11,6 +11,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 import { handleErrors } from "@/utils/handle-errors.util";
+import { Input } from "@/components/ui/input";
 
 export function UsernameCard() {
   const { data: sessionData, update } = useSession();
@@ -79,9 +80,9 @@ export function UsernameCard() {
             <div className="flex p-3 items-center gap-10 rounded-l-lg self-stretch bg-gray-100 dark:bg-neutral-900">
               outfits.bio/
             </div>
-            <input
+            <Input
               {...register("username", { maxLength: 24 })}
-              className="flex items-center gap-4 p-3 py-4 flex-1 rounded-r-lg self-stretch"
+              className="flex items-center gap-4 p-3 py-4 flex-1 border-none rounded-r-lg rounded-l-none self-stretch h-fit"
               placeholder={sessionData?.user?.username ?? "username"}
               defaultValue={sessionData?.user?.username}
             />

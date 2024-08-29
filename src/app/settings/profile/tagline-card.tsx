@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { handleErrors } from "@/utils/handle-errors.util";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
+import { Input } from "@/components/ui/input";
 
 export function TaglineCard() {
   const { data: session } = useSession();
@@ -69,9 +70,9 @@ export function TaglineCard() {
             </p>
           </div>
           <div className="flex justify-between items-center self-stretch border dark:border-stroke rounded-lg">
-            <input
+            <Input
               {...register("tagline", { maxLength: 200 })}
-              className="flex rounded-lg items-center gap-4 p-3 py-4 flex-1 self-stretch"
+              className="flex items-center gap-4 p-3 py-4 flex-1 border-none rounded-lg self-stretch h-fit"
               placeholder="I enjoy linking my outfits."
               defaultValue={taglineData?.tagline ?? ""}
             />

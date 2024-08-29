@@ -19,6 +19,8 @@ import type { AppRouter } from "@/server/api/root";
 import { api } from "@/trpc/react";
 import { handleErrors } from "@/utils/handle-errors.util";
 import { useRef } from "react";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 
 type RouterOutput = inferRouterOutputs<AppRouter>;
 
@@ -109,7 +111,7 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
               <label htmlFor="username" className="text-sm font-semibold">
                 Username
               </label>
-              <input
+              <Input
                 {...register("username")}
                 className="w-full p-2 rounded-xl border border-stroke bg-white dark:bg-black text-black dark:text-white"
               />
@@ -117,7 +119,7 @@ export const AdminEditUserModal = (props: AdminEditUserModalProps) => {
               <label htmlFor="tagline" className="text-sm font-semibold">
                 Tagline
               </label>
-              <textarea
+              <Textarea
                 {...register("tagline")}
                 className="w-full h-24 p-2 rounded-xl border border-stroke bg-white dark:bg-black text-black dark:text-white"
               />

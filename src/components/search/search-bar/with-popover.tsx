@@ -15,6 +15,7 @@ import {
   PiSpinnerGap,
 } from "react-icons/pi";
 import { Avatar } from "../../ui/Avatar";
+import { Input } from "@/components/ui/input";
 
 export function SearchBar() {
   const pathname = usePathname();
@@ -50,7 +51,7 @@ export function SearchBar() {
 
   return (
     <div className="hidden relative items-center font-clash font-medium xl:flex">
-      <input
+      <Input
         autoComplete="off"
         id="link"
         type="text"

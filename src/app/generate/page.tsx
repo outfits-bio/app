@@ -22,6 +22,7 @@ import {
   BaseModalTrigger,
   BaseModalDescription,
 } from "@/components/modals/base-modal";
+import { Input } from "@/components/ui/input";
 
 type OutfitPiece = {
   id: string;
@@ -162,7 +163,7 @@ export default function GenerateOutfitPage() {
                 </div>
               ))}
             </div>
-            <input
+            <Input
               placeholder="Enter outfit name"
               value={outfitName}
               onChange={(e) => setOutfitName(e.target.value)}

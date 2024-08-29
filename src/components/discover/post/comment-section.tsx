@@ -15,6 +15,7 @@ import {
 } from "react-icons/pi";
 import Link from "next/link";
 import { handleErrors } from "@/utils/handle-errors.util";
+import { Input } from "@/components/ui/input";
 
 type CommentType = {
   id: string;
@@ -95,14 +96,14 @@ export function CommentSection({ post }: PostProps) {
           </>
         )}
       </div>
-      <div className="mt-4 flex">
-        <input
+      <div className="mt-4 flex rounded-3xl border border-stroke">
+        <Input
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
           placeholder="Add a comment..."
-          className="pl-3 flex-grow rounded-md border border-stroke mr-2"
+          className="pl-3 flex-grow rounded-l-3xl border-none mr-2 h-full"
         />
-        <Button onClick={handleSubmitComment} className="max-w-fit px-3">
+        <Button onClick={handleSubmitComment} shape={'circle'} className="max-w-fit px-3 rounded-full">
           <PiPaperPlaneRight className="text-xl" />
         </Button>
       </div>
@@ -241,7 +242,7 @@ function Comment({
           </Link>
           {isEditing ? (
             <div className="flex">
-              <input
+              <Input
                 value={editText}
                 onChange={(e) => setEditText(e.target.value)}
                 className="pl-3 flex-grow rounded-md border border-stroke mr-2"
@@ -337,14 +338,14 @@ function Comment({
         </div>
       </div>
       {showReplyInput && (
-        <div className="mt-2 ml-8 flex">
-          <input
+        <div className="mt-4 flex rounded-3xl border border-stroke items-center">
+          <Input
             value={replyText}
             onChange={(e) => setReplyText(e.target.value)}
-            placeholder="Reply to this comment..."
-            className="pl-3 flex-grow rounded-md border border-stroke mr-2"
+            placeholder="Add a reply..."
+            className="pl-3 flex-grow rounded-l-3xl border-none mr-2 h-full"
           />
-          <Button onClick={handleSubmitReply} className="max-w-fit px-3">
+          <Button onClick={handleSubmitReply} shape={'circle'} className="max-w-fit px-3 rounded-full">
             <PiPaperPlaneRight className="text-xl" />
           </Button>
         </div>

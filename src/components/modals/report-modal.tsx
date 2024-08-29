@@ -20,6 +20,7 @@ import {
   BaseModalTitle,
   BaseModalTrigger,
 } from "./base-modal";
+import { Textarea } from "../ui/textarea";
 
 interface ReportModalProps {
   type: ReportType;
@@ -72,7 +73,7 @@ export const ReportModal = ({ type, id }: ReportModalProps) => {
             <label htmlFor="reason" className="block font-medium mb-1">
               Reason
             </label>
-            <textarea
+            <Textarea
               id="reason"
               className="w-full min-h-28 px-4 py-2 border-stroke rounded-xl border dark:border-stroke dark:text-white dark:bg-black"
               placeholder="Please describe the reason for your report."

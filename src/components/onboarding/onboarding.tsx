@@ -20,6 +20,8 @@ import {
 } from "@/schemas/user.schema";
 import { handleErrors } from "@/utils/handle-errors.util";
 import Image from "next/image";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 
 export const Onboarding = ({
   session,
@@ -175,7 +177,7 @@ export const Onboarding = ({
                   />
                 )}
 
-                <input
+                <Input
                   ref={ref}
                   id="avatar"
                   type="file"
@@ -214,13 +216,13 @@ export const Onboarding = ({
                       : errors.tagline?.message}
                   </p>
                 )}
-                <input
+                <Input
                   {...register("username")}
                   type="text"
                   className="border border-stroke px-3 py-2 rounded-lg placeholder:text-gray-500 dark:bg-black"
                   placeholder="Your special @username, here"
                 />
-                <textarea
+                <Textarea
                   {...register("tagline")}
                   className="border border-stroke px-3 py-2 rounded-lg grow resize-none placeholder:text-gray-500 h-20 dark:bg-black"
                   placeholder="Your tagline, short description, bio, whatnot"

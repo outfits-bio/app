@@ -31,8 +31,8 @@ export function TaggedProfilesModal({ taggedUsers, children }: TaggedProfilesMod
         <div className="flex flex-col gap-3 overflow-scroll max-h-[400px] mt-3">
           {taggedUsers.map((tag: any) => (
             <Link
-              href={`/${tag}`}
               key={tag.id}
+              href={`/${tag}`}
               className="flex items-center rounded-md p-2 hover:bg-hover w-full text-left border border-stroke outline-none"
             >
               <Avatar

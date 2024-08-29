@@ -1,5 +1,6 @@
 "use client";
 
+import { Input } from "@/components/ui/input";
 import debounce from "lodash.debounce";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
@@ -50,7 +51,7 @@ export function SearchBar({
 
   return (
     <div className="relative items-center font-clash font-medium flex mb-4">
-      <input
+      <Input
         autoComplete="off"
         type="text"
         placeholder="Search for users"
