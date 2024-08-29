@@ -127,6 +127,7 @@ export default function GenerateOutfitPage() {
       <div className="flex mb-4 flex-wrap text-nowrap gap-3">
         <Button
           className="max-w-fit"
+          isLoading={generateOutfitMutation.isPending}
           onClick={() => generateOutfitMutation.mutate()}
           disabled={generateOutfitMutation.isPending}
         >

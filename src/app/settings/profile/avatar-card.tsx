@@ -12,7 +12,7 @@ import { handleErrors } from "@/utils/handle-errors.util";
 import { api } from "@/trpc/react";
 import { useFileUpload } from "@/hooks/file-upload.hook";
 import { AvatarCropModal } from "@/components/modals/avatar-crop-modal";
-import { PiSubtract } from "react-icons/pi";
+// import { PiSubtract } from "react-icons/pi";
 import Image from "next/image";
 import * as nsfwjs from "nsfwjs";
 
@@ -202,7 +202,7 @@ export function AvatarCard() {
           <Button variant="ghost" onClick={() => deleteImage()}>
             Remove
           </Button>
-          <Button
+          {/* <Button
             variant="outline"
             centerItems
             iconLeft={<PiSubtract />}
@@ -210,7 +210,7 @@ export function AvatarCard() {
             onClick={() => setCropModalOpen(true)}
           >
             Edit/Crop
-          </Button>
+          </Button> */}
           <Button onClick={handleSubmit(handleFormSubmit)} disabled={loading}>
             Save
           </Button>

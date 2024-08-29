@@ -1,9 +1,7 @@
 "use client";
 
-import { Dialog, Transition, TransitionChild, DialogPanel, DialogTitle } from "@headlessui/react";
 import {
   type Dispatch,
-  Fragment,
   type SetStateAction,
   useCallback,
   useEffect,
@@ -14,6 +12,7 @@ import { Button } from "../ui/Button";
 import getCroppedImg from "@/utils/crop-image.util";
 import * as nsfwjs from "nsfwjs";
 import toast from "react-hot-toast";
+import { BaseModal, BaseModalContent, BaseModalTitle } from "./base-modal";
 
 interface Props {
   isOpen: boolean;
@@ -98,81 +97,49 @@ export const AvatarCropModal = ({
   }, [croppedAreaPixelsState]);
 
   return (
-    <Transition appear show={isOpen} as={Fragment}>
-      <Dialog
-        as="div"
-        className="relative z-10"
-        open={isOpen}
-        onClose={handleClose}
-      >
-        <TransitionChild
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
-        </TransitionChild>
+    <BaseModal open={isOpen}>
+      <BaseModalContent className="w-full max-w-md overflow-hidden rounded-xl dark:text-white bg-white dark:bg-slate-950 p-6 text-left align-middle shadow-xl transition-all">
+        <BaseModalTitle className={"text-lg font-clash font-bold mb-2"}>
+          Crop Image
+        </BaseModalTitle>
 
-        <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
-            <TransitionChild
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <DialogPanel className="w-full max-w-md overflow-hidden rounded-xl dark:text-white bg-white dark:bg-slate-950 p-6 text-left align-middle shadow-xl transition-all">
-                <DialogTitle className={"text-lg font-clash font-bold mb-2"}>
-                  Crop Image
-                </DialogTitle>
-
-                <div className="relative w-full h-80">
-                  <Cropper
-                    image={fileUrl ?? ""}
-                    crop={crop}
-                    zoom={zoom}
-                    aspect={1}
-                    cropShape="round"
-                    showGrid={false}
-                    onCropChange={(crop) => setCrop(crop)}
-                    onCropComplete={onCropComplete}
-                    onZoomChange={(zoom) => setZoom(zoom)}
-                  />
-                </div>
-
-                <div className="flex w-full justify-between items-center mt-4 gap-2">
-                  <Button
-                    variant={"outline"}
-                    centerItems
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    centerItems
-                    onClick={handleClose}
-                    disabled={isNSFW || isChecking}
-                  >
-                    {isChecking ? "Loading..." : "Save"}
-                  </Button>
-                </div>
-                {isNSFW && (
-                  <p className="text-red-500 mt-2">
-                    NSFW content detected. Please choose a different image.
-                  </p>
-                )}
-              </DialogPanel>
-            </TransitionChild>
-          </div>
+        <div className="relative w-full h-80">
+          <Cropper
+            image={fileUrl ?? ""}
+            crop={crop}
+            zoom={zoom}
+            aspect={1}
+            cropShape="round"
+            showGrid={false}
+            onCropChange={(crop) => setCrop(crop)}
+            onCropComplete={onCropComplete}
+            onZoomChange={(zoom) => setZoom(zoom)}
+          />
         </div>
-      </Dialog>
-    </Transition>
+
+        <div className="flex w-full justify-between items-center mt-4 gap-2">
+          <Button
+            variant={"outline"}
+            centerItems
+            onClick={() => setIsOpen(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            centerItems
+            isLoading={isChecking}
+            onClick={handleClose}
+            disabled={isNSFW || isChecking}
+          >
+            {isChecking ? "Loading..." : "Save"}
+          </Button>
+        </div>
+        {isNSFW && (
+          <p className="text-red-500 mt-2">
+            NSFW content detected. Please choose a different image.
+          </p>
+        )}
+      </BaseModalContent>
+    </BaseModal >
   );
 };

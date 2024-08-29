@@ -25,15 +25,16 @@ import {
 
 export interface BaseModalProps {
   children?: React.ReactNode;
+  open?: boolean;
   className?: string;
   ref?: React.RefObject<HTMLButtonElement>;
 }
 
-export const BaseModal = ({ children }: BaseModalProps) => {
+export const BaseModal = ({ children, open }: BaseModalProps) => {
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
-    return <Dialog>{children}</Dialog>;
+    return <Dialog {...(open !== undefined ? { open } : {})}>{children}</Dialog>;
   } else {
     return <Drawer>{children}</Drawer>;
   }

@@ -319,6 +319,7 @@ export function CreatePostModal() {
           </Button>
           <Button
             centerItems
+            isLoading={isChecking}
             onClick={handleSubmit}
             disabled={!fileUrl || isChecking || isNSFW}
             className="disabled:cursor-not-allowed disabled:opacity-75"

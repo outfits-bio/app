@@ -2,7 +2,7 @@ import { cn } from "@/utils/cn.util";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import { forwardRef } from "react";
-import { PiSpinnerGap } from "react-icons/pi";
+import { PiSpinner, PiSpinnerGap } from "react-icons/pi";
 
 const variants = cva(
   "font-semibold font-clash self-stretch h-12 py-2 gap-3 flex items-center",
@@ -43,7 +43,7 @@ const variants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof variants> {
+  VariantProps<typeof variants> {
   isLoading?: boolean;
   iconLeft?: React.ReactNode;
   iconRight?: React.ReactNode;
@@ -131,7 +131,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {iconLeft && !isLoading && <div className="text-2xl">{iconLeft}</div>}
-        {isLoading && <PiSpinnerGap className="animate-spin text-2xl" />}
+        {isLoading && <PiSpinner className="animate-spin text-2xl" />}
         {children}
       </button>
     );

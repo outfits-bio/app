@@ -282,7 +282,7 @@ export const ProfileCard = ({ profileData, username }: Props) => {
 
         {!isCurrentUser &&
           profileData?.username?.toLowerCase() !==
-            data?.user.username?.toLowerCase() && (
+          data?.user.username?.toLowerCase() && (
             <div className="w-full flex items-center justify-between gap-4">
               <div className="grow">
                 <Button
@@ -303,7 +303,7 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                         onAnimationEnd={() => setLikeAnimation(false)}
                         className={
                           likeAnimation
-                            ? "animate-ping text-white dark:text-black"
+                            ? "animate-like text-white dark:text-black"
                             : ""
                         }
                       />
@@ -312,7 +312,7 @@ export const ProfileCard = ({ profileData, username }: Props) => {
                         onAnimationEnd={() => setLikeAnimation(false)}
                         className={
                           likeAnimation
-                            ? "animate-ping text-white dark:text-black"
+                            ? "animate-like text-white dark:text-black"
                             : ""
                         }
                       />
@@ -342,55 +342,55 @@ export const ProfileCard = ({ profileData, username }: Props) => {
           (data?.user &&
             profileData &&
             data?.user.username.toLowerCase() ===
-              (profileData?.username ?? "").toLowerCase())) && (
-          <div className="flex gap-3">
-            <Link href="/settings/profile" className="grow">
-              <Button
-                variant="outline"
-                iconLeft={<PiPencilSimple />}
-                centerItems
-              >
-                Edit
-              </Button>
-            </Link>
+            (profileData?.username ?? "").toLowerCase())) && (
+            <div className="flex gap-3">
+              <Link href="/settings/profile" className="grow">
+                <Button
+                  variant="outline"
+                  iconLeft={<PiPencilSimple />}
+                  centerItems
+                >
+                  Edit
+                </Button>
+              </Link>
 
-            <div className="hidden md:block md:grow">
+              <div className="hidden md:block md:grow">
+                <Button
+                  variant="outline"
+                  iconLeft={<PiShareFat />}
+                  centerItems
+                  onClick={handleShare}
+                >
+                  Share
+                </Button>
+              </div>
+
               <Button
+                className="md:hidden"
                 variant="outline"
                 iconLeft={<PiShareFat />}
                 centerItems
+                shape="square"
                 onClick={handleShare}
-              >
-                Share
-              </Button>
+              />
+              <Link href="/generate" className="sm:hidden">
+                <Button
+                  variant="outline"
+                  shape="square"
+                  iconLeft={<PiDresser />}
+                  centerItems
+                />
+              </Link>
+              <Link href="/settings" className="sm:hidden">
+                <Button
+                  variant="outline"
+                  shape="square"
+                  iconLeft={<PiGear />}
+                  centerItems
+                />
+              </Link>
             </div>
-
-            <Button
-              className="md:hidden"
-              variant="outline"
-              iconLeft={<PiShareFat />}
-              centerItems
-              shape="square"
-              onClick={handleShare}
-            />
-            <Link href="/generate" className="sm:hidden">
-              <Button
-                variant="outline"
-                shape="square"
-                iconLeft={<PiDresser />}
-                centerItems
-              />
-            </Link>
-            <Link href="/settings" className="sm:hidden">
-              <Button
-                variant="outline"
-                shape="square"
-                iconLeft={<PiGear />}
-                centerItems
-              />
-            </Link>
-          </div>
-        )}
+          )}
       </div>
     </div>
   );

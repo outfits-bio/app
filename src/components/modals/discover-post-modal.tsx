@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-redundant-type-constituents */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 "use client";
 
 import { Dialog, Transition, DialogPanel, TransitionChild } from "@headlessui/react";
@@ -21,7 +26,7 @@ import { PostMenu } from "../menus/post-menu";
 export type DiscoverPost = RouterOutputs["post"]["getLatestPosts"]["posts"][0];
 
 interface DiscoverPostModalProps {
-  post: DiscoverPost | null;
+  post: DiscoverPost | any;
 }
 
 const clash = localFont({
