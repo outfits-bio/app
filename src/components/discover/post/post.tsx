@@ -4,7 +4,7 @@ import { api } from "@/trpc/react";
 import { handleErrors } from "@/utils/handle-errors.util";
 import type { AppRouter } from "@/server/api/root";
 import { formatImage } from "@/utils/image-src-format.util";
-import { getPostTypeName } from "@/utils/names.util";
+// import { getPostTypeName } from "@/utils/names.util";
 import type { inferRouterOutputs } from "@trpc/server";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -19,6 +19,7 @@ import {
   PiSealCheck,
   PiShareFatBold,
   PiLinkBold,
+  PiUsersBold,
 } from "react-icons/pi";
 import { PostMenu } from "../../menus/post-menu";
 import { Avatar } from "../../ui/Avatar";
@@ -28,6 +29,7 @@ import ReactButton from "./react-button";
 import WishlistButton from "./wishlist-button";
 import { useMediaQuery } from "@/hooks/use-media-query.hook";
 import { ProductLinkModal } from "../../modals/product-link-modal";
+import { TaggedProfilesModal } from "@/components/modals/tagged-profiles-modal";
 
 export interface PostProps {
   post: inferRouterOutputs<AppRouter>["post"]["getLatestPosts"]["posts"][number];
@@ -91,18 +93,18 @@ export function Post({ post, ref, priority = false }: PostProps) {
       }),
   });
 
-  const truncateTagline = (tagline: string) => {
-    if (!tagline) return "";
-    const words = tagline.split(/\s+/);
-    let truncated = "";
-    for (const word of words) {
-      if ((truncated + word).length > 20) break;
-      truncated += (truncated ? " " : "") + word;
-    }
-    return truncated.length < tagline.length ? truncated + "..." : truncated;
-  };
+  // const truncateTagline = (tagline: string) => {
+  //   if (!tagline) return "";
+  //   const words = tagline.split(/\s+/);
+  //   let truncated = "";
+  //   for (const word of words) {
+  //     if ((truncated + word).length > 20) break;
+  //     truncated += (truncated ? " " : "") + word;
+  //   }
+  //   return truncated.length < tagline.length ? truncated + "..." : truncated;
+  // };
 
-  const truncatedTagline = truncateTagline(post.user.tagline ?? "");
+  // const truncatedTagline = truncateTagline(post.user.tagline ?? "");
 
   const AuthorDesc = memo(() => (
     <div
@@ -165,17 +167,8 @@ export function Post({ post, ref, priority = false }: PostProps) {
           })}
         </p>
       )}
-      {post.tags && post.tags.length > 0 && (
-        <p className="text-sm text-white break-words">
-          {post.tags.map((tag, index) => (
-            <Link key={index} href={`/${tag}`} className="mr-2 font-bold">
-              @{tag}
-            </Link>
-          ))}
-        </p>
-      )}
 
-      <p className="inline text-sm text-stroke 2xs-h:hidden dark:text-white/75 break-words">
+      {/* <p className="inline text-sm text-stroke 2xs-h:hidden dark:text-white/75 break-words">
         {truncatedTagline && (
           <>
             {truncatedTagline.split(/(@\w+)/).map((part, index) => {
@@ -195,7 +188,13 @@ export function Post({ post, ref, priority = false }: PostProps) {
       </p>
       <p className="hidden text-sm text-stroke 2xs-h:inline dark:text-white/75">
         {getPostTypeName(post.type).toLowerCase()}
-      </p>
+      </p> */}
+
+      {/* {getPostTypeName(post.type) !== 'OUTFIT' && (
+        <p className="hidden text-sm text-stroke 2xs-h:inline dark:text-white/75">
+          {getPostTypeName(post.type).toLowerCase()}
+        </p>
+      )} */}
     </div>
   ));
   return (
@@ -301,6 +300,19 @@ export function Post({ post, ref, priority = false }: PostProps) {
                 aria-label="Product Link Button"
               />
             </ProductLinkModal>
+          )}
+
+          {post.tags && post.tags.length > 0 && (
+            <TaggedProfilesModal taggedUsers={post.tags}>
+              <Button
+                variant="outline-ghost"
+                centerItems
+                shape={"circle"}
+                iconLeft={<PiUsersBold className="w-5 h-5" />}
+                className="text-white border-white/50 sm:border-stroke sm:text-black bg-black/50 sm:bg-transparent sm:dark:text-white"
+                aria-label="Tagged Users Button"
+              />
+            </TaggedProfilesModal>
           )}
 
           <Button

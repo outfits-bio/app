@@ -10,6 +10,8 @@ import {
   PiPaperPlaneRight,
   PiHeart,
   PiHeartFill,
+  PiSealCheck,
+  PiHammer,
 } from "react-icons/pi";
 import Link from "next/link";
 import { handleErrors } from "@/utils/handle-errors.util";
@@ -23,6 +25,8 @@ type CommentType = {
     id: string;
     image: string | null;
     username: string | null;
+    verified?: boolean;
+    admin?: boolean;
   };
   likeCount: number;
   replyCount: number;
@@ -218,14 +222,23 @@ function Comment({
   return (
     <div className="mb-4">
       <div className="flex items-start">
-        <Avatar
-          image={comment.user.image}
-          id={comment.user.id}
-          username={comment.user.username}
-          size="xs"
-        />
+        <Link href={"/" + comment.user.username}>
+          <Avatar
+            image={comment.user.image}
+            id={comment.user.id}
+            username={comment.user.username}
+            size="xs"
+          />
+        </Link>
         <div className="ml-2 flex-grow">
-          <p className="font-bold">{comment.user.username}</p>
+          <Link href={"/" + comment.user.username} className="font-bold flex gap-1 items-center">
+            {comment.user.username}
+            {comment.user.admin ? (
+              <PiHammer className="w-4 h-4" />
+            ) : (
+              comment.user.verified && <PiSealCheck className="w-4 h-4" />
+            )}
+          </Link>
           {isEditing ? (
             <div className="flex">
               <input

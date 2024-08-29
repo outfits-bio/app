@@ -270,7 +270,7 @@ export function DiscoverContent({ initialPosts }: { initialPosts: never }) {
 
       <section className="relative flex flex-col items-center gap-4 px-1 pt-1 grow">
         {/* Post Type */}
-        <div className="fixed z-10 flex max-w-[14rem] w-full gap-1 top-[0.25rem] md:hidden">
+        <div className="fixed z-10 flex max-w-[14rem] w-full gap-1 top-[0.25rem] left-1/2 transform -translate-x-1/2 md:hidden">
           <button
             onClick={() => handleChangeCategory("latest")}
             className={cn(
@@ -341,16 +341,16 @@ export function DiscoverContent({ initialPosts }: { initialPosts: never }) {
           <div className="flex flex-col items-center w-full gap-3 pb-[69px] overflow-y-scroll hide-scrollbar snap-mandatory snap-y scroll-smooth md:pb-0 md:first:mt-4">
             {posts
               ? posts.map((post, index) => {
-                  return (
-                    <div
-                      ref={posts.length === index + 1 ? lastElementRef : null}
-                      key={post.id}
-                      className="flex justify-center w-full"
-                    >
-                      <Post post={post} priority={index < 3} />
-                    </div>
-                  );
-                })
+                return (
+                  <div
+                    ref={posts.length === index + 1 ? lastElementRef : null}
+                    key={post.id}
+                    className="flex justify-center w-full"
+                  >
+                    <Post post={post} priority={index < 3} />
+                  </div>
+                );
+              })
               : null}
           </div>
 

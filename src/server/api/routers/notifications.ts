@@ -27,6 +27,8 @@ export const notificationsRouter = createTRPCRouter({
             id: true,
             username: true,
             image: true,
+            verified: true,
+            admin: true
           },
         },
       },
@@ -84,6 +86,9 @@ export const notificationsRouter = createTRPCRouter({
       where: {
         targetUserId: ctx.session.user.id,
         read: false,
+        NOT: {
+          userId: ctx.session.user.id,
+        },
       },
     });
 

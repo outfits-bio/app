@@ -5,7 +5,7 @@ import type { RouterOutputs } from "@/trpc/shared";
 import { handleErrors } from "@/utils/handle-errors.util";
 import { intlFormatDistance } from "date-fns";
 import Link from "next/link";
-import { PiSpinnerGap, PiX } from "react-icons/pi";
+import { PiHammerBold, PiSealCheckBold, PiSpinnerGap, PiX } from "react-icons/pi";
 import { Avatar } from "../ui/Avatar";
 import { useSession } from "next-auth/react";
 
@@ -80,43 +80,92 @@ export function NotificationCard({
         <span className="font-medium">
           {notification.type === "PROFILE_LIKE" && (
             <>
-              <span className="font-bold">{notification.user?.username}</span>
+              <span className="font-bold gap-1 items-center inline-flex">
+                {notification.user?.username}
+                {notification.user?.admin ? (
+                  <PiHammerBold className="w-4 h-4" />
+                ) : (
+                  notification.user?.verified && <PiSealCheckBold className="w-4 h-4" />
+                )}
+              </span>
               <span> liked your profile </span>
             </>
           )}
           {notification.type === "POST_LIKE" && (
             <>
-              <span className="font-bold">{notification.user?.username}</span>
+              <span className="font-bold gap-1 items-center inline-flex">
+                {notification.user?.username}
+                {notification.user?.admin ? (
+                  <PiHammerBold className="w-4 h-4" />
+                ) : (
+                  notification.user?.verified && <PiSealCheckBold className="w-4 h-4" />
+                )}
+              </span>
               <span> liked your post </span>
             </>
           )}
           {notification.type === "POST_REACTION" && (
             <>
-              <span className="font-bold">{notification.user?.username}</span>
+              <span className="font-bold gap-1 items-center inline-flex">
+                {notification.user?.username}
+                {notification.user?.admin ? (
+                  <PiHammerBold className="w-4 h-4" />
+                ) : (
+                  notification.user?.verified && <PiSealCheckBold className="w-4 h-4" />
+                )}
+              </span>
               <span> reacted to your post with {notification.message}</span>
             </>
           )}
           {notification.type === "POST_WISHLIST" && (
             <>
-              <span className="font-bold">{notification.user?.username}</span>
+              <span className="font-bold gap-1 items-center inline-flex">
+                {notification.user?.username}
+                {notification.user?.admin ? (
+                  <PiHammerBold className="w-4 h-4" />
+                ) : (
+                  notification.user?.verified && <PiSealCheckBold className="w-4 h-4" />
+                )}
+              </span>
               <span> added your post to their wishlist </span>
             </>
           )}
           {notification.type === "POST_COMMENT" && (
             <>
-              <span className="font-bold">{notification.user?.username}</span>
+              <span className="font-bold gap-1 items-center inline-flex">
+                {notification.user?.username}
+                {notification.user?.admin ? (
+                  <PiHammerBold className="w-4 h-4" />
+                ) : (
+                  notification.user?.verified && <PiSealCheckBold className="w-4 h-4" />
+                )}
+              </span>
               <span> left a comment on your post </span>
             </>
           )}
           {notification.type === "COMMENT_REPLY" && (
             <>
-              <span className="font-bold">{notification.user?.username}</span>
+              <span className="font-bold gap-1 items-center inline-flex">
+                {notification.user?.username}
+                {notification.user?.admin ? (
+                  <PiHammerBold className="w-4 h-4" />
+                ) : (
+                  notification.user?.verified && <PiSealCheckBold className="w-4 h-4" />
+                )}
+              </span>
               <span> replied to your comment </span>
             </>
           )}
           {notification.type === "COMMENT_LIKE" && (
             <>
-              <span className="font-bold">{notification.user?.username}</span>
+              <span className="font-bold gap-1 items-center inline-flex">
+                {notification.user?.username}
+                {notification.user?.admin ? (
+                  <PiHammerBold className="w-4 h-4" />
+                ) : (
+                  notification.user?.verified && <PiSealCheckBold className="w-4 h-4" />
+                )}
+              </span>
               <span> liked your comment </span>
             </>
           )}

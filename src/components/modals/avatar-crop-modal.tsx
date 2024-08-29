@@ -1,6 +1,6 @@
 "use client";
 
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Transition, TransitionChild, DialogPanel, DialogTitle } from "@headlessui/react";
 import {
   type Dispatch,
   Fragment,
@@ -105,7 +105,7 @@ export const AvatarCropModal = ({
         open={isOpen}
         onClose={handleClose}
       >
-        <Transition.Child
+        <TransitionChild
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"
@@ -115,11 +115,11 @@ export const AvatarCropModal = ({
           leaveTo="opacity-0"
         >
           <div className="fixed inset-0 bg-black bg-opacity-25" />
-        </Transition.Child>
+        </TransitionChild>
 
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center">
-            <Transition.Child
+            <TransitionChild
               as={Fragment}
               enter="ease-out duration-300"
               enterFrom="opacity-0 scale-95"
@@ -128,10 +128,10 @@ export const AvatarCropModal = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md overflow-hidden rounded-xl dark:text-white bg-white dark:bg-slate-950 p-6 text-left align-middle shadow-xl transition-all">
-                <Dialog.Title className={"text-lg font-clash font-bold mb-2"}>
+              <DialogPanel className="w-full max-w-md overflow-hidden rounded-xl dark:text-white bg-white dark:bg-slate-950 p-6 text-left align-middle shadow-xl transition-all">
+                <DialogTitle className={"text-lg font-clash font-bold mb-2"}>
                   Crop Image
-                </Dialog.Title>
+                </DialogTitle>
 
                 <div className="relative w-full h-80">
                   <Cropper
@@ -168,8 +168,8 @@ export const AvatarCropModal = ({
                     NSFW content detected. Please choose a different image.
                   </p>
                 )}
-              </Dialog.Panel>
-            </Transition.Child>
+              </DialogPanel>
+            </TransitionChild>
           </div>
         </div>
       </Dialog>

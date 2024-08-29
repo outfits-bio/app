@@ -1,6 +1,6 @@
 "use client";
 
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Transition, DialogPanel, TransitionChild } from "@headlessui/react";
 import { useSession } from "next-auth/react";
 import localFont from "next/font/local";
 import Image from "next/image";
@@ -73,7 +73,7 @@ export const DiscoverPostModal = ({ post }: DiscoverPostModalProps) => {
         className={`relative z-10 ${clash.variable} ${satoshi.variable} font-clash`}
         onClose={close}
       >
-        <Transition.Child
+        <TransitionChild
           as={Fragment}
           enter="ease-out duration-100"
           enterFrom="opacity-0"
@@ -83,11 +83,11 @@ export const DiscoverPostModal = ({ post }: DiscoverPostModalProps) => {
           leaveTo="opacity-0"
         >
           <div className="fixed inset-0 bg-black bg-opacity-40" />
-        </Transition.Child>
+        </TransitionChild>
 
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center text-center gap-12">
-            <Transition.Child
+            <TransitionChild
               as={Fragment}
               enter="ease-out duration-100"
               enterFrom="opacity-0 scale-95"
@@ -96,7 +96,7 @@ export const DiscoverPostModal = ({ post }: DiscoverPostModalProps) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel
+              <DialogPanel
                 className={`relative overflow-hidden rounded-xl bg-white text-left align-middle shadow-xl transition-all w-[400px] h-[654px]`}
               >
                 <div
@@ -170,8 +170,8 @@ export const DiscoverPostModal = ({ post }: DiscoverPostModalProps) => {
                     </div>
                   </div>
                 </div>
-              </Dialog.Panel>
-            </Transition.Child>
+              </DialogPanel>
+            </TransitionChild>
           </div>
         </div>
       </Dialog>

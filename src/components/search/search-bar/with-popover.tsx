@@ -2,7 +2,7 @@
 
 import { api } from "@/trpc/react";
 import { showSearch } from "@/utils/nav-options.util";
-import { Popover, Transition } from "@headlessui/react";
+import { Popover, PopoverPanel, Transition } from "@headlessui/react";
 import debounce from "lodash.debounce";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -96,7 +96,7 @@ export function SearchBar() {
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-1"
               >
-                <Popover.Panel>
+                <PopoverPanel>
                   <div className="relative border border-stroke rounded-xl p-4 bg-white dark:bg-black w-full flex flex-col gap-2 shadow-lg">
                     <Link
                       href={`/search?username=${input}`}
@@ -107,30 +107,30 @@ export function SearchBar() {
                     </Link>
 
                     {searchData?.users
-                      ? searchData.users?.map((user) => (
-                          <Link
-                            href={`/${user.username}`}
-                            key={user.id}
-                            className="flex items-center rounded-md p-2 hover:bg-hover w-full text-left border border-stroke"
-                          >
-                            <Avatar
-                              image={user.image}
-                              id={user.id}
-                              username={user.username}
-                              size={"xs"}
-                              className="mr-2"
-                            />
-                            <p>{user.username}</p>
-                            {user.admin ? (
-                              <PiHammer className="ml-1 text-primary" />
-                            ) : user.verified ? (
-                              <PiSealCheck className="ml-1 text-primary" />
-                            ) : null}
-                          </Link>
-                        ))
+                      ? searchData.users.slice(0, 4).map((user) => (
+                        <Link
+                          href={`/${user.username}`}
+                          key={user.id}
+                          className="flex items-center rounded-md p-2 hover:bg-hover w-full text-left border border-stroke"
+                        >
+                          <Avatar
+                            image={user.image}
+                            id={user.id}
+                            username={user.username}
+                            size={"xs"}
+                            className="mr-2"
+                          />
+                          <p>{user.username}</p>
+                          {user.admin ? (
+                            <PiHammer className="ml-1 text-primary" />
+                          ) : user.verified ? (
+                            <PiSealCheck className="ml-1 text-primary" />
+                          ) : null}
+                        </Link>
+                      ))
                       : null}
                   </div>
-                </Popover.Panel>
+                </PopoverPanel>
               </Transition>
             </>
           )}
