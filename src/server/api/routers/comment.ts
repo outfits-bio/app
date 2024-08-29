@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 import { TRPCError } from '@trpc/server'
-import { NotificationType, PrismaClient } from 'database'
+import { NotificationType, type PrismaClient } from 'database'
 import { filterBadWords } from '@/utils/username.util'
 
 async function deleteCommentAndReplies(prisma: PrismaClient, commentId: string) {

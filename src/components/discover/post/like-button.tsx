@@ -18,7 +18,7 @@ export function LikeButton({ post, children }: LikeButtonProps & { children?: Re
   const ctx = api.useUtils()
   const { mutate: sendPushNotification } = api.notifications.sendPushNotification.useMutation();
 
-  const { mutate: toggleLikePost, isPending: toggleLikePostPending } =
+  const { mutate: toggleLikePost } =
     api.post.toggleLikePost.useMutation({
       onSuccess: () => {
         void ctx.post.getLatestPosts.refetch()
@@ -32,7 +32,7 @@ export function LikeButton({ post, children }: LikeButtonProps & { children?: Re
       onError: (e) =>
         handleErrors({
           e,
-          message: 'An error occurred while liking this post.' + e,
+          message: `An error occurred while liking this post: ${e.message}`,
         }),
     })
 

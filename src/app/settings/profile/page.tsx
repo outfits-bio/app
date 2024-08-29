@@ -1,6 +1,5 @@
 import { getServerAuthSession } from "@/server/auth";
 import { redirect } from "next/navigation";
-import { api } from "@/trpc/server";
 import { AvatarCard } from "./avatar-card";
 import { DeleteAccountCard } from "./delete-account-card";
 import { LinksCard } from "./links-card";
@@ -17,8 +16,6 @@ export default async function ProfileSettingsPage() {
     if (!session?.user) {
         redirect('/login');
     }
-    const userData = await api.user.getMe();
-    const tagline = await api.user.getProfile({ username: session.user.username ?? '' });
 
     return (
         <div className="flex">
@@ -28,9 +25,9 @@ export default async function ProfileSettingsPage() {
                     <h1 className="font-clash font-bold text-3xl">Profile</h1>
                     <p>Edit and manage your profile.</p>
                 </div>
-                <AvatarCard session={session} />
-                <UsernameCard session={session} />
-                <TaglineCard session={session} />
+                <AvatarCard />
+                <UsernameCard />
+                <TaglineCard />
                 <LinksCard />
                 <MemoizedDeleteAccountCard />
             </section>

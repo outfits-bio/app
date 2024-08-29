@@ -5,13 +5,10 @@ import { getPostTypeName } from '@/utils/names.util';
 import Image from 'next/image';
 import Link from 'next/link';
 import { type PostSectionProps, getPostTypeCount, getPostTypeIcon } from './post-utils';
-import { useSession } from 'next-auth/react';
 
 export const PostSection = ({ profileData, postsData, type }: PostSectionProps) => {
-    const { data: session } = useSession();
 
     const posts = postsData?.filter((p) => p.type === type);
-    const userIsProfileOwner = session?.user.id === profileData?.id;
     const postsExist = posts?.length !== 0;
 
     if (!postsExist) return null;

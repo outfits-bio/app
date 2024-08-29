@@ -8,6 +8,7 @@ interface ProductLinkModalProps {
 }
 
 export function ProductLinkModal({ link, children }: ProductLinkModalProps) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [isOpen, setIsOpen] = useState(false);
 
     const handleOpenLink = () => {

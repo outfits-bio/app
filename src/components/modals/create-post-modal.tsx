@@ -39,6 +39,7 @@ export function CreatePostModal() {
 
     const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, handlePaste, setFile, setFileUrl } = useFileUpload();
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [isCropped, setIsCropped] = useState<boolean>(false);
 
     const ref = useRef<HTMLInputElement>(null);
@@ -61,7 +62,7 @@ export function CreatePostModal() {
             const model = await nsfwjs.load();
             const predictions = await model.classify(img);
 
-            const nsfwScore = predictions.find((p: { className: string; }) => p.className === 'Porn' || p.className === 'Hentai')?.probability || 0;
+            const nsfwScore = predictions.find((p: { className: string; }) => p.className === 'Porn' || p.className === 'Hentai')?.probability ?? 0;
             setIsNSFW(nsfwScore > 0.5); // Set a threshold, e.g., 50%
         } catch (error) {
             console.error('NSFW check failed:', error);
@@ -72,7 +73,7 @@ export function CreatePostModal() {
 
     useEffect(() => {
         if (fileUrl) {
-            checkNSFW(fileUrl);
+            void checkNSFW(fileUrl);
         }
     }, [fileUrl, checkNSFW]);
 

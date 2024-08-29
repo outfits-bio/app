@@ -185,7 +185,7 @@ function Comment({ comment, postId, postOwnerId }: { comment: CommentType; postI
         toggleLikeComment({ commentId: comment.id })
     }
 
-    const canDeleteComment = session?.user.id === comment.userId || session?.user.admin || session?.user.id === postOwnerId
+    const canDeleteComment = (session?.user.id === comment.userId) || (session?.user.admin ?? (session?.user.id === postOwnerId))
 
     return (
         <div className="mb-4">

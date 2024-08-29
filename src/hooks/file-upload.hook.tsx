@@ -36,10 +36,9 @@ export const useFileUpload = () => {
     const handlePaste = useCallback((event: React.ClipboardEvent) => {
         const items = event.clipboardData?.items;
         if (items) {
-            for (let i = 0; i < items.length; i++) {
-                const item = items[i];
-                if (item?.type.indexOf('image') !== -1) {
-                    const blob = item?.getAsFile();
+            for (const item of items) {
+                if (item?.type.includes('image')) {
+                    const blob = item.getAsFile();
                     if (blob) {
                         const reader = new FileReader();
                         reader.onload = (e) => {

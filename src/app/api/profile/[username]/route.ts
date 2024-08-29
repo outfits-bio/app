@@ -7,6 +7,7 @@ export async function GET(request: Request, { params }: { params: { username: st
         const posts = await api.post.getPostsAllTypes({ id: profileData.id });
 
         return NextResponse.json({ profileData, posts });
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
         return NextResponse.json({ error: 'Failed to fetch profile data' }, { status: 500 });
     }

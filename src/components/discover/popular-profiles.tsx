@@ -4,9 +4,10 @@ import Link from "next/link";
 import { Avatar } from "../ui/Avatar";
 import { api } from "@/trpc/react";
 
-export function PopularProfiles({ popularProfiles }: { popularProfiles?: any }) {
+export function PopularProfiles({ popularProfiles }: { popularProfiles?: never }) {
 
     const { data: popularProfilesData } = api.user.getMostLikedProfiles.useQuery(undefined, {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         initialData: popularProfiles,
     })
 

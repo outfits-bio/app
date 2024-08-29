@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { api } from '@/trpc/react';
 import { Input } from './input';
 import { PiX } from 'react-icons/pi';
-import Image from 'next/image';
 import { Avatar } from './Avatar';
 
 interface UserTagInputProps {
@@ -73,7 +72,7 @@ export function UserTagInput({ value, onChange, placeholder }: UserTagInputProps
                     value={input}
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
-                    placeholder={placeholder || "Tag users..."}
+                    placeholder={placeholder ?? "Tag users..."}
                     className="border border-stroke rounded px-2 py-1"
                 />
                 {suggestions.length > 0 && (

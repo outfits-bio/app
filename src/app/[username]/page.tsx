@@ -4,7 +4,7 @@ import { api } from "@/trpc/server";
 import { notFound } from "next/navigation";
 import { Posts } from "@/components/profile/posts";
 import { ProfileCard } from "@/components/profile/profile-section";
-import { Metadata } from 'next';
+import { type Metadata } from 'next';
 
 export async function generateMetadata({ params }: { params: { username: string } }): Promise<Metadata> {
     try {
@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: { username: string 
         return {
             metadataBase: new URL('https://outfits.bio'),
             title: `${profileData.username}`,
-            description: profileData.tagline || `Check out ${profileData.username}'s profile on outfits.bio`,
+            description: profileData.tagline ?? `Check out ${profileData.username}'s profile on outfits.bio`,
             openGraph: {
                 images: [`/api/og/${params.username}`],
             },
@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: { params: { username: string 
                 images: [`/api/og/${params.username}`],
             },
         };
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
         return {};
     }
@@ -35,6 +36,7 @@ export default async function ProfilePage({ params }: { params: { username: stri
 
             <Posts username={params.username} />
         </div>
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
         notFound();
     }

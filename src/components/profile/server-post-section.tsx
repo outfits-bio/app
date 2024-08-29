@@ -1,6 +1,6 @@
 import { api } from "@/trpc/server";
 import { PostSection } from "./post-section";
-import { PostType } from "database";
+import { type PostType } from "database";
 
 interface ServerPostSectionProps {
     username: string;

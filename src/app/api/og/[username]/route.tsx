@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from 'next/og';
 import { formatAvatar, formatImage } from '@/utils/image-src-format.util';
 import { type Key } from 'react';
@@ -42,6 +46,7 @@ export async function GET(request: Request, { params }: { params: { username: st
                         <img
                             width="300"
                             height="300"
+                            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                             src={formatAvatar(profileData.image, profileData.id)}
                             style={{
                                 borderRadius: "100%",
@@ -69,6 +74,7 @@ export async function GET(request: Request, { params }: { params: { username: st
                                 key={index}
                                 width="149"
                                 height="245"
+                                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                                 src={formatImage(post.image, profileData.id)}
                                 style={{
                                     objectFit: 'cover',
@@ -93,7 +99,7 @@ export async function GET(request: Request, { params }: { params: { username: st
             },
         );
     } catch (e) {
-        console.log(`${e}`);
+        console.log(e);
         return new Response(`Failed to generate the image`, {
             status: 500,
         });

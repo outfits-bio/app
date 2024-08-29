@@ -121,7 +121,7 @@ export const ProfileCard = ({ profileData, username }: Props) => {
 
                         {profileData?.tagline && profileData?.tagline.length > 0 && (
                             <p className={`grow`}>
-                                {profileData.tagline.split(/(@\w+)/).map((part, index) => {
+                                {profileData.tagline.split(/(@\w+)/).map((part) => {
                                     if (part.startsWith('@')) {
                                         const linkText = part.substring(1);
                                         return (

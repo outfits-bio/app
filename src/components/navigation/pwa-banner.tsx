@@ -13,7 +13,7 @@ export function PwaBanner() {
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const ua = window.navigator.userAgent;
-            const iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+            const iOS = /iPad|iPhone/i.test(ua);
             setIsIOS(iOS);
             setIsStandalone(window.matchMedia('(display-mode: standalone)').matches);
 

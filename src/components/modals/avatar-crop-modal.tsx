@@ -34,7 +34,7 @@ export const AvatarCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUr
             const model = await nsfwjs.load();
             const predictions = await model.classify(img);
 
-            const nsfwScore = predictions.find((p: { className: string; }) => p.className === 'Porn' || p.className === 'Hentai')?.probability || 0;
+            const nsfwScore = predictions.find((p: { className: string; }) => p.className === 'Porn' || p.className === 'Hentai')?.probability ?? 0;
             setIsNSFW(nsfwScore > 0.5); // Set a threshold, e.g., 50%
         } catch (error) {
             console.error('NSFW check failed:', error);
@@ -45,7 +45,7 @@ export const AvatarCropModal = ({ isOpen, setIsOpen, fileUrl, setFile, setFileUr
 
     useEffect(() => {
         if (fileUrl) {
-            checkNSFW(fileUrl);
+            void checkNSFW(fileUrl);
         }
     }, [fileUrl, checkNSFW]);
 

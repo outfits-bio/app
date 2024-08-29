@@ -7,7 +7,7 @@ async function handleSignout() {
     await signOut({ redirect: true });
 }
 
-export default async function LogoutButton() {
+export default function LogoutButton() {
     return <Button
         onClick={handleSignout}
         variant='ghost'

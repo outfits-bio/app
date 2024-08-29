@@ -1,12 +1,10 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { api } from "@/trpc/react";
 import { useState, useEffect } from "react";
 import { useMediaQuery } from "@/hooks/use-media-query.hook";
 
 export function NotificationStatusCard() {
-    const { data: session } = useSession();
     const [notificationsEnabled, setNotificationsEnabled] = useState(false);
     const subscribeToPushNotifications = api.notifications.subscribeToPushNotifications.useMutation();
     const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -88,7 +86,7 @@ export function NotificationStatusCard() {
             }
         };
 
-        checkSubscription();
+        void checkSubscription();
     }, []);
 
     return (

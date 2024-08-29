@@ -36,12 +36,17 @@ export const handleErrors = ({ e, message, fn }: HandleErrorsProps) => {
       }
     });
 
-    fn && void fn();
+    if (fn) {
+      fn();
+    }
     return;
   }
 
   toast.error(message ?? "Something went wrong");
 
-  fn && void fn();
+  if (fn) {
+    fn();
+  }
+
   return;
 };

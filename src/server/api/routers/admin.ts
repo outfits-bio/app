@@ -227,6 +227,7 @@ export const adminRouter = createTRPCRouter({
         });
 
         await ctx.prisma.$transaction([user, notification]);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         await ctx.prisma.user.update({
           where: {

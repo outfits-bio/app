@@ -73,13 +73,15 @@ export function MobileNav() {
 
         else if (session && typeof window !== 'undefined' && 'Notification' in window) {
             if (Notification.permission === 'default') {
-                Notification.requestPermission().then(permission => {
+                Notification.requestPermission().then(async permission => {
                     if (permission === 'granted') {
-                        subscribeUser();
+                        await subscribeUser();
                     }
+                }).catch(error => {
+                    console.error('Error requesting notification permission:', error);
                 });
             } else if (Notification.permission === 'granted') {
-                subscribeUser();
+                void subscribeUser();
             }
         }
     }, [session]);

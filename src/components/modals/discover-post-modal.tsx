@@ -17,7 +17,6 @@ import { useParamsModal } from '@/hooks/params-modal.hook';
 import type { RouterOutputs } from '@/trpc/shared';
 import { formatAvatar, formatImage } from '@/utils/image-src-format.util';
 import { getPostTypeName } from '@/utils/names.util';
-import { LikeButton } from '../discover/post/like-button';
 import { PostMenu } from '../menus/post-menu';
 
 

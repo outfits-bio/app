@@ -11,7 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import toast from "react-hot-toast";
 import { handleErrors } from '@/utils/handle-errors.util';
 
-export function UsernameCard({ session }: { session: any }) {
+export function UsernameCard() {
     const { data: sessionData, update } = useSession();
     const { register, handleSubmit, formState: { errors }, setError, clearErrors } = useForm<EditProfileInput>({
         resolver: zodResolver(editProfileSchema),

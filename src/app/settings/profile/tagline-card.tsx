@@ -11,9 +11,11 @@ import { handleErrors } from '@/utils/handle-errors.util';
 import { useSession } from 'next-auth/react';
 import toast from "react-hot-toast";
 
-
-export function TaglineCard({ session }: { session: any }) {
-    const { data: taglineData } = api.user.getProfile.useQuery({ username: session?.user?.username ?? '' });
+export function TaglineCard() {
+    const { data: session } = useSession();
+    const { data: taglineData } = api.user.getProfile.useQuery({ username: session?.user?.username ?? '' }, {
+        enabled: !!session?.user?.username
+    });
 
     const { register, handleSubmit, formState: { errors } } = useForm<EditProfileInput>({
         resolver: zodResolver(editProfileSchema),

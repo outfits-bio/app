@@ -18,7 +18,6 @@ import {
   PiHeartStraightFill,
   PiSealCheck,
   PiShareFatBold,
-  PiLink,
   PiLinkBold,
 } from 'react-icons/pi'
 import { PostMenu } from '../../menus/post-menu'
@@ -96,14 +95,14 @@ export function Post({ post, ref, priority = false }: PostProps) {
     if (!tagline) return '';
     const words = tagline.split(/\s+/);
     let truncated = '';
-    for (let word of words) {
+    for (const word of words) {
       if ((truncated + word).length > 20) break;
       truncated += (truncated ? ' ' : '') + word;
     }
     return truncated.length < tagline.length ? truncated + '...' : truncated;
   }
 
-  const truncatedTagline = truncateTagline(post.user.tagline || '');
+  const truncatedTagline = truncateTagline(post.user.tagline ?? '');
 
   const AuthorDesc = memo(() => (
     <div

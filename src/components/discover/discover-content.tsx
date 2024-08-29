@@ -7,18 +7,17 @@ import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { PiBookmarkSimpleBold, PiCamera, PiClockBold, PiFadersHorizontal, PiFireBold, PiHammer, PiHeart, PiNewspaper, PiOption, PiSealCheck, PiSidebar } from 'react-icons/pi'
+import { PiBookmarkSimpleBold, PiClockBold, PiFadersHorizontal, PiFireBold, PiSidebar } from 'react-icons/pi'
 import { PostModal } from '../modals/post-modal'
 import { Button } from '../ui/Button'
 import { CategoryButton } from './category-button'
 import { Post } from './post/post'
 import { RegisterBanner } from './register-banner'
-import { Avatar } from '../ui/Avatar'
 import { motion, AnimatePresence } from 'framer-motion'
 import { BaseModal, BaseModalContent, BaseModalHeader, BaseModalTitle, BaseModalTrigger } from '../modals/base-modal'
 import { PopularProfiles } from './popular-profiles'
 
-export function DiscoverContent({ initialPosts }: { initialPosts: any; }) {
+export function DiscoverContent({ initialPosts }: { initialPosts: never; }) {
     const params = useSearchParams()
     const router = useRouter()
     const pathname = usePathname()
@@ -35,6 +34,7 @@ export function DiscoverContent({ initialPosts }: { initialPosts: any; }) {
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const saved = localStorage.getItem('isSidebarOpen')
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             setIsSidebarOpen(saved !== null ? JSON.parse(saved) : true)
             setIsLoaded(true)
         }

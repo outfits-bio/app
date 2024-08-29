@@ -1,14 +1,12 @@
 'use client'
 
 import { showSlash } from '@/utils/nav-options.util'
-import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { PiArrowLeftBold } from 'react-icons/pi'
 import { Logo } from '../ui/Logo'
 
 export function NavLogo() {
-  const { data: session } = useSession()
   const pathname = usePathname()
 
   const title =

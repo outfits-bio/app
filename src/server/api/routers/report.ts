@@ -16,11 +16,11 @@ export const reportRouter = createTRPCRouter({
 
       if (type === "USER") {
         const report = await ctx.prisma.user.update({
-          where: { id: id as string },
+          where: { id: id },
           data: {
             reports: {
               create: {
-                reason: reason as string,
+                reason: reason,
                 type,
                 creator: {
                   connect: {
@@ -47,11 +47,11 @@ export const reportRouter = createTRPCRouter({
         });
       } else if (type === "POST") {
         const report = await ctx.prisma.post.update({
-          where: { id: id as string },
+          where: { id: id },
           data: {
             reports: {
               create: {
-                reason: reason as string,
+                reason: reason,
                 type,
                 creator: {
                   connect: {

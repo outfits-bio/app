@@ -8,7 +8,7 @@
     "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "next dev",
     "format": "prettier --check . --ignore-path .gitignore",
-    "lint": "eslint src/** --ignore-path .gitignore",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "db:generate": "prisma generate --schema ./src/prisma/schema.prisma",

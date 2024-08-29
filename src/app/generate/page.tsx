@@ -35,6 +35,7 @@ export default function GenerateOutfitPage() {
         if (typeof window !== "undefined") {
             const storedOutfits = localStorage.getItem("savedOutfits");
             if (storedOutfits) {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                 setSavedOutfits(JSON.parse(storedOutfits));
             }
         }

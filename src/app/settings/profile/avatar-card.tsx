@@ -16,7 +16,7 @@ import { PiSubtract } from "react-icons/pi";
 import Image from "next/image";
 import * as nsfwjs from 'nsfwjs';
 
-export function AvatarCard({ session }: { session: any }) {
+export function AvatarCard() {
     const { data: sessionData, update } = useSession();
     const { handleChange, dragActive, file, fileUrl, handleDrag, handleDrop, handlePaste, setFile, setFileUrl, cropModalOpen, setCropModalOpen } = useFileUpload();
     const [loading, setLoading] = useState<boolean>(false);
@@ -67,7 +67,7 @@ export function AvatarCard({ session }: { session: any }) {
                 const model = await nsfwjs.load();
                 const predictions = await model.classify(img);
 
-                const nsfwScore = predictions.find((p: { className: string; }) => p.className === 'Porn' || p.className === 'Hentai')?.probability || 0;
+                const nsfwScore = predictions.find((p: { className: string; }) => p.className === 'Porn' || p.className === 'Hentai')?.probability ?? 0;
 
                 if (nsfwScore > 0.5) {
                     toast.error('NSFW content detected. Please choose a different image.');

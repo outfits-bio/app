@@ -4,9 +4,8 @@ import { Button } from "../../../components/ui/Button"
 import { api } from "@/trpc/react";
 import { toast } from 'react-hot-toast';
 import { handleErrors } from "@/utils/handle-errors.util";
-import { signIn } from 'next-auth/react';
 import { PiLinkBreak } from 'react-icons/pi';
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 
 export function GoogleCard(props: { children: ReactNode }) {
