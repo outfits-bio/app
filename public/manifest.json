@@ -8,7 +8,19 @@
   ],
   "orientation": "portrait",
   "scope": "https://outfits.bio/",
+  "scope_extensions": [
+    {
+      "origin": "*.outfits.bio"
+    }
+  ],
   "start_url": "https://outfits.bio/",
+  "handle_links": "preferred",
+  "launch_handler": {
+    "client_mode": [
+      "navigate-existing",
+      "auto"
+    ]
+  },
   "name": "outfits.bio",
   "short_name": "outfits.bio",
   "description": "Your wardrobe in the cloud, share and inspire your followers",
@@ -48,10 +60,36 @@
       "type": "image/png"
     }
   ],
+  "screenshots": [
+    {
+      "src": "screenshots/discover.png",
+      "sizes": "1242x2208",
+      "type": "image/png",
+      "platform": "narrow"
+    },
+    {
+      "src": "screenshots/post.png",
+      "sizes": "1242x2208",
+      "type": "image/png",
+      "platform": "narrow"
+    },
+    {
+      "src": "screenshots/comment.png",
+      "sizes": "1242x2208",
+      "type": "image/png",
+      "platform": "narrow"
+    },
+    {
+      "src": "screenshots/profile.png",
+      "sizes": "1242x2208",
+      "type": "image/png",
+      "platform": "narrow"
+    }
+  ],
   "id": "outfitsbio",
   "lang": "en",
   "dir": "ltr",
-  "prefer_related_applications": false,
+  "prefer_related_applications": true,
   "categories": [
     "entertainment",
     "lifestyle",
