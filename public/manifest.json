@@ -2,7 +2,10 @@
   "theme_color": "#ffffff",
   "background_color": "#F9F9F9",
   "display": "standalone",
-  "display_override": "standalone",
+  "display_override": [
+    "standalone",
+    "window-controls-overlay"
+  ],
   "orientation": "portrait",
   "scope": "https://outfits.bio/",
   "start_url": "https://outfits.bio/",
@@ -44,5 +47,16 @@
       "sizes": "512x512",
       "type": "image/png"
     }
+  ],
+  "id": "outfitsbio",
+  "lang": "en",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "categories": [
+    "entertainment",
+    "lifestyle",
+    "personalization",
+    "photo",
+    "social"
   ]
 }
