@@ -13,7 +13,6 @@ import { MobileNav } from "@/components/navigation/mobile-nav";
 import { Navbar } from "@/components/navigation/navbar";
 import SessionProvider from "@/components/wrappers/session-provider";
 import ThemeProvider from "@/components/wrappers/theme-provider";
-import { PwaBanner } from "@/components/navigation/pwa-banner";
 
 const clash = localFont({
   src: "../../public/fonts/ClashDisplay-Variable.woff2",
@@ -90,7 +89,6 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <TRPCReactProvider cookies={cookies().toString()}>
             <ThemeProvider>
-              <PwaBanner />
               <Navbar />
               <main className="h-screen pt-12 md:pt-20 overflow-x-hidden scroll-smooth">
                 {children}
