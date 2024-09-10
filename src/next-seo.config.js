@@ -31,7 +31,7 @@ export const meta = {
 
 export const icons = [
   { rel: "icon", url: "/favicon.ico" },
-  { rel: "apple-touch-icon", url: "/icon.png" },
+  { rel: "apple-touch-icon", url: "/ios/180.png" },
   {
     rel: "apple-touch-startup-image",
     media:
