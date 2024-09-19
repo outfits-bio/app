@@ -192,7 +192,7 @@ export function CreatePostModal() {
                   rotation={rotation}
                   aspect={176 / 288}
                   cropSize={{ width: 244.4, height: 400 }}
-                  classes={{ containerClassName: "bg-hover rounded-xl" }}
+                  classes={{ containerClassName: "rounded-xl" }}
                   showGrid={true}
                   onCropChange={setCrop}
                   onRotationChange={setRotation}
@@ -224,7 +224,7 @@ export function CreatePostModal() {
                   <button
                     onClick={() => ref.current?.click()}
                     type="button"
-                    className="w-full h-full bg-white dark:bg-black border hover:bg-stroke border-stroke gap-2 flex items-center justify-center font-bold flex-col text-sm rounded-xl"
+                    className="w-full h-full border hover:bg-stroke border-stroke gap-2 flex items-center justify-center font-bold flex-col text-sm rounded-xl"
                   >
                     <PiPlus className="w-8 h-8 text-secondary-text" />
                     <p className="text-secondary-text font-clash">
@@ -291,7 +291,7 @@ export function CreatePostModal() {
               placeholder="Write a caption... (optional)"
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
-              className="w-full border border-gray-300 rounded px-2 py-1 resize-none"
+              className="w-full px-2 py-1 resize-none"
             />
             <UserTagInput
               value={tags}
@@ -303,7 +303,7 @@ export function CreatePostModal() {
               placeholder="Product link (optional)"
               value={productLink}
               onChange={(e) => setProductLink(e.target.value)}
-              className="w-full border border-gray-300 rounded px-2 py-1"
+              className="w-full px-2 py-1"
             />
           </div>
         </div>
