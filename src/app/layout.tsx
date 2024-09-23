@@ -13,6 +13,7 @@ import { MobileNav } from "@/components/navigation/mobile-nav";
 import { Navbar } from "@/components/navigation/navbar";
 import SessionProvider from "@/components/wrappers/session-provider";
 import ThemeProvider from "@/components/wrappers/theme-provider";
+import Error from "next/error";
 
 const clash = localFont({
   src: "../../public/fonts/ClashDisplay-Variable.woff2",
@@ -91,7 +92,7 @@ export default async function RootLayout({
             <ThemeProvider>
               <Navbar />
               <main className="h-screen pt-12 md:pt-20 overflow-x-hidden scroll-smooth">
-                {children}
+                {isDev ? children : <Error statusCode={404} />}
               </main>
               <MobileNav />
               <Toaster
