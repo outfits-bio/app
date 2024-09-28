@@ -8,10 +8,13 @@ const variants = cva("", {
       sm: "w-4 h-4 md:w-6 md:h-6",
       md: "w-6 h-6 md:w-8 md:h-8",
       lg: "w-8 md: md:w-10 xmd:h-10",
+      xl: "w-14 h-14 md:w-16 xmd:h-16",
     },
     variant: {
       white: "fill-white dark:fill-white",
       black: "fill-black dark:fill-black",
+      orange: "fill-orange-accent",
+      onOrange: "fill-[#FFECC8]",
       auto: "fill-black dark:fill-white",
     },
   },
@@ -23,7 +26,7 @@ const variants = cva("", {
 
 export interface LogoProps
   extends React.ButtonHTMLAttributes<SVGSVGElement>,
-    VariantProps<typeof variants> {}
+  VariantProps<typeof variants> { }
 
 const LogoComponent = forwardRef<SVGSVGElement, LogoProps>(
   ({ className, size, variant, ...props }, ref) => {
