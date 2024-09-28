@@ -33,7 +33,8 @@ export default async function ServiceUnavailablePage() {
                         </AccordionContent>
                     </AccordionItem>
                 </Accordion>
-                <p className="text-sm md:text-base">We'll meet again - Jeremy</p>
+                <p className="text-sm md:text-base text-center">We'll meet again - Jeremy</p>
+                <p className="text-sm md:text-base text-center">Also I want to thank everyone who took part in outfits.bio, I appreciate you for posting and engaging with styles across the globe and specifically thanks to Brice Duke, funnydusto and Jess Daniel for their collaborations to make this platform possible.</p>
             </div>
         </>
     );
