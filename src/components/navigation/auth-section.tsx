@@ -14,6 +14,7 @@ import {
 import { NavbarMenu } from "../menus/navbar-menu";
 import dynamic from "next/dynamic";
 import { Button } from "../ui/Button";
+import { SearchBar } from "../search/search-bar/with-popover";
 
 const CreatePostModal = dynamic(
   () =>
@@ -68,6 +69,8 @@ export function AuthSection() {
             <CreatePostModal />
           </div>
 
+          <SearchBar />
+
           {pathname !== "/" && (
             <Link href="/">
               <Button
@@ -118,19 +121,15 @@ export function AuthSection() {
     <div className="items-center gap-4 hidden md:flex">
       {pathname !== "/" && (
         <Link href="/">
-          <Button variant="outline-ghost" iconLeft={<PiCompass />}>
-            Discover
-          </Button>
+          <Button variant="outline-ghost" shape={"square"} iconLeft={<PiCompass />} />
         </Link>
       )}
 
       {pathname !== "/login" && (
         <>
+          <SearchBar />
           <Link href="/login">
-            <Button variant="outline">Login</Button>
-          </Link>
-          <Link href="/login">
-            <Button variant="primary">Create your profile</Button>
+            <Button orange>Login</Button>
           </Link>
         </>
       )}

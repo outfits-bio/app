@@ -120,7 +120,7 @@ export function Post({ post, ref, priority = false }: PostProps) {
           )}
         </p>
 
-        <p className="text-sm font-medium font-clash text-white/80">
+        {/* <p className="text-sm font-medium font-clash text-white/80">
           {(() => {
             const now = new Date();
             const createdAt = new Date(post.createdAt);
@@ -149,7 +149,7 @@ export function Post({ post, ref, priority = false }: PostProps) {
               return createdAt.toLocaleDateString();
             }
           })()}
-        </p>
+        </p> */}
       </div>
 
       {/* Caption and tags */}

@@ -31,12 +31,17 @@ const variants = cva(
         true: "bg-accent border-accent",
         false: "",
       },
+      orange: {
+        true: "bg-orange-accent border-none",
+        false: "",
+      },
     },
     defaultVariants: {
       variant: "primary",
       centerItems: false,
       shape: "normal",
       accent: false,
+      orange: false,
     },
   },
 );
@@ -61,6 +66,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       iconRight,
       shape,
       accent,
+      orange,
       ...props
     },
     ref,
@@ -74,7 +80,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         <button
           ref={ref}
           className={cn(
-            variants({ centerItems, className, variant, shape, accent }),
+            variants({ centerItems, className, variant, shape, accent, orange }),
           )}
           disabled={isLoading}
           {...props}
@@ -91,7 +97,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         <button
           ref={ref}
           className={cn(
-            variants({ centerItems, className, variant, shape, accent }),
+            variants({ centerItems, className, variant, shape, accent, orange }),
           )}
           disabled={isLoading}
           {...props}
@@ -108,7 +114,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         <button
           ref={ref}
           className={cn(
-            variants({ centerItems, className, variant, shape, accent }),
+            variants({ centerItems, className, variant, shape, accent, orange }),
           )}
           disabled={isLoading}
           {...props}
@@ -125,7 +131,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         className={cn(
-          variants({ centerItems, className, variant, shape, accent }),
+          variants({ centerItems, className, variant, shape, accent, orange }),
         )}
         disabled={isLoading}
         {...props}
